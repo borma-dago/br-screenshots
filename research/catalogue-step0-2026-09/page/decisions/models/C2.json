@@ -1,0 +1,88 @@
+{
+ "keys": [
+  "Count as an axis",
+  "Separate pack / bundle mechanism",
+  "What the vendor calls the distinction",
+  "Example"
+ ],
+ "rows": {
+  "Amazon": {
+   "Count as an axis": "named: theme <code>SIZE/COLOR/NUMBER_OF_ITEMS</code> makes <code>number_of_items</code> mandatory; legacy <code>count</code> → <code>ITEM_PACKAGE_QUANTITY</code>; workbook valid values <code>Color · Count · SizeName · SizeName-ColorName</code>.",
+   "Separate pack / bundle mechanism": "<code>ItemRelationship.type = PACKAGE_HIERARCHY</code> (“a package container or is contained by the related items”) and <code>ItemClassification = PRODUCT_BUNDLE</code> (“A parent catalog item that represents a bundle of items”) — first-party 2026-09-21.",
+   "What the vendor calls the distinction": "<b>containment</b>, not count: <code>VARIATION</code> = parent/child; <code>PACKAGE_HIERARCHY</code> = container/contained.",
+   "Example": "● <pre>\"relationships\": [{\"type\": \"VARIATION\", \"parentAsins\": [\"B08J7TQ9FL\"], \"variationTheme\": {\"attributes\": [\"color\", \"size\"], \"theme\": \"SIZE_NAME/COLOR_NAME\"}}]\n\"itemClassification\": \"BASE_PRODUCT\"   (enum: BASE_PRODUCT · OTHER · PRODUCT_BUNDLE · VARIATION_PARENT)</pre>"
+  },
+  "Walmart": {
+   "Count as an axis": "named: <em>“Color · Size · Pattern · Character · Count · Count per pack · Multipack quantity · Theme”</em>; <code>count</code>, <code>countPerPack</code>, <code>multipackQuantity</code> are the only axes Toothpastes (9) and Tires (18) share; ten food types have no variant mechanism at all.",
+   "Separate pack / bundle mechanism": "Virtual Pack — <code>bundleType=VIRTUALPACK</code>, <code>bundleComponentItemQuantity</code>, <code>bundle_component_gtin</code>.",
+   "What the vendor calls the distinction": "the shopper choosing on one page: <em>“display multiple versions of the same product on a single Walmart item page … vary by color, size, flavor, pattern, count.”</em>",
+   "Example": "● Toothpastes <code>variantAttributeNames.items.enum = [character, character_group, count, countPerPack, flavor, form, multipackQuantity, pieceCount, size]</code>"
+  },
+  "Google": {
+   "Count as an axis": "expressible (no closed set of axes; <code>variant_option.name</code> free); the multipack is an <b>offer attribute</b> beside it.",
+   "Separate pack / bundle mechanism": "<code>[multipack]</code> integer (required for multipacks in AU, BR, CZ, FR, DE, IT, JP, NL, ES, CH, UK, US) + <code>[is_bundle]</code> yes/no.",
+   "What the vendor calls the distinction": "inference: <code>item_group_id</code> renders a picker; <code>multipack</code> lets a comparison normalise price-per-unit — different jobs.",
+   "Example": "● <code>[multipack]</code> example value <code>6</code>; <code>[is_bundle]</code> <code>yes</code>"
+  },
+  "eBay": {
+   "Count as an axis": "<b>yes, measured 2026-09-21</b>: <code>Number in Pack</code> is <code>aspectEnabledForVariations: true</code> on 12 of 12 grocery leaves; <code>Unit Quantity</code> false on 12 of 12 (item-level).",
+   "Separate pack / bundle mechanism": "not collected.",
+   "What the vendor calls the distinction": "per-aspect eligibility: <em>“Not all aspects are allowed as a pivoting aspect.”</em>",
+   "Example": "● <code>Number in Pack {aspectDataType: STRING, aspectMode: FREE_TEXT, aspectRequired: false, aspectUsage: OPTIONAL, aspectEnabledForVariations: true}</code> (leaf 257998)"
+  },
+  "Shopify": {
+   "Count as an axis": "expressible — <code>ProductOption.name</code> free text; no count attribute on any of 9 food taxonomy nodes.",
+   "Separate pack / bundle mechanism": "not in the record (bundles are an app surface; not collected).",
+   "What the vendor calls the distinction": "the taxonomy carries pack <em>form</em>: <code>Package type</code> (1456: Bag, Bottle, Box, Can, Canister, Case, Dispenser, Flip-top, …) on Soda — live 2026-09-21.",
+   "Example": "● <code>Package type</code> 27 values on <code>fb-1-12 Soda</code>"
+  },
+  "Shopee": {
+   "Count as an axis": "expressible — <code>variation_id=0</code> + <code>variation_name</code>.",
+   "Separate pack / bundle mechanism": "kit items: <code>add_kit_item</code> / <code>update_kit_item</code> / <code>get_kit_item_info</code> with <code>item_setting.model_list[] {tier_index, model_sku, original_price, component_list[] {component_item_id, component_model_id, quantity, main_component}}</code> + its own <code>tier_variation_list[]</code>.",
+   "What the vendor calls the distinction": "a containment edge (<code>component_list</code>) — the kit may itself have variants; nothing makes a kit a sibling of its component.",
+   "Example": "● <code>component_list: [{component_item_id, component_model_id, quantity, main_component}]</code>"
+  },
+  "Tokopedia": {
+   "Count as an axis": "expressible — built-in id or custom name; max 3 sales attributes.",
+   "Separate pack / bundle mechanism": "<code>skus[].combined_skus[] {product_id Y, sku_id Y, sku_count: int Y}</code> — structured spec 2026-09-21.",
+   "What the vendor calls the distinction": "a bundle is composed on the SKU from other SKUs with counts; the axis stays <code>sales_attributes</code>.",
+   "Example": "● <code>\"combined_skus\": [{\"product_id\": \"1729582718312380123\", \"sku_id\": \"2729382476852921560\", \"sku_count\": 1}]</code> (vendor sample)"
+  },
+  "Square": {
+   "Count as an axis": "expressible — <code>item_options</code> with free-text values.",
+   "Separate pack / bundle mechanism": "not collected.",
+   "What the vendor calls the distinction": "—",
+   "Example": "—"
+  },
+  "Salesforce B2C": {
+   "Count as an axis": "expressible — variation attributes per master; no kind restriction retrieved.",
+   "Separate pack / bundle mechanism": "<code>product-set-products</code> and <code>bundled-products</code> elements on <code>Product</code> (schema only).",
+   "What the vendor calls the distinction": "—",
+   "Example": "● XSD: <code>classification-category, variations, images, product-set-products, bundled-products, custom-attributes</code>"
+  },
+  "Magento": {
+   "Count as an axis": "expressible — any global select attribute (<code>canUseAttribute()</code>).",
+   "Separate pack / bundle mechanism": "not collected in the record (Magento generally ships a <code>bundle</code> <code>type_id</code> — outside the thirteen records, not cited here).",
+   "What the vendor calls the distinction": "—",
+   "Example": "● <code>catalog_product_entity.type_id</code> is a static column (record); its value set is not enumerated in the record."
+  },
+  "WooCommerce": {
+   "Count as an axis": "expressible — one bool per attribute entry (<code>is_variation</code>).",
+   "Separate pack / bundle mechanism": "not collected in the record.",
+   "What the vendor calls the distinction": "—",
+   "Example": "—"
+  },
+  "commercetools": {
+   "Count as an axis": "expressible — any definition may carry <code>attributeConstraint: CombinationUnique</code>.",
+   "Separate pack / bundle mechanism": "not collected.",
+   "What the vendor calls the distinction": "—",
+   "Example": "—"
+  },
+  "Akeneo": {
+   "Count as an axis": "expressible, type-gated — a count fits <code>metric</code> or <code>simple select</code> (six vendor statements, three answers on the allowed types).",
+   "Separate pack / bundle mechanism": "not collected as a bundle mechanism; the record lists <code>rawQuantifiedAssociations</code> among the product's non-attribute columns (a quantified association), with no bundle semantics stated.",
+   "What the vendor calls the distinction": "—",
+   "Example": "● <code>pim_catalog_product.rawQuantifiedAssociations</code> — a column, no semantics stated (#11069 §1.7)"
+  }
+ }
+}

@@ -10,8 +10,12 @@ import json, re, html, glob, os
 
 S = os.path.dirname(os.path.abspath(__file__))
 V1 = open(os.path.join(S, 'step-zero-decisions-v1.html'), encoding='utf-8').read()
-DATA = {os.path.basename(p)[:-5]: json.load(open(p, encoding='utf-8')) for p in glob.glob(os.path.join(S, 'decisions', '*.json')) if not p.endswith('costs.json')}
+DATA = {os.path.basename(p)[:-5]: json.load(open(p, encoding='utf-8')) for p in glob.glob(os.path.join(S, 'decisions', '*.json')) if not p.endswith(('costs.json', 'instances.json'))}
 COSTS = json.load(open(os.path.join(S, 'decisions', 'costs.json'), encoding='utf-8'))
+MODELS = {os.path.basename(p)[:-5]: json.load(open(p, encoding='utf-8')) for p in glob.glob(os.path.join(S, 'decisions', 'models', '*.json'))}
+INSTANCES = json.load(open(os.path.join(S, 'decisions', 'instances.json'), encoding='utf-8'))
+PLAT_ANCHOR = {'Amazon':'Amazon','Shopify':'Shopify','eBay':'eBay','Google':'Google Merchant Center','Walmart':'Walmart Marketplace','Shopee':'Shopee','Magento':'Magento / Adobe Commerce','WooCommerce':'WooCommerce','Salesforce B2C':'Salesforce B2C','Tokopedia':'Tokopedia / TikTok Shop','Square':'Square','commercetools':'commercetools','Akeneo':'Akeneo PIM'}
+def anchor_id(name): return 'inst-' + re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
 SCORE = {'Amazon': 100, 'Shopify': 85, 'eBay': 80, 'Google': 70, 'Walmart': 65, 'Shopee': 60, 'Magento': 60,
          'WooCommerce': 55, 'Salesforce B2C': 50, 'Tokopedia': 45, 'Square': 40, 'commercetools': 35, 'Akeneo': 30}
@@ -93,6 +97,48 @@ details.shape summary .hint{font-weight:400;color:var(--ink-3);font-size:.82rem}
 .costs td:nth-child(2){width:26%}
 .costs td:last-child{color:var(--ink-2);font-size:.82rem;width:16%}
 .tablewrap-x{overflow-x:auto}
+.model{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;font-size:.84rem}
+.model .k{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding-top:3px;white-space:nowrap}
+.model .v{line-height:1.5}
+.model .v pre{margin:4px 0 2px;padding:8px 10px;background:var(--code-bg);border-radius:6px;font-size:.78rem;line-height:1.4;overflow-x:auto;white-space:pre}
+.model .v code{font-size:.9em}
+details.raw{margin-top:6px}
+details.raw summary{cursor:pointer;font-size:.76rem;color:var(--ink-3);list-style:none}
+details.raw summary::before{content:"▸ ";color:var(--ink-3)}
+details.raw[open] summary::before{content:"▾ "}
+details.raw .prose{font-size:.82rem;color:var(--ink-2);padding:6px 0 0;line-height:1.5}
+.shape-t td.x{min-width:420px}
+.pbl{display:grid;gap:10px;padding:12px 14px;border-top:1px solid var(--line)}
+.pb{border:1px solid var(--line);border-radius:8px;padding:10px 14px 12px;background:var(--surface)}
+.pb.gap{border-color:color-mix(in srgb,var(--ok) 50%,var(--line));background:color-mix(in srgb,var(--ok-soft) 30%,var(--surface))}
+.pbh{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.pbh .s{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-3);font-size:.85rem;min-width:28px}
+.pbh .p{font-weight:700;font-size:1rem}
+.pbh .tag{font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:5px;background:var(--surface-2);color:var(--ink-2)}
+.pbh .tag.rec{background:var(--accent-soft);color:var(--accent-ink)}
+.pbh .hint{font-size:.8rem;color:var(--ink-3)}
+.pbh .ci{margin-left:auto;font-size:.74rem;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.pbh .ci a{font-family:"IBM Plex Sans",system-ui,sans-serif}
+.model{grid-template-columns:190px minmax(0,1fr);min-width:0}
+.model .k{white-space:normal;line-height:1.3}
+.model .v{min-width:0;overflow-wrap:anywhere}
+.pb,.pbl,details.shape,.blk{min-width:0}
+.pbh{min-width:0}
+.pbh .ci{max-width:100%;overflow-wrap:anywhere}
+.exlegend{font-size:.76rem;color:var(--ink-3);padding:6px 14px 10px}
+.inst-grid{display:grid;gap:14px}
+.inst{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.inst .ih{padding:14px 20px 8px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.inst .ih .sc{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-3);font-size:.9rem}
+.inst .ih h3{font-size:1.15rem}
+.inst .ih .sub{color:var(--ink-2);font-size:.88rem;flex-basis:100%}
+.inst .route{padding:0 20px 8px;font-size:.82rem;color:var(--ink-3)}
+.inst pre{margin:0;padding:12px 20px;background:var(--code-bg);font-size:.78rem;line-height:1.45;overflow-x:auto;white-space:pre;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.inst .cut{padding:10px 20px;font-size:.82rem;color:var(--ink-2)}
+.inst .fm{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;padding:4px 20px 16px;font-size:.84rem}
+.inst .fm .k{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--accent-ink);padding-top:2px}
+.inst .fm .d{color:var(--ink-2)}
+@media (max-width:760px){ .model{grid-template-columns:1fr} .inst .fm{grid-template-columns:1fr} }
 @media (max-width:760px){ .ans td.a,.ans td.w{width:auto} .ans{display:block} .ans thead{display:none} .ans tr{display:grid;gap:4px;padding:8px 0;border-bottom:1px solid var(--line)} .ans td{border:0;padding:2px 0} }
 '''
 PRELUDE = PRELUDE.replace('</style>', EXTRA_CSS + '</style>', 1)
@@ -146,17 +192,25 @@ def reading_block(d):
 def shape_block(cid, d):
     opts = d['options']; recs = rec_keys(cid)
     rows = sorted(d['rows'], key=lambda r: -r['s'])
-    trs = []
+    keys = (MODELS.get(cid) or {}).get('keys', [])
+    blocks = []
     for r in rows:
         gap = GAP in (r.get('cite') or '')
         tag = f'<span class="tag{" rec" if r["o"] in recs else ""}">{html.escape(r["o"])}</span>'
-        hint = f'<span class="h">{html.escape(r["h"])}</span>' if r.get('h') else ''
+        hint = f'<span class="hint">{html.escape(r["h"])}</span>' if r.get('h') else ''
         mark = '<span class="gapmark">gap pass 21 Sep</span>' if gap else ''
-        trs.append(f'<tr class="{"gap" if gap else ""}"><td class="s">{r["s"]}</td><td class="p">{html.escape(r["p"])}{mark}{hint}</td><td class="o">{tag}</td><td class="x">{r["shape"]}</td><td class="ci">{html.escape(r.get("cite",""))}</td></tr>')
+        model = (MODELS.get(cid) or {}).get('rows', {}).get(r['p'])
+        if model:
+            kv = ''.join(f'<div class="k">{html.escape(k)}</div><div class="v">{model.get(k)}</div>' for k in keys if model.get(k))
+            body = f'<div class="model">{kv}</div><details class="raw"><summary>the record\'s words, unstructured</summary><div class="prose">{r["shape"]}</div></details>'
+        else:
+            body = f'<div class="prose">{r["shape"]}</div>'
+        inst_link = f'<a href="#{anchor_id(PLAT_ANCHOR.get(r["p"], r["p"]))}">real instance ↓</a>'
+        blocks.append(f'<div class="pb{" gap" if gap else ""}"><div class="pbh"><span class="s">{r["s"]}</span><span class="p">{html.escape(r["p"])}</span>{tag}{mark}{hint}<span class="ci">{html.escape(r.get("cite",""))} · {inst_link}</span></div>{body}</div>')
     legend = ' · '.join(f'<b>{html.escape(k)}</b> {html.escape(v)}' for k, v in opts.items())
-    return (f'<div class="blk"><details class="shape"><summary>Platform by platform — the exact shape, in the record\'s own words <span class="hint">13 rows · sorted by tried-and-tested score · rows in green were extended by the 2026-09-21 gap pass</span></summary>'
-            f'<div class="shape-wrap"><table class="shape-t"><thead><tr><th>Score</th><th>Platform</th><th>Answer</th><th>What it is — objects, fields, value types, caps</th><th>Cite</th></tr></thead><tbody>{"".join(trs)}</tbody></table></div>'
-            f'<p style="padding:8px 14px;font-size:.78rem;color:var(--ink-3)">Answer keys: {legend}</p></details></div>')
+    return (f'<div class="blk"><details class="shape"><summary>Platform by platform — the exact shape <span class="hint">13 platforms · sorted by tried-and-tested score · structured from the record; the record\'s own prose folded under each</span></summary>'
+            f'<div class="pbl">{"".join(blocks)}</div>'
+            f'<p class="exlegend">Examples: <b>●</b> verbatim from the record or a vendor sample · <b>◇</b> illustrative — built only from the documented field names and types, not a retrieved object. Answer keys: {legend}</p></details></div>')
 
 def costs_block(cid):
     rows = COSTS.get(cid)
@@ -198,6 +252,17 @@ PRELUDE = PRELUDE.replace('research of 2026-09-19 · page of 2026-09-21', 'resea
 PRELUDE = PRELUDE.replace('<p class="lede">Thirteen concept questions',
     '<p class="lede">Modelled on the Catalogue Decision Matrix: for every decision, the answer, who gives it (tried-and-tested score beside each name — Amazon 100 … Akeneo 30, the matrix\'s own scale), the caveats inside each group, then platform by platform the exact shape in the record\'s own words — objects, fields, value types, caps — and what each answer would cost us. Thirteen concept questions')
 
-OUT = PRELUDE + BODY2 + POSTLUDE
+def instances_section():
+    blocks = []
+    for name, d in sorted(INSTANCES.items(), key=lambda kv: -kv[1]['score']):
+        fm = ''.join(f'<span class="k">{html.escape(k)}</span><span class="d">{html.escape(v)}</span>' for k, v in d['fieldmap'])
+        blocks.append(f'<article class="inst" id="{anchor_id(name)}"><div class="ih"><span class="sc">{d["score"]}</span><h3>{html.escape(name)}</h3><span class="sub">{html.escape(d["subtitle"])}</span></div>'
+                      f'<p class="route">{html.escape(d["route"])}</p><pre>{html.escape(d["instance"])}</pre><p class="cut">{html.escape(d["cut"])}</p><div class="fm">{fm}</div></article>')
+    return ('<section class="group" id="grp-i"><div class="group-head"><h2>One real instance per platform</h2>'
+            '<p>Verbatim from the thirteen records as the Catalogue Decision Matrix printed them (extracted 2026-09-09, sorted by the tried-and-tested score): an object the platform itself emitted or published — a live capture where one exists, otherwise the vendor\'s own sample. Nothing constructed; elisions marked; what is missing stated. The field map says what each key is in that platform\'s model. Every platform row above links here.</p></div>'
+            f'<div class="inst-grid">{"".join(blocks)}</div></section>')
+
+PRELUDE = PRELUDE.replace('<a href="#grp-l">Lock wording</a>', '<a href="#grp-l">Lock wording</a><a href="#grp-i">Instances</a>')
+OUT = PRELUDE + BODY2 + instances_section() + POSTLUDE
 open(os.path.join(S, 'step-zero-decisions-v2.html'), 'w', encoding='utf-8').write(OUT)
 print('wrote', len(OUT), 'bytes;', len(DATA), 'cards with data;', sum(len(d['rows']) for d in DATA.values()), 'platform rows')

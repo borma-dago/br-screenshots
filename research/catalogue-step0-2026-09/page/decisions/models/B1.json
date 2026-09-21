@@ -1,0 +1,88 @@
+{
+ "keys": [
+  "Node object",
+  "Fields that describe leafness / kind",
+  "Kinds of node",
+  "Owns a schema?"
+ ],
+ "rows": {
+  "Amazon": {
+   "Node object": "two objects: <code>ProductType</code> (the attribute owner; <code>required: [marketplaceIds, name, displayName]</code>, no parent, flat list) and <code>BrowseNode</code> (598,957 ids across 24 locales; US 31,354).",
+   "Fields that describe leafness / kind": "none on the type (flat); the browse tree has parent/child.",
+   "Kinds of node": "one kind in each object.",
+   "Owns a schema?": "the <code>ProductType</code> does; the browse node does not (but the type's schema constrains legal browse values)."
+  },
+  "Shopify": {
+   "Node object": "<code>TaxonomyCategory</code> — 11 fields: <code>id</code>, <code>name</code>, <code>fullName</code>, <code>level</code>, <code>parentId</code>, <code>ancestorIds</code>, <code>childrenIds</code>, <code>isRoot</code>, <code>isLeaf</code>, <code>isArchived</code>, <code>attributes</code>.",
+   "Fields that describe leafness / kind": "<code>isRoot Boolean!</code>, <code>isLeaf Boolean!</code>, <code>isArchived Boolean!</code> — derived.",
+   "Kinds of node": "one.",
+   "Owns a schema?": "yes at every level (only 152 of 14,606 have none; median 6 attributes)."
+  },
+  "Google": {
+   "Node object": "none — <em>“every line is <code>id - path</code>”</em> in a text file (5,595 nodes, depth 7).",
+   "Fields that describe leafness / kind": "none.",
+   "Kinds of node": "one, trivially.",
+   "Owns a schema?": "no."
+  },
+  "eBay": {
+   "Node object": "<code>CategoryTreeNode {category {categoryId, categoryName}, categoryTreeNodeLevel, leafCategoryTreeNode, childCategoryTreeNodes[], parentCategoryTreeNodeHref}</code>.",
+   "Fields that describe leafness / kind": "<code>leafCategoryTreeNode</code> — true on 15,111, absent on 1,994; <code>childCategoryTreeNodes</code> on exactly those 1,994.",
+   "Kinds of node": "one (leafness derived); leaf-only enforced (B2).",
+   "Owns a schema?": "leaves do (aspects); gap pass: Food &amp; Beverages subtree = 122 leaves."
+  },
+  "Walmart": {
+   "Node object": "none — 6,967 product-type keys in one flat map; the workbook taxonomy (24 / 77 / 461) is not in the feed.",
+   "Fields that describe leafness / kind": "none.",
+   "Kinds of node": "no tree.",
+   "Owns a schema?": "the product type does."
+  },
+  "Shopee": {
+   "Node object": "a category with <code>category_id</code>, <code>parent_category_id</code>, <code>original_category_name</code>, <code>display_category_name</code>, <code>has_children</code>.",
+   "Fields that describe leafness / kind": "<code>has_children = false</code> means the last level.",
+   "Kinds of node": "one; leaf-only enforced.",
+   "Owns a schema?": "leaves do (<code>get_attribute_tree</code>)."
+  },
+  "Tokopedia": {
+   "Node object": "Era A: <code>Category {name, id, child []object}</code>. Era B: <code>Category {id, parent_id, local_name: string (\"Home Supplies\"), is_leaf: bool, permission_statuses: []string}</code>.",
+   "Fields that describe leafness / kind": "<code>is_leaf</code>; <code>permission_statuses</code> (<code>INVITE_ONLY</code> needs a Qualification Center application) — a gate on who may list, not a kind.",
+   "Kinds of node": "one; Era B leaf-only enforced.",
+   "Owns a schema?": "leaves do (Era B <code>…/categories/{id}/attributes</code>)."
+  },
+  "Square": {
+   "Node object": "<code>CatalogCategory {name, category_type, parent_category, is_top_level, path_to_root, root_category, online_visibility, …}</code>.",
+   "Fields that describe leafness / kind": "<code>CatalogCategoryType ∈ {REGULAR_CATEGORY, MENU_CATEGORY, KITCHEN_CATEGORY}</code> — function, not folder/type.",
+   "Kinds of node": "three, by function (the only platform with kinds).",
+   "Owns a schema?": "no (no per-category attribute set)."
+  },
+  "Salesforce B2C": {
+   "Node object": "one <code>Category</code> class with three edges per assignment: classification 0..1, primary 0..1 per catalog, assignments 0..N.",
+   "Fields that describe leafness / kind": "roles per assignment, not kinds per node.",
+   "Kinds of node": "one.",
+   "Owns a schema?": "the classification category does (attribute groups), and inherits from ancestors."
+  },
+  "Akeneo": {
+   "Node object": "<code>Category {code, parent, labels, …}</code> — <code>attributes</code> absent (<code>grep -c attributes Category.orm.yml</code> = 0).",
+   "Fields that describe leafness / kind": "none per node; a per-<b>tree</b> <code>only_leaves</code> setting.",
+   "Kinds of node": "one.",
+   "Owns a schema?": "no — the Family does."
+  },
+  "WooCommerce": {
+   "Node object": "a <code>product_cat</code> term — 9 properties, none an attribute set.",
+   "Fields that describe leafness / kind": "none (parent via <code>wp_term_taxonomy.parent</code>).",
+   "Kinds of node": "one.",
+   "Owns a schema?": "no."
+  },
+  "commercetools": {
+   "Node object": "<code>Category {id, key, name, slug, parent, ancestors, orderHint, custom?, …}</code>.",
+   "Fields that describe leafness / kind": "none.",
+   "Kinds of node": "one.",
+   "Owns a schema?": "no — <code>ProductType</code> is flat and separate."
+  },
+  "Magento": {
+   "Node object": "<code>catalog_category_entity</code> (EAV) with per-node <code>is_anchor</code>, <code>custom_use_parent_settings</code>, and its <b>own</b> <code>attribute_set_id</code> (describing the category record, not its products).",
+   "Fields that describe leafness / kind": "per-node display flags (<code>is_anchor</code>, <code>custom_use_parent_settings</code>) — not “accepts products”; no kind column in the record.",
+   "Kinds of node": "one.",
+   "Owns a schema?": "no — the product's attribute set does (0 of 63 tables join a category to a product attribute)."
+  }
+ }
+}

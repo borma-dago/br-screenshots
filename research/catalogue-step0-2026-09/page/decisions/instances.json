@@ -1,0 +1,475 @@
+{
+ "Amazon": {
+  "score": 100,
+  "subtitle": "CatalogItem (SP-API), ASIN B07N4M94X4",
+  "route": "Route. Vendor sample — Amazon's own OpenAPI model catalogItems_2022-04-01.json, the 200 example for GET /items/{asin}; byte-identical to the sandbox static response. Corroborated live at amazon.com/dp/B07N4M94X4. (#10976 §2c [E-10])",
+  "instance": "\"application/json\": {\n \"asin\": \"B07N4M94X4\",\n …\n \"identifiers\": [ { \"marketplaceId\": \"ATVPDKIKX0DER\", \"identifiers\": [\n { \"identifier\": \"0887276302195\", \"identifierType\": \"EAN\" },\n { \"identifier\": \"00887276302195\", \"identifierType\": \"GTIN\" },\n { \"identifier\": \"887276302195\", \"identifierType\": \"UPC\" } ] } ],\n \"productTypes\": [ { \"marketplaceId\": \"ATVPDKIKX0DER\", \"productType\": \"TELEVISION\" } ],\n \"summaries\": [ {\n \"marketplaceId\": \"ATVPDKIKX0DER\",\n \"brand\": \"SAMSUNG\",\n \"browseClassification\": { \"displayName\": \"QLED TVs\", \"classificationId\": \"21489946011\" },\n \"color\": \"Black\",\n \"itemClassification\": \"BASE_PRODUCT\",\n \"itemName\": \"Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility\",\n \"modelNumber\": \"QN82Q60RAFXZA\",\n \"partNumber\": \"QN82Q60RAFXZA\",\n \"size\": \"82-Inch\",\n … } ],\n \"relationships\": [ { \"marketplaceId\": \"ATVPDKIKX0DER\", \"relationships\": [ {\n \"type\": \"VARIATION\",\n \"parentAsins\": [ \"B08J7TQ9FL\" ],\n \"variationTheme\": { \"attributes\": [ \"color\", \"size\" ], \"theme\": \"SIZE_NAME/COLOR_NAME\" } } ] } ],\n …\n}",
+  "cut": "What is cut or missing. attributes (~500-line per-type bag), classifications (4-level browse chain), dimensions, images, salesRanks, vendorDetails, and from summaries: manufacturer, packageQuantity, style, websiteDisplayGroup. Price and seller SKU are not on this object at all — they live on the seller-side ListingsItem.",
+  "fieldmap": [
+   [
+    "asin",
+    "identifier — the catalog PK, the only required field"
+   ],
+   [
+    "identifiers[].identifiers[]",
+    "external GTIN family (EAN / GTIN / UPC here), per marketplace"
+   ],
+   [
+    "productTypes[].productType",
+    "the type, TELEVISION — selects the attribute schema; one per marketplace"
+   ],
+   [
+    "relationships[].parentAsins",
+    "the family link: this ASIN is a child pointing up at its parent B08J7TQ9FL"
+   ],
+   [
+    "relationships[].variationTheme",
+    "the axis: theme token SIZE_NAME/COLOR_NAME plus the resolved attribute names color, size"
+   ],
+   [
+    "summaries[].itemClassification",
+    "role, BASE_PRODUCT; the parent-side value VARIATION_PARENT was never retrieved as an instance"
+   ],
+   [
+    "summaries[].browseClassification",
+    "the browse category, a scalar beside the 0..N classifications"
+   ]
+  ]
+ },
+ "Shopify": {
+  "score": 85,
+  "subtitle": "Product 1974208299030 with its default variant",
+  "route": "Route. Live GraphQL response, unauthenticated, from Shopify's own proxy store (shopify.dev/admin-graphql-direct-proxy/2026-07). (#11011 §2c [R-30])",
+  "instance": "{\"id\":\"gid://shopify/Product/1974208299030\",\"title\":\"Rough Snowflake Camisole\",\n \"handle\":\"rough-snowflake-camisole\",\"hasOnlyDefaultVariant\":true,\n \"combinedListingRole\":null,\"variantsCount\":{\"count\":1},\n \"options\":[{\"name\":\"Title\",\"values\":[\"Default Title\"]}],\n \"variants\":{\"nodes\":[{\"id\":\"gid://shopify/ProductVariant/19523123216406\",\n \"title\":\"Default Title\",\"sku\":\"\",\n \"selectedOptions\":[{\"name\":\"Title\",\"value\":\"Default Title\"}]}]}}",
+  "cut": "What is cut or missing. Nothing — printed whole. This is a standalone product, which is why it carries the synthesized Title / Default Title option and variant: the record notes \"There is no 'no variant' state.\" category, price, barcode and inventoryItem appear only in separate dev-store fragments (§2c′ [R-82], [R-85]).",
+  "fieldmap": [
+   [
+    "id (Product)",
+    "the container identifier; the Product is the family row. productType / vendor / tags are free strings; the taxonomy link is category (absent here)"
+   ],
+   [
+    "options[]",
+    "the axis (ProductOption, name + values); 3 per product on the shops measured"
+   ],
+   [
+    "hasOnlyDefaultVariant / variantsCount",
+    "the flag for the synthesized single-cell case, and the grid size"
+   ],
+   [
+    "variants.nodes[].id",
+    "the sellable leaf (ProductVariant), one per combination actually created"
+   ],
+   [
+    "variants.nodes[].selectedOptions",
+    "the binding leaf → axis, the variant's coordinate"
+   ],
+   [
+    "variants.nodes[].sku",
+    "merchant SKU, here the empty string, not null"
+   ],
+   [
+    "combinedListingRole",
+    "parent / child marker for the Plus-only CombinedListing; null = neither"
+   ]
+  ]
+ },
+ "eBay": {
+  "score": 80,
+  "subtitle": "Browse Item v1|110590192388|410111412258 and its item group",
+  "route": "Route. Live GET on the sandbox Browse API, application token: getItemsByItemGroup?item_group_id=110590192388; raw 25,104 B; printed by jq. (#11045 §2c [R-47])",
+  "instance": "[{\"description\":\"High-quality cotton t-shirt available in multiple colors and sizes.\",\n \"itemIds\":[\"v1|110590192388|410111412258\",\"v1|110590192388|410111412259\"]}]\n\n{\"itemId\":\"v1|110590192388|410111412258\",\"title\":\"Cotton T-Shirt 1786672804899\",\n \"primaryItemGroup\":{\"itemGroupId\":\"110590192388\",\"itemGroupType\":\"SELLER_DEFINED_VARIATIONS\",\n \"itemGroupHref\":\"https://api.sandbox.ebay.com/buy/browse/v1/item/get_items_by_item_group?item_group_id=110590192388\",\n \"itemGroupTitle\":\"Cotton T-Shirt 1786672804899\",\"itemGroupImage\":{\"imageUrl\":\"https://example.com/blue-shirt.jpg\"}},\n \"localizedAspects\":[{\"type\":\"STRING\",\"name\":\"Color\",\"value\":\"Blue\"},{\"type\":\"STRING\",\"name\":\"Size\",\"value\":\"S\"},\n {\"type\":\"STRING\",\"name\":\"Pattern\",\"value\":\"Solid\"},{\"type\":\"STRING\",\"name\":\"Material\",\"value\":\"Cotton\"},\n {\"type\":\"STRING\",\"name\":\"Brand\",\"value\":\"Unbranded\"},{\"type\":\"STRING\",\"name\":\"Department\",\"value\":\"Unisex Adults\"},\n {\"type\":\"STRING\",\"name\":\"Size Type\",\"value\":\"Regular\"}],\n \"price\":{\"value\":\"19.99\",\"currency\":\"USD\"},\n \"categoryId\":\"15687\",\"categoryPath\":\"Clothing, Shoes & Accessories|Men|Men's Clothing|Shirts|T-Shirts\"}",
+  "cut": "What is cut or missing. The record's own projection keeps 7 of the member's 36 keys (brand, condition, seller, shippingOptions, categoryIdPath… not printed). The second member differs on Size = M only. No InventoryItemGroup (seller-side) was ever captured: the 20-SKU variesBy example in the record is a vendor doc sample with eBay's own * masks, and every seller write was refused 403 for want of a user token.",
+  "fieldmap": [
+   [
+    "itemId",
+    "identifier of the buy-side listing; middle segment is the group id, last the variation"
+   ],
+   [
+    "primaryItemGroup.itemGroupId",
+    "the family link, eBay-minted; addressable via itemGroupHref"
+   ],
+   [
+    "primaryItemGroup.itemGroupType",
+    "SELLER_DEFINED_VARIATIONS, the only live value of the enum in the record"
+   ],
+   [
+    "localizedAspects[]",
+    "axis and non-axis attributes flattened together, all STRING; Color and Size vary, the other five are shared — the buy side does not mark which is which"
+   ],
+   [
+    "price",
+    "per member"
+   ],
+   [
+    "categoryId / categoryPath",
+    "the leaf category that gates the aspects, with its human path"
+   ],
+   [
+    "SKU",
+    "absent on the buy side"
+   ]
+  ]
+ },
+ "Google Merchant Center": {
+  "score": 70,
+  "subtitle": "Processed Product id~ID~cp0905-u3-flavor-mango",
+  "route": "Route. Live response from the staging account's research data source: GET …/products/v1/accounts/5310255286/products/id~ID~cp0905-u3-flavor-mango, 2026-09-05, read 38 min after insert; 1,219 B, printed whole. (#11013 §2 [F-37])",
+  "instance": "{\n \"name\": \"accounts/5310255286/products/id~ID~cp0905-u3-flavor-mango\",\n \"offerId\": \"cp0905-u3-flavor-mango\",\n \"contentLanguage\": \"id\",\n \"feedLabel\": \"ID\",\n \"dataSource\": \"accounts/5310255286/dataSources/10721231878\",\n \"productStatus\": {\n \"creationDate\": \"2026-09-05T08:37:28.471968Z\",\n \"lastUpdateDate\": \"2026-09-05T08:37:28.471968Z\",\n \"googleExpirationDate\": \"2026-10-05T08:37:28.471968Z\"\n },\n \"productAttributes\": {\n \"title\": \"cp0905 u3 flavor - mango\",\n \"description\": \"Catalogue research probe for issue 11013 (cp0905). Not for sale.\",\n \"link\": \"https://staging.bormadago.com/p/cp0905-u3-flavor-mango\",\n \"imageLink\": \"https://staging.bormadago.com/i/cp0905-u3-flavor-mango.jpg\",\n \"availability\": \"IN_STOCK\",\n \"condition\": \"NEW\",\n \"itemGroupId\": \"cp0905-grp-flavor\",\n \"price\": { \"amountMicros\": \"10000000\", \"currencyCode\": \"IDR\" },\n \"excludedDestinations\": [ \"SHOPPING_ADS\", \"FREE_LISTINGS\" ],\n \"itemGroupTitle\": \"cp0905 u3 flavor group\",\n \"variantOptions\": [ { \"name\": \"flavor\", \"value\": \"mango\" } ]\n },\n \"base64EncodedName\": \"accounts/5310255286/products/aWR-SUR-Y3AwOTA1LXUzLWZsYXZvci1tYW5nbw\"\n}",
+  "cut": "What is cut or missing. Nothing. This probe was single-purpose, so productTypes, googleProductCategory and gtins are not on it; they appear on other probes in the record (productTypes ten values on cp0905-rev-g2b-a-p11; googleProductCategory \"371\" on the c1 probe).",
+  "fieldmap": [
+   [
+    "offerId",
+    "the merchant SKU; one feed row = one product; identity is contentLanguage ~ feedLabel ~ offerId"
+   ],
+   [
+    "productAttributes",
+    "the one global attribute bag (145 properties); there is no per-category schema"
+   ],
+   [
+    "itemGroupId",
+    "the family link — a plain string shared by siblings, and the only thing that makes this a variant rather than a standalone"
+   ],
+   [
+    "variantOptions[]",
+    "the axis, free-form name (flavor was accepted and persisted); 0..30 per product"
+   ],
+   [
+    "itemGroupTitle",
+    "the group's title, carried on every member — there is no parent row to hold it"
+   ],
+   [
+    "price",
+    "micros as a string"
+   ],
+   [
+    "productStatus",
+    "Google's processing metadata; itemLevelIssues never appeared on any product of the pass"
+   ]
+  ]
+ },
+ "Walmart Marketplace": {
+  "score": 65,
+  "subtitle": "MP_ITEM feed with a two-member variant group",
+  "route": "Route. Vendor sample from the developer-portal guide \"setting up multiple variants of an item\" [R-13]; every unauthenticated read of /v3/items returned 401. (#11046 §2c)",
+  "instance": "{ \"MPItemFeedHeader\": { \"businessUnit\": \"WALMART_US\", \"locale\": \"en\", \"version\": \"2.0.20230221-12_22_32-api\" },\n \"MPItem\": [\n { \"Orderable\": { \"productId\": \"123456\", \"sku\": \"ABC123\" },\n \"Visible\": { \"Toothpastes\": { \"productName\": \"Colgate Crest Toothpaste\", \"flavor\": \"Peppermint\",\n \"variantGroupId\": \"001960968586AX6\", \"isPrimaryVariant\": \"Yes\",\n \"variantAttributeNames\": [ \"flavor\" ] } } },\n { \"Orderable\": { \"productId\": \"123456\", \"sku\": \"ABC1245\" },\n \"Visible\": { \"Toothpastes\": { \"productName\": \"Colgate Crest Toothpaste\", \"flavor\": \"Spearmint\",\n \"variantGroupId\": \"001960968586AX6\", \"isPrimaryVariant\": \"No\",\n \"variantAttributeNames\": [ \"flavor\" ] } } } ] }",
+  "cut": "What is cut or missing. Nothing — this is the whole block. It is partial on the offer side: no price and no productIdentifiers, both of which the current spec requires; and its version stamp matches no published spec build (the record flags both).",
+  "fieldmap": [
+   [
+    "MPItem[]",
+    "one complete member per row; the schema is required [\"Visible\",\"Orderable\"] with additionalProperties: false — there is no group node in the envelope"
+   ],
+   [
+    "Orderable.sku",
+    "the seller SKU; price and inventory live only here, on the member"
+   ],
+   [
+    "Visible.Toothpastes",
+    "the single key naming the product type; there is no category field in the feed"
+   ],
+   [
+    "variantGroupId",
+    "the family link — a string repeated identically on every member, no group object"
+   ],
+   [
+    "variantAttributeNames",
+    "the axis list, from the type's closed enum, identical across members"
+   ],
+   [
+    "flavor",
+    "the axis value, inline on the member, unique within the group"
+   ],
+   [
+    "isPrimaryVariant",
+    "Yes on exactly one member — a member, not a container"
+   ]
+  ]
+ },
+ "Shopee": {
+  "score": 60,
+  "subtitle": "batch_add_item item with tier variations and models; attribute_list from a second sample",
+  "route": "Route. Vendor doc samples only — the only request sample of v2.product.batch_add_item (api 3279) [R-15], and Guide 211 Example 6 for attribute_list [R-36]. No live call was possible (H1). (#11047 §2c)",
+  "instance": "\"item_list\": [ { \"category_id\": 100017, \"item_name\": \"Example Item 1\", …\n \"tier_variation\": [ { \"name\": \"Color\", \"option_list\": [ { \"option\": \"Red\" }, { \"option\": \"Blue\" } ] } ],\n \"model_list\": [ { \"model_sku\": \"SKU-001-RED\", \"original_price\": 12.34,\n \"seller_stock\": [ { \"location_id\": \"SGZ\", \"stock\": 100 } ],\n \"tier_index\": [ 0 ] }, … ] }, … ]\n\n\"attribute_list\": [ { \"attribute_id\": 100061,\n \"attribute_value_list\": [ { \"value_id\": 0, \"original_value_name\": \"customized name\" },\n { \"value_id\": 678 } ] } ]",
+  "cut": "What is cut or missing. The … are the record's own elisions of a longer sample. gtin_code and price_info appear in no sample anywhere in the corpus. The tier_variation form shown is the deprecated one; the current form is standardise_tier_variation[] with variation_id / variation_option_id.",
+  "fieldmap": [
+   [
+    "category_id",
+    "the one leaf category, required 1..1; it alone decides attributes and the axis catalogue"
+   ],
+   [
+    "attribute_list[]",
+    "category-scoped attributes; value_id is a shared catalogue row, value_id: 0 the custom sentinel that makes original_value_name required"
+   ],
+   [
+    "tier_variation[]",
+    "the axis and its options — free text here; 2 axes maximum"
+   ],
+   [
+    "model_list[]",
+    "the variants and the sellable unit; the item itself is the family, there is no separate family row"
+   ],
+   [
+    "tier_index",
+    "axis binding: option indices, one per axis"
+   ],
+   [
+    "model_sku / original_price / seller_stock",
+    "SKU, price and stock, reachable only through the model once the item has models"
+   ]
+  ]
+ },
+ "Magento / Adobe Commerce": {
+  "score": 60,
+  "subtitle": "Configurable container MS-Champ (id 2078) and simple child MS-Champ-S (2079)",
+  "route": "Route. Vendor-published emitted REST responses in Adobe's configurable-product tutorial [R-70]–[R-72] (payload dated 2017-11-29); no live instance was stood up. (#11082 Companion C §2c rows 10–19)",
+  "instance": "// container — catalog_product_entity\n{\"id\": 2078, \"sku\": \"MS-Champ\", \"name\": \"Champ Tee\", \"attribute_set_id\": 9, \"price\": 0, \"visibility\": 4, \"type_id\": \"configurable\", \"created_at\": \"2017-11-29 19:57:20\", …}\n// category_links on 2078 — catalog_category_product\n[{\"position\": 0, \"category_id\": \"11\"}, {\"position\": 1, \"category_id\": \"12\"}, {\"position\": 2, \"category_id\": \"16\"}]\n// custom_attributes on the container — catalog_product_entity_int\n{\"attribute_code\": \"color\", \"value\": \"52\"}, {\"size\", \"91\"}, {\"material\", \"148\"}, {\"pattern\", \"196\"}\n// the axis — POST /V1/configurable-products/:sku/options\n{\"id\": 338, \"attribute_id\": \"141\", \"label\": \"Size\", \"position\": 0, \"values\": [{\"value_index\": 168}, {\"value_index\": 169}, {\"value_index\": 170}], \"product_id\": 2078}\n// the family link — catalog_product_super_link\n\"configurable_product_links\": [2079, 2080, 2081]\n// stock on the container\n{\"item_id\": 2078, \"product_id\": 2078, \"stock_id\": 1, \"qty\": 0, \"is_in_stock\": false, \"max_sale_qty\": 10000, …}\n\n// child — same table\n{\"id\": 2079, \"sku\": \"MS-Champ-S\", \"attribute_set_id\": 9, \"price\": 25, \"visibility\": 1, \"type_id\": \"simple\", …}\n// child stock\n{\"qty\": 10, \"is_in_stock\": true}",
+  "cut": "What is cut or missing. The record prints only one-line fragments with its own …; no whole body and no custom_attributes on the child. Rows 15 and 17 are REST payloads mapped onto catalog_product_super_attribute / super_link; no raw DB row is printed.",
+  "fieldmap": [
+   [
+    "type_id",
+    "the family role in the same table: configurable = container, simple = variant"
+   ],
+   [
+    "sku",
+    "identifier on both rows, varchar(64) NOT NULL"
+   ],
+   [
+    "attribute_set_id",
+    "the EAV attribute set (9 = Top), 1..1, identical on parent and child"
+   ],
+   [
+    "configurable_product_options[].attribute_id + values[].value_index",
+    "the axis: one super-attribute row per axis, values are shared option ids"
+   ],
+   [
+    "configurable_product_links[]",
+    "the family link, materialised as super-link rows with FKs both ways into the product table"
+   ],
+   [
+    "price / visibility",
+    "container emits price 0 and visibility 4 (Catalog, Search); child price 25 and visibility 1 (Not Visible Individually)"
+   ],
+   [
+    "category_links[]",
+    "browse placement, M:N, on the container"
+   ]
+  ]
+ },
+ "WooCommerce": {
+  "score": 55,
+  "subtitle": "Variable product 11 Hoodie and variation 27",
+  "route": "Route. Live REST v3 responses from a WooCommerce 11.0.1 install: GET /wc/v3/products/11 (6,626 B) and /products/11/variations/27 (2,385 B) [R-72]. (#11080 §2c; full bodies in the record's cited retrieval)",
+  "instance": "// parent — GET /wp-json/wc/v3/products/11\n\"id\":11\n\"name\":\"Hoodie\"\n\"type\":\"variable\"\n\"sku\":\"woo-hoodie\"\n\"global_unique_id\":\"01234567890128\"\n\"price\":\"42\"\n\"regular_price\":\"\"\n\"manage_stock\":true\n\"stock_quantity\":7\n\"parent_id\":0\n\"categories\":[{\"id\":23,\"name\":\"Hoodies\",\"slug\":\"hoodies\"}]\n\"attributes\":[{\"id\":1,\"name\":\"color\",\"slug\":\"pa_color\",\"position\":0,\"visible\":true,\"variation\":true,\"options\":[\"Blue\",\"Green\",\"Red\"]},\n {\"id\":0,\"name\":\"Logo\",\"slug\":\"Logo\",\"position\":1,\"visible\":true,\"variation\":true,\"options\":[\"Yes\",\"No\"]}]\n\"default_attributes\":[]\n\"variations\":[34,27,28,29]\n\n// variation — GET /wp-json/wc/v3/products/11/variations/27\n\"id\":27\n\"type\":\"variation\"\n\"parent_id\":11\n\"name\":\"Red, No\"\n\"permalink\":\"http:\\/\\/localhost:8089\\/product\\/hoodie\\/?attribute_pa_color=red&attribute_logo=No\"\n\"sku\":\"woo-hoodie-red\"\n\"global_unique_id\":\"\"\n\"price\":\"42\"\n\"regular_price\":\"45\"\n\"sale_price\":\"42\"\n\"manage_stock\":\"parent\"\n\"stock_quantity\":7\n\"attributes\":[{\"id\":1,\"name\":\"color\",\"slug\":\"pa_color\",\"option\":\"Red\"},{\"id\":0,\"name\":\"Logo\",\"slug\":\"logo\",\"option\":\"No\"}]",
+  "cut": "What is cut or missing. Dates, descriptions, images, downloads, tax/shipping/weight/dimensions, ratings, upsell/cross-sell/related ids, brands/tags, meta_data, price_html, _links. Keys are shown as the file writes them (\\/ escaping).",
+  "fieldmap": [
+   [
+    "type: \"variable\"",
+    "the type, a product_type taxonomy term on the wp_posts row, not a column"
+   ],
+   [
+    "variations[] / parent_id",
+    "the family link both ways, stored once as wp_posts.post_parent on the child"
+   ],
+   [
+    "attributes[].variation: true",
+    "the axis flag, per (product, attribute); on the variation, attributes[].option is the copied axis value"
+   ],
+   [
+    "attributes[].id",
+    "1 = the global pa_color definition; 0 = product-local (Logo)"
+   ],
+   [
+    "sku",
+    "independently valued on parent and child"
+   ],
+   [
+    "price",
+    "parent \"42\" is derived — sync_price() deletes the parent's own price and rewrites it from the children, so the parent's regular_price is empty"
+   ],
+   [
+    "manage_stock: \"parent\"",
+    "stock inherited by an explicit sentinel"
+   ],
+   [
+    "categories",
+    "N:M product_cat terms, on the container only"
+   ]
+  ]
+ },
+ "Salesforce B2C": {
+  "score": 50,
+  "subtitle": "Master product apple-ipod-shuffle with its variation attributes and variants",
+  "route": "Route. Vendor doc example inside the Shopper Products OpenAPI spec 1.12.0 (GetProductResponseExample); the record has no retrieved instance. (#11050 §2c [R-19])",
+  "instance": "id: apple-ipod-shuffle\ntype: {master: true}\nmaster: {masterId: apple-ipod-shuffle, orderable: false, price: 45.99}\nprice: 45.99 priceMax: 69 primaryCategoryId: electronics-digital-media-players\nvariants: # 9 in total\n - {orderable: true, price: 45.99, productId: apple-ipod-shuffle-silver-1g,\n variationValues: {color: Silver, memorySize: 1 GB}}\nvariationAttributes:\n - id: color name: Color values: [Silver, Blue, Green, Red, Fuscia]\n - id: memorySize name: Memory Size values: [{name: 1 GB, orderable: true, value: 1 GB},\n {name: 2 GB, orderable: true, value: 2 GB}]",
+  "cut": "What is cut or missing. 8 of the 9 variants, by the record; color values printed as bare labels while memorySize keeps {name, orderable, value}. Classification category and assignments are not on this example — they appear on a different product in the admin-projection example [R-17].",
+  "fieldmap": [
+   [
+    "id / master.masterId",
+    "identifier of the family container; the same schema calls it \"The ID (SKU) of the master product\" and says the master \"Doesn't have a SKU\" — the record's contradiction C3"
+   ],
+   [
+    "type: {master: true}",
+    "the role, a boolean-flag set rather than an enum"
+   ],
+   [
+    "variants[].productId",
+    "the orderable row's identifier; variants[] is the family link master → child"
+   ],
+   [
+    "variants[].variationValues",
+    "the child's axis selection, a flat {attributeId: value} map"
+   ],
+   [
+    "variationAttributes[]",
+    "the axis definitions on the master with their allowed labels; 1 GB is one opaque string"
+   ],
+   [
+    "price / priceMax",
+    "derived min and max on the non-buyable master; variants[].price is the child's own"
+   ],
+   [
+    "primaryCategoryId",
+    "the browse primary; the classification category is a different edge, absent here"
+   ]
+  ]
+ },
+ "Tokopedia / TikTok Shop": {
+  "score": 45,
+  "subtitle": "Era B: one SKU element of Create Product v202309, with the response; Era A: live PDP family 1372485",
+  "route": "Route. Era B: the vendor's own published request_body in the schema file for create-product-202309 [R-1] — no live call (H1). Era A: live capture of the production product page, 2026-09-01 [R-27]. (#11048 §2c)",
+  "instance": "// Era B — TikTok Shop, one skus[] element of the Create Product request\n{\"sales_attributes\":[{\"id\":\"100089\",\"value_id\":\"1729592969712207000\",\"value_name\":\"Red\",\n \"sku_img\":{\"uri\":\"tos-maliva-i-o3syd03w52-us/c668cdf70b7f483c94dbe\"},\"name\":\"Color\",\n \"supplementary_sku_images\":[{\"uri\":\"...\"}]}],\n \"inventory\":[{\"warehouse_id\":\"7068517275539719942\",\"quantity\":999,\"backorder_quantity\":888,\"handling_time\":5}],\n \"seller_sku\":\"Color-Red-XM001\",\n \"price\":{\"amount\":\"1.21\",\"currency\":\"USD\\n\",\"sale_price\":\"1.21\",\"starting_bid_price\":\"2.22\"},\n \"identifier_code\":{\"code\":\"10000000000000\",\"type\":\"GTIN\"},\n \"sku_dimensions\":{\"length\":\"10\",\"width\":\"10\",\"height\":\"10\",\"unit\":\"CENTIMETER\"},\n \"sku_weight\":{\"value\":\"1,32\",\"unit\":\"KILOGRAM\"}}\n// Era B — the response, showing the product ↔ SKU container\n{\"code\":0,\"data\":{\"product_id\":\"1729592969712207008\",\"skus\":[{\"id\":\"1729592969712207012\",\n \"seller_sku\":\"Color-Red-XM001\",\"sales_attributes\":[{\"id\":\"100000\",\"value_id\":\"1729592969712207123\"}],\n \"external_sku_id\":\"1729592969712207234\"}]},\"message\":\"Success\"}\n\n// Era A — legacy Tokopedia, live PDP of product 1372485 (three fragments of one page)\n{\"errorCode\":0,\"parentID\":\"1372485\",\"defaultChild\":\"1747343136\",\"sizeChart\":\"\",\"totalStockFmt\":\"\"}\n\"components.4.data.0.variants.0\":{\"productVariantID\":\"31912482\",\"variantID\":\"29\",\n \"name\":\"ukuran\",\"identifier\":\"size\",\"option\":[\n {\"productVariantOptionID\":\"108654324\",\"variantUnitValueID\":\"455\",\"value\":\"S\",\"hex\":\"\",\"stock\":\"0\"},\n {\"productVariantOptionID\":\"108654325\",\"variantUnitValueID\":\"456\",\"value\":\"M\",\"hex\":\"\",\"stock\":\"0\"},\n {\"productVariantOptionID\":\"108654326\",\"variantUnitValueID\":\"457\",\"value\":\"L\",\"hex\":\"\",\"stock\":\"0\"},\n {\"productVariantOptionID\":\"108654327\",\"variantUnitValueID\":\"458\",\"value\":\"XL\",\"hex\":\"\",\"stock\":\"0\"}]}\n\"children.0\":{\"productID\":\"1747343136\",\"price\":51000,\"priceFmt\":\"Rp51.000\",\n \"optionID\":{\"type\":\"json\",\"json\":[108654324]},\"optionName\":{\"type\":\"json\",\"json\":[\"S\"]},\n \"productURL\":\"https://www.tokopedia.com/tanakoshop/kaos-oblong-gtman-warna-putih-round-neck-s\"}",
+  "cut": "What is cut or missing. Era B: this is one skus[] element, not a whole product body; no printed instance carries category_id or product_attributes. \"USD\\n\" and \"1,32\" are the vendor's own defects. Era A: three keyed fragments of one page, not joined; no Create Product body exists in the record.",
+  "fieldmap": [
+   [
+    "B · sales_attributes[].id / value_id",
+    "the axis and its value, by built-in catalogue id; name / value_name are the free-text escape"
+   ],
+   [
+    "B · price / identifier_code / inventory",
+    "price, GTIN and stock — all SKU-level only; the product carries none"
+   ],
+   [
+    "B · data.product_id + data.skus[]",
+    "the family container: one product, N SKUs, in two id spaces"
+   ],
+   [
+    "A · parentID = productID 1372485",
+    "the container is itself a product row, same id space as its children"
+   ],
+   [
+    "A · children[].productID / price",
+    "children are full product rows with their own URL and price; the parent's price is derived (lowest child)"
+   ],
+   [
+    "A · variantID 29 / variantUnitValueID 455",
+    "the global catalogue axis (Ukuran) and value (S); productVariantOptionID is a second, per-product id space"
+   ]
+  ]
+ },
+ "Square": {
+  "score": 40,
+  "subtitle": "CatalogObject ITEM cp0905-rev-item-6opt with one embedded ITEM_VARIATION",
+  "route": "Route. Live sandbox response: GET /v2/catalog/object/ERAHZP2RC3N4LFT3RAWMAWXI?include_related_objects=true, square-version: 2026-08-19, 1,745 B, printed whole. (#11049 Companion C §C1 [R-60])",
+  "instance": "{\"object\":{\"type\":\"ITEM\",\"id\":\"ERAHZP2RC3N4LFT3RAWMAWXI\",\"version\":1788600970113,\"is_deleted\":false,\n \"present_at_all_locations\":true,\n \"item_data\":{\"name\":\"cp0905-rev-item-6opt\",\"is_taxable\":true,\n \"variations\":[{\"type\":\"ITEM_VARIATION\",\"id\":\"VJOESNEEUC32G3MHLKWJGMM3\",\"version\":1788600970113,\"is_deleted\":false,\n \"present_at_all_locations\":true,\n \"item_variation_data\":{\"item_id\":\"ERAHZP2RC3N4LFT3RAWMAWXI\",\n \"name\":\"cp0905-rev-A-val1, cp0905-rev-B-val1, cp0905-rev-C-val1, cp0905-rev-D-val1, cp0905-rev-E-val1, cp0905-rev-F-val1\",\n \"ordinal\":0,\"pricing_type\":\"FIXED_PRICING\",\"price_money\":{\"amount\":100,\"currency\":\"USD\"},\n \"item_option_values\":[{\"item_option_id\":\"QSYVES3CG6DREP7ENYG2G63D\",\"item_option_value_id\":\"FXZYYVVKDCG4JZ3YAM6I22XJ\"},\n {\"item_option_id\":\"LTZVJZCKKX35U2PZY4URHRDW\",\"item_option_value_id\":\"NAIZGAXTOT3TMTN37LSOQ5ZW\"},\n {\"item_option_id\":\"7M226N2KXCJ43VNAVSDJH2RY\",\"item_option_value_id\":\"HB5J2GS3ZPMZ7OTBKNGKXBB7\"},\n {\"item_option_id\":\"ZDQC5J33ON3GVTAB24Y2RJPL\",\"item_option_value_id\":\"VTREJAXHMSMSNMMRZNAX77EY\"},\n {\"item_option_id\":\"4KK363TPOQJ2CHT5Q54PCZY3\",\"item_option_value_id\":\"WGPVP34VIVJPWG2QOGFYWWY5\"},\n {\"item_option_id\":\"CPQLBHBYYHUN7VJYRJIDXMC3\",\"item_option_value_id\":\"ZDPXTHMA32GXUM7RTIDOGJB2\"}],\n \"sellable\":true,\"stockable\":true}}],\n \"product_type\":\"REGULAR\",\n \"item_options\":[{\"item_option_id\":\"QSYVES3CG6DREP7ENYG2G63D\"},{\"item_option_id\":\"LTZVJZCKKX35U2PZY4URHRDW\"},\n {\"item_option_id\":\"7M226N2KXCJ43VNAVSDJH2RY\"},{\"item_option_id\":\"ZDQC5J33ON3GVTAB24Y2RJPL\"},\n {\"item_option_id\":\"4KK363TPOQJ2CHT5Q54PCZY3\"},{\"item_option_id\":\"CPQLBHBYYHUN7VJYRJIDXMC3\"}],\n \"is_archived\":false}}}",
+  "cut": "What is cut or missing. Nothing. This item has no sku and no categories / reporting_category; the record's category evidence is a different live item [R-88] and its sku / upc evidence a different variation read-back [R-93], not merged here.",
+  "fieldmap": [
+   [
+    "type / id / version",
+    "the CatalogObject wrapper: discriminator, server id, optimistic-lock token; repeated on the nested variation, which is a first-class object"
+   ],
+   [
+    "item_data",
+    "the container: name, product_type: REGULAR, is_taxable"
+   ],
+   [
+    "item_data.item_options[]",
+    "the axes, by reference to standalone ITEM_OPTION rows; six is the observed hard cap"
+   ],
+   [
+    "item_data.variations[]",
+    "the variants, embedded in the read, each ITEM_VARIATION"
+   ],
+   [
+    "item_variation_data.item_id",
+    "the family link back to the parent item"
+   ],
+   [
+    "item_variation_data.item_option_values[]",
+    "the axis coordinates as {item_option_id, item_option_value_id} pointing at shared rows, never copied strings"
+   ],
+   [
+    "price_money / sellable / stockable",
+    "per-variant price in minor units, and the sale and inventory flags"
+   ]
+  ]
+ },
+ "commercetools": {
+  "score": 35,
+  "subtitle": "Product example, a ProductDraft variant with attributes, a Category example, and an AttributeDefinition",
+  "route": "Route. Vendor artifacts only — the API-reference example files (product.example.json, category.example.json, product-type.example.json) [R-1] and a training-collection ProductDraft payload [R-5]; no live response (H1). (#11081 Companion C §2c; Companion A §3)",
+  "instance": "// Product — product.example.json, as the record summarises it\nid `e7ba4c75-…`, 1970 timestamps, 1 category,\nmasterVariant `{\"attributes\":[],\"id\":1,\"images\":[…],\"prices\":[…],\"sku\":\"sku_MB_PREMIUM_TECH_T_…\"}`,\n`\"variants\": []`\n\n// a ProductDraft variant carrying attributes — training collection\n{\"sku\": \"ONB-V-Carton\", \"key\": \"ONB-V-Carton\",\n \"attributes\": [{\"name\": \"bar-flavor\", \"value\": \"vanilla\"}, {\"name\": \"bar-size\", \"value\": \"carton\"}]}\n\n// Category — category.example.json\n{\"id\":\"c2f93298-…\",\"version\":1,\"name\":{\"en\":\"Hats\"},\"slug\":{\"en\":\"hats\"},\n \"parent\":{\"typeId\":\"category\",\"id\":\"123456\"},\"ancestors\":[],\"orderHint\":\"0.1\", …}\n\n// one AttributeDefinition — product-type.example.json\n{\"type\":{\"name\":\"text\"},\"isSearchable\":false,\"inputHint\":\"SingleLine\",\"name\":\"size\",\n \"label\":{\"en\":\"The right size is important.\"},\"isRequired\":false,\n \"attributeConstraint\":\"None\",\"level\":\"Product\"}",
+  "cut": "What is cut or missing. The record prints §2c as a summary table with its own elisions ([…], id and SKU tails); the only Product example has \"variants\": [], so no single instance shows a populated family. Ids and 1970 timestamps are vendor placeholders.",
+  "fieldmap": [
+   [
+    "productType",
+    "the type link, 1..1, required and immutable; it owns the whole attribute set"
+   ],
+   [
+    "masterData.current (ProductData)",
+    "the family container: categories, name, slug, product-level attributes"
+   ],
+   [
+    "masterVariant / variants[]",
+    "the members (Classic model): 1..1 plus 0..100; id is the sequential within-product identifier, master = 1"
+   ],
+   [
+    "sku / prices[]",
+    "variant-scoped; SKU unique project-wide"
+   ],
+   [
+    "attributes[] {name, value}",
+    "attribute values named by their definition; no axis field exists anywhere"
+   ],
+   [
+    "attributeConstraint",
+    "the nearest thing to an axis — a write-time uniqueness validator on the definition, not stored axis metadata"
+   ]
+  ]
+ },
+ "Akeneo PIM": {
+  "score": 30,
+  "subtitle": "FamilyVariant clothing_color_size, ProductModel jack, and a variant Product with parent jack_brown",
+  "route": "Route. Vendor doc samples from api.akeneo.com (concepts/catalog-structure.html [R-74] and concepts/products.html [R-75]); the family variant is confirmed by the shipped fixture CSV row [R-56]. (#11069 §2c)",
+  "instance": "// FamilyVariant — the structure: levels, axes, attribute distribution\n{\"code\":\"clothing_color_size\",\"labels\":{\"de_DE\":\"Kleidung nach Farbe und Größe\",\"en_US\":\"Clothing by color and size\",\"fr_FR\":\"Vêtements par couleur et taille\"},\n \"variant_attribute_sets\":[\n {\"level\":1,\"axes\":[\"color\"],\"attributes\":[\"variation_name\",\"variation_image\",\"composition\",\"color\",\"material\"]},\n {\"level\":2,\"axes\":[\"size\"], \"attributes\":[\"sku\",\"weight\",\"size\",\"ean\"]}]}\n\n// ProductModel — the root model\n{\"code\":\"jack\",\"family\":\"clothing\",\"family_variant\":\"clothing_color_size\",\"parent\":null,\"categories\":[],\n \"values\":{\"name\":[{\"locale\":null,\"scope\":null,\"data\":\"jack\"}],\"erp_name\":[…], …}}\n\n// Product — the leaf, hanging off sub-model jack_brown\n{\"uuid\":\"fc24e6c3-933c-4a93-8a81-e5c703d134d5\",\"family\":\"clothing\",\"parent\":\"jack_brown\",\"categories\":[\"tshirts\"],\"enabled\":true,\n \"values\":{\"sku\":[{\"locale\":null,\"scope\":null,\"data\":\"1111111195\"}],\n \"ean\":[{\"…\",\"data\":\"1234567890207\"}],\n \"size\":[{\"…\",\"data\":\"s\"}],\n \"weight\":[{\"…\",\"data\":{\"amount\":\"800.0000\",\"unit\":\"GRAM\",\"symbol\":\"g\"}}],\n \"color\":[…]}}",
+  "cut": "What is cut or missing. The record's own elisions inside values ([…], and \"…\" standing for the repeated locale/scope pair). VariantAttributeSet has no standalone instance and no endpoint would produce one; it appears only embedded.",
+  "fieldmap": [
+   [
+    "family",
+    "the attribute template, on the root model and the product; 0..1 on a product"
+   ],
+   [
+    "family_variant",
+    "the link to the variant structure, required on a root model"
+   ],
+   [
+    "variant_attribute_sets[].level / axes / attributes",
+    "the tier (1 or 2), the attribute codes that differentiate siblings at that tier, and the values carried there (a superset of the axes)"
+   ],
+   [
+    "code",
+    "the model's identifier; models have no SKU and no uuid"
+   ],
+   [
+    "parent",
+    "the link up: model → model (null at root), product → the model it varies"
+   ],
+   [
+    "uuid / values.sku",
+    "the leaf-only primary key and the identifier attribute, forced into the last level"
+   ],
+   [
+    "weight.data {amount, unit}",
+    "a metric value — typed quantity with unit, drawn from a shared unit registry"
+   ]
+  ]
+ }
+}

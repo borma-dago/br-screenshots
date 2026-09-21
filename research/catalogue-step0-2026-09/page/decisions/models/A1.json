@@ -1,0 +1,130 @@
+{
+ "keys": [
+  "Built-in core (outside the bag)",
+  "Extension (the attribute)",
+  "Definition ↔ value",
+  "A value is stored as",
+  "Brand",
+  "Cap",
+  "Example"
+ ],
+ "rows": {
+  "Amazon": {
+   "Built-in core (outside the bag)": "<code>sku</code> only — a URL path parameter, never a schema attribute. The read model projects scalars beside the bag: <code>ItemSummaryByMarketplace.brand · itemName · manufacturer · color · size · style</code> + first-class <code>identifiers</code>, <code>images</code>, <code>dimensions</code>, <code>classifications</code>, <code>relationships</code>, <code>salesRanks</code>.",
+   "Extension (the attribute)": "Everything else is a property of the <b>product-type JSON Schema</b>, in seven property groups: <code>offer</code> (price = <code>list_price</code>) · <code>images</code> · <code>shipping</code> (weight, dimensions) · <code>variations</code> · <code>safety_and_compliance</code> · <code>product_identity</code> (<code>item_name</code>, <code>brand</code>, <code>external_product_id</code>, <code>product_type</code>, …) · <code>product_details</code>. Bag declared open: <code>ItemAttributes {additionalProperties: true}</code>.",
+   "Definition ↔ value": "Modelled as <code>Attribute</code> (name PK) + <code>ProductTypeAttribute</code> join {<code>marketplaceId</code>, <code>parentageLevel</code>, requiredness} — <em>requiredness is a property of the join</em>. JSON-side <code>type / constraints / enum</code> ❓UNKNOWN. 2,336 distinct attribute names; 213 types → 208 attributes, 1,154 pairs, 107 used by one type.",
+   "A value is stored as": "an array of objects per attribute — <code>[{value, marketplace_id, language_tag}]</code> — scalar inside; per-marketplace selectors.",
+   "Brand": "an attribute (<code>product_identity</code>) <em>and</em> a read scalar <em>and</em> a search refinement; must match across a family (“non-varying attributes”).",
+   "Cap": "none published; per-attribute <code>maxUniqueItems</code>, <code>maxUtf8ByteLength</code> only.",
+   "Example": "● <pre>\"attributes\": { \"parentage_level\": [{\"value\": \"child\"}], \"color\": [{\"value\": \"Red\"}],\n                \"item_weight\":     [{\"value\": 4, \"marketplace_id\": \"ATVPDKIKX0DER\"}] }</pre> (record instances: #10976 §6, §1.3)"
+  },
+  "Shopify": {
+   "Built-in core (outside the bag)": "<code>Product</code> 83 fields, <code>ProductVariant</code> 52: <code>title</code>, <code>handle</code>, <code>descriptionHtml</code>, <code>productType</code> (free text), <code>vendor</code>, <code>tags</code>, <code>category</code>, <code>options</code>; variant: <code>price</code>, <code>compareAtPrice</code>, <code>sku</code>, <code>barcode</code>, <code>inventoryItem</code>. Weight is <b>not</b> on the variant — <code>inventoryItem.measurement.weight {unit: WeightUnit!, value: Float!}</code>.",
+   "Extension (the attribute)": "<code>MetafieldDefinition</code> (17 fields; <code>ownerType</code> ∈ 26 values incl. <code>PRODUCT</code>, <code>PRODUCTVARIANT</code>). Second surface: the taxonomy — 8,240 base + 316 extended attributes, 93,007 category→attribute edges, 74,820 values.",
+   "Definition ↔ value": "separate objects; a value may exist with <code>definition: null</code> (undefined namespace/key accepted, <code>userErrors: []</code>).",
+   "A value is stored as": "<b>always a string</b> — <em>“the value is always entered and stored as a string, regardless of type”</em>; 48 basic + 12 reference + 53 list types decide parsing.",
+   "Brand": "<code>vendor: String!</code>, free text, no validation; “brand” occurs zero times in the record.",
+   "Cap": "metafields per product: not answered.",
+   "Example": "◇ <pre>{\"namespace\": \"custom\", \"key\": \"flavour\", \"type\": \"single_line_text_field\",\n \"value\": \"Soto\", \"definition\": {\"id\": \"gid://shopify/MetafieldDefinition/…\"}}</pre> — the documented fields; live weight: ● <code>\"inventoryItem\":{\"measurement\":{\"weight\":{\"value\":0.5,\"unit\":\"KILOGRAMS\"}}}</code>"
+  },
+  "Google": {
+   "Built-in core (outside the bag)": "there is only the bag: <b>145</b> flat properties on <code>products_v1</code> — <code>title</code>, <code>description</code>, <code>price</code>, <code>gtins</code>, <code>brand</code>, <code>productWeight</code>, <code>productLength/Height/Width</code>, <code>shippingWeight</code>, <code>googleProductCategory</code>, <code>productTypes</code>, <code>color</code>, <code>size</code>, <code>material</code>, <code>pattern</code>, <code>itemGroupId</code>, …",
+   "Extension (the attribute)": "four open name/value bags: <code>customAttributes</code> (≤2,500, 102.4 kB, recursive) · <code>productDetails {sectionName, attributeName, attributeValue}</code> (≤100; suggested keys incl. <em>Flavor</em>, <em>Scent</em>) · <code>variantOptions {name, value}</code> · <code>cloudExportAdditionalProperties</code>.",
+   "Definition ↔ value": "<b>no definition object</b> — the 145 names <em>are</em> the schema; the bags carry no definition.",
+   "A value is stored as": "a typed field (some enums) for the 145; a free string for the bags.",
+   "Brand": "a flat field, max 70 chars, required except movies/books/music.",
+   "Cap": "2,500 custom attributes / 102.4 kB; 100 product details; 30 variant options.",
+   "Example": "● <pre>\"productAttributes\": { \"title\": \"cp0905 u3 flavor - mango\", \"itemGroupId\": \"cp0905-grp-flavor\",\n  \"variantOptions\": [{\"name\": \"flavor\", \"value\": \"mango\"}] }</pre> (staging probe, #11013 §2 [F-37]); ◇ <code>\"productDetails\": [{\"sectionName\": \"General\", \"attributeName\": \"Flavor\", \"attributeValue\": \"Soto\"}]</code>"
+  },
+  "eBay": {
+   "Built-in core (outside the bag)": "Inventory <code>Product</code>: <code>brand</code>, <code>ean</code>, <code>epid</code>, <code>isbn</code>, <code>mpn</code>, <code>upc</code> (every identifier variant-level), <code>title</code>, <code>description</code>, <code>imageUrls</code>, <code>subtitle</code>, <code>videoIds</code>. Price/quantity on the <code>Offer</code>.",
+   "Extension (the attribute)": "the <b>aspect</b>, owned by the leaf category — 197,046 over 15,111 leaves; no id: an item's aspects are <code>{name: [strings]}</code>.",
+   "Definition ↔ value": "definition = <code>AspectConstraint</code> (exactly 11 properties), identified only by <code>localizedAspectName</code> within a category — a per-category definition without an identity.",
+   "A value is stored as": "strings in an array, per aspect name, on each SKU; <code>aspectDataType</code> STRING 196,549 / NUMBER 482 / DATE 15.",
+   "Brand": "built-in <code>Product.brand</code> <em>and</em> a <code>Brand</code> aspect; catalog-matched aspects are auto-filled and locked.",
+   "Cap": "name 40 chars · value 50 · 30 values per multi-value aspect; aspects per item not published.",
+   "Example": "● <pre>\"localizedAspects\": [{\"type\": \"STRING\", \"name\": \"Color\", \"value\": \"Blue\"}, {\"type\": \"STRING\", \"name\": \"Size\", \"value\": \"S\"},\n                     {\"type\": \"STRING\", \"name\": \"Brand\", \"value\": \"Unbranded\"}]</pre> (sandbox Browse item, #11045 §2c); write side ◇ <code>\"aspects\": {\"Color\": [\"Blue\"], \"Number in Pack\": [\"6\"]}</code>"
+  },
+  "Walmart": {
+   "Built-in core (outside the bag)": "<code>Orderable</code> — 23 properties, required <code>sku</code>, <code>productIdentifiers</code>, <code>price</code>, <code>ShippingWeight</code>, <code>country_of_origin_substantial_transformation</code> (+ <code>inventory</code>, <code>msrp</code>, <code>product_package_dimensions_and_weight</code>, …).",
+   "Extension (the attribute)": "<code>Visible.&lt;ProductType&gt;</code> — the per-type attribute set where merchandising lives (<code>productName</code>, <code>brand</code>, <code>shortDescription</code>, <code>mainImageUrl</code>, <code>netContent</code>, <code>flavor</code> …); 6,967 types · 383,947 slots · 6,576 names · 28–183 per type.",
+   "Definition ↔ value": "<b>no definition object on the write path</b> — every attribute written out in full per type (<code>$ref</code> 0 over 451 MB): <code>color</code> 126 distinct definitions, <code>size</code> 438, <code>flavor</code> 50.",
+   "A value is stored as": "inline on the member, typed by the slot's JSON Schema; governance is a description prefix: <code>\"Closed List - …\"</code> (enum) · <code>\"Alphanumeric, N characters - …\"</code> · <code>\"Number, Value range: A to B - …\"</code> · <code>\"Decimal, …\"</code>.",
+   "Brand": "a product-type slot, required for <code>Toothpastes</code>.",
+   "Cap": "none (<code>maxItems</code>/<code>maxProperties</code> = 0 by scan).",
+   "Example": "● <pre>\"Visible\": {\"Toothpastes\": {\"productName\": \"Colgate Crest Toothpaste\", \"flavor\": \"Peppermint\",\n                            \"variantGroupId\": \"001960968586AX6\", \"isPrimaryVariant\": \"Yes\", \"variantAttributeNames\": [\"flavor\"]}}</pre> (vendor sample, #11046 §2c)"
+  },
+  "Shopee": {
+   "Built-in core (outside the bag)": "item fields: <code>item_name</code> REQ, <code>description</code> REQ, <code>original_price</code> REQ, <code>weight</code> REQ, <code>item_sku</code>, <code>gtin_code</code>, <code>brand {brand_id int32 REQ, original_brand_name REQ}</code>, <code>dimension {package_height/length/width}</code>, <code>logistic_info</code> REQ, <code>seller_stock</code>, <code>price_info</code>, tax / size chart / certification / purchase limit / complaint policy.",
+   "Extension (the attribute)": "<code>attribute_list</code>, category-scoped: <code>get_attribute_tree(category_id)</code> → <code>{attribute_id, name, mandatory, attribute_value_list[{value_id, name, value_unit, child_attribute_list}], attribute_info{input_type (5), input_validation_type (5), format_type (2), date_format_type, attribute_unit_list, max_value_count, is_oem, support_search_value}}</code>; only last-level categories retrieve it.",
+   "Definition ↔ value": "separate; shared value rows by <code>value_id</code>.",
+   "A value is stored as": "<code>value_id</code> (shared row) or <code>value_id: 0</code> + <code>original_value_name</code> (free text); a typed value carries <code>value_unit</code>.",
+   "Brand": "a reference to a platform-owned brand entity (<code>brand_id</code>).",
+   "Cap": "no documented cap.",
+   "Example": "● <pre>\"attribute_list\": [{\"attribute_id\": 100061,\n  \"attribute_value_list\": [{\"value_id\": 0, \"original_value_name\": \"customized name\"}, {\"value_id\": 678}]}]</pre> (Guide 211 Example 6, #11047 §2c)"
+  },
+  "Tokopedia": {
+   "Built-in core (outside the bag)": "Era A: <code>name</code> ≤70, <code>category_id</code>, <code>price</code>, <code>status</code>, <code>stock</code>, <code>min_order</code>, <code>weight</code>, <code>weight_unit</code>, <code>condition</code>, <code>sku</code> ≤50, <code>description</code> ≤2000, <code>dimension</code>, <code>etalase</code>, <code>variant</code>. Era B: 34 depth-0 fields — <code>title</code>, <code>description</code>, <code>category_id</code>, <code>brand_id</code>, <code>main_images</code>, <code>package_dimensions</code>, <code>package_weight</code>, <code>certifications</code>, <code>size_chart</code>, …; price/inventory/identifier on the SKU.",
+   "Extension (the attribute)": "Era A: the <b>Annotation</b> (“product specification based on category ID”) — group = a bare <code>variant</code> string, <code>values[{id, name, data}]</code>. Era B: <code>GET /product/202309/categories/{id}/attributes</code> → <code>{id, name, type: SALES_PROPERTY|PRODUCT_PROPERTY, is_requried, values[{id, name, icon_url}], value_data_format, is_customizable, requirement_conditions[], is_multiple_selection}</code>.",
+   "Definition ↔ value": "separate (id-bearing catalogues in both eras).",
+   "A value is stored as": "Era B: <code>product_attributes[] {id, values[] {id, name}}</code> — an id-bearing row or a name; all money/quantity fields <code>string</code>.",
+   "Brand": "Era A: none. Era B: platform-owned Brand entity (<code>brand_id</code>; “Brand does not exist” error).",
+   "Cap": "ambiguous — <code>12052525</code> “The attribute max num cannot exceed 3.”",
+   "Example": "● <pre>\"product_attributes\": [{\"id\": \"100392\", \"values\": [{\"id\": \"1001533\", \"name\": \"Birthday\"}]}],\n\"skus\": [{\"sales_attributes\": [{\"id\": \"100089\", \"value_id\": \"1729592969712207000\", \"value_name\": \"Red\", \"name\": \"Color\"}],\n          \"price\": {\"amount\": \"1.21\", \"currency\": \"USD\"}, \"identifier_code\": {\"code\": \"10000000000000\", \"type\": \"GTIN\"}}],\n\"package_weight\": {\"value\": \"1.32\", \"unit\": \"KILOGRAM\"}</pre> (vendor Create Product sample, api_meta 2026-09-21)"
+  },
+  "Square": {
+   "Built-in core (outside the bag)": "<code>CatalogItem</code> — 27 properties (<code>name</code>, <code>description_html</code>, <code>categories</code>, <code>item_options</code>, <code>variations</code>, <code>product_type</code>, <code>is_alcoholic</code>, <code>kitchen_name</code>, …); price / SKU / UPC on the variation (<code>price_money</code>, <code>sku</code>, <code>upc</code>, <code>measurement_unit_id</code>).",
+   "Extension (the attribute)": "<code>CatalogCustomAttributeDefinition</code> — 12 properties; required <code>type</code>, <code>name</code>, <code>allowed_object_types</code>; <code>key</code> immutable; <code>type ∈ STRING | BOOLEAN | NUMBER | SELECTION</code>.",
+   "Definition ↔ value": "separate; value = <code>CatalogObject.custom_attribute_values</code>, a map keyed by the definition's <code>key</code>.",
+   "A value is stored as": "inline, typed by the definition: <code>string_value / number_value / boolean_value / selection_uid_values</code> — <em>not a shared row</em>.",
+   "Brand": "not answered (<code>\"cocoa_brand\"</code> only as a key example).",
+   "Cap": "<b>10 seller-visible + 10 seller-hidden</b> definitions — live: the 11th → HTTP 400 <code>ITEMS_CUSTOM_ATTRIBUTE_LIMIT_EXCEEDED</code>; scope (account vs <code>app_id</code>) unresolved.",
+   "Example": "◇ <pre>\"custom_attribute_values\": {\n  \"cocoa_brand\": {\"key\": \"cocoa_brand\", \"type\": \"STRING\", \"string_value\": \"Valrhona\"}\n}</pre> — the documented map shape; <code>cocoa_brand</code> is the vendor's own key example"
+  },
+  "Salesforce B2C": {
+   "Built-in core (outside the bag)": "<code>complexType.Product</code> opens with <code>ean</code>, <code>upc</code>, <code>unit</code>, <code>unit-quantity</code> (<code>xsd:decimal</code>), <code>unit-measure</code> (<code>String.60</code>), then <code>classification-category</code>, <code>variations</code>, <code>images</code>, <code>product-set-products</code>, <code>bundled-products</code>, <code>custom-attributes</code>.",
+   "Extension (the attribute)": "three-level definition: <code>ObjectTypeDefinition → ObjectAttributeGroup → ObjectAttributeDefinition</code> with <code>unit: String</code> and <code>valueTypeCode</code>; system/custom switch = <code>@system: xsd:boolean default=\"false\"</code>; REST prefixes custom attributes <code>c_</code>.",
+   "Definition ↔ value": "separate; which named facts are system vs custom is not answered.",
+   "A value is stored as": "typed by <code>valueTypeCode</code> (18: <code>INT NUMBER STRING TEXT HTML DATE IMAGE BOOLEAN MONEY QUANTITY DATETIME EMAIL PASSWORD SET_OF_* ENUM_OF_*</code>) vs the XSD's 16 (no MONEY/QUANTITY — the two disagree).",
+   "Brand": "zero occurrences in the record.",
+   "Cap": "not answered.",
+   "Example": "◇ <pre>&lt;custom-attributes&gt;&lt;custom-attribute attribute-id=\"warrantyType\"&gt;…&lt;/custom-attribute&gt;&lt;/custom-attributes&gt;</pre> — <code>warrantyType</code> in group <code>ProductExtras</code> is the only named pair in the record; no instance data retrieved (U9)"
+  },
+  "Akeneo": {
+   "Built-in core (outside the bag)": "<code>pim_catalog_product</code>: <code>uuid</code>, <code>id</code>, <code>identifier</code>, <code>enabled</code>, <code>raw_values</code>, <code>created</code>, <code>updated</code>, <code>rawQuantifiedAssociations</code> + edges <code>family</code>, <code>parent</code>, <code>familyVariant</code>, <code>groups</code>, <code>categories</code>, <code>associations</code>. <b>Everything describing content is an attribute</b> — title (<code>attributeAsLabel</code>), price (<code>pim_catalog_price_collection</code>), images, SKU (<code>pim_catalog_identifier</code>), weight (<code>pim_catalog_metric</code>). Barcode: no such concept.",
+   "Extension (the attribute)": "<code>pim_catalog_attribute</code>, ~30 columns: <code>type</code> (19 CE types, immutable), <code>is_required</code>, <code>is_unique</code>, <code>is_localizable</code>, <code>is_scopable</code>, <code>sortOrder</code>, <code>useableAsGridFilter</code>, <code>metricFamily</code>, <code>defaultMetricUnit</code>, <code>group</code>; the <b>Family</b> decides the set (never the category).",
+   "Definition ↔ value": "separate; option values are shared <code>AttributeOption</code> rows, but the product <b>copies the code string</b> — “referential integrity is a validator, not a foreign key”.",
+   "A value is stored as": "<code>raw_values</code> JSON: <code>{attribute: [{locale, scope, data}]}</code>; metric <code>data = {amount, unit}</code>.",
+   "Brand": "both — a <code>pim_catalog_simpleselect</code> attribute in the demo catalogue, and (EE) a Reference Entity with a label, logo, description, pages.",
+   "Cap": "none.",
+   "Example": "● <pre>\"weight\": [{\"locale\": null, \"scope\": null, \"data\": {\"amount\": \"800.0000\", \"unit\": \"GRAM\", \"symbol\": \"g\"}}]</pre> (#11069 §2c); ◇ <code>\"color\": [{\"locale\": null, \"scope\": null, \"data\": \"red\"}]</code> — the option code copied as a string"
+  },
+  "WooCommerce": {
+   "Built-in core (outside the bag)": "WordPress rows: <code>post_title</code>, <code>post_excerpt</code>; postmeta <code>_sku</code>, <code>_global_unique_id</code> (GTIN), <code>_price</code>. Shipping dimensions (<code>_weight</code>…) not answered (0 hits).",
+   "Extension (the attribute)": "three objects: (1) per-product <code>WC_Product_Attribute {id, name, options, position, visible, variation}</code> serialised into one <code>_product_attributes</code> postmeta row; (2) global definition <code>woocommerce_attribute_taxonomies {attribute_id, attribute_name, attribute_label, attribute_type, attribute_orderby, attribute_public}</code>; (3) the value = a <code>wp_terms</code> row.",
+   "Definition ↔ value": "global attributes have a definition row; a product-local attribute has none (<code>id</code> 0; <code>is_taxonomy() { return 0 < id }</code>). No attribute-set object exists.",
+   "A value is stored as": "a term — <em>“a bare label — six fields, none a quantity, a unit or a dimension”</em> — shared across products; the variation copies the slug string.",
+   "Brand": "<code>product_brand</code>, a core taxonomy since 9.4.0 (2024-11-11) — the one merchant-owned brand entity in the thirteen.",
+   "Cap": "none found.",
+   "Example": "● attribute 3 = <code>pa_flavour</code>, <code>variation:true</code> on product 10 / <code>false</code> on product 22; variation 27 of product 11 stores <code>attribute_pa_flavour = 'mint'</code> (posted <code>\"option\":\"Mint\"</code> → 201, no term created) (#11080 §1.3, §2 step 6)"
+  },
+  "commercetools": {
+   "Built-in core (outside the bag)": "<code>ProductData</code> 13: <code>name</code>, <code>categories</code>, <code>categoryOrderHints?</code>, <code>description?</code>, <code>slug</code>, <code>metaTitle?</code>, <code>metaDescription?</code>, <code>metaKeywords?</code>, <code>masterVariant</code>, <code>variants</code>, <code>searchKeywords</code>, <code>attributes</code>, <code>defaultVariant?</code>. <code>ProductVariant</code> 13: <code>id</code>, <code>sku?</code>, <code>key?</code>, <code>prices?</code>, <code>attributes?</code>, <code>images?</code>, <code>assets?</code>, <code>availability?</code>, … No barcode/GTIN field anywhere; weight is an ordinary attribute.",
+   "Extension (the attribute)": "<code>AttributeDefinition {type, name (^[A-Za-z0-9_-]+$ 2..256), label, isRequired, attributeConstraint, inputTip?, inputHint, isSearchable, level}</code> — <em>not a resource</em> (no id, no version), reached only through its <code>ProductType</code>.",
+   "Definition ↔ value": "separate; value = <code>Attribute {name, value: any}</code>.",
+   "A value is stored as": "<code>value: any</code>, typed by the definition's <code>type</code> (13 types); enum values <code>{key, label}</code> nested in the ProductType; <code>{\"name\":\"weight\",\"value\":250}</code> — no unit.",
+   "Brand": "only vendor-authored attribute names (<code>brand</code>, <code>tablet-brand</code>).",
+   "Cap": "none per type; 50 Product + 50 Variant attributes indexable; 1,000 ProductTypes.",
+   "Example": "● <pre>{\"name\": \"weight\", \"value\": 250}</pre> (vendor sample, #11081 §2c — no unit); ◇ <code>{\"name\": \"color\", \"value\": {\"key\": \"red\", \"label\": \"Red\"}}</code> — the documented enum shape"
+  },
+  "Magento": {
+   "Built-in core (outside the bag)": "<code>catalog_product_entity</code> — 8 columns: <code>entity_id</code>, <code>attribute_set_id</code>, <code>type_id</code>, <code>sku</code>, <code>has_options</code>, <code>required_options</code>, <code>created_at</code>, <code>updated_at</code>.",
+   "Extension (the attribute)": "everything else is an <code>eav_attribute</code> row (17 columns: <code>attribute_code</code>, <code>frontend_input</code>, <code>backend_type</code>, <code>source_model</code>, <code>is_user_defined</code>, <code>is_required</code>, <code>is_unique</code>, <code>default_value</code>; <code>UNIQUE (entity_type_id, attribute_code)</code>) + overlay <code>catalog_eav_attribute</code> (24 columns); the default set installs 43 definitions.",
+   "Definition ↔ value": "separate — and <b>one registry, two storages</b>: <code>sku</code>, <code>created_at</code>, <code>updated_at</code> have a definition row with <code>backend_type = 'static'</code> (<code>isStatic()</code>) while their value lives in a column.",
+   "A value is stored as": "five typed tables — <code>catalog_product_entity_{varchar,int,decimal,text,datetime}</code>, <code>UNIQUE (entity_id, attribute_id, store_id)</code>; select values = <code>eav_attribute_option.option_id</code> (int) with labels in <code>eav_attribute_option_value</code> per store view.",
+   "Brand": "the installed <code>manufacturer</code> attribute (<code>select</code>, <code>user_defined</code>). Barcode: no vendor term.",
+   "Cap": "none.",
+   "Example": "● uid <code>Y29uZmlndXJhYmxlLzkzLzUz</code> = <code>configurable/93/53</code>: parent entity 93, option 53 on two surfaces of one response (#11082 §1.7); ◇ <pre>catalog_product_entity_int {entity_id: 93, attribute_id: 83, store_id: 0, value: 53}\neav_attribute_option_value {option_id: 53, store_id: 0, value: 'Red'} {option_id: 53, store_id: 2, value: 'Merah'}</pre>"
+  }
+ }
+}
