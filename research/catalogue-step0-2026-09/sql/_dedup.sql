@@ -1,0 +1,3 @@
+-- Shared CDC dedup pattern for solvent-staging.production_append_public (append-only mirror).
+-- Current state of a table = latest row per id, excluding DELETE.
+-- Every baseline query below inlines this pattern per table.

@@ -1,0 +1,6 @@
+id,code,name,name_equals_code,type,required,product_class_id,product_class_name,value_rows,rows_value_text,rows_value_float,rows_value_integer,rows_value_boolean,rows_value_date,rows_value_datetime
+2,manufacturer,Manufacturer,false,text,true,1,Standard,46499,46499,0,0,0,0,0
+3,weight,Berat (gram),false,float,true,1,Standard,106161,0,106161,0,0,0,0
+4,length,Panjang (cm),false,float,true,1,Standard,106161,0,106161,0,0,0,0
+5,width,Lebar (cm),false,float,true,1,Standard,106161,0,106161,0,0,0,0
+6,height,Tinggi (cm),false,float,true,1,Standard,106161,0,106161,0,0,0,0

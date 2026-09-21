@@ -1,0 +1,65 @@
+used nodes 1686, products 106161, threshold 0.2
+
+=== MEASURED (title evidence) ===
+distinct measured attribute-need SETS across 1686 used nodes: 68
+nodes sharing their set with at least one other node: 1665 (98.8%)
+the 12 most common sets:
+     369 nodes  {(none)}
+     219 nodes  {model_code}
+     188 nodes  {net_content}
+     153 nodes  {colour}
+      77 nodes  {flavour|net_content}
+      71 nodes  {colour|net_content}
+      70 nodes  {colour|model_code}
+      64 nodes  {pack_count}
+      54 nodes  {model_code|net_content}
+      38 nodes  {material}
+      38 nodes  {colour|flavour|net_content}
+      32 nodes  {net_content|scent}
+
+kind -> how many used nodes need it (>= threshold):
+   net_content     617 nodes (36.6%)
+   colour          494 nodes (29.3%)
+   model_code      454 nodes (26.9%)
+   pack_count      202 nodes (12.0%)
+   flavour         199 nodes (11.8%)
+   scent            93 nodes (5.5%)
+   material         88 nodes (5.2%)
+   garment_size     49 nodes (2.9%)
+
+nodes needing NO kind at threshold: 369
+distinct measured kinds in total: 8
+
+used LEAVES 1394: distinct measured sets 61; leaves sharing a set with another leaf 1376 (98.7%)
+
+the 639 nodes covering 90% of products: distinct measured sets 47; distinct measured kinds 8
+
+=== INFERRED (Shopify pass-B mapping) ===
+nodes with an inferred set: 434 of 1686 (25.7%); the other 1252 are a hole, not a zero
+distinct inferred attribute SETS among them: 316; nodes sharing a set with another: 186 (42.9%)
+  of the mapped, NOT flagged 'target level<=2 or non-leaf': 284 nodes, 220 distinct sets, 558 distinct names
+distinct inferred attribute NAMES across the mapped nodes: 776
+median attributes per mapped node: 8
+top 20 inferred names by node count:
+    259  Warna
+    253  Pola
+    107  Jenis kelamin sasaran
+    105  Kelompok usia
+    103  Bahan
+    102  Preferensi diet
+     97  Informasi alergen
+     87  Persyaratan penyimpanan
+     56  Kain
+     53  Petunjuk perawatan
+     49  Bentuk produk
+     44  Sertifikasi & standar produk
+     42  Jenis ukuran
+     40  Bentuk produk makanan
+     37  Ukuran
+     36  Keharuman
+     31  Jenis penggunaan
+     30  Rasa
+     30  Jenis kemasan
+     30  Bentuk
+
+of the 639 nodes covering 90%: 200 have an inferred set, carrying 477 distinct attribute names; not-flagged-ancestor subset: 115 nodes / 330 names

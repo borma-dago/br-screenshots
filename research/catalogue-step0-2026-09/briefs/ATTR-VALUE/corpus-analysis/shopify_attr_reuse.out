@@ -1,0 +1,200 @@
+# corpus files: categories.json 80329762 B · attributes.json 14809460 B · attribute_values.json 10658582 B
+# self-reported version: categories=2026-11-unstable attributes=2026-11-unstable values=2026-11-unstable
+
+## 1 · totals
+verticals                 26
+categories                14606
+attribute definitions     8240
+attribute values          74820
+category->attribute edges 93007
+  edges with extended=true  2891
+  edges with extended=false 90116
+
+## 2 · is the definition ONE object shared by many categories, or a per-category copy?
+distinct attribute ids appearing on at least one category edge  8195
+attribute definitions never attached to a category              45
+mean categories per attached attribute                          11.35
+categories-per-attribute histogram (bucketed):
+  used by         1 categories :  5282 attributes  (   5282 edges)
+  used by         2 categories :   272 attributes  (    544 edges)
+  used by       3-5 categories :  1162 attributes  (   4488 edges)
+  used by      6-10 categories :   702 attributes  (   5206 edges)
+  used by     11-25 categories :   442 attributes  (   6896 edges)
+  used by     26-50 categories :   166 attributes  (   6047 edges)
+  used by    51-100 categories :    79 attributes  (   5543 edges)
+  used by   101-500 categories :    67 attributes  (  14653 edges)
+  used by  501-2000 categories :    20 attributes  (  16386 edges)
+  used by     2001+ categories :     3 attributes  (  27962 edges)
+attributes used by exactly 1 category : 5282 (64.5% of attached)
+attributes used by >1 category        : 2913 (35.5%)
+
+top 25 most-reused attribute definitions (categories subscribing):
+   11730  Color                                         gid://shopify/TaxonomyAttribute/1
+   11686  Pattern                                       gid://shopify/TaxonomyAttribute/3
+    4546  Material                                      gid://shopify/TaxonomyAttribute/4
+    1737  Power source                                  gid://shopify/TaxonomyAttribute/1221
+    1598  Age group                                     gid://shopify/TaxonomyAttribute/30
+    1104  Target gender                                 gid://shopify/TaxonomyAttribute/837
+     890  Battery size                                  gid://shopify/TaxonomyAttribute/1682
+     876  Sports governing body certification           gid://shopify/TaxonomyAttribute/11033
+     866  Battery type                                  gid://shopify/TaxonomyAttribute/1571
+     842  Accessory size                                gid://shopify/TaxonomyAttribute/50
+     819  Mounting type                                 gid://shopify/TaxonomyAttribute/1205
+     792  Dietary preferences                           gid://shopify/TaxonomyAttribute/1452
+     782  Cleaning instructions                         gid://shopify/TaxonomyAttribute/1779
+     781  Allergen information                          gid://shopify/TaxonomyAttribute/1451
+     689  Fabric                                        gid://shopify/TaxonomyAttribute/2777
+     653  Product certifications & standards            gid://shopify/TaxonomyAttribute/1261
+     611  Shape                                         gid://shopify/TaxonomyAttribute/73
+     597  Product form                                  gid://shopify/TaxonomyAttribute/1285
+     596  Storage requirements                          gid://shopify/TaxonomyAttribute/7962
+     580  Connectivity technology                       gid://shopify/TaxonomyAttribute/1272
+     538  Item condition                                gid://shopify/TaxonomyAttribute/2680
+     522  Care instructions                             gid://shopify/TaxonomyAttribute/2336
+     513  Suitable space                                gid://shopify/TaxonomyAttribute/1214
+     486  Fragrance                                     gid://shopify/TaxonomyAttribute/1637
+     465  Size type                                     gid://shopify/TaxonomyAttribute/12821
+
+## 3 · the card's example: Flavor
+  'Flavor'  gid://shopify/TaxonomyAttribute/1458  handle=flavor  values=30  categories subscribing=293
+    description: Specifies the taste or flavor of a product, e.g. vanilla, mint
+    extended_attributes: []
+  attribute definitions whose NAME contains 'flavo(u)r': 9
+      293 cats ·   30 values · Flavor
+       54 cats ·   43 values · Pet food flavor
+       10 cats ·   22 values · E-liquid flavor
+        6 cats ·    5 values · Flavor profile
+        4 cats ·   41 values · Baby food flavor
+        1 cats ·    5 values · Baby snack flavor
+        1 cats ·    5 values · Dental paste flavor
+        1 cats ·    7 values · Flavor intensity
+        1 cats ·    8 values · Flavor solvent base
+  wrote shopify-flavor-categories.txt (293 rows)
+  verticals containing a Flavor subscription:
+      169  Food, Beverages & Tobacco
+      111  Health & Beauty
+       13  Home & Garden
+  distinct names carried on the Flavor edges: {'Flavor': 293}
+
+## 4 · extended attributes — a category-specific NAME over a shared value list
+base attributes carrying extended_attributes : 106
+total extended names declared                : 316
+distinct (base attribute id, extended name) pairs seen on edges: 314
+sample of 15 extended edges (base id · extended name · #categories):
+    123  Bag/Case closure                       handle=bag-case-closure                       base=Bag closure (gid://shopify/TaxonomyAttribute/2958)
+    104  Upholstery color                       handle=upholstery-color                       base=Color (gid://shopify/TaxonomyAttribute/1)
+    104  Upholstery pattern                     handle=upholstery-pattern                     base=Pattern (gid://shopify/TaxonomyAttribute/3)
+    102  Body color                             handle=body-color                             base=Color (gid://shopify/TaxonomyAttribute/1)
+    102  Body pattern                           handle=body-pattern                           base=Pattern (gid://shopify/TaxonomyAttribute/3)
+     78  Handle color                           handle=handle-color                           base=Color (gid://shopify/TaxonomyAttribute/1)
+     78  Handle pattern                         handle=handle-pattern                         base=Pattern (gid://shopify/TaxonomyAttribute/3)
+     76  Sport                                  handle=sport                                  base=Activity (gid://shopify/TaxonomyAttribute/5)
+     69  Scent                                  handle=scent                                  base=Fragrance (gid://shopify/TaxonomyAttribute/1637)
+     61  Frame pattern                          handle=frame-pattern                          base=Pattern (gid://shopify/TaxonomyAttribute/3)
+     58  Frame color                            handle=frame-color                            base=Color (gid://shopify/TaxonomyAttribute/1)
+     56  Chair features                         handle=chair-features                         base=Chair/Sofa features (gid://shopify/TaxonomyAttribute/3049)
+     52  Light pattern                          handle=light-pattern                          base=Pattern (gid://shopify/TaxonomyAttribute/3)
+     51  Light color                            handle=light-color                            base=Color (gid://shopify/TaxonomyAttribute/1)
+     51  Frame material                         handle=frame-material                         base=Furniture/Fixture material (gid://shopify/TaxonomyAttribute/2786)
+
+## 5 · where does the value list live?
+value ids reachable from attributes.json : 74820
+value ids appearing under >1 attribute   : 0
+  (a TaxonomyValue therefore belongs to exactly 1 attribute)
+distinct value NAMES                     : 41342
+value names that recur under >1 attribute: 7254  (covering 40732 value rows)
+top 15 recurring value names:
+   8237  'Other'
+    272  'None'
+    184  'Plastic'
+    151  'Medium'
+    147  'Wood'
+    140  'Aluminum'
+    132  'Universal'
+    131  'Stainless steel'
+    121  'Rubber'
+    112  'Metal'
+    107  'Standard'
+     98  'Nylon'
+     94  'Leather'
+     93  'Round'
+     90  'Steel'
+values (first 2000) whose handle lacks the '<attribute>__<value>' convention: 0
+attribute definitions with an EMPTY value list: 0
+values per attribute: min 2 · median 7 · mean 9.1 · max 451
+
+does any CATEGORY carry its own value list?  keys present on a category->attribute edge:
+    93007  ('description', 'extended', 'handle', 'id', 'name')
+
+## 6 · per-category attribute counts
+categories with 0 attributes : 152 (1.0%)
+attributes per category: min 0 · median 6 · mean 6.37 · max 28
+
+## 7 · net content / size / weight / volume attributes
+attribute definitions whose NAME matches size|volume|weight|capacity|net content|quantity|dimension|length|width|height|depth|diameter : 329
+  of those, subscribed by <=1 category : 219
+  of those, subscribed by >1 category  : 110
+attribute definitions named exactly containing 'net content'/'net weight': 0 []
+the 15 most-reused size/weight/volume attributes:
+    890 cats ·  102 values · Battery size
+    842 cats ·   23 values · Accessory size
+    465 cats ·    7 values · Size type
+    464 cats ·   80 values · Size
+    186 cats ·    8 values · Sleeve length type
+    102 cats ·  131 values · Shoe size
+     96 cats ·   10 values · Bedding size
+     72 cats ·   38 values · Paper size
+     68 cats ·    3 values · Height adjustment
+     63 cats ·    6 values · Hand percussion size class
+     63 cats ·    7 values · Pants length type
+     60 cats ·    5 values · Top length type
+     48 cats ·    8 values · Maximum bit depth
+     38 cats ·   16 values · Bulb size
+     34 cats ·   14 values · Ball size
+sample values of the most-reused 'size'-named attribute, to show they are labels not numbers:
+  Size (gid://shopify/TaxonomyAttribute/2778) cats=464 values=80: ['Triple extra small (XXXS)', 'Double extra small (XXS)', 'Extra small (XS)', 'Small (S)', 'Medium (M)', 'Large (L)', 'Extra large (XL)', 'Double extra large (XXL)', 'Triple extra large (XXXL)', 'Four extra large (4XL)', 'Five extra large (5XL)', 'Six extra large (6XL)', '000', '00', '0', '1', '2', '4', '6', '8', '10', '12', '14', '16', '18']
+attributes where >50% of values are a literal 'number + unit' label: 27
+     33 cats · 3/5 numeric-unit values · Data network
+     12 cats · 4/6 numeric-unit values · Compatible pole dimensions
+      7 cats · 6/7 numeric-unit values · Film type
+      6 cats · 3/4 numeric-unit values · Compatible BB size
+      6 cats · 4/5 numeric-unit values · Compatible hitch receiver size
+      5 cats · 3/5 numeric-unit values · Compatible pipe filter size
+      5 cats · 7/8 numeric-unit values · Shuffleboard table length compatibility
+      1 cats · 5/8 numeric-unit values · CO2 cylinder compatibility
+      1 cats · 4/7 numeric-unit values · Compatible axle size
+      1 cats · 9/13 numeric-unit values · Compatible billiard table size
+      1 cats · 16/18 numeric-unit values · Compatible can size
+      1 cats · 14/15 numeric-unit values · Compatible cymbal size
+      1 cats · 9/12 numeric-unit values · Compatible spoke gauge
+      1 cats · 10/11 numeric-unit values · Compatible wax container size
+      1 cats · 10/11 numeric-unit values · Disco ball mirror tile size
+      1 cats · 8/10 numeric-unit values · Engine bearing size
+      1 cats · 13/14 numeric-unit values · Hex size
+      1 cats · 7/8 numeric-unit values · Model rocket motor mount size
+      1 cats · 7/8 numeric-unit values · Motor vehicle subwoofer size
+      1 cats · 4/5 numeric-unit values · Mounting receiver size
+
+## 8 · food branch, the card's Rasa example (en + id-ID)
+categories under 'Food, Beverages & Tobacco': 764
+top 20 attribute names in the food vertical:
+    721  Allergen information
+    721  Dietary preferences
+    596  Storage requirements
+    199  Food product form
+    169  Flavor
+    103  Dietary supplements
+     92  Cooking method
+     80  Vegetable preparation style
+     71  Fruit cut style
+     63  Flour/Grain type
+     49  Country
+     39  Package type
+     38  Color
+     38  Pattern
+     27  Beta-casein variant
+     19  Caffeine content
+     19  Cultivation method
+     19  Greens maturity stage
+     19  Produce washing state
+     17  Distillation method

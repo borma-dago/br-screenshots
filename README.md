@@ -42,3 +42,15 @@ https://raw.githubusercontent.com/borma-dago/br-screenshots/main/<yyyy-mm>/<slug
 Monthly folders make pruning cheap. Delete folders older than **12 months**
 occasionally — embedded links in long-closed issues/PRs are the only thing that
 breaks, and those are historical by then.
+
+## `research/` — long-lived document packs (not pruned)
+
+```
+research/<topic-slug>/
+```
+
+Research packs that a GitHub issue links to for persistence (markdown, SQL, CSV, rendered
+HTML). Unlike the monthly image folders these are **never pruned** — the linking issue is
+the index. Same public-repo rule applies: catalogue-level data only, never credentials,
+customer data, or copies of private-repo content. First pack: `research/catalogue-step0-2026-09/`
+(the thirteen Step-0 catalogue concept questions; the br-monorepo issue that links it is the index).

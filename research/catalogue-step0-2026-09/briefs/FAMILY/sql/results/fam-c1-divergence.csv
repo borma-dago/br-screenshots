@@ -1,0 +1,13 @@
+section,bucket,value
+A · divergence inside a proxy family,every member has a distinct slug,10090
+A · divergence inside a proxy family,every member has a distinct title,8935
+A · divergence inside a proxy family,every member has a distinct upc,10090
+A · divergence inside a proxy family,members differ on is_active,1677
+A · divergence inside a proxy family,members differ on is_offline_only,510
+A · divergence inside a proxy family,members differ on is_public,30
+A · divergence inside a proxy family,proxy families,10090
+B · duplicate normalised titles,distinct titles carried by >1 product,2112
+B · duplicate normalised titles,duplicate titles where every row has its own upc,2112
+B · duplicate normalised titles,duplicate titles whose rows sit in ONE category,1221
+B · duplicate normalised titles,duplicate titles whose rows span >1 category,891
+B · duplicate normalised titles,products involved,4273

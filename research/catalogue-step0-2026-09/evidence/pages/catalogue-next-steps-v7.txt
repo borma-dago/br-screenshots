@@ -1,0 +1,376 @@
+Catalogue Next Steps
+
+br-monorepo · catalogue model · plan as of 2026-09-18 · today: lock the questions · research: Sunday
+
+# Catalogue Next Steps
+
+Two top-layer decisions are locked. Before the fourteen numbered decisions can be taken, the words they use have to be defined: what an attribute is, what a category node is, what a family is. Those concept questions are step 0. The rest runs bottom-up: schema before value, value before axis, axis before group row. Naming and the feed key come last.
+
+2locks · 2026-09-16
+
+14decisions open
+
+13concept questions to lock
+
+6steps, in order
+
+4code items ready now
+
+## Where we are
+
+Locked 2026-09-16 in the decision comment on #10966, on the strength of the stress-test in #11230. The thirteen-platform evidence is on the Catalogue Decision Matrix.
+
+### L1 · The category is the product type locked
+
+One object. The existing Category tree owns the attribute definitions and the axis eligibility. ProductClass is retired. Confirms D1 · D2 · D3.
+
+Defensible, but a no-op until step 1 is decided. One clean precedent of thirteen (eBay). The surviving argument is good: a separate type would silently become a mirror of the category. But the lock's own reopen condition, "staff cannot keep a 639-node schema coherent", is the likeliest failure, and whether it happens is exactly what D15 and D16 decide. Spend nothing on L1 until they close.
+
+### L2 · Every product belongs to a group locked
+
+Shape B. The group is a separate, mandatory table; Product stays the sellable row with price, stock, barcode and visibility. Re-closes D13, which was shape A. Ships before L1.
+
+Sound. One production create path, already atomic. A NOT NULL key makes the Elasticsearch collapse trap unreachable. The Indomie drift problem that started the work is removed, not tooled. The costs are named and bounded. One caveat: the lock assumes shared content moves up to the group, yet what moves is D10, still open. Decide it explicitly in step 4.
+
+Record defects fixed 2026-09-18. The D13 row on #10966 now says shape B (it still said "parent Product row"); the lock comment's "confirms D13" is corrected to "re-closes D13"; the matrix page gained a Locks section and the naming item L2.3 the comment referred to.
+
+## Step 0 · Lock the questions before the answers
+
+The D-numbers were written as if "attribute", "category" and "family" were already defined. They are not. Thirteen questions, one already closed. Green-edged cards are tier 1. Nothing here is answered; the small line under each card is what Sunday's research reads.
+
+### A · What is an attribute?
+
+Six questions about the thing itself: what it is for, what it is, whether an axis is one, whether categories share it, what a value is, and which side of the family line a fact lives on.
+
+A0 tier 1
+
+### What are attributes for, and are some of them hidden?
+
+The uses on the table: the variant picker, search filters, a spec sheet on the product page, Google feed fields, and internal rules (age wall, replenishment, purchasing). Which do we want, in what order? And are some attributes customer-facing while others are staff-only?
+
+Visibility is a property of the attribute definition: shown or hidden everywhere it appears.
+
+Per category membership: Rasa shown for food, hidden for cleaning products.
+
+Per channel: shown online, hidden at the till, sent to Google.
+
+Each use pulls the design differently: filters want shared value rows (A4); the feed wants Google's names and a mapping; the picker wants an order; internal rules want a stable code that staff cannot rename away.
+
+Touches A2, A4, D17. Sunday: Square's 10 visible + 10 hidden; Shopify metafield storefront visibility; eBay aspectUsage; Magento's is_visible_on_front / is_filterable / used_in_product_listing flags.
+
+A1 tier 1
+
+### What is an attribute, and which facts are attributes at all?
+
+Today title, price and barcode are columns; weight and manufacturer are attributes. What is the rule? And is a definition (name, type, allowed values, owner) a separate thing from a value (one product's answer)?
+
+Universal and read by code → column; category-specific and staff-authored → attribute. Lock condition 2 already moves the four shipping dimensions to columns on this logic.
+
+Everything is an attribute, even the title (Amazon).
+
+Only a small fixed set of custom fields beside the columns (Square: 10 visible + 10 hidden).
+
+Is brand an attribute, or an entity with its own table?
+
+Touches D9, D18. Sunday: where each of the thirteen draws the column-versus-attribute line; Shopify keeps weight on the variant, outside the attribute system.
+
+A2 tier 1
+
+### Is a variant dimension an attribute, or its own object?
+
+Flavour distinguishes Indomie siblings. It is also a fact to display, to filter on, and to send to Google. One thing with several roles, or two things?
+
+One object with a role flag (WooCommerce is_variation, eBay, Magento). Then a group's axes are simply some of its category's attributes, and a member's axis value is its ordinary attribute value. Nothing new to store.
+
+Two objects: options for variation, attributes for everything else (Shopify, Square, Shopee). Then the group declares its axes, and a member stores a "selected option" separately from its attribute values.
+
+This is D3, closed 2026-08-13 as (a) on a 4–4 tie and confirmed by Lock 1. Answer A1 first, then confirm or reopen it, and say which on the record.
+
+Touches D3, D4, D5, D7, D8. Sunday: what each side pays — duplicated values, two editors, two filter paths.
+
+A3 tier 1
+
+### Is "Rasa" one attribute type shared by every category that wants it, or does each category define its own?
+
+Food has Rasa. Instant noodles also want Rasa. The same type, reused, or two separate ones? This is the attribute matrix: a category × attribute membership table, or attributes nested under categories.
+
+One global type; categories subscribe to it (Shopify: 8,240 definitions, 93,007 category edges; Akeneo; Magento). One search filter across categories; values survive a category move; one list to curate.
+
+Each category owns its own copy (eBay: 197,046 leaf-scoped aspects; the 2a designs as written). Each category curates its own; no cross-category filter; a move loses values.
+
+Shared type, per-category value list: one Rasa, but noodle flavours and snack flavours are different lists.
+
+Touches A4, D4, D15, D16, D17. Sunday: how many Shopify categories reuse Flavor; distinct names among eBay's aspects; the distinct attribute names our 639 main nodes would need.
+
+A4 tier 1
+
+### What is a value, and where does its allowed list live?
+
+Is "Soto" a string typed on each product, or a row that many products point at? Is "215 g" a number with a unit, or text? Who decides the order the picker shows?
+
+A value is a free string · a shared option row · or hybrid by type (select-typed → row, free text → string).
+
+The list lives on the attribute (one list everywhere) · the category (per-category list) · the family (Shopify's option values belong to the product).
+
+Quantities are text · a number under a unit fixed on the definition · a number plus a unit on the value (Akeneo's metric type).
+
+Subsumes D8, D9. Today: 0.7% case drift, 25–32% junk in manufacturer, '0' on 11,071 rows, 28,750 titles carrying a unit token. Sunday: Shopify linked versus unlinked values; Square shared option values; Akeneo option order and metric type; GS1 and BPOM net-content rules.
+
+A5 tier 2
+
+### Does an attribute belong to the product, to the product variant, or both?
+
+"Product" here is the family row Lock 2 gives every product; "product variant" is the sellable member. Brand and description are facts of the product; flavour, barcode and price are facts of the variant. Is each attribute pinned to one side, can it live on either, and who says?
+
+Pinned on the definition: each attribute is product-level or variant-level, fixed (commercetools level).
+
+Either side, chosen per family: a family decides which of its attributes vary (Akeneo's distribution; Shopify metafields exist on both Product and ProductVariant).
+
+Always on the variant; the product carries nothing, and shared facts are copied across siblings.
+
+If an attribute is on the product, its variants do not store it. An axis is variant-level by definition (A2). Subsumes D11; touches D10.
+
+### B · What is a category node?
+
+Four questions about the tree, plus one already closed: one category per product, as Amazon has one product type.
+
+B1 tier 1
+
+### Do nodes have types — is a leaf a different kind of thing from an internal node?
+
+Is Snack a folder that only groups, or a type that can own a schema and hold products?
+
+Two kinds: folders and types.
+
+One kind; "leaf" only means no children today (Shopify).
+
+One kind with a per-node switch, so the rule can tighten later without a migration (Akeneo; lock condition 5).
+
+Today: 1,553 leaves, 339 internal nodes, 292 of them holding products. Sunday: eBay's leaf-only rule (error 62009) and what sellers do about it.
+
+B2 tier 1
+
+### Can a product be assigned to a non-leaf node?
+
+19,459 products (18%) sit on non-leaf nodes today, 1,722 of them on a root.
+
+Yes, any node (eight of thirteen platforms).
+
+Leaves only (eBay, Walmart, Shopee, Tokopedia), so 19,459 products need a home before Lock 1 ships.
+
+Per node: an "accepts products" switch.
+
+Sunday: which of our 292 used non-leaf nodes are real types (a product genuinely belongs at "Snack") and which are catch-alls (Mainan dan Alat Lainnya: 1,048 products at depth 1).
+
+B3 tier 1
+
+### How deep should leaves go?
+
+For Snack, do we go on to potato snacks? What earns a node its existence: a distinct attribute set, a browse need, a reporting need, a minimum product count?
+
+Today: depth up to 8; 607 used nodes hold fewer than ten products; 114 nodes cover half the catalogue; 639 cover 90%.
+
+Equals D16; sizes Lock 1's authoring bill. Sunday: Shopify's depth and attributes per node in the food branch; Amazon's 107 food types against Google's 5,595 nodes; how many of our leaves share an identical attribute need.
+
+B4 tier 1
+
+### What flows down from parent to child, per kind of fact?
+
+If Food has Rasa, does Instant noodle get it automatically? Same question for requiredness, allowed values, age-walling, replenishment settings, "accepts products".
+
+Nothing flows; every node is complete on its own (nine of thirteen).
+
+Inherit with override (Salesforce: sub-category over parent over global).
+
+Universal set on the root, additions on the leaves, nothing in between.
+
+Probably per kind of fact, not one switch: attributes may inherit while age-walling must.
+
+Equals D15. Sunday: eBay's category-features "inheritance override model"; the #11188 survey of 2026-09-15 (one of thirteen inherits down a category tree).
+
+closed 2026-09-18 ✅ decided
+
+### One category per product.
+
+A product has exactly one category, as Amazon has exactly one product type. Closes the first half of D14. Where a merchandising node such as "Promo Ramadan" lives moves to step 5; promo already targets ProductRange, so nothing waits on it.
+
+### C · What makes products a family?
+
+Three questions about the group row that Lock 2 gives every product.
+
+C1 tier 2
+
+### What may two siblings differ in, and what must they share?
+
+Differ only in axis values, plus each one's price, stock and barcode? Or also in title, images, description? Must they share the category? The brand? Can one product be in two families?
+
+Why: under Lock 2 every product has a group, so this defines "sibling" for 105,000 rows and is the rule the merge and split screens enforce. Sunday: Google and Meta "consistent content across variants" rules; which fields actually differ across the 33 Indomie rows.
+
+C2 tier 2
+
+### Is a 6-pack, or a bundle, a variant of the single — or a separate product?
+
+#11126 ruled a warehouse-banded pack is its own SKU. D6 named "pack form" as an axis. Is "sachet versus bottle" the same idea as "1 versus 6"?
+
+Count is an axis: the 6-pack is a sibling of the single.
+
+Count is a separate product; form is an axis (Amazon: package_level is a mechanism apart from variation).
+
+Both are separate products, no family link.
+
+Touches D6, #11126, promo bundles. Sunday: Walmart count and multipack fields; GS1's GTIN-per-pack rule; count our own "x6" / "isi 6" titles.
+
+C3 tier 3
+
+### Can a family have sub-families?
+
+Shirt → colour → size, two levels; or one level only.
+
+Equals D12. Apparel today: 240 of 1,945 products carry a size token. Sunday: #10943; Akeneo's two levels.
+
+Tier 1 today: A0 · A1 · A2 · A3 · A4 · B1 · B2 · B3 · B4. Removed in the 2026-09-18 clean-up: node roles (folded into B1); barcode identity (a Sunday measurement); physical storage of values (step 2); the axis group V (written into A2 and A4; required-and-complete and where the guarantee lives went to step 3; the variant label to step 5); channel (X1) dropped; enforcement (X2) is D18 and belongs to step 1.
+
+## The order, and why it is this way
+
+Each step needs the one below it to exist. The concepts say what the words mean; the registry says which attributes a category has; a value is what an attribute holds; an axis is an attribute whose value differs between siblings; a group is what siblings share. Nothing in steps 1 to 4 can be designed without step 0.
+
+0
+
+### The concepts A0 – C3 above · today
+
+What the words mean. Lock the thirteen questions in step 0, tier 1 first; research them on Sunday. Their answers rewrite the options in every step below, so the defaults shown there are placeholders until then.
+
+1
+
+### The registry — the attribute matrix D15 · D16 · then D17 · D18
+
+What a category schema is. Which nodes carry a schema, whether it flows down the tree, how requiredness is expressed, and whether the set is a closed contract. This also decides whether L1 is a rename or a 639-node authoring project, and what the schema editor (lock condition 1, the real critical path) looks like.
+
+Decision | Question | Options on the table | 
+
+D15 | Does anything flow down the type tree? | (a) self-contained per node · (b) inherit down with override · (c) universal root set plus leaf additions. Only Salesforce inherits down a category tree; nine of thirteen are per node. | 
+
+D16 | How fine-grained is the registry? | (a) every used node is a type, 1,684 schemas · (b) a schema on a subset, untyped nodes inherit · (c) a coarser registry, on the order of Amazon's 107 food types. New since #11188: adopt a vendor taxonomy. | 
+
+D17 | Where does requiredness live? | (a) one boolean on the (type, attribute) row · (b) required / recommended / optional · (c) per channel, online vs POS · (d) conditional. Today: one global boolean, and manufacturer required blocks saves on 59,726 products. | 
+
+D18 | Closed contract, enforced where? | (a) closed, enforced above the DB · (b) closed, enforced in the DB, which no platform does · (c) open bag with typed known attributes. | 
+
+D14 (a separate placement object for merchandising nodes such as "Promo Ramadan") is part of this group but has no dependants. It can wait for step 5.
+
+2
+
+### The value D8 · D9
+
+What a value is. Framed by A4 above. Adds one storage question moved out of step 0: rows or a document? Today every value is one ProductAttributeValue row per (product, attribute) with six typed columns, 469,179 rows; the alternative is a JSONB document per product (Akeneo moved from rows to raw_values JSONB in 3.0), or rows plus a JSONB projection for reads. A foreign key from a value to an option row exists only with rows. The only part with measurable pain today: case drift on 0.7% of values and junk on 25 to 32% of manufacturer rows. An option type must exist before any axis does, because "Ayam Bawang" cannot be anything but free text in today's six value columns.
+
+Decision | Question | Options, and the likely default | 
+
+D8 | Shared row, or a string copied per product? | (a) shared row by FK · (b) copied string with normalisation · (c) hybrid by attribute type: select-typed to a shared row, free text to a string. Ordering, rename and a stable variant key come only with (a) or (c). | 
+
+D9 | Bare label, or a typed quantity with a unit? | (a) bare label plus typed quantities is mostly forced: lock condition 2 moves the four shipping dimensions to columns. The open sub-question is net content as an axis. 28,750 of 105,786 titles carry a unit token such as "215 GR". | 
+
+3
+
+### The axis D4 · D5 · D6 · D7
+
+What makes two members siblings. Framed by A2 and C1 above. Two questions moved here from step 0: must every member fill every axis with a unique combination, and is the axis set immutable once members exist (D7); and where the guarantee lives — a DB constraint with the composite-FK mirror from lock condition 4, a trigger, a validator, or by construction (D18). Mostly forced by the locks and the 2a designs; close them formally in one pass once step 0 is locked.
+
+Decision | Question | Likely default | 
+
+D4 | Does the type gate which attributes may be axes? | (b) an is_axis_eligible flag on the attribute. Already sketched as common to all three designs. | 
+
+D5 | Does the family pick, or the type impose? | (a) the family picks from the eligible set. Eleven of thirteen platforms. | 
+
+D6 | How many axes? | (b) cap of 3. We need size, flavour and pack form; Shopify, Walmart and Tokopedia cap at 3. A validator, not a schema shape. | 
+
+D7 | Fill every axis, unique combination? | (a) both at write, in the DB. Already forced by the composite-FK mirror in lock condition 4. | 
+
+4
+
+### The group row D10 · D11 · D12
+
+What siblings share. Only decidable once the attributes and values that could move up exist. D10 is the one genuinely open item here, and it sets the migration size.
+
+Decision | Question | Options, and the likely default | 
+
+D10 | What does the group carry? | Field by field: title, slug, description, main_category, images, non-axis values. Never price, stock or barcode. A move needs a dual-write migration and explicit writable serializer fields; a merge must not delete the losing member's images. | 
+
+D11 | Inherit, or replicate? | (b) partition by level, each fact stored once. Implied by "content has one home", which is the reason B beat C. | 
+
+D12 | May a family nest? | (a) one level, enforced. Grocery is one axis deep; 240 of 1,945 apparel products carry a size token. | 
+
+5
+
+### Implementation details naming · feed key · collapse totals · D14
+
+No model consequence. Decide these when the migration is written. Naming (L2.3): keep Product as the sellable row and name the container; renaming Product to ProductVariant churns every FK, serializer and TS model for nothing. Feed key: an opaque stable item_group_id decoupled from the group PK, because Google treats it as immutable. Collapse totals: Elasticsearch reports hits.total before collapsing, so pick a cardinality aggregation or accept the inflated count. D14, second half: where a merchandising node such as "Promo Ramadan" lives now that a product has exactly one category — the dead ProductCategory M2M is the candidate. The member's short variant label ("Soto · 85 g"), derived from its axis values or stored, also lands here. A consideration with no core decision behind it, kept so it is not forgotten: what happens to existing products when a schema changes — an attribute removed from a category, a value removed from a list, a product moved, an axis added to a family that has members.
+
+## Step 1 starts with one fork
+
+Surfaced on #11188. Everything in the registry hangs on it, and it decides how heavy L1 turns out to be. Nothing is recommended here yet; this is the first decision to take.
+
+### Keep authoring our own tree
+
+Needs
+Inheritance down the tree with override (D15 = b), so 1,892 nodes do not need 1,892 schemas. The only fully worked reference is eBay's category features, delivered as an "inheritance override model" that integrators are told to store and manage client side.
+
+Precedent
+One of thirteen inherits attribute definitions down a category tree (Salesforce B2C, single route). Akeneo inherits down its Family tree, a different object, paid edition only.
+
+Bill
+Staff-authored schemas on a depth-8 tree. 114 nodes cover 50% of products, 398 cover 80%, 639 cover 90%; 607 used nodes hold fewer than ten products each. 46 catch-all nodes hold 3,766 products.
+
+Fits
+L1 as written, and the tree's existing business logic (age-walling, replenishment).
+
+### Adopt the Shopify Standard Product Taxonomy
+
+What it is
+MIT-licensed, 14,606 categories, 8,240 attribute definitions with closed value lists (only 1.0% of nodes have none, median 6), materialised per node with no inheritance. id-ID is a published locale: categories, attribute names and values all translated.
+
+Example
+Makanan, Minuman & Tembakau > Item Makanan > Produk Susu > Yoghurt carries Rasa (30 values), Kandungan lemak (8), dietary preferences including Halal, storage requirements, allergen information.
+
+Gaps
+No net-content or size attribute: 300 of 8,240 definitions match size/volume/weight and every one is category-specific. Our size axis is not solved by adopting it. The id-ID build has 18 duplicate full_name paths (Tableware and Flatware both render as Peralatan Makan).
+
+Bill
+Re-homing 105,771 products onto a foreign 14,606-node tree, which is the re-labelling cost L1 was chosen to avoid, though it is per category, not per product, and machine work once a mapping exists.
+
+1,892category nodes
+
+1,684used as main_category
+
+8max depth
+
+19,459products on non-leaf nodes (18.4%)
+
+5attribute definitions today, all universal
+
+The same fork settles the non-leaf question. Products on non-leaf nodes are not automatically illegal: eight of thirteen platforms permit it. Akeneo's model, leaf-only as a per-tree setting, is what lock condition 5 already asks for, so the rule can tighten later without a migration.
+
+## A sequencing tension in the lock, resolved by this order
+
+Lock condition 1 says build the category attribute schema editor first; condition 3 says ship L2 before L1. The editor belongs to L1 and cannot be designed until step 1 is decided.
+
+Read together they mean: decide the registry (step 1) → build the editor → decide value and axis (steps 2, 3) → ship L2 with groups that can have axes → decide the group row's content (step 4) → only then the L1 authoring at scale.
+
+So L1's schema change is small and early (ProductAttribute.category replaces product_class, needed by the editor), while L1's authoring bill is late and sized by step 1.
+
+## Code that needs no further decision
+
+All four are named in the lock's conditions or found wrong today. They can start while the decisions above are being taken.
+
+Work | Why it is decision-free | Issue | 
+
+Shipping dimensions → columns | weight, length, width, height become NOT NULL columns on the sellable row. 105,885 of 105,885 products carry all four, so nothing to reconcile. Shopify does the same; none of its 8,240 taxonomy attributes is a generic weight or dimension. | not filed nearest is #10015 (validation) | 
+
+Age-walling by ancestry | Wrong today, independent of either lock: an exact-id list, so adding one child under the cigarettes parent silently unwalls its products. The test settings set the list empty, so no test catches it. | not filed | 
+
+Google feed withdrawal | Nothing ever withdraws a product from the Merchant feed; compounds #10872. Blocks part of the feed-key work. | #11231 | 
+
+Family-level ranking aggregates | importance_boost and num_purchases_estimate read a per-member ProductRecord; splitting one product into five members divides both. The lock calls this the most serious open item against L2. | not filed design first | 
+
+Sources: the 2026-09-16 lock comment on #10966; #11230 (stress-test and system passes); #11188 (tree management and the inheritance survey of 2026-09-15); the Catalogue Decision Matrix (thirteen-platform records); production numbers as measured on #11188 (2026-09-15) and #11230. Order and defaults are this page's proposal; nothing here is decided.
+

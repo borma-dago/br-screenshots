@@ -1,0 +1,56 @@
+292 used non-leaf nodes, 19522 products
+  under-filed          113 nodes ( 38.7%)    8374 products ( 42.9%)
+  residual-type         82 nodes ( 28.1%)    4410 products ( 22.6%)
+  mixed                 72 nodes ( 24.7%)    3845 products ( 19.7%)
+  declared-catch-all    12 nodes (  4.1%)    1766 products (  9.0%)
+  root-parking           9 nodes (  3.1%)     579 products (  3.0%)
+  not-a-type             4 nodes (  1.4%)     548 products (  2.8%)
+
+red-team hand-read tail nodes: 8 (163 products); rule agreed on 0 of 8
+  their direction of error, on the tail:
+    [52] rule under-filed     -> hand residual-type   n=68
+    [125] rule residual-type   -> hand under-filed     n=61
+    [110] rule mixed           -> hand under-filed     n=21
+    [1677] rule mixed           -> hand residual-type   n=8
+    [213] rule under-filed     -> hand residual-type   n=2
+    [235] rule under-filed     -> hand mixed           n=1
+    [935] rule under-filed     -> hand residual-type   n=1
+    [945] rule under-filed     -> hand residual-type   n=1
+
+hand-read, top-by-products stratum: 40 nodes (13555 products, 69.4%); rule agrees on 20 of 40 (50%)
+hand-read UNION (top-by-products + the adopted tail rows): 48 nodes (13718 products, 70.3%); rule agrees on 20 of 48 (42%)
+  NOTE: the union pools a top-by-products stratum with an ERROR-ENRICHED subsample (the rows a random-20 tail re-read judged misclassified), so the union's agreement rate is a lower bound, not an estimate of the rule's accuracy on the tail. See nonleaf-classification.md §2.
+rule-assigned nodes remaining: 244
+
+CONFUSION MATRIX on the 40 hand-read nodes — rows = rule_says, columns = hand verdict
+rule / hand           under-filed  residual-ty        mixed  declared-ca  root-parkin   not-a-type   TOTAL
+under-filed                     8            1            1            0            0            0      10
+residual-type                   0            3            0            0            0            0       3
+mixed                          13            5            3            0            0            0      21
+declared-catch-all              0            0            0            2            0            0       2
+root-parking                    0            0            0            0            2            0       2
+not-a-type                      0            0            0            0            0            2       2
+TOTAL                          21            9            4            2            2            2      40
+
+where the rule and the reading disagree, by direction:
+   rule mixed               -> hand under-filed         13
+   rule mixed               -> hand residual-type       5
+   rule under-filed         -> hand residual-type       1
+   rule under-filed         -> hand mixed               1
+
+the residual-type nodes (the ones where a non-leaf assignment is genuinely right):
+     642  Fashion > KACAMATA
+     596  Fashion > FASHION ANAK & BAYI
+     379  Fashion > SEPATU ANAK & BAYI
+     299  Fashion > FASHION WANITA > PAKAIAN DALAM WANITA
+     252  Fashion > FASHION WANITA
+     225  Hobi, Ibadah, dan Olahraga > MENJAHIT
+     218  Rumah Tangga > Rumah Tangga > BAHAN LAUNDRY > DETERJEN PAKAIAN > DETERJEN CAIR
+     173  Alat dan Buku Tulis > KERTAS
+     135  Perawatan Diri & Rumah Tangga > Rumah Tangga > PENGHARUM RUANGAN
+     105  Fashion > FASHION PRIA
+     100  Fashion > TAS & KOPER > TAS TRAVEL & KOPER > KOPER BAGASI
+      71  mah Tangga > Peralatan & Perlengkapan Rumah Tangga > PERLENGKAPAN RUMAH TANGGA
+      70  Fashion > FASHION PRIA > ATASAN PRIA
+      68  Fashion > JAM TANGAN
+      64  Fashion > TAS & KOPER > TAS TRAVEL & KOPER > KOPER KABIN

@@ -1,0 +1,12 @@
+section,bucket,value
+A · population,"apparel-titled, active online (feed/site)",78
+A · population,"apparel-titled, all rows",2201
+A · population,"apparel-titled, live (is_active AND is_public)",2062
+"B · size token, by definition",def1 range only (M-XL),50
+"B · size token, by definition",def2 OR def1 OR def4 (defensible floor),287
+"B · size token, by definition",def2 unambiguous letters only (XS/XL/XXL/2L/3L...),262
+"B · size token, by definition",def3 letter size at END of title,368
+"B · size token, by definition",def4 explicit marker word (SIZE/UKURAN/UK/ALL SIZE),23
+"B · size token, by definition","def5 permissive (any letter size anywhere, incl. bare S/M/L)",688
+C · samples,def2 unambiguous,WANITA XXXL - CELANA DALAM JUST GO || PRIA XL - CELANA DALAM JUST GO || LIFREE CELANA EXTRA XL (90-125 CM) ISI 6 || LIFREE CELANA TIPIS (XXL-10) || LIFREE CELANA EXTRA (XXL-5) || LAURIER RELAX NIGHT CELANA MENSTRUASI XXL 2 BUAH || HAPPILY POPOK CELANA DEWASA XL-6 || KEMEJA PANJANG POLOS XL || KEMEJA PRAMUKA SMA GESPER XL || KEMEJA SMP XL.
+C · samples,no size token at all (def5 false),KAPUR BARUS SWALLOW KOTAK BAJU 104 GR || SOFTEX CELANA MENSTRUASI ISI 2 || LIFREE POPOK CELANA EXTRA SERAP XL12 || LIFREE POPOK CELANA EXTRA SERAP L16 || LIFREE POPOK CELANA EXTRA SERAP M20 || LIFREE POPOK CELANA TIPIS L16 || LIFREE POPOK CELANA L4 || LIFREE POPOK CELANA TIPIS XL12 || LIFREE POPOK CELANA TIPIS XL6 || LIFREE POPOK CELANA EKSTRA SERAP L8

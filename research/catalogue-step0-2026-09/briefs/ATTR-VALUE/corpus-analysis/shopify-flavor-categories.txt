@@ -1,0 +1,294 @@
+# categories subscribing to gid://shopify/TaxonomyAttribute/1458 ('Flavor') — 293 of 14606
+gid://shopify/TaxonomyCategory/fb-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages
+gid://shopify/TaxonomyCategory/fb-1-1-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Alcoholic Beverages > Flavored Alcoholic Beverages
+gid://shopify/TaxonomyCategory/fb-1-1-5-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Alcoholic Beverages > Liquor & Spirits > Liqueurs
+gid://shopify/TaxonomyCategory/fb-1-1-5-8	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Alcoholic Beverages > Liquor & Spirits > Vodka
+gid://shopify/TaxonomyCategory/fb-1-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Buttermilk
+gid://shopify/TaxonomyCategory/fb-1-2-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Buttermilk > Ayran & Doogh
+gid://shopify/TaxonomyCategory/fb-1-2-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Buttermilk > Laban
+gid://shopify/TaxonomyCategory/fb-1-2-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Buttermilk > Lassi & Chaas
+gid://shopify/TaxonomyCategory/fb-1-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Coffee
+gid://shopify/TaxonomyCategory/fb-1-3-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Coffee > Coffee Beans & Ground Coffee
+gid://shopify/TaxonomyCategory/fb-1-3-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Coffee > Coffee Concentrates
+gid://shopify/TaxonomyCategory/fb-1-3-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Coffee > Coffee Pods & Capsules
+gid://shopify/TaxonomyCategory/fb-1-3-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Coffee > Instant Coffee
+gid://shopify/TaxonomyCategory/fb-1-3-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Coffee > Ready-To-Drink Coffee
+gid://shopify/TaxonomyCategory/fb-1-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Cordials, Syrups & Squash
+gid://shopify/TaxonomyCategory/fb-1-4-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Cordials, Syrups & Squash > Beverage Syrups
+gid://shopify/TaxonomyCategory/fb-1-4-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Cordials, Syrups & Squash > Cordials
+gid://shopify/TaxonomyCategory/fb-1-4-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Cordials, Syrups & Squash > Squash
+gid://shopify/TaxonomyCategory/fb-1-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Fruit Flavored Drinks
+gid://shopify/TaxonomyCategory/fb-1-5-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Fruit Flavored Drinks > Fruit Punch
+gid://shopify/TaxonomyCategory/fb-1-5-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Fruit Flavored Drinks > Lemonade
+gid://shopify/TaxonomyCategory/fb-1-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Juices, Milkshakes & Smoothies
+gid://shopify/TaxonomyCategory/fb-1-7-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Juices, Milkshakes & Smoothies > Juices
+gid://shopify/TaxonomyCategory/fb-1-7-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Juices, Milkshakes & Smoothies > Milkshakes
+gid://shopify/TaxonomyCategory/fb-1-7-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Juices, Milkshakes & Smoothies > Smoothies
+gid://shopify/TaxonomyCategory/fb-1-11	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Powdered Beverage Mixes
+gid://shopify/TaxonomyCategory/fb-1-11-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Powdered Beverage Mixes > Iced Tea Mixes
+gid://shopify/TaxonomyCategory/fb-1-11-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Powdered Beverage Mixes > Lemonade Mixes
+gid://shopify/TaxonomyCategory/fb-1-11-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Powdered Beverage Mixes > Sports Drink Mixes
+gid://shopify/TaxonomyCategory/fb-1-12	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Soda
+gid://shopify/TaxonomyCategory/fb-1-13-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Sports & Energy Drinks > Energy Drinks
+gid://shopify/TaxonomyCategory/fb-1-14	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions
+gid://shopify/TaxonomyCategory/fb-1-14-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Bubble Tea Ingredients & Kits
+gid://shopify/TaxonomyCategory/fb-1-14-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Infusions
+gid://shopify/TaxonomyCategory/fb-1-14-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Ready-To-Drink Herbal Infusions & Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Black Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-8	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Green Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Herbal & Fruit Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Matcha
+gid://shopify/TaxonomyCategory/fb-1-14-2-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Oolong Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Pu-erh Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > Rooibos Tea
+gid://shopify/TaxonomyCategory/fb-1-14-2-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Tea & Infusions > Tea > White Tea
+gid://shopify/TaxonomyCategory/fb-1-15	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Vinegar Drinks
+gid://shopify/TaxonomyCategory/fb-1-16	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water
+gid://shopify/TaxonomyCategory/fb-1-16-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Alkaline Water
+gid://shopify/TaxonomyCategory/fb-1-16-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Carbonated Water
+gid://shopify/TaxonomyCategory/fb-1-16-9	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Coconut Water
+gid://shopify/TaxonomyCategory/fb-1-16-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Distilled Water
+gid://shopify/TaxonomyCategory/fb-1-16-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Flat Mineral Water
+gid://shopify/TaxonomyCategory/fb-1-16-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Flavored Water
+gid://shopify/TaxonomyCategory/fb-1-16-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Functional & Enhanced Water
+gid://shopify/TaxonomyCategory/fb-1-16-8	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Purified Water
+gid://shopify/TaxonomyCategory/fb-1-16-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Beverages > Water > Spring Water
+gid://shopify/TaxonomyCategory/fb-4-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Cannabis Products > Medical Cannabis
+gid://shopify/TaxonomyCategory/fb-4-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Cannabis Products > Recreational Cannabis
+gid://shopify/TaxonomyCategory/fb-4-5-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Cannabis Products > Vaping > E-Liquid
+gid://shopify/TaxonomyCategory/fb-4-5-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Cannabis Products > Vaping > Vape Cartridges
+gid://shopify/TaxonomyCategory/fb-4-5-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Cannabis Products > Vaping > Vape Pods
+gid://shopify/TaxonomyCategory/fb-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items
+gid://shopify/TaxonomyCategory/fb-2-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery
+gid://shopify/TaxonomyCategory/fb-2-1-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Bagels
+gid://shopify/TaxonomyCategory/fb-2-1-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Breads & Buns
+gid://shopify/TaxonomyCategory/fb-2-1-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars
+gid://shopify/TaxonomyCategory/fb-2-1-4-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes
+gid://shopify/TaxonomyCategory/fb-2-1-4-1-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes > Cheesecakes
+gid://shopify/TaxonomyCategory/fb-2-1-4-1-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes > Cookie Cakes
+gid://shopify/TaxonomyCategory/fb-2-1-4-1-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes > Fruit Cakes
+gid://shopify/TaxonomyCategory/fb-2-1-4-1-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes > Panettones
+gid://shopify/TaxonomyCategory/fb-2-1-4-1-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes > Pound Cakes & Bundt Cakes
+gid://shopify/TaxonomyCategory/fb-2-1-4-1-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Cakes > Roll Cakes & Swiss Rolls
+gid://shopify/TaxonomyCategory/fb-2-1-4-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Dessert Bars
+gid://shopify/TaxonomyCategory/fb-2-1-4-2-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Dessert Bars > Blondies
+gid://shopify/TaxonomyCategory/fb-2-1-4-2-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cakes & Dessert Bars > Dessert Bars > Brownies
+gid://shopify/TaxonomyCategory/fb-2-1-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Coffee Cakes
+gid://shopify/TaxonomyCategory/fb-2-1-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cookies
+gid://shopify/TaxonomyCategory/fb-2-1-6-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cookies > Biscotti & Cantuccini
+gid://shopify/TaxonomyCategory/fb-2-1-6-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cookies > Gingerbread & Holiday Cookies
+gid://shopify/TaxonomyCategory/fb-2-1-6-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cookies > Sandwich Cookies
+gid://shopify/TaxonomyCategory/fb-2-1-6-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cookies > Shortbread Cookies
+gid://shopify/TaxonomyCategory/fb-2-1-6-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cookies > Wafer Cookies
+gid://shopify/TaxonomyCategory/fb-2-1-17	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Crêpes
+gid://shopify/TaxonomyCategory/fb-2-1-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Cupcakes
+gid://shopify/TaxonomyCategory/fb-2-1-8	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Donuts
+gid://shopify/TaxonomyCategory/fb-2-1-9	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Fudge
+gid://shopify/TaxonomyCategory/fb-2-1-10	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Ice Cream Cones
+gid://shopify/TaxonomyCategory/fb-2-1-10-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Ice Cream Cones > Cake Cones
+gid://shopify/TaxonomyCategory/fb-2-1-10-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Ice Cream Cones > Sugar Cones
+gid://shopify/TaxonomyCategory/fb-2-1-10-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Ice Cream Cones > Wafer Cups & Bowls
+gid://shopify/TaxonomyCategory/fb-2-1-10-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Ice Cream Cones > Waffle Cones
+gid://shopify/TaxonomyCategory/fb-2-1-16	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Mooncakes
+gid://shopify/TaxonomyCategory/fb-2-1-11	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Muffins
+gid://shopify/TaxonomyCategory/fb-2-1-12	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones
+gid://shopify/TaxonomyCategory/fb-2-1-12-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Baklava
+gid://shopify/TaxonomyCategory/fb-2-1-12-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Cannoli
+gid://shopify/TaxonomyCategory/fb-2-1-12-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Cinnamon Rolls
+gid://shopify/TaxonomyCategory/fb-2-1-12-8	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Croissants
+gid://shopify/TaxonomyCategory/fb-2-1-12-9	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Danish Pastries
+gid://shopify/TaxonomyCategory/fb-2-1-12-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Puff Pastries
+gid://shopify/TaxonomyCategory/fb-2-1-12-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Scones
+gid://shopify/TaxonomyCategory/fb-2-1-12-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Strudels & Turnovers
+gid://shopify/TaxonomyCategory/fb-2-1-12-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pastries & Scones > Éclairs
+gid://shopify/TaxonomyCategory/fb-2-1-13	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pies & Tarts
+gid://shopify/TaxonomyCategory/fb-2-1-13-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pies & Tarts > Pies
+gid://shopify/TaxonomyCategory/fb-2-1-13-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pies & Tarts > Quiches
+gid://shopify/TaxonomyCategory/fb-2-1-13-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Pies & Tarts > Tarts
+gid://shopify/TaxonomyCategory/fb-2-1-18	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Bakery > Waffles
+gid://shopify/TaxonomyCategory/fb-2-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate
+gid://shopify/TaxonomyCategory/fb-2-3-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy
+gid://shopify/TaxonomyCategory/fb-2-3-1-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Caramel & Toffee
+gid://shopify/TaxonomyCategory/fb-2-3-1-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Chewing Gum
+gid://shopify/TaxonomyCategory/fb-2-3-1-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Cotton Candy
+gid://shopify/TaxonomyCategory/fb-2-3-1-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Gummy Candy
+gid://shopify/TaxonomyCategory/fb-2-3-1-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Hard Candy
+gid://shopify/TaxonomyCategory/fb-2-3-1-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Licorice Candy
+gid://shopify/TaxonomyCategory/fb-2-3-1-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Candy > Lollipops
+gid://shopify/TaxonomyCategory/fb-2-3-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate
+gid://shopify/TaxonomyCategory/fb-2-3-2-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate > Chocolate Bars & Tablets
+gid://shopify/TaxonomyCategory/fb-2-3-2-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate > Chocolate Covered Nuts
+gid://shopify/TaxonomyCategory/fb-2-3-2-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate > Chocolate Gift Boxes
+gid://shopify/TaxonomyCategory/fb-2-3-2-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate > Chocolate Truffles & Bonbons
+gid://shopify/TaxonomyCategory/fb-2-3-2-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate > Novelty & Shaped Chocolates
+gid://shopify/TaxonomyCategory/fb-2-3-2-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Candy & Chocolate > Chocolate > Seasonal & Holiday Chocolates
+gid://shopify/TaxonomyCategory/fb-2-4-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Dessert Toppings
+gid://shopify/TaxonomyCategory/fb-2-4-3-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Dessert Toppings > Dessert Sauces
+gid://shopify/TaxonomyCategory/fb-2-4-3-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Dessert Toppings > Fruit Toppings
+gid://shopify/TaxonomyCategory/fb-2-4-3-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Dessert Toppings > Ice Cream Syrup
+gid://shopify/TaxonomyCategory/fb-2-4-3-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Dessert Toppings > Whipped Toppings
+gid://shopify/TaxonomyCategory/fb-2-5-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Cooking & Baking Ingredients > Baking Flavors & Extracts
+gid://shopify/TaxonomyCategory/fb-2-6-8	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Dairy Products > Yogurt
+gid://shopify/TaxonomyCategory/fb-2-7-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Dips & Spreads > Cream Cheese
+gid://shopify/TaxonomyCategory/fb-2-7-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Dips & Spreads > Jams & Jellies
+gid://shopify/TaxonomyCategory/fb-2-9	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Frozen Desserts & Novelties
+gid://shopify/TaxonomyCategory/fb-2-9-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Frozen Desserts & Novelties > Frozen Cakes & Pies
+gid://shopify/TaxonomyCategory/fb-2-9-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Frozen Desserts & Novelties > Frozen Custards & Puddings
+gid://shopify/TaxonomyCategory/fb-2-11-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Cereal & Granola
+gid://shopify/TaxonomyCategory/fb-2-11-4-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Cereal & Granola > Cold Breakfast Cereals
+gid://shopify/TaxonomyCategory/fb-2-11-4-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Cereal & Granola > Granola
+gid://shopify/TaxonomyCategory/fb-2-11-4-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Cereal & Granola > Muesli
+gid://shopify/TaxonomyCategory/fb-2-11-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal
+gid://shopify/TaxonomyCategory/fb-2-11-7-7	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Cornmeal & Polenta
+gid://shopify/TaxonomyCategory/fb-2-11-7-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Instant & Quick Oats
+gid://shopify/TaxonomyCategory/fb-2-11-7-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Muesli
+gid://shopify/TaxonomyCategory/fb-2-11-7-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Oat Flour & Powder
+gid://shopify/TaxonomyCategory/fb-2-11-7-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Porridge
+gid://shopify/TaxonomyCategory/fb-2-11-7-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Rolled Oats
+gid://shopify/TaxonomyCategory/fb-2-11-7-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Oats, Grits & Hot Cereal > Steel Cut Oats
+gid://shopify/TaxonomyCategory/fb-2-16-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Seasonings & Spices > Popcorn Seasoning
+gid://shopify/TaxonomyCategory/fb-2-17	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods
+gid://shopify/TaxonomyCategory/fb-2-17-2-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Cereal & Granola Bars > Cereal Bars
+gid://shopify/TaxonomyCategory/fb-2-17-4	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Chips
+gid://shopify/TaxonomyCategory/fb-2-17-5	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Crackers
+gid://shopify/TaxonomyCategory/fb-2-17-6	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Croutons
+gid://shopify/TaxonomyCategory/fb-2-17-22	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Nut & Seed Snacks
+gid://shopify/TaxonomyCategory/fb-2-17-11	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Pretzels
+gid://shopify/TaxonomyCategory/fb-2-17-12	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Pudding & Gelatin Snacks
+gid://shopify/TaxonomyCategory/fb-2-17-12-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Pudding & Gelatin Snacks > Gelatin & Jelly Desserts
+gid://shopify/TaxonomyCategory/fb-2-17-12-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Pudding & Gelatin Snacks > Pudding Snacks
+gid://shopify/TaxonomyCategory/fb-2-17-19	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Puffed & Extruded Snacks
+gid://shopify/TaxonomyCategory/fb-2-17-13	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Puffed Rice Cakes
+gid://shopify/TaxonomyCategory/fb-2-17-20	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Rice Crackers
+gid://shopify/TaxonomyCategory/fb-2-17-21	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Seaweed Snacks
+gid://shopify/TaxonomyCategory/fb-2-17-15	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Sesame Sticks
+gid://shopify/TaxonomyCategory/fb-2-17-16	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Snack Cakes
+gid://shopify/TaxonomyCategory/fb-2-17-17	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Sticky Rice Cakes
+gid://shopify/TaxonomyCategory/fb-2-17-17-2	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Sticky Rice Cakes > Korean Tteok & Tteokbokki Rice Cakes
+gid://shopify/TaxonomyCategory/fb-2-17-17-3	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Sticky Rice Cakes > Mochi Blocks
+gid://shopify/TaxonomyCategory/fb-2-17-17-1	extended=False	name_on_edge=Flavor	Food, Beverages & Tobacco > Food Items > Snack Foods > Sticky Rice Cakes > Sweet Mochi & Daifuku
+gid://shopify/TaxonomyCategory/hb-1-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Condoms
+gid://shopify/TaxonomyCategory/hb-1-9	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition
+gid://shopify/TaxonomyCategory/hb-1-9-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Bars
+gid://shopify/TaxonomyCategory/hb-1-9-1-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Bars > Energy Bars
+gid://shopify/TaxonomyCategory/hb-1-9-1-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Bars > Meal Replacement Bars
+gid://shopify/TaxonomyCategory/hb-1-9-1-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Bars > Protein Bars
+gid://shopify/TaxonomyCategory/hb-1-9-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes
+gid://shopify/TaxonomyCategory/hb-1-9-2-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes > Pre-Workout Drinks & Powders
+gid://shopify/TaxonomyCategory/hb-1-9-2-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes > Protein & Meal Replacement Shakes
+gid://shopify/TaxonomyCategory/hb-1-9-2-2-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes > Protein & Meal Replacement Shakes > Meal Replacement Drinks & Powders
+gid://shopify/TaxonomyCategory/hb-1-9-2-2-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes > Protein & Meal Replacement Shakes > Protein Shakes
+gid://shopify/TaxonomyCategory/hb-1-9-2-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes > Weight Gainer Shakes
+gid://shopify/TaxonomyCategory/hb-1-9-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Gels & Chews
+gid://shopify/TaxonomyCategory/hb-1-9-3-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Gels & Chews > Energy Chews & Gummies
+gid://shopify/TaxonomyCategory/hb-1-9-3-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Gels & Chews > Energy Gels
+gid://shopify/TaxonomyCategory/hb-1-9-4	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Nutritional Food Purées
+gid://shopify/TaxonomyCategory/hb-1-9-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Tube Feeding Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Amino Acids
+gid://shopify/TaxonomyCategory/hb-1-9-6-1-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Amino Acids > Branched-Chain Amino Acid (BCAA)
+gid://shopify/TaxonomyCategory/hb-1-9-6-1-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Amino Acids > Single Amino Acid Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-10	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > CBD Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Collagen
+gid://shopify/TaxonomyCategory/hb-1-9-6-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Creatine
+gid://shopify/TaxonomyCategory/hb-1-9-6-4	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Digestive Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-4-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Digestive Supplements > Activated Charcoal & Binders
+gid://shopify/TaxonomyCategory/hb-1-9-6-4-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Digestive Supplements > Colon Cleanses
+gid://shopify/TaxonomyCategory/hb-1-9-6-4-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Digestive Supplements > Digestive Enzymes
+gid://shopify/TaxonomyCategory/hb-1-9-6-4-4	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Digestive Supplements > Prebiotics & Fiber
+gid://shopify/TaxonomyCategory/hb-1-9-6-4-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Digestive Supplements > Probiotics
+gid://shopify/TaxonomyCategory/hb-1-9-6-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-5-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements > Flower Essence Remedies
+gid://shopify/TaxonomyCategory/hb-1-9-6-5-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements > Kratom Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-6	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Minerals
+gid://shopify/TaxonomyCategory/hb-1-9-6-6-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Minerals > Calcium
+gid://shopify/TaxonomyCategory/hb-1-9-6-6-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Minerals > Iron
+gid://shopify/TaxonomyCategory/hb-1-9-6-6-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Minerals > Magnesium
+gid://shopify/TaxonomyCategory/hb-1-9-6-6-4	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Minerals > Multimineral Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-6-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Minerals > Zinc
+gid://shopify/TaxonomyCategory/hb-1-9-6-7	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Multivitamin Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-11	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Omega Fatty Acids
+gid://shopify/TaxonomyCategory/hb-1-9-6-8	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Protein Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-6-9	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > CoQ10
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > Vitamin A
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > Vitamin B
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-4	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > Vitamin C
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > Vitamin D
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-6	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > Vitamin E
+gid://shopify/TaxonomyCategory/hb-1-9-6-9-7	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Single Vitamins > Vitamin K
+gid://shopify/TaxonomyCategory/hb-1-9-6-12	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Sleep Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-7	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss
+gid://shopify/TaxonomyCategory/hb-1-9-7-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss > Weight Loss Detox & Cleanse Products
+gid://shopify/TaxonomyCategory/hb-1-9-7-3-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss > Weight Loss Detox & Cleanse Products > Detox & Cleanse Patches
+gid://shopify/TaxonomyCategory/hb-1-9-7-3-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss > Weight Loss Detox & Cleanse Products > Detox & Cleanse Programs
+gid://shopify/TaxonomyCategory/hb-1-9-7-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss > Weight Loss Meal Replacements
+gid://shopify/TaxonomyCategory/hb-1-9-7-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss > Weight Loss Supplements
+gid://shopify/TaxonomyCategory/hb-1-9-7-6	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Fitness & Nutrition > Weight Loss > Weight Loss Topical & Patch Treatments
+gid://shopify/TaxonomyCategory/hb-1-16	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs
+gid://shopify/TaxonomyCategory/hb-1-16-1	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Allergy & Hay Fever Medicines
+gid://shopify/TaxonomyCategory/hb-1-16-2	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Cough, Cold & Flu Medicines
+gid://shopify/TaxonomyCategory/hb-1-16-3	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Digestive Health Medicines
+gid://shopify/TaxonomyCategory/hb-1-16-4	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Pain Relief & Fever Reducers
+gid://shopify/TaxonomyCategory/hb-1-16-5	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Sleep Aids & Relaxants
+gid://shopify/TaxonomyCategory/hb-1-16-6	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Smoking Cessation Aids
+gid://shopify/TaxonomyCategory/hb-1-16-7	extended=False	name_on_edge=Flavor	Health & Beauty > Health Care > Medicine & Drugs > Topical Skin Treatments
+gid://shopify/TaxonomyCategory/hb-3-2-6-5	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip & Cheek Stains
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip Gloss
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-3	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip Liners
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-7	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip Makeup Kits & Sets
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-8	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip Oils
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-9	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip Plumpers
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-5	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lip Primers
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-6	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lipsticks
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-6-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lipsticks > Lipstick Refills
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-6-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Lipsticks > Liquid Lipsticks
+gid://shopify/TaxonomyCategory/hb-3-2-6-5-10	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Makeup > Lip Makeup > Permanent Makeup Lip Pigments
+gid://shopify/TaxonomyCategory/hb-3-2-9-9	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Skin Care > Lip Balms & Treatments
+gid://shopify/TaxonomyCategory/hb-3-2-9-9-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Skin Care > Lip Balms & Treatments > Lip Balms
+gid://shopify/TaxonomyCategory/hb-3-2-9-9-3	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Skin Care > Lip Balms & Treatments > Lip Masks
+gid://shopify/TaxonomyCategory/hb-3-2-9-9-4	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Skin Care > Lip Balms & Treatments > Lip Scrubs
+gid://shopify/TaxonomyCategory/hb-3-2-9-9-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Cosmetics > Skin Care > Lip Balms & Treatments > Medicated Lip Treatments
+gid://shopify/TaxonomyCategory/hb-3-12-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Breath Sprays
+gid://shopify/TaxonomyCategory/hb-3-12-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Dental Floss
+gid://shopify/TaxonomyCategory/hb-3-12-2-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Dental Floss > Dental Floss Picks
+gid://shopify/TaxonomyCategory/hb-3-12-2-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Dental Floss > Floss Refills
+gid://shopify/TaxonomyCategory/hb-3-12-3	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Dental Mouthguards
+gid://shopify/TaxonomyCategory/hb-3-12-6	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Denture Adhesives
+gid://shopify/TaxonomyCategory/hb-3-12-7	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Denture Cleaners
+gid://shopify/TaxonomyCategory/hb-3-12-7-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Denture Cleaners > Denture Cleaning Tablets & Powders
+gid://shopify/TaxonomyCategory/hb-3-12-7-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Denture Cleaners > Ultrasonic Denture Cleaners
+gid://shopify/TaxonomyCategory/hb-3-12-11	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Mouthwash
+gid://shopify/TaxonomyCategory/hb-3-12-14	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners
+gid://shopify/TaxonomyCategory/hb-3-12-14-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Charcoal Powder
+gid://shopify/TaxonomyCategory/hb-3-12-14-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > LED Light Kits
+gid://shopify/TaxonomyCategory/hb-3-12-14-2-1	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > LED Light Kits > LED Mouthpiece Kits
+gid://shopify/TaxonomyCategory/hb-3-12-14-2-2	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > LED Light Kits > Teeth Whitening Lamps
+gid://shopify/TaxonomyCategory/hb-3-12-14-3	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Tray Cases
+gid://shopify/TaxonomyCategory/hb-3-12-14-4	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Foam
+gid://shopify/TaxonomyCategory/hb-3-12-14-5	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Gels
+gid://shopify/TaxonomyCategory/hb-3-12-14-11	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Kits
+gid://shopify/TaxonomyCategory/hb-3-12-14-6	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Mouthwash
+gid://shopify/TaxonomyCategory/hb-3-12-14-7	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Pens
+gid://shopify/TaxonomyCategory/hb-3-12-14-8	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Pods
+gid://shopify/TaxonomyCategory/hb-3-12-14-9	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Powder
+gid://shopify/TaxonomyCategory/hb-3-12-14-12	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Serums
+gid://shopify/TaxonomyCategory/hb-3-12-14-10	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Strips
+gid://shopify/TaxonomyCategory/hb-3-12-14-13	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Teeth Whiteners > Whitening Tablets
+gid://shopify/TaxonomyCategory/hb-3-12-19	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Oral Care > Toothpaste
+gid://shopify/TaxonomyCategory/hb-3-13	extended=False	name_on_edge=Flavor	Health & Beauty > Personal Care > Personal Lubricants
+gid://shopify/TaxonomyCategory/hg-11-6-19-1	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Barbecue Briquettes
+gid://shopify/TaxonomyCategory/hg-11-6-19-1-1	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Barbecue Briquettes > Binchotan Charcoal
+gid://shopify/TaxonomyCategory/hg-11-6-19-1-2	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Barbecue Briquettes > Charcoal Briquettes
+gid://shopify/TaxonomyCategory/hg-11-6-19-1-5	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Barbecue Briquettes > Coconut Shell Charcoals
+gid://shopify/TaxonomyCategory/hg-11-6-19-1-3	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Barbecue Briquettes > Lump Charcoals
+gid://shopify/TaxonomyCategory/hg-11-6-19-1-4	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Barbecue Briquettes > Thai Charcoals
+gid://shopify/TaxonomyCategory/hg-11-6-19-9	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Smoking Chips & Pellets
+gid://shopify/TaxonomyCategory/hg-11-6-19-9-1	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Smoking Chips & Pellets > Smoking Chips
+gid://shopify/TaxonomyCategory/hg-11-6-19-9-3	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Smoking Chips & Pellets > Smoking Chunks
+gid://shopify/TaxonomyCategory/hg-11-6-19-9-2	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Outdoor Grill Accessories > Smoking Chips & Pellets > Smoking Pellets
+gid://shopify/TaxonomyCategory/hg-11-6-21	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Popcorn Maker Accessories
+gid://shopify/TaxonomyCategory/hg-11-6-25-7	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Soda Maker Accessories > Syrups
+gid://shopify/TaxonomyCategory/hg-11-6-32-2	extended=False	name_on_edge=Flavor	Home & Garden > Kitchen & Dining > Kitchen Appliance Accessories > Yogurt Maker Accessories > Flavorings

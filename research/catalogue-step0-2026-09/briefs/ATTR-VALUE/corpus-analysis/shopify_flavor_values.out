@@ -1,0 +1,174 @@
+## Flavor (gid 1458) — the ONE list, all 30 values, en
+  gid://shopify/TaxonomyValue/19274  Almond
+  gid://shopify/TaxonomyValue/19275  Apple
+  gid://shopify/TaxonomyValue/19276  Banana
+  gid://shopify/TaxonomyValue/19277  Blueberry
+  gid://shopify/TaxonomyValue/19278  Caramel
+  gid://shopify/TaxonomyValue/19279  Cherry
+  gid://shopify/TaxonomyValue/19280  Chocolate
+  gid://shopify/TaxonomyValue/19281  Cinnamon
+  gid://shopify/TaxonomyValue/992  Coconut
+  gid://shopify/TaxonomyValue/8200  Coffee
+  gid://shopify/TaxonomyValue/9025  Dulce de leche
+  gid://shopify/TaxonomyValue/9027  Elderflower
+  gid://shopify/TaxonomyValue/9031  Ginger
+  gid://shopify/TaxonomyValue/9042  Lemon
+  gid://shopify/TaxonomyValue/9045  Lime
+  gid://shopify/TaxonomyValue/9046  Lychee
+  gid://shopify/TaxonomyValue/19282  Mango
+  gid://shopify/TaxonomyValue/9050  Matcha
+  gid://shopify/TaxonomyValue/19283  Mint
+  gid://shopify/TaxonomyValue/9054  Mojito
+  gid://shopify/TaxonomyValue/19284  Orange
+  gid://shopify/TaxonomyValue/19285  Peach
+  gid://shopify/TaxonomyValue/19286  Raspberry
+  gid://shopify/TaxonomyValue/19287  Rose
+  gid://shopify/TaxonomyValue/9065  Salted caramel
+  gid://shopify/TaxonomyValue/19288  Strawberry
+  gid://shopify/TaxonomyValue/19289  Tropical
+  gid://shopify/TaxonomyValue/19290  Unflavored
+  gid://shopify/TaxonomyValue/19291  Vanilla
+  gid://shopify/TaxonomyValue/19292  Other
+
+## Pet food flavor — all 43 values (a SECOND definition, its own list)
+  Apple
+  Avocado
+  Bacon
+  Banana
+  Beef
+  Beet
+  Blueberry
+  Bone
+  Brown rice
+  Carrot
+  Cheese
+  Chicken
+  Cranberry
+  Duck
+  Fish
+  Fruit
+  Grains
+  Grass
+  Ham
+  Lamb
+  Liver
+  Mango
+  Meat
+  Mixed flavors
+  Peanut butter
+  Peas
+  Peppermint
+  Pork
+  Potatoes
+  Rabbit
+  Rice
+  Salami
+  Salmon
+  Seafood
+  Spinach
+  Sweet potatoes
+  Tuna
+  Turkey
+  Unflavored
+  Veal
+  Vegetables
+  Venison
+  Other
+
+## Baby food flavor — all 41 values
+  Apple
+  Apricot
+  Avocado
+  Banana
+  Barley
+  Berries
+  Blackberry
+  Blueberry
+  Broccoli
+  Brown rice
+  Butternut squash
+  Carrot
+  Cauliflower
+  Cherry
+  Chocolate
+  Green beans
+  Kiwi
+  Lentils
+  Mango
+  Meat
+  Mixed fruits
+  Oatmeal
+  Orange
+  Papaya
+  Peach
+  Pear
+  Peas
+  Pineapple
+  Plum
+  Pumpkin
+  Quinoa
+  Raspberry
+  Spinach
+  Strawberry
+  Sweet potato
+  Unflavored
+  Vanilla
+  Vegetables
+  Watermelon
+  Zucchini
+  Other
+
+## Food product form values
+  Food product form (gid://shopify/TaxonomyAttribute/1978) 11 values: ['Dried', 'Fresh', 'Frozen', 'Granules', 'Ground', 'Powder', 'Preserved', 'Sheets', 'Untreated/Raw', 'Whole', 'Other']
+  Package type (gid://shopify/TaxonomyAttribute/1456) 27 values: ['Bag', 'Bottle', 'Box', 'Can', 'Canister', 'Case', 'Dispenser', 'Flip-top', 'Glass bottle', 'Glass container', 'Jar', 'Keg', 'Plastic bottle', 'Plastic container', 'Pot', 'Pouch', 'Pump bottle', 'Refill', 'Sachet', 'Shaker', 'Spray bottle', 'Squeeze tube', 'Stick', 'Tin', 'Travel size', 'Tube', 'Other']
+  Product form (gid://shopify/TaxonomyAttribute/1285) 29 values: ['Cream', 'Cream-to-powder', 'Film', 'Foam', 'Foaming lotion', 'Gel', 'Kohl', 'Liquid', 'Loose powder', 'Lotion', 'Milk', 'Mousse', 'Oil', 'Ointment', 'Pads', 'Paste', 'Pencil', 'Powder', 'Pressed powder', 'Roll-on', 'Serum', 'Solid', 'Spray', 'Stick', 'Suppository', 'Tablets', 'Towelette', 'Wipes', 'Other']
+
+## id-ID: same ids, translated names?
+  id-ID attributes: 8240 · same id present: True
+  name en='Flavor'  id-ID='Rasa'  handle en='flavor' id-ID='flavor'
+  value count en=30 id-ID=30
+    gid://shopify/TaxonomyValue/19274  en=Almond                 id-ID=Almon
+    gid://shopify/TaxonomyValue/19275  en=Apple                  id-ID=Apel
+    gid://shopify/TaxonomyValue/19277  en=Blueberry              id-ID=Bluberi
+    gid://shopify/TaxonomyValue/19279  en=Cherry                 id-ID=Ceri
+    gid://shopify/TaxonomyValue/19280  en=Chocolate              id-ID=Cokelat
+    gid://shopify/TaxonomyValue/9025  en=Dulce de leche         id-ID=Dulce de leche
+    gid://shopify/TaxonomyValue/9027  en=Elderflower            id-ID=Elderflower
+    gid://shopify/TaxonomyValue/9031  en=Ginger                 id-ID=Jahe
+    gid://shopify/TaxonomyValue/19284  en=Orange                 id-ID=Jeruk
+    gid://shopify/TaxonomyValue/9045  en=Lime                   id-ID=Jeruk nipis
+    gid://shopify/TaxonomyValue/19278  en=Caramel                id-ID=Karamel
+    gid://shopify/TaxonomyValue/9065  en=Salted caramel         id-ID=Karamel asin
+    gid://shopify/TaxonomyValue/19281  en=Cinnamon               id-ID=Kayu manis
+    gid://shopify/TaxonomyValue/992  en=Coconut                id-ID=Kelapa
+    gid://shopify/TaxonomyValue/8200  en=Coffee                 id-ID=Kopi
+    gid://shopify/TaxonomyValue/9046  en=Lychee                 id-ID=Leci
+    gid://shopify/TaxonomyValue/19282  en=Mango                  id-ID=Mangga
+    gid://shopify/TaxonomyValue/9050  en=Matcha                 id-ID=Matcha
+    gid://shopify/TaxonomyValue/19287  en=Rose                   id-ID=Mawar
+    gid://shopify/TaxonomyValue/19283  en=Mint                   id-ID=Mint
+    gid://shopify/TaxonomyValue/9054  en=Mojito                 id-ID=Mojito
+    gid://shopify/TaxonomyValue/19285  en=Peach                  id-ID=Persik
+    gid://shopify/TaxonomyValue/19276  en=Banana                 id-ID=Pisang
+    gid://shopify/TaxonomyValue/19286  en=Raspberry              id-ID=Rasberi
+    gid://shopify/TaxonomyValue/9042  en=Lemon                  id-ID=Sitrun
+    gid://shopify/TaxonomyValue/19288  en=Strawberry             id-ID=Strawberry
+    gid://shopify/TaxonomyValue/19290  en=Unflavored             id-ID=Tanpa rasa
+    gid://shopify/TaxonomyValue/19289  en=Tropical               id-ID=Tropis
+    gid://shopify/TaxonomyValue/19291  en=Vanilla                id-ID=Vanila
+    gid://shopify/TaxonomyValue/19292  en=Other                  id-ID=Lainnya
+  id-ID categories: 14606
+
+## does the taxonomy have ANY non-enumerated attribute? (free text / number / measurement)
+  attributes with 0 values: 0
+  keys on an attribute object: ['description', 'extended_attributes', 'handle', 'id', 'name', 'values']
+  keys on a value object: ['handle', 'id', 'name']
+  -> no 'type', no 'unit', no 'input_type', no 'position' key anywhere on attribute or value
+
+## value ORDER: is the published list alphabetical, id-ordered, or curated?
+  Flavor               alphabetical=False  id-ascending=False  last='Other'
+  Size                 alphabetical=False  id-ascending=False  last='Other'
+  Color                alphabetical=True  id-ascending=False  last='Yellow'
+  Food product form    alphabetical=False  id-ascending=False  last='Other'
+  attributes whose LAST value is 'Other': 8237 of 8237 attributes containing an 'Other' value (8240 total)
+  attributes alphabetical once 'Other' is removed: 7715 of 8240

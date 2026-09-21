@@ -1,0 +1,35 @@
+our used nodes 1686, products 106161
+
+--- passA ---
+   EXACT        242 ( 14.4%)  products   14209 ( 13.4%)
+   FUZZY        120 (  7.1%)  products    9539 (  9.0%)
+   AMBIGUOUS     77 (  4.6%)  products    7713 (  7.3%)
+   UNMAPPED    1247 ( 74.0%)  products   74700 ( 70.4%)
+   mapped       362 ( 21.5%)  products   23748 ( 22.4%)
+   MISS        1324 ( 78.5%)  products   82413 ( 77.6%)
+--- passB ---
+   EXACT        321 ( 19.0%)  products   27034 ( 25.5%)
+   FUZZY        113 (  6.7%)  products    7637 (  7.2%)
+   AMBIGUOUS     68 (  4.0%)  products    7347 (  6.9%)
+   UNMAPPED    1184 ( 70.2%)  products   64143 ( 60.4%)
+   mapped       434 ( 25.7%)  products   34671 ( 32.7%)
+   MISS        1252 ( 74.3%)  products   71490 ( 67.3%)
+
+pass-A matches lost by pass B, over the TEN PRODUCT ROOTS (must be 0): 0
+  lost under the three non-product roots, by construction: 2, products 89  [1804, 1839]
+pass-B AMBIGUOUS rows: 68, of which 68 have >1 identically-normalised candidate (the round-2 rule)
+pass-B scope: global=1245, vertical=441
+pass-B tier:  (none)=1184, exact-raw=269, fuzzy-raw=127, exact-stripped=85, fuzzy-stripped=21
+
+mapped 434; of them target level<=2 or non-leaf ('mapped to an ancestor'): 150 (34.6%), products 16458
+taxonomy nodes receiving >1 of our nodes: 55; our nodes collapsing: 125
+
+inferred attribute need:
+  all mapped: 434 nodes, 316 distinct sets, 776 distinct names, median 8 attrs
+  equivalent-level only: 284 nodes, 220 distinct sets, 558 distinct names, median 7 attrs
+
+the 639 nodes covering 90% (deterministic cut, -products then id): UNMAPPED=411, EXACT=161, FUZZY=39, AMBIGUOUS=28
+  mapped 200; distinct attribute names 477; equivalent-level only 115 nodes / 330 names
+
+our used nodes whose NAME carries a gender/age qualifier: 302 (17.9%), 42621 products (40.1%)
+  of them mapped by the stripped tiers: 106

@@ -1,0 +1,274 @@
+{
+ "build_version_en": "2026-11-unstable",
+ "build_version_id": "2026-11-unstable",
+ "verticals_en": 26,
+ "categories_en": 14606,
+ "categories_id": 14606,
+ "attribute_definitions_en": 8240,
+ "attribute_definitions_id": 8240,
+ "attribute_defs_with_zero_values": 0,
+ "attribute_values_total_en": 74820,
+ "attribute_values_per_def_median": 7.0,
+ "attribute_values_per_def_max": 451,
+ "attribute_defs_with_extended": 106,
+ "cats_with_zero_attributes": 152,
+ "cats_with_zero_attributes_pct": 1.04,
+ "attributes_per_category_median": 6.0,
+ "attributes_per_category_mean": 6.37,
+ "attributes_per_category_max": 28,
+ "category_attribute_edges": 93007,
+ "level_histogram": {
+  "0": 26,
+  "1": 218,
+  "2": 1619,
+  "3": 4704,
+  "4": 5159,
+  "5": 2252,
+  "6": 557,
+  "7": 71
+ },
+ "max_level": 7,
+ "leaf_categories_en": 11942,
+ "internal_categories_en": 2664,
+ "leaf_level_histogram": {
+  "0": 3,
+  "1": 44,
+  "2": 858,
+  "3": 3715,
+  "4": 4617,
+  "5": 2098,
+  "6": 536,
+  "7": 71
+ },
+ "parent_child_pairs": 14580,
+ "pairs_with_parent_attr_absent_from_child": 4569,
+ "pairs_child_superset_of_parent": 10011,
+ "total_parent_attrs_absent_in_child": 10159,
+ "inherit_occurrences_en_taxonomy.json": 0,
+ "inherit_occurrences_en_categories.json": 0,
+ "inherit_occurrences_en_attributes.json": 0,
+ "defs_name_matches_size_volume_weight_capacity_qty": 259,
+ "defs_name_matches_size_volume_weight_substring": 262,
+ "defs_size_generic_exact_name": [
+  "Size"
+ ],
+ "size_like_defs_used_by_more_than_one_category": 85,
+ "size_like_defs_unused_by_any_category": 18,
+ "most_reused_attributes_top20": [
+  [
+   "Color",
+   10927
+  ],
+  [
+   "Pattern",
+   10882
+  ],
+  [
+   "Material",
+   4546
+  ],
+  [
+   "Power source",
+   1737
+  ],
+  [
+   "Age group",
+   1598
+  ],
+  [
+   "Target gender",
+   1104
+  ],
+  [
+   "Battery size",
+   881
+  ],
+  [
+   "Sports governing body certification",
+   876
+  ],
+  [
+   "Battery type",
+   866
+  ],
+  [
+   "Accessory size",
+   822
+  ],
+  [
+   "Mounting type",
+   819
+  ],
+  [
+   "Dietary preferences",
+   792
+  ],
+  [
+   "Cleaning instructions",
+   782
+  ],
+  [
+   "Allergen information",
+   781
+  ],
+  [
+   "Fabric",
+   689
+  ],
+  [
+   "Product certifications & standards",
+   653
+  ],
+  [
+   "Product form",
+   597
+  ],
+  [
+   "Storage requirements",
+   596
+  ],
+  [
+   "Connectivity technology",
+   579
+  ],
+  [
+   "Shape",
+   561
+  ]
+ ],
+ "flavor_category_count": 293,
+ "distinct_attribute_names_used_on_a_category": 8500,
+ "duplicate_full_name_paths_en": 0,
+ "duplicate_full_name_rows_en": 0,
+ "duplicate_leaf_names_en": 205,
+ "duplicate_full_name_paths_id-ID": 18,
+ "duplicate_full_name_rows_id-ID": 36,
+ "duplicate_leaf_names_id-ID": 298,
+ "food_branch_categories_en": 764,
+ "food_branch_leaves_en": 656,
+ "food_branch_max_level": 6,
+ "food_branch_level_histogram": {
+  "0": 1,
+  "1": 4,
+  "2": 50,
+  "3": 284,
+  "4": 349,
+  "5": 74,
+  "6": 2
+ },
+ "food_branch_attrs_per_node_median": 5.0,
+ "food_branch_attrs_per_node_mean": 5.51,
+ "food_branch_attrs_per_node_max": 13,
+ "food_branch_nodes_with_zero_attrs": 1,
+ "food_branch_leaf_attrs_median": 5.0,
+ "food_branch_leaf_attrs_mean": 5.57,
+ "food_branch_distinct_attribute_names": 483,
+ "food_branch_attr_top25": [
+  [
+   "Allergen information",
+   721
+  ],
+  [
+   "Dietary preferences",
+   721
+  ],
+  [
+   "Storage requirements",
+   596
+  ],
+  [
+   "Food product form",
+   199
+  ],
+  [
+   "Flavor",
+   169
+  ],
+  [
+   "Dietary supplements",
+   103
+  ],
+  [
+   "Cooking method",
+   92
+  ],
+  [
+   "Vegetable preparation style",
+   80
+  ],
+  [
+   "Fruit cut style",
+   71
+  ],
+  [
+   "Flour/Grain type",
+   63
+  ],
+  [
+   "Country",
+   49
+  ],
+  [
+   "Package type",
+   39
+  ],
+  [
+   "Color",
+   38
+  ],
+  [
+   "Pattern",
+   38
+  ],
+  [
+   "Beta-casein variant",
+   27
+  ],
+  [
+   "Caffeine content",
+   19
+  ],
+  [
+   "Cultivation method",
+   19
+  ],
+  [
+   "Greens maturity stage",
+   19
+  ],
+  [
+   "Produce washing state",
+   19
+  ],
+  [
+   "Distillation method",
+   17
+  ],
+  [
+   "Animal raising method",
+   17
+  ],
+  [
+   "Meat processing state",
+   17
+  ],
+  [
+   "Carbonation",
+   16
+  ],
+  [
+   "Fat content",
+   16
+  ],
+  [
+   "Spread consistency",
+   14
+  ]
+ ],
+ "food_branch_distinct_attribute_sets": 330,
+ "food_branch_leaf_distinct_attribute_sets": 320,
+ "food_branch_leaf_count_for_sets": 656,
+ "taxonomy_distinct_attribute_sets": 7018,
+ "taxonomy_nodes_sharing_a_set_with_another": 9286,
+ "taxonomy_leaf_distinct_attribute_sets": 6292
+}

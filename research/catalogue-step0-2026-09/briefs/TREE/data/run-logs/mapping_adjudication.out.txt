@@ -1,0 +1,14 @@
+pass-B mapped nodes: 434
+adjudicated rows no longer mapped after the round-2 resolver fix: 7 [('1163', 'correct', 'AMBIGUOUS'), ('1176', 'correct', 'AMBIGUOUS'), ('1211', 'correct', 'AMBIGUOUS'), ('549', 'correct', 'AMBIGUOUS'), ('1094', 'correct', 'AMBIGUOUS'), ('1179', 'wrong', 'AMBIGUOUS'), ('1813', 'correct', 'AMBIGUOUS')]
+surviving adjudicated rows: 37
+  top20     n=16  correct=11  ancestor=3   wrong=2    wrong-rate= 12.5%  not-equivalent= 31.2%
+  random    n=21  correct=13  ancestor=2   wrong=6    wrong-rate= 28.6%  not-equivalent= 38.1%
+  ALL       n=37  correct=24  ancestor=5   wrong=8    wrong-rate= 21.6%  not-equivalent= 35.1%
+
+random stratum wrong-rate 6/21 = 29%; Wilson 95% CI [14%, 50%]
+product-weighted over the 37 adjudicated rows: wrong 3077/14290 = 21.5%, ancestor 2381/14290 = 16.7%  (the top-20 stratum dominates this, so it is NOT a population estimate — it is the error share of the products this sample covers)
+  -> the honest statement over all mapped rows: roughly a quarter, and certainly not negligible
+
+mechanical flag `target level<=2 or non-leaf` fires on 16 of the 37; hand says 'ancestor' on 5.  The flag OVER-counts: it fires on correct equivalent matches whose target is simply non-leaf.
+
+scope among the 434 mapped rows: vertical=384, global=50

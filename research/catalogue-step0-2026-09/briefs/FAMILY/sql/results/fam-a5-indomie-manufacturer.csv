@@ -1,0 +1,14 @@
+section,bucket,value
+A · distinct spellings,PT INDOFOOD CBP SUKSES MAKMUR TBK,2
+A · distinct spellings,PT. INDOFFOD CBP SUKSES MAKMUR TBK,1
+A · distinct spellings,PT. INDOFOOD CBP  SUKSES MAKMUR TBK,1
+A · distinct spellings,PT. INDOFOOD CBP MAKMUR TBK.,1
+A · distinct spellings,PT. INDOFOOD CBP SUKSES MAKMKUR TBK,1
+A · distinct spellings,PT. INDOFOOD CBP SUKSES MAKMUR,3
+A · distinct spellings,PT. INDOFOOD CBP SUKSES MAKMUR TBK,31
+A · distinct spellings,PT. INDOFOOD CBP SUKSES MAKMUR Tbk,2
+A · distinct spellings,PT. INDOFOOD CBP SUKSES MAKMUR Tbk.,1
+B · totals,Indomie rows with a manufacturer row,43
+B · totals,distinct after UPPER(),8
+B · totals,distinct after UPPER+collapse internal whitespace,7
+B · totals,distinct raw spellings,9

@@ -1,0 +1,258 @@
+[
+  {
+    "measure": "active_online_manufacturer_no_letter", 
+    "value": "2843"
+  }, 
+  {
+    "measure": "active_online_without_manufacturer_row", 
+    "value": "0"
+  }, 
+  {
+    "measure": "catchall_nodes_LAINNYA", 
+    "value": "42"
+  }, 
+  {
+    "measure": "catchall_products_LAINNYA", 
+    "value": "3566"
+  }, 
+  {
+    "measure": "categories_leaf", 
+    "value": "1553"
+  }, 
+  {
+    "measure": "categories_max_depth", 
+    "value": "8"
+  }, 
+  {
+    "measure": "categories_nonleaf", 
+    "value": "339"
+  }, 
+  {
+    "measure": "categories_root", 
+    "value": "13"
+  }, 
+  {
+    "measure": "categories_total", 
+    "value": "1892"
+  }, 
+  {
+    "measure": "categories_used_as_main", 
+    "value": "1686"
+  }, 
+  {
+    "measure": "image_rows", 
+    "value": "63363"
+  }, 
+  {
+    "measure": "indomie_active_gs1", 
+    "value": "33"
+  }, 
+  {
+    "measure": "indomie_rows_active", 
+    "value": "33"
+  }, 
+  {
+    "measure": "indomie_rows_all", 
+    "value": "43"
+  }, 
+  {
+    "measure": "manufacturer_distinct_raw", 
+    "value": "5580"
+  }, 
+  {
+    "measure": "manufacturer_distinct_trim_lower", 
+    "value": "5541"
+  }, 
+  {
+    "measure": "manufacturer_junk_set", 
+    "value": "15475"
+  }, 
+  {
+    "measure": "manufacturer_no_ascii_letter", 
+    "value": "15516"
+  }, 
+  {
+    "measure": "manufacturer_numeric_only", 
+    "value": "12792"
+  }, 
+  {
+    "measure": "manufacturer_rows", 
+    "value": "46499"
+  }, 
+  {
+    "measure": "manufacturer_value_is_0", 
+    "value": "12512"
+  }, 
+  {
+    "measure": "manufacturer_values_used_once", 
+    "value": "2788"
+  }, 
+  {
+    "measure": "nodes_to_cover_50pct", 
+    "value": "114"
+  }, 
+  {
+    "measure": "nodes_to_cover_80pct", 
+    "value": "398"
+  }, 
+  {
+    "measure": "nodes_to_cover_90pct", 
+    "value": "639"
+  }, 
+  {
+    "measure": "pav_rows_height", 
+    "value": "106161"
+  }, 
+  {
+    "measure": "pav_rows_length", 
+    "value": "106161"
+  }, 
+  {
+    "measure": "pav_rows_manufacturer", 
+    "value": "46499"
+  }, 
+  {
+    "measure": "pav_rows_total", 
+    "value": "471143"
+  }, 
+  {
+    "measure": "pav_rows_weight", 
+    "value": "106161"
+  }, 
+  {
+    "measure": "pav_rows_width", 
+    "value": "106161"
+  }, 
+  {
+    "measure": "productattribute_list", 
+    "value": "manufacturer:text:req | weight:float:req | length:float:req | width:float:req | height:float:req"
+  }, 
+  {
+    "measure": "productattribute_rows", 
+    "value": "5"
+  }, 
+  {
+    "measure": "productcategory_m2m_distinct_products", 
+    "value": "20519"
+  }, 
+  {
+    "measure": "productcategory_m2m_products_gt1", 
+    "value": "1"
+  }, 
+  {
+    "measure": "productcategory_m2m_rows", 
+    "value": "20520"
+  }, 
+  {
+    "measure": "productclass_rows", 
+    "value": "1"
+  }, 
+  {
+    "measure": "products_active", 
+    "value": "91952"
+  }, 
+  {
+    "measure": "products_active_online", 
+    "value": "23299"
+  }, 
+  {
+    "measure": "products_offline_only", 
+    "value": "71874"
+  }, 
+  {
+    "measure": "products_on_nonleaf", 
+    "value": "19522"
+  }, 
+  {
+    "measure": "products_on_root", 
+    "value": "1724"
+  }, 
+  {
+    "measure": "products_public", 
+    "value": "106102"
+  }, 
+  {
+    "measure": "products_total", 
+    "value": "106161"
+  }, 
+  {
+    "measure": "products_with_image", 
+    "value": "30740"
+  }, 
+  {
+    "measure": "products_without_manufacturer_row", 
+    "value": "59662"
+  }, 
+  {
+    "measure": "snapshot_utc", 
+    "value": "2026-09-19 15:05"
+  }, 
+  {
+    "measure": "titles_with_isi_N", 
+    "value": "3519"
+  }, 
+  {
+    "measure": "titles_with_multiplier", 
+    "value": "2168"
+  }, 
+  {
+    "measure": "titles_with_pack_word", 
+    "value": "1583"
+  }, 
+  {
+    "measure": "titles_with_unit_token", 
+    "value": "30417"
+  }, 
+  {
+    "measure": "upc_checksum_invalid_len_8_12_13", 
+    "value": "258"
+  }, 
+  {
+    "measure": "upc_gs1_checksum_valid_not_984_987", 
+    "value": "45166"
+  }, 
+  {
+    "measure": "upc_len_12", 
+    "value": "1532"
+  }, 
+  {
+    "measure": "upc_len_13", 
+    "value": "103981"
+  }, 
+  {
+    "measure": "upc_len_7_weight_embedded", 
+    "value": "380"
+  }, 
+  {
+    "measure": "upc_len_8", 
+    "value": "16"
+  }, 
+  {
+    "measure": "upc_len_other", 
+    "value": "252"
+  }, 
+  {
+    "measure": "upc_prefix_2xx_2x_restricted_gs1", 
+    "value": "71"
+  }, 
+  {
+    "measure": "upc_prefix_984_deprecated_custom", 
+    "value": "0"
+  }, 
+  {
+    "measure": "upc_prefix_987_server_generated", 
+    "value": "60238"
+  }, 
+  {
+    "measure": "used_leaf_nodes", 
+    "value": "1394"
+  }, 
+  {
+    "measure": "used_nodes_lt10_products", 
+    "value": "609"
+  }, 
+  {
+    "measure": "used_nonleaf_nodes", 
+    "value": "292"
+  }
+]

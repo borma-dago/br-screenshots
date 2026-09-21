@@ -1,0 +1,12 @@
+m,v
+distinct_labels_all,886
+distinct_magnitudes_all,573
+distinct_units_all,5
+labels_covering_90pct_of_products,214
+labels_used_once,275
+magnitude_not_parseable,0
+products_total,106161
+products_with_2plus_tokens_in_title,86
+products_with_mass_or_volume_token,23986
+unit_spellings_for_gram,3
+unit_spellings_for_litre,2

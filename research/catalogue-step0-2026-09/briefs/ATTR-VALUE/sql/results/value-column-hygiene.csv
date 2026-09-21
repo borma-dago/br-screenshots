@@ -1,0 +1,6 @@
+code,type,n_rows,zero_columns_populated,one_column_populated,more_than_one_populated,wrong_column_for_type
+height,float,106161,0,106161,0,0
+length,float,106161,0,106161,0,0
+weight,float,106161,0,106161,0,0
+width,float,106161,0,106161,0,0
+manufacturer,text,46499,0,46499,0,0

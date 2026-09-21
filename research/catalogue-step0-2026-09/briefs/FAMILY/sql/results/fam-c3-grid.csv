@@ -1,0 +1,11 @@
+section,bucket,value
+"A · apparel (#10943 re-run, 2026-09-19)","apparel-titled, active online",78
+"A · apparel (#10943 re-run, 2026-09-19)","apparel-titled, all rows",2201
+"A · apparel (#10943 re-run, 2026-09-19)","apparel-titled, live (is_active AND is_public)",2062
+"A · apparel (#10943 re-run, 2026-09-19)","of those, carrying a size token",688
+"A · apparel (#10943 re-run, 2026-09-19)","of those, the token is a RANGE (M-XL)",50
+B · grid signal in proxy families (>=2 members),products inside grid candidates,8071
+B · grid signal in proxy families (>=2 members),proxy families,10090
+B · grid signal in proxy families (>=2 members),vary on BOTH (grid candidate),1748
+B · grid signal in proxy families (>=2 members),"vary on net content only (units>1, rest=1)",747
+B · grid signal in proxy families (>=2 members),"vary on the words only (units<=1, rest>1)",6560

@@ -1,0 +1,27 @@
+measure,bucket,value
+"proxy families (>=2, 3-word prefix + category)",families,10090
+"proxy families (>=2, 3-word prefix + category)",products in them,33144
+proxy family barcode mix,all members GS1-valid,5303
+proxy family barcode mix,all members server 987,4045
+proxy family barcode mix,contains other kind,85
+proxy family barcode mix,mixed GS1 + 987,664
+upc_kind · active,gs1_restricted_2x,66
+upc_kind · active,gs1_valid,34350
+upc_kind · active,other_invalid,329
+upc_kind · active,server_987,56835
+upc_kind · active,weight_embedded_7,372
+upc_kind · active online (feed+site),gs1_restricted_2x,9
+upc_kind · active online (feed+site),gs1_valid,21116
+upc_kind · active online (feed+site),other_invalid,2
+upc_kind · active online (feed+site),server_987,2152
+upc_kind · active online (feed+site),weight_embedded_7,20
+upc_kind · all products,gs1_restricted_2x,71
+upc_kind · all products,gs1_valid,45142
+upc_kind · all products,other_invalid,363
+upc_kind · all products,server_987,60205
+upc_kind · all products,weight_embedded_7,380
+upc_kind · offline only,gs1_restricted_2x,59
+upc_kind · offline only,gs1_valid,14022
+upc_kind · offline only,other_invalid,361
+upc_kind · offline only,server_987,57073
+upc_kind · offline only,weight_embedded_7,359

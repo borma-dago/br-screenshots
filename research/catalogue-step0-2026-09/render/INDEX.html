@@ -1,0 +1,560 @@
+<title>Step Zero Verdicts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F4F7F4; --surface:#FFFFFF; --ink:#1A211E; --ink-2:#48524D; --ink-3:#75807A;
+  --line:#D6DDD8; --line-2:#BFC8C2;
+  --accent:#0F6E56; --accent-ink:#0A5240; --accent-soft:#DCEDE5;
+  --open:#A35C05; --open-soft:#F6E7D0;
+  --gate:#9A3B3B; --gate-soft:#F5DFDF;
+  --mono-bg:#E9EEEA; --mark:#FFF3C4;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121715; --surface:#191F1C; --ink:#E3E9E5; --ink-2:#ACB6B0; --ink-3:#7C8781;
+    --line:#28312C; --line-2:#3A453F;
+    --accent:#5CC7A4; --accent-ink:#8CDCC1; --accent-soft:#16332A;
+    --open:#E2A54B; --open-soft:#382812;
+    --gate:#E08A8A; --gate-soft:#3A2121;
+    --mono-bg:#202824; --mark:#4A3F12;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121715; --surface:#191F1C; --ink:#E3E9E5; --ink-2:#ACB6B0; --ink-3:#7C8781;
+  --line:#28312C; --line-2:#3A453F;
+  --accent:#5CC7A4; --accent-ink:#8CDCC1; --accent-soft:#16332A;
+  --open:#E2A54B; --open-soft:#382812;
+  --gate:#E08A8A; --gate-soft:#3A2121;
+  --mono-bg:#202824; --mark:#4A3F12;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.5;font-variant-numeric:tabular-nums;overflow-wrap:break-word}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--mono-bg);padding:.05em .3em;border-radius:3px}
+h1,h2,h3{font-family:"Bricolage Grotesque","Source Sans 3",system-ui,sans-serif;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(30px,4.4vw,44px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:25px;font-weight:700}
+h3{font-size:19px;font-weight:700}
+p{margin:0}
+
+.page{max-width:1140px;margin:0 auto;padding:0 16px 72px}
+@media (min-width:760px){.page{padding:0 28px 88px}}
+
+/* masthead */
+.masthead{padding:40px 0 22px;border-bottom:1px solid var(--line-2);display:grid;gap:16px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:18px;line-height:1.45;color:var(--ink-2);max-width:72ch}
+.lede b{color:var(--ink)}
+.strip{display:flex;flex-wrap:wrap;border:1px solid var(--line);background:var(--surface);max-width:100%}
+.strip>div{padding:10px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 auto}
+.strip>div:last-child{border-right:0}
+.strip .n{font-family:"Bricolage Grotesque",sans-serif;font-size:25px;font-weight:700;line-height:1}
+.strip .n.sm{font-size:17px;padding-top:6px}
+.strip .l{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.n.closed{color:var(--accent)} .n.open{color:var(--open)} .n.gate{color:var(--gate)}
+.whatis{font-size:16px;line-height:1.55;color:var(--ink-2);max-width:82ch;border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px}
+.whatis b{color:var(--ink)}
+.meta{font-size:13.5px;line-height:1.5;color:var(--ink-3);max-width:88ch;display:grid;gap:7px}
+.meta b{color:var(--ink-2);font-weight:600}
+
+/* sticky nav */
+nav.tabs{position:sticky;top:0;z-index:9;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -16px 4px;padding:0 16px}
+nav.tabs .inner{padding:8px 0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+@media (min-width:760px){nav.tabs{margin:0 -28px 4px;padding:0 28px}}
+nav.tabs a{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;white-space:nowrap;padding:5px 10px;border:1px solid var(--line);background:var(--surface)}
+nav.tabs a:hover{color:var(--accent-ink);border-color:var(--line-2)}
+
+section{padding:36px 0 4px;scroll-margin-top:52px}
+section>h2{margin-bottom:6px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.snum{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500;color:var(--accent);letter-spacing:.02em}
+section>.sub{color:var(--ink-2);margin-bottom:18px;max-width:82ch;font-size:15.5px;line-height:1.5}
+section>.sub b{color:var(--ink)}
+
+.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.03em;padding:2px 8px;border-radius:2px;border:1px solid var(--line-2);color:var(--ink-3);white-space:nowrap;vertical-align:middle}
+.chip.closed{color:var(--accent-ink);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.chip.open{color:var(--open);background:var(--open-soft);border-color:color-mix(in srgb,var(--open) 35%,transparent)}
+.chip.gate{color:var(--gate);background:var(--gate-soft);border-color:color-mix(in srgb,var(--gate) 35%,transparent)}
+
+/* tables */
+.bt{overflow-x:auto;border:1px solid var(--line);background:var(--surface);-webkit-overflow-scrolling:touch}
+.bt table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+.bt th,.bt td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+.bt thead th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--mono-bg)}
+.bt tbody tr:last-child td{border-bottom:0}
+.bt td.a{font-weight:600;white-space:nowrap}
+.bt td.s{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink-3);white-space:nowrap}
+.bt td.v{color:var(--ink-2);line-height:1.5}
+.bt td.v b{color:var(--ink);font-weight:600}
+
+/* verdict cards */
+.qgroup{margin-top:26px}
+.qgroup>h3{font-size:21px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line-2)}
+.qcard{border:1px solid var(--line);background:var(--surface);padding:14px 18px 13px;display:grid;gap:9px;margin-bottom:10px}
+.qcard.t1{border-left:4px solid var(--accent)}
+.qcard.done{border-left:4px solid var(--line-2);background:var(--mono-bg)}
+.qid{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-3);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qq{font-family:"Bricolage Grotesque","Source Sans 3",sans-serif;font-size:19.5px;line-height:1.25;font-weight:700;text-wrap:balance;margin:0}
+dl.vd{display:grid;grid-template-columns:132px minmax(0,1fr);gap:9px 18px;margin:0;font-size:15.5px;line-height:1.5}
+dl.vd dt{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);padding-top:4px;white-space:nowrap}
+dl.vd dd{margin:0;color:var(--ink-2);min-width:0}
+dl.vd dd b{color:var(--ink);font-weight:600}
+dl.vd dd.rec{color:var(--ink-2)}
+dl.vd dd.conf{font-size:14.5px;color:var(--ink-3)}
+dl.vd dd.det a{font-family:"IBM Plex Mono",monospace;font-size:13px}
+@media (max-width:640px){
+  dl.vd{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.vd dt{padding-top:9px}
+  dl.vd dt:first-child{padding-top:0}
+}
+
+/* callouts */
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;font-size:15.5px;line-height:1.55;color:var(--ink-2);margin-top:6px}
+.callout.warn{border-left-color:var(--open);background:var(--open-soft)}
+.callout b{color:var(--ink)}
+.callout h4{font-family:"Bricolage Grotesque",sans-serif;font-size:16px;font-weight:700;color:var(--ink);margin:0 0 6px}
+.amend{border:1px solid var(--line-2);background:var(--open-soft);padding:14px 18px 14px 20px;margin-top:16px}
+.amend h4{font-family:"Bricolage Grotesque",sans-serif;font-size:17px;font-weight:700;color:var(--ink);margin:0 0 8px}
+.amend ol{margin:0;padding-left:1.25em;display:grid;gap:9px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.amend ol b{color:var(--ink)}
+ul.plain{margin:14px 0 0;padding-left:1.1em;display:grid;gap:9px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+ul.plain b{color:var(--ink)}
+h4.lbl{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:22px 0 0;font-family:"Source Sans 3",sans-serif}
+.foot{margin-top:48px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);max-width:90ch;line-height:1.6;display:grid;gap:6px}
+.foot b{color:var(--ink-2)}
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <div class="eyebrow">br-monorepo · catalogue · Step-0 verdicts · 2026-09-19</div>
+    <h1>Step Zero Verdicts</h1>
+    <p class="lede">For each decision: <b>who uses it, who does not</b>, what options are on the table, <b>which one is cleanest or structurally correct for us</b> — and, where a vendor states one, why that platform chose what it chose. Thirteen Step-0 cards from <em>Catalogue Next Steps</em>, in the same order, each now carrying its verdict.</p>
+    <div class="strip" role="group" aria-label="Scope of the research">
+      <div><span class="n gate">13</span><span class="l">questions</span></div>
+      <div><span class="n">4</span><span class="l">briefs</span></div>
+      <div><span class="n">13</span><span class="l">platforms</span></div>
+      <div><span class="n">2</span><span class="l">red-team rounds each</span></div>
+      <div><span class="n sm">2026-09-19 10:27 UTC</span><span class="l">snapshot</span></div>
+    </div>
+    <p class="whatis"><b>What this is.</b> For each card on <em>Catalogue Next Steps</em> Step 0 (2026-09-18): the options, who uses which and who does not (13 platforms), why, which is cleanest for us, and a judgement-labelled recommendation with confidence and reopen trigger — produced by four Opus research agents, each brief red-teamed by an independent Opus reviewer (round 1: 46 / 31 / 26 / 28 findings; every finding fixed at the root or disputed with a cite; nothing silently deleted). Every number carries a SQL file pinned to the snapshot <b>2026-09-19 10:27 UTC</b> (<code>sql/baseline.sql</code>, <code>BRIEF.md</code> §3.4); every code cite is <code>path:line</code> at solvent-master <code>4f99dc01c6</code> / ts-master <code>82187a17bd</code>. <b>Nothing here is decided; the recommendations are the agents' judgements for Irvan to accept, change, or reject.</b></p>
+    <div class="meta">
+      <p><b>Status:</b> final, 2026-09-19 (late evening WIB). All four briefs went through two adversarial rounds each and a final fix pass; every finding was fixed at the root or disputed with a cite, and every struck claim remains visible beside its correction. Round-2 counts: FAMILY 0/3/5 · TREE 1/10/9 · ATTR-DEF 0/4/5 · ATTR-VALUE 0/5/4 (blocking/serious/minor), all applied. Every SQL file in the pack is pinned to the shared snapshot and reproduces byte-identically.</p>
+      <p><b>Briefs:</b> <code>briefs/ATTR-DEF/ATTR-DEF.md</code> (A1 A2 A0) · <code>briefs/ATTR-VALUE/ATTR-VALUE.md</code> (A3 A4) · <code>briefs/TREE/TREE.md</code> (B1–B4, the fork) · <code>briefs/FAMILY/FAMILY.md</code> (A5 C1 C2 C3). Each carries its matrices, design sketches, SQL, corpus notes and red-team files beside it.</p>
+      <p><b>Read against the two locks (2026-09-16).</b> L1 — the category <em>is</em> the product type: one object, the existing <code>Category</code> tree owns the attribute definitions and the axis eligibility, <code>ProductClass</code> retires. L2 — every product belongs to a product variant group: shape B, a separate mandatory table, while <code>Product</code> stays the sellable row with price, stock, barcode and visibility. The locks' five conditions were binding on every brief.</p>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <div class="inner">
+      <a href="#answered">§1 Step 0, answered</a>
+      <a href="#meet">§2 Where the briefs meet</a>
+      <a href="#forces">§3 Steps 1–5</a>
+      <a href="#standing">§4 Standing decisions</a>
+      <a href="#coverage">§5 Coverage</a>
+      <a href="#notcollected">§6 Not collected</a>
+    </div>
+  </nav>
+
+  <!-- ===== Step 0, answered ===== -->
+  <section id="answered">
+    <h2><span class="snum">§1</span>Step 0, answered</h2>
+    <p class="sub">The verdicts, in Step-0 order — the same three groups, the same cards, in the same sequence as the plan page. <b>Legend:</b> <em>unanimous / near-unanimous</em> = the platform evidence points one way; <em>split</em> = the design pass decided it. Confidence is the brief's own. Green-edged cards are tier 1.</p>
+
+    <div class="qgroup">
+      <h3>A · What is an attribute?</h3>
+
+      <article class="qcard t1" id="a0">
+        <div class="qid">A0 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">What are attributes for, and are some of them hidden?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>10 of 13</b> put visibility on the <em>definition</em> (5 with a named qualification); 1 of 13 per channel.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec">Visibility on the definition as <b>purpose flags</b> — <code>is_customer_visible</code>, <code>is_filterable</code>, <code>display_order</code> — not one boolean. Uses ranked: spec sheet (live and broken today) › internal rules (read columns; keep it so) › variant picker › Google feed (sends nothing today) › search filters (need A4's rows). No per-category visibility (that is A3's membership), no per-channel visibility now. Make <code>code</code> <code>UNIQUE</code> and immutable once values exist.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high on “on the definition”; medium on the flag set</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/2rwv1z5YFPeo62BHBZNyb1#A0">ATTR-DEF · A0</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="a1">
+        <div class="qid">A1 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">What is an attribute, and which facts are attributes at all?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>9 of 13</b> draw the same line (universal + code-read → column; category-specific + human-read → attribute); the 3 that do not are a PIM, an EAV monolith and a feed. 8 of 13 keep definition and value as two objects.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec">Option 1, made decidable: <em>a fact is a column when a code path reads it or a DB constraint must hold over it; an attribute when only humans read it and applicability depends on the category.</em> Plus <b>option 4</b> (Magento's <code>backend_type='static'</code>): one definition registry over both storages with a <code>storage</code> discriminator — so lock condition 2 moves four <em>values</em> to columns while the four <em>definitions</em> stay. <b>Brand:</b> an attribute with option rows now, promoted to its own table only when it needs a page/logo/navigation (the trigger three vendors state); never derived from <code>manufacturer</code> (69.6% are <code>PT …</code> companies, 3.2% match the title brand).</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high on option 1; medium-high on option 4; medium on brand</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/2rwv1z5YFPeo62BHBZNyb1#A1">ATTR-DEF · A1</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="a2">
+        <div class="qid">A2 <span class="chip gate">tier 1</span> <span class="chip">= D3</span></div>
+        <h3 class="qq">Is a variant dimension an attribute, or its own object?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>Tie on declaration</b> (4 marked-attribute / 4 own-object / 1 neither / 4 unassignable — re-derived, holds); <b>6–4 lean on value storage</b> to the same store.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>D3 CONFIRMED, not reopened</b>, on the storage argument: an axis is a category-owned <code>ProductAttribute</code> marked eligible + a thin per-family dimension row (<code>group</code>, <code>attribute</code>, <code>position</code>); a member's axis value is its ordinary <code>ProductAttributeValue</code>. One write path, one editor, one filter path instead of two. <b>Conditional on A4 giving values rows</b> — if A4 had answered “free strings”, A2 must reopen.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">medium-high</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/2rwv1z5YFPeo62BHBZNyb1#A2">ATTR-DEF · A2</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="a3">
+        <div class="qid">A3 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Is “Rasa” one attribute type shared by every category that wants it, or does each category define its own?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>4–3 among the unambiguous</b> for a shared global type that categories subscribe to (6–3 counting hedged rows); the 3 per-category platforms are all marketplaces that do not own their sellers' data model.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>(a′)</b> one global attribute registry + a <code>CategoryProductAttribute</code> <b>membership row</b> carrying <code>required</code> / <code>display_order</code> / optional <code>name_override</code>; a second <em>type</em> (not a subsetted list) when two categories need different vocabularies. Our own reuse is head-heavy (<code>net_content</code> on 617 nodes, <code>colour</code> 494, <code>flavour</code> 199 of 1,686), the shape (a) is built for. Makes <code>UNIQUE(code)</code> expressible; a category move orphans (fixable) rather than mis-attributes.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">medium-high on (a) over (b) — written into the file after round 2 (the measured reuse route alone carries it; TREE's inferred route is discharged as support, see <a href="#meet">§2</a>); medium on <code>name_override</code></dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/QXjTYzyq8PWeAfn4Xko932#A3">ATTR-VALUE · A3</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="a4">
+        <div class="qid">A4 <span class="chip gate">tier 1</span> <span class="chip">= D8, D9</span></div>
+        <h3 class="qq">What is a value, and where does its allowed list live?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>13 of 13</b> store the value the same way at the platform's own level (no disagreement with the matrix's D8 tally); ordering: 5 systems hand-order a shared list, 3 generate order from the label, <b>0 generate it from a stored quantity</b>.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>(c) hybrid by type</b> (select-typed → shared option row; free text → string), <b>list on the attribute</b>, quantities as <b>label + magnitude derived on write</b> into a canonical base unit. Honest bill: one table, one column, one enum entry, one validator, one type-alias member, one API field, one form type. Normalisation alone reaches 1.6% of the manufacturer mess; the junk is 31 distinct letterless values over 15,516 rows, which rows delete in 31 operations.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">medium-high on (c)+(A) — lowered from high once the honest seven-item bill replaced “two lines”; medium-high on derived magnitude; high that string-plus-normalisation alone is insufficient</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/QXjTYzyq8PWeAfn4Xko932#A4">ATTR-VALUE · A4</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard" id="a5">
+        <div class="qid">A5 <span class="chip open">tier 2</span> <span class="chip">= D11</span></div>
+        <h3 class="qq">Does an attribute belong to the product, to the product variant, or both?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>Split with no plurality once “pinned” is split by mechanism</b>: 4 declared on the definition · 2 fixed by structure · 1 per family · 4 absent (the four with no family content row) · 1 read-time fallback · eBay ambiguous.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>A5-a — level pinned on the definition</b>: <code>ProductAttribute.level</code> (family | member, default member) + a nullable <code>variant_group_id</code> beside <code>ProductAttributeValue.product</code> with <code>CHECK (num_nonnulls(...) = 1)</code> and two partial uniques. No <code>SameForAll</code> (family level <em>is</em> it); fallback kept for images only. Day-one no-op: <code>level</code> defaults member, all 471,143 rows untouched, the 2026-09-15 tentative decision survives. Card correction: Shopify is <em>not</em> a per-family example (<code>MetafieldDefinition.ownerType</code> is one value).</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">moderate-high</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/MzKkrdfL1fJ8nfDgfVF9FL#A5">FAMILY · A5</a></dd>
+        </dl>
+      </article>
+
+      <div class="callout">
+        <h4>The V4-vs-matrix conflict, resolved (A4)</h4>
+        <p>Both are true — V4 (“a single text label, hand-ordered; nobody drives a picker from a stored quantity”) describes <em>how a picker can be ordered</em>, the matrix (“a label has no magnitude”) describes <em>what a label does by itself</em>. Neither priced the alternative: hand-ordering costs 886 labels (399 inside real size families) plus renumbering on insert; a derived magnitude costs 0 and is correct on the 782 of 1,993 size families that text order gets wrong. V4's core claim (the label is the record) is confirmed; its “ordering fails as an argument” is re-expressed as “ordering costs”; its “splitting forfeits nothing, those belong to #10942” is superseded because #10942 is closed and never carried those capabilities — <b>the typed-quantity capability has no owning issue today.</b> <a href="https://claude.ai/artifact/QXjTYzyq8PWeAfn4Xko932#A4-conflict">ATTR-VALUE · the conflict</a></p>
+      </div>
+    </div>
+
+    <div class="qgroup">
+      <h3>B · What is a category node?</h3>
+
+      <article class="qcard t1" id="b1">
+        <div class="qid">B1 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Do nodes have types — is a leaf a different kind of thing from an internal node?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>8 of 13</b> one kind; Square alone has node types (a till/kitchen artefact its vendor warns about); <b>no platform has a per-node switch</b> — Akeneo's <code>only_leaves</code> is <b>per-tree</b> (a correction to the card and to lock condition 5).</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>(c)</b> one kind with a per-node <code>accepts_products</code> switch, recorded as a <b>cleanup instrument, not a model of the world</b> — a zero-row migration and the only option that lets the 19,522 non-leaf products be cleaned incrementally. “One precedent of thirteen at tree scope; none at node scope.”</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">medium</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/WGKXj58ebMNcRfQU2x4EY4#B1">TREE · B1</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="b2">
+        <div class="qid">B2 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Can a product be assigned to a non-leaf node?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>8 permit</b> (incl. both central authors, Amazon and Shopify) · <b>3 forbid</b> (eBay, Shopee, Tokopedia B — Walmart miscounted on the card: its feed has no category field) · every leaf-only platform authors its tree centrally with a per-leaf policy table.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>The switch, defaulted <code>True</code> — explicitly NOT leaf-only.</b> Our 292 used non-leaf nodes, hand-read (48 nodes = 70% of the products): under-filed 52% · <b>real residual types 21.9%</b> · mixed 10% · catch-all 9% · not-a-type 4% · root-parking 3%. Leaf-only would re-home 19,522 rows of which ~22% cannot be re-homed without inventing nodes.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high on “not leaf-only”; medium on the switch</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/WGKXj58ebMNcRfQU2x4EY4#B2">TREE · B2</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="b3">
+        <div class="qid">B3 <span class="chip gate">tier 1</span> <span class="chip">= D16</span></div>
+        <h3 class="qq">How deep should leaves go, and what earns a node its existence?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd>Granularity for the same domain spans <b>107 : 764 : 5,595 : 14,606</b>; 7 platforms carry a per-node schema, 6 central + <b>Salesforce, the one merchant-authored precedent</b>; every published deep taxonomy is at least as deep as ours (Shopify 8 levels = our max 8).</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>D16 = (b)</b> — a schema on a <em>subset</em> of nodes, the rest inheriting; subset = where the measured attribute need differs from the parent's; <b>no depth cap</b>; a separate ≥10-product pruning rule (609 nodes / 2,545 products). Authoring bill is bounded by <em>distinct sets</em> (68 measured; 220–316 inferred over the mapped quarter, rev 3) not by 1,686 nodes. <b>B3 and B4 are one decision.</b></dd>
+          <dt>Confidence</dt>
+          <dd class="conf">medium-high on (b); low on the threshold</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/WGKXj58ebMNcRfQU2x4EY4#B3">TREE · B3</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard t1" id="b4">
+        <div class="qid">B4 <span class="chip gate">tier 1</span> <span class="chip">= D15</span></div>
+        <h3 class="qq">What flows down from parent to child, per kind of fact?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd>Like-for-like denominator (internal nodes own a schema, so inheriting is a real choice): <b>1 of 2</b> — Salesforce inherits, Shopify does not (and authors 14,606 nodes centrally); eBay inherits the fact it attaches tree-wide (features) and not the leaf-only one (aspects) — direct evidence for <em>per kind</em>.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>D15 is not one switch — (d) per kind of fact.</b> Definitions: <b>(b) inherit, add-and-override, never remove</b>. Requiredness inherits with the definition, a child may tighten. Allowed values inherit, a child may narrow (A4 owns the model). Age-walling <b>must</b> flow by ancestry (today's exact-id list is a live bug). Replenishment and <code>is_public</code> already flow. <code>accepts_products</code> must <b>not</b> flow. Our own code already carries six kinds of category-derived fact resolved by four mechanisms.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high that it is per-kind; medium-high on (b) for definitions (raised from medium once the like-for-like precedent was derived)</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/WGKXj58ebMNcRfQU2x4EY4#B4">TREE · B4</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard" id="fork">
+        <div class="qid">the fork <span class="chip open">step 1 starts here</span></div>
+        <h3 class="qq">Keep authoring our own tree, or adopt the Shopify Standard Product Taxonomy?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>0 of 13</b> adopt another organisation's taxonomy as their tree; the two that touch a second taxonomy ship a mapping (Shopify → Google: 14,528 rules) or run a dual tree (Tokopedia B).</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>Keep authoring our own tree — (a) now; (c) “hold a mapping” deferred as a named migration path, not recommended.</b> The taxonomy has <b>no node for instant noodles</b> (Indomie joins spaghetti), none for Batik / Mukena / Sajadah / Sambal / Terasi (~2,800 products), and <b>no net-content attribute</b>; only <b>25.7% of our used nodes (32.7% of products) map mechanically and 28.6% of those map wrong</b> (Wilson CI 14–50%; the figures moved ~20% on each of three re-measurements, which is itself the finding); 302 nodes (40% of products) carry a gender/age level the taxonomy models as an attribute. Option (c) was priced honestly in the final pass: it pays the identical our→Shopify mapping bill, the 14,528 + 5,754 published rules take a <em>Shopify</em> category as input and relieve none of it, and nothing consumes a Shopify id today (the Google feed builder never touches category). Take the 8,240-name attribute vocabulary with closed <code>id-ID</code> value lists as seed for the registry (V1).</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">medium-high on (a); (c) deferred</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/WGKXj58ebMNcRfQU2x4EY4#fork">TREE · the fork</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard done" id="b-closed">
+        <div class="qid">closed 2026-09-18 <span class="chip closed">✅ decided</span></div>
+        <h3 class="qq">One category per product.</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd>—</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec">Already true in code on both stacks (the M2M has no production reader). <b>Live consequence for D14's second half:</b> 3,402 rows (3,209 active) sit under roots that are not product types — <code>UNUSED</code> (shop-in-shop display areas), <code>BELUM DISORTIR</code>, <code>INVENTORY KANTOR</code> — and need a non-type home <em>before</em> Lock 1 makes them types.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">—</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/WGKXj58ebMNcRfQU2x4EY4#closed">TREE · closed</a></dd>
+        </dl>
+      </article>
+    </div>
+
+    <div class="qgroup">
+      <h3>C · What makes products a family?</h3>
+
+      <article class="qcard" id="c1">
+        <div class="qid">C1 <span class="chip open">tier 2</span></div>
+        <h3 class="qq">What may two siblings differ in, and what must they share?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>8 of 13</b> say siblings must not differ in title, description or category (3 police it on flat rows, 5 own it on the family); <b>12 of 13</b> forbid one product in two families.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>C1-ii — family-owned content, member-owned commerce.</b> Siblings differ only in axis values, price, stock, barcode, visibility, images (+ a short label); <b>must</b> share the category, enforced in the DB by a composite FK on <code>(variant_group_id, main_category_id)</code>; <b>should</b> share the brand (advisory until a brand attribute exists); one product, one family, by construction. <b>Description = family confirmed as the home, overruled as a silent migration</b>: 3,912 of 10,090 proxy families have a different description on every member; the merge screen must present each losing description. <b>Title: composed</b> (<code>group.title + label</code> via one <code>get_display_title()</code>), at an honest cost of <b>nine</b> consumers across four apps including a shared search template. <b>#10778 S1 confirmed and now free</b> (the group is a different table: no <code>upc</code>, no price, no basket FK — the “make <code>upc</code> nullable” work is unnecessary). <b>#10778 C2 re-expressed</b>: the hero survives (Walmart requires exactly one primary); the bare family URL is dropped (the route is member-keyed; every existing URL keeps working).</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high on category / one-family / barcode; moderate on description; low-moderate on the <em>cost</em> of composing the title</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/MzKkrdfL1fJ8nfDgfVF9FL#C1">FAMILY · C1</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard" id="c1-barcode">
+        <div class="qid">barcode identity <span class="chip">the kept “Sunday measurement”</span></div>
+        <h3 class="qq">Does every sibling carry its own barcode, and is ours real?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd>GS1 §2.1: <em>each style, colour and size variation … assigned a unique GTIN</em>.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><code>upc</code> is unique by constraint, so “duplicates” is zero by construction. Provenance is the real measure: <b>57% of all products carry a server-generated <code>987</code> code, but that is an offline-stock artefact — on the active-online surface where families matter, 90.6% carry a real GS1 GTIN</b> (2,152 of 23,299 minted). Across 10,090 proxy families: 5,303 all-GS1, 4,045 all-minted, <b>664 mixed → flag at merge</b>. Exclude the 380 weight-embedded rows from axis eligibility (their code identifies a weight-priced class). All 33 active Indomie rows carry Indofood GS1 codes.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/MzKkrdfL1fJ8nfDgfVF9FL#C1-barcode">FAMILY · barcode identity</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard" id="c2">
+        <div class="qid">C2 <span class="chip open">tier 2</span></div>
+        <h3 class="qq">Is a 6-pack, or a bundle, a variant of the single — or a separate product?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>No vendor artifact forbids count as an axis</b> — 2 name it (Amazon <code>NUMBER_OF_ITEMS</code>; Walmart <code>Count</code>/<code>Multipack quantity</code>), 10 can express it, 1 not collected; three restrict axis eligibility by another mechanism. Card correction: (a) and (b) are not alternatives — Amazon has both <code>VARIATION</code> and <code>PACKAGE_HIERARCHY</code>.</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec">GS1 splits our one word into three: <b>consumer multipack</b> (§2.3, same level as the single, new GTIN) → <b>count is an axis</b>; <b>carton</b> (§2.8) → <b>not a product</b> (already <code>ProductMeta.quantity_per_box</code>); <b>banded pack of different products</b> (§2.9) → <b>a separate product with no family link to its components</b> (it may itself be a family). One rule: <em>a row exists iff it is scanned and stocked as its own unit; two rows are siblings iff they differ only in axis values.</em> “Sachet vs bottle” is a different axis from “1 vs 6”. <b>#10778 M4 re-expressed</b>: true for <code>2×500 ml</code>, not for #11126's Bango-plus-sachet. <b>Baseline correction:</b> of 2,168 “N x M” titles, 2,055 are dimensions (bedsheets, gauze); the honest multipack population is 3,633 (3.4%), and only ~727 have a plausible single in the same category.</dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high on carton and banded pack; moderate on count-as-axis (legitimate everywhere, but 80% of packs have no single)</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/MzKkrdfL1fJ8nfDgfVF9FL#C2">FAMILY · C2</a></dd>
+        </dl>
+      </article>
+
+      <article class="qcard" id="c3">
+        <div class="qid">C3 <span class="chip">tier 3</span> <span class="chip">= D12</span></div>
+        <h3 class="qq">Can a family have sub-families?</h3>
+        <dl class="vd">
+          <dt>Who uses</dt>
+          <dd><b>9 of 13 one level</b>; the 2 that nest cap at exactly two (Akeneo — reason: content placement per colour; Salesforce <code>VariationGroup</code>, Beta).</dd>
+          <dt>Recommendation</dt>
+          <dd class="rec"><b>C3-a — one level, enforced by not building the column.</b> No <code>parent_id</code>, no validator. Two-dimensional families are two axes on one family (D6 permits). Our grids are ragged (Indomie: one flavour at two sizes, 31 at one) and 71% of products have no image, so Akeneo's reason does not apply. <b>D12 = (a).</b></dd>
+          <dt>Confidence</dt>
+          <dd class="conf">high</dd>
+          <dt>Detail</dt>
+          <dd class="det"><a href="https://claude.ai/artifact/MzKkrdfL1fJ8nfDgfVF9FL#C3">FAMILY · C3</a></dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Where the briefs meet ===== -->
+  <section id="meet">
+    <h2><span class="snum">§2</span>Where the briefs meet</h2>
+    <p class="sub">Cross-brief consistency — checked by the coordinator. Each coupling has one owner; the other brief cites it and never re-decides it.</p>
+    <div class="bt"><table>
+      <thead><tr><th>Coupling</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td class="a">A1↔A2</td><td class="v">Consistent: A2 derives from A1's rule; D3 confirmed conditional on A4.</td></tr>
+        <tr><td class="a">A2↔A4</td><td class="v"><b>Satisfied</b>: A4 gives select-typed values rows, which is A2's condition.</td></tr>
+        <tr><td class="a">A0↔A4</td><td class="v">Consistent: A0 ranks filters last pending rows; A4 supplies them.</td></tr>
+        <tr><td class="a">A3↔B4</td><td class="v">Consistent: A3's membership row is what B4 inherits (“does a membership row apply to descendants” — one boolean); both put requiredness on the (node, attribute) row.</td></tr>
+        <tr><td class="a">A3↔B3<br><span class="chip">one measurement</span></td><td class="v">TREE computed <code>node-attribute-need.md</code> (now rev 3: 434 mapped, 28.6% over-mapping, inferred ceiling 776 names / 316 sets, conservative 558 / 284). ATTR-VALUE leans on the <b>measured</b> route only (8 kinds over 1,686 nodes; <code>net_content</code> 617, <code>colour</code> 494, <code>flavour</code> 199) and, after reading rev 3, <b>discharges the inferred route as support</b> — the rate went up on re-measurement, the figures moved every round, and even a perfect mapping would measure the taxonomy's concentration (<em>Warna</em> on ~80% of its 14,606 nodes) rather than our reuse. Retained only as an order-of-magnitude ceiling for the adoption bill. Consistent.</td></tr>
+        <tr><td class="a">A4↔A5</td><td class="v">Consistent: option rows are an FK from the same value row set whichever level owns the value.</td></tr>
+        <tr><td class="a">A0↔A5</td><td class="v">Consistent and precedent-backed: level and visibility are independent fields of the same definition (commercetools, Shopify); “family-level = visible” has no precedent.</td></tr>
+        <tr><td class="a">C2↔A2</td><td class="v">Consistent: count as an axis requires D3 (a), which A2 confirms.</td></tr>
+        <tr><td class="a">fork↔A3,<br>fork↔A4</td><td class="v">Consistent: TREE keeps the tree and proposes the taxonomy vocabulary as seed; ATTR-VALUE's global registry is where that seed lands; A4's closed lists match the taxonomy's shape, and its net-content gap is why A4 needs derived magnitude.</td></tr>
+        <tr><td class="a"><b>#10778 C5</b><br><span class="chip">one global name catalogue, not per category</span></td><td class="v">Three readings converge: TREE <em>confirms</em> for names / re-expresses value lists; ATTR-DEF marks it <em>at risk under Lock 1</em> and refers it to A3; ATTR-VALUE <em>confirms and re-expresses</em> — the binding and the global catalogue are the same design. <b>Synthesis: C5 stands as re-expressed by A3(a′): a global <code>ProductAttribute</code> registry (<code>UNIQUE(code)</code>) plus a per-category membership table.</b> ATTR-DEF's worry (nothing in its field list creates a global object) is answered by that membership table.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="amend">
+      <h4>Three amendments the locks' own wording needs, surfaced by the briefs (for Irvan, not decided here)</h4>
+      <ol>
+        <li><b>Lock 1's “concretely” sentence</b> — <code>ProductAttribute.product_class</code> → <code>ProductAttribute.category</code> is a FK; under A3(a′) it must be a <b>join table</b> (<code>CategoryProductAttribute</code>), or every shared attribute is copied per category. (ATTR-VALUE A3 §7.)</li>
+        <li><b>Lock condition 2</b> — “take the four shipping dimensions out of the attribute system” is re-expressed by A1 option 4: the four <em>values</em> move to <code>NOT NULL</code> columns; the four <em>definitions</em> stay in the registry with <code>storage='column'</code> so their metadata (name, unit, order, visibility) is not deleted. Ship knowing 68.4% of products carry <code>0</code> in those columns. (ATTR-DEF A1 §7.)</li>
+        <li><b>Lock condition 5</b> — “a per-node ‘accepts products’ switch (Akeneo's model)”: Akeneo's <code>only_leaves</code> is <b>per-tree</b>; a per-node switch has no precedent in the thirteen. TREE still recommends it, as a cleanup instrument. (TREE B1 §7.)</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== What this forces in steps 1-5 ===== -->
+  <section id="forces">
+    <h2><span class="snum">§3</span>What this forces in steps 1–5</h2>
+    <p class="sub">What the answers force in steps 1–5 of the Next Steps page — the D-decisions below are no longer open in the same way they were written.</p>
+    <div class="bt"><table>
+      <thead><tr><th>Step</th><th>Decision</th><th>Forced by the Step-0 answers</th></tr></thead>
+      <tbody>
+        <tr><td class="s">1</td><td class="a">D15</td><td class="v">(d) per kind of fact; definitions (b) inherit + add-and-override, never remove — B4</td></tr>
+        <tr><td class="s">1</td><td class="a">D16</td><td class="v">(b) schema on a subset, rest inherit; no depth cap — B3</td></tr>
+        <tr><td class="s">1</td><td class="a">D17</td><td class="v">requiredness lives on the <b>membership row</b>, per (node, attribute) and <b>per level</b> — A3, A5, B4</td></tr>
+        <tr><td class="s">1</td><td class="a">D18</td><td class="v">closed <b>above</b> the DB for free-text attributes (as today, <code>staff_serializers.py:74-81</code>); the FK <em>is</em> the enforcement for option-typed ones — A1, A4</td></tr>
+        <tr><td class="s">1</td><td class="a">schema editor<br>(condition 1)</td><td class="v">definite field list: <code>code</code> (unique, immutable), <code>name</code>, <code>type</code>, <code>required</code>, <code>is_axis_eligible</code>, <code>is_customer_visible</code>, <code>is_filterable</code>, <code>display_order</code>, <code>unit</code>, <code>level</code>, <code>storage</code> (+<code>source_field</code>); must show inherited vs own rows and where a set is authored; permissions <code>add_/change_/delete_productattribute</code> on both stacks — A0, A1, A5, B3, B4</td></tr>
+        <tr><td class="s">2</td><td class="a">D8</td><td class="v">(c) hybrid by type; <b>rows, not JSONB</b> (the FK from value to option exists only with rows) — A4</td></tr>
+        <tr><td class="s">2</td><td class="a">D9</td><td class="v">label + derived magnitude in a canonical base unit; <b>net content as an axis: yes</b> — A4, C2</td></tr>
+        <tr><td class="s">3</td><td class="a">D4</td><td class="v"><code>is_axis_eligible</code> on the <b>membership</b> row (eBay: 62% of aspects are not axis-eligible) — A2, A3</td></tr>
+        <tr><td class="s">3</td><td class="a">D5</td><td class="v">the family chooses from the gated set (8 family-chooses / 1 type-imposes / 1 neither over 10 of 13) — A2</td></tr>
+        <tr><td class="s">3</td><td class="a">D6</td><td class="v">cap of 3 is <b>necessary</b> (flavour, net content, pack form); Shopify and Walmart at 3; Tokopedia is 2-or-3, open — C2, C3</td></tr>
+        <tr><td class="s">3</td><td class="a">D7</td><td class="v">implementable <b>in the DB</b> once values are rows (lock condition 4's composite-FK mirror becomes a real constraint) — A4</td></tr>
+        <tr><td class="s">4</td><td class="a">D10</td><td class="v">field list settled: description, title, slug, <code>main_category</code> → family (composite-FK mirror as the open sub-choice); images member-first; never price/stock/barcode/visibility. <b>Plus a required work item nobody had named: a family-row reindex receiver and a family-image trigger</b> (every reindex today is <code>post_save</code> on <code>Product</code>) — C1, A5</td></tr>
+        <tr><td class="s">4</td><td class="a">D11</td><td class="v">partition by level, each fact stored once — A5</td></tr>
+        <tr><td class="s">4</td><td class="a">D12</td><td class="v">(a) one level, enforced by not building the column — C3</td></tr>
+        <tr><td class="s">5</td><td class="a">D14<br>second half</td><td class="v"><b>not hypothetical</b>: 3,402 rows under non-type roots need a home before Lock 1 — TREE</td></tr>
+        <tr><td class="s">5</td><td class="a">variant label</td><td class="v">load-bearing for the composed title; composable from option labels — C1, A4</td></tr>
+        <tr><td class="s">5</td><td class="a">feed key</td><td class="v">must be a <b>group</b> key; suppression on singletons is the common case (80% of packs have no single) — C1, C2</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 class="lbl">Decision-free defects surfaced (independent of every decision above)</h4>
+    <ul class="plain">
+      <li>The <b>save-ordering bug</b> — <code>Product.save()</code> enqueues the search index and the Google push at <code>models.py:489</code> <em>before</em> attribute values are written at <code>:490</code>, and there is no signal on <code>ProductAttributeValue</code>. (ATTR-DEF, ATTR-VALUE)</li>
+      <li><b>Age-walling matches an exact id list, not ancestry.</b> (TREE; already on the v7 page)</li>
+      <li>The attribute <b><code>unit</code> lives in a free-text <code>name</code></b> <em>and</em> a frontend i18n bundle, with three dead <code>internalname</code> keys. (ATTR-DEF, ATTR-VALUE)</li>
+      <li><code>ProductAttribute.code</code> has <b>no <code>UNIQUE</code></b> and is auto-generated from a free-text name. (A0)</li>
+      <li>The customer spec sheet is ordered <b>alphabetically by code</b> on the backend while the staff form uses a hard-coded TS array. (A0)</li>
+      <li><code>manufacturer</code> is declared required yet <b>59,662 products have no row</b> and 2,843 active-online rows carry a letterless value. (baseline)</li>
+    </ul>
+  </section>
+
+  <!-- ===== Standing decisions ===== -->
+  <section id="standing">
+    <h2><span class="snum">§4</span>Standing decisions</h2>
+    <p class="sub">Every #10778 item, with its verdict — confirmed, re-expressed, or superseded; never silently contradicted.</p>
+    <div class="bt"><table>
+      <thead><tr><th>Item</th><th>Verdict</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td class="v"><b>V1</b> axis names from a shared staff-extendable catalogue</td><td class="v"><b>confirmed</b>; TREE proposes seeding it from the Shopify vocabulary; ATTR-DEF re-expresses “shared” as reusable across categories via A3's mechanism</td><td class="s">A3, fork, A2</td></tr>
+        <tr><td class="v"><b>V2</b> one storage shape + governance flag</td><td class="v"><b>confirmed</b>; A4's (c) is its implementation (“the flag becomes the attribute's input type”); its “six eBay flags” count superseded (eBay has 11)</td><td class="s">A4, A2</td></tr>
+        <tr><td class="v"><b>V3</b> which setting per dimension: deferred</td><td class="v"><b>confirmed</b>; (c) keeps it deferrable</td><td class="s">A4</td></tr>
+        <tr><td class="v"><b>V4</b> single text label, hand-ordered</td><td class="v"><b>confirmed in substance</b> (the label is the record), <b>re-expressed</b> on ordering (it costs; a derived magnitude is cheaper and correct), <b>superseded</b> on “splitting forfeits nothing / belongs to #10942” (no owner exists)</td><td class="s">A4</td></tr>
+        <tr><td class="v"><b>V5</b> ordering column missing</td><td class="v"><b>confirmed</b> as a gap; re-expressed: derived magnitude for magnitude-bearing lists, hand-set <code>display_order</code> only for lists without one</td><td class="s">A4</td></tr>
+        <tr><td class="v"><b>V6</b> normalisation + derived suggestions</td><td class="v"><b>confirmed whole</b> (an earlier “unsourced” verdict was withdrawn after the #10778 corpus was opened); its manufacturer figures superseded by the baseline</td><td class="s">A4</td></tr>
+        <tr><td class="v"><b>C5</b> one global name catalogue, not per category</td><td class="v"><b>confirmed as re-expressed by A3(a′)</b> — global registry + membership table + <code>UNIQUE(code)</code></td><td class="s">A3, B4, A2</td></tr>
+        <tr><td class="v"><b>C8</b> one <code>Ukuran</code>, never split</td><td class="v"><b>confirmed and strengthened</b> under (c)+(iv)</td><td class="s">A4</td></tr>
+        <tr><td class="v"><b>C2</b> family page at every variant's URL, hero via <code>display_order</code></td><td class="v"><b>re-expressed</b>: hero survives; bare family URL dropped</td><td class="s">C1</td></tr>
+        <tr><td class="v"><b>M4</b> a promo/banded pack is an ordinary dimension value</td><td class="v"><b>re-expressed</b>: true for a same-product multipack, not for a two-product banded pack</td><td class="s">C2</td></tr>
+        <tr><td class="v"><b>M9</b> no cross-brand grouping, advisory</td><td class="v"><b>confirmed</b>, with our numbers for why it cannot be enforced</td><td class="s">C1</td></tr>
+        <tr><td class="v"><b>S1</b> family never buyable</td><td class="v"><b>confirmed</b>, and free under shape B</td><td class="s">C1</td></tr>
+        <tr><td class="v"><b>Decision A</b> = S5 + C7</td><td class="v"><b>superseded by Lock 2</b> (S5 shape A); C7 satisfied by construction</td><td class="s">BRIEF</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===== Coverage ===== -->
+  <section id="coverage">
+    <h2><span class="snum">§5</span>Coverage</h2>
+    <p class="sub">Nothing dropped — every source item, and where it landed.</p>
+    <div class="bt"><table>
+      <thead><tr><th>Source item</th><th>Landed in</th></tr></thead>
+      <tbody>
+        <tr><td class="v">Step-0 cards A0 A1 A2 A3 A4 A5 B1 B2 B3 B4 C1 C2 C3</td><td class="v"><a href="#answered">§1 above</a>, one row each, each with all eight sections in its brief</td></tr>
+        <tr><td class="v">The closed card (one category per product)</td><td class="v">TREE, recorded not reopened</td></tr>
+        <tr><td class="v">The Step-1 fork</td><td class="v">TREE, full eight-section shape</td></tr>
+        <tr><td class="v">Each card's research pointer</td><td class="v">executed or recorded as “not collected + route” in the brief's §8 (see <a href="#notcollected">§6</a>)</td></tr>
+        <tr><td class="v">The 2026-09-18 clean-up line: barcode identity</td><td class="v">C1 §5b</td></tr>
+        <tr><td class="v">Tentative decisions 2026-09-15</td><td class="v">A5 (values on member: confirmed day-one), C1 (description: confirmed home / overruled silent migration; title: composed), images unchanged</td></tr>
+        <tr><td class="v">The lock's five conditions</td><td class="v">condition 1 field list (A0/A1/A5/B3/B4); condition 2 re-expressed (A1); condition 4's mirror becomes a real constraint (A4); condition 5's attribution corrected (B1)</td></tr>
+        <tr><td class="v">#10778 items</td><td class="v"><a href="#standing">§4 above</a></td></tr>
+        <tr><td class="v">Errata (V4-vs-matrix)</td><td class="v">resolved in A4</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===== Not collected ===== -->
+  <section id="notcollected">
+    <h2><span class="snum">§6</span>Not collected, and the route</h2>
+    <p class="sub">What could not be collected, and the route that would settle it. Credential-gated items were not re-attempted.</p>
+    <ul class="plain">
+      <li><b>Akeneo <code>only_leaves</code> per-tree</b> and <b>Salesforce's ancestor walk</b> (the only B4=(b) precedent) — single-route; their corpora are on the laptop. Route: Akeneo's category-tree docs; Salesforce B2C catalog/attribute-group docs. (TREE)</li>
+      <li><b>Shopify taxonomy <code>docs/</code></b> — whether local extension is sanctioned. Route: <code>git sparse-checkout add docs</code> on the existing clone. (TREE)</li>
+      <li><b>The 244 rule-assigned non-leaf nodes</b> — direction of error unresolved. Route: read them as the 48 were. (TREE)</li>
+      <li><b>Meta's variant-consistency rule</b> (one route) and Meta's <code>ProductGroup</code> node fields; <b>Meta vs Google contradict on per-variant landing pages</b> (recorded). (FAMILY)</li>
+      <li><b>Walmart: may non-axis content diverge</b> — behind <code>MP_ITEM</code> credentials (#11068). <b>eBay: does a count aspect pivot</b> — one sandbox <code>getItemAspectsForCategory</code> call would settle it, the cheapest open item. <b>Amazon <code>package_level</code> field definitions</b> — <code>getCatalogItem?includedData=relationships</code>, credential-gated. (FAMILY)</li>
+      <li><b>Amazon “title and brand are attributes”</b> — single-route; the schema body sits behind <code>SchemaLink.link.resource</code> and <code>schemas.amazon.com</code> has no DNS record from here. Route: <code>getDefinitionsProductType</code> with LWA credentials. (ATTR-DEF)</li>
+      <li><b>A derived parse on staff-authored size labels</b> — tested on 886 title-derived labels only; a sample of 200 staff-entered values (<code>1 LUSIN</code>, <code>1/2 KG</code>) would settle it. (ATTR-VALUE)</li>
+      <li><b>Price-per-unit consistency across the ~727 pack/single pairs</b> — one join on <code>PriceSell</code>; not run. (FAMILY)</li>
+    </ul>
+  </section>
+
+  <div class="foot">
+    <p><b>Pack:</b> <code>~/copilot/research/catalogue-step0-2026-09/</code> — <code>INDEX.md</code> (this synthesis), <code>BRIEF.md</code>, <code>briefs/{ATTR-DEF,ATTR-VALUE,TREE,FAMILY}/</code> with their matrices, design sketches, SQL, corpus notes and red-team files, and <code>sql/baseline.sql</code>.</p>
+    <p><b>Pins:</b> backend solvent-master <code>4f99dc01c6</code> · frontend ts-master <code>82187a17bd</code> · every code cite is <code>path:line</code> at those pins. <b>Snapshot:</b> every number is pinned to <code>2026-09-19 10:27 UTC</code> on <code>solvent-staging.production_append_public</code> and reproduces byte-identically.</p>
+    <p><b>Nothing on this page is a decision.</b> The recommendations are the research agents' judgements, labelled as such, with their confidence and reopen triggers — for Irvan to accept, change, or reject.</p>
+  </div>
+</div>

@@ -1,0 +1,501 @@
+<title>Catalogue Next Steps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F4F7F4; --surface:#FFFFFF; --ink:#1A211E; --ink-2:#48524D; --ink-3:#75807A;
+  --line:#D6DDD8; --line-2:#BFC8C2;
+  --accent:#0F6E56; --accent-ink:#0A5240; --accent-soft:#DCEDE5;
+  --open:#A35C05; --open-soft:#F6E7D0;
+  --gate:#9A3B3B; --gate-soft:#F5DFDF;
+  --mono-bg:#E9EEEA; --mark:#FFF3C4;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121715; --surface:#191F1C; --ink:#E3E9E5; --ink-2:#ACB6B0; --ink-3:#7C8781;
+    --line:#28312C; --line-2:#3A453F;
+    --accent:#5CC7A4; --accent-ink:#8CDCC1; --accent-soft:#16332A;
+    --open:#E2A54B; --open-soft:#382812;
+    --gate:#E08A8A; --gate-soft:#3A2121;
+    --mono-bg:#202824; --mark:#4A3F12;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121715; --surface:#191F1C; --ink:#E3E9E5; --ink-2:#ACB6B0; --ink-3:#7C8781;
+  --line:#28312C; --line-2:#3A453F;
+  --accent:#5CC7A4; --accent-ink:#8CDCC1; --accent-soft:#16332A;
+  --open:#E2A54B; --open-soft:#382812;
+  --gate:#E08A8A; --gate-soft:#3A2121;
+  --mono-bg:#202824; --mark:#4A3F12;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.5;font-variant-numeric:tabular-nums}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--mono-bg);padding:.05em .3em;border-radius:3px}
+h1,h2,h3{font-family:"Bricolage Grotesque","Source Sans 3",system-ui,sans-serif;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(30px,4vw,42px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:25px;font-weight:700}
+h3{font-size:19px;font-weight:700}
+h4{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+p{margin:0}
+.page{max-width:880px;margin:0 auto;padding:0 20px 80px}
+
+.masthead{padding:44px 0 24px;border-bottom:1px solid var(--line-2);display:grid;gap:16px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:18px;line-height:1.45;color:var(--ink-2);max-width:66ch}
+.strip{display:flex;flex-wrap:wrap;border:1px solid var(--line);background:var(--surface);width:max-content;max-width:100%}
+.strip>div{padding:10px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:110px}
+.strip>div:last-child{border-right:0}
+.strip .n{font-family:"Bricolage Grotesque",sans-serif;font-size:26px;font-weight:700;line-height:1}
+.strip .l{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.n.closed{color:var(--accent)} .n.open{color:var(--open)} .n.gate{color:var(--gate)}
+
+section{padding:40px 0 4px}
+section>h2{margin-bottom:6px}
+section>.sub{color:var(--ink-2);margin-bottom:18px;max-width:68ch}
+
+.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.03em;padding:2px 8px;border-radius:2px;border:1px solid transparent;white-space:nowrap;vertical-align:middle}
+.chip.closed{color:var(--accent-ink);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.chip.open{color:var(--open);background:var(--open-soft);border-color:color-mix(in srgb,var(--open) 35%,transparent)}
+.chip.gate{color:var(--gate);background:var(--gate-soft);border-color:color-mix(in srgb,var(--gate) 35%,transparent)}
+
+.bt{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+.bt table{border-collapse:collapse;width:100%;font-size:15px}
+.bt th,.bt td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+.bt thead th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--mono-bg)}
+.bt tbody tr:last-child td{border-bottom:0}
+.bt td.a{font-weight:600;white-space:nowrap}
+.bt td.v{color:var(--ink-2);line-height:1.5}
+.bt td.v b{color:var(--ink);font-weight:600}
+.bt tr.hi td{background:var(--accent-soft)}
+.bt tr.hi td.v{color:var(--ink)}
+
+/* locks */
+.locks{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.lock{border:1px solid var(--line);background:var(--surface);padding:16px 18px;display:grid;gap:10px;align-content:start}
+.lock h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.lock p{font-size:15px;color:var(--ink-2);line-height:1.5}
+.lock p b{color:var(--ink)}
+.verdict{border-left:3px solid var(--accent);padding:6px 12px;background:var(--accent-soft);font-size:15px;line-height:1.5}
+.verdict.warn{border-left-color:var(--open);background:var(--open-soft)}
+@media (max-width:700px){.locks{grid-template-columns:1fr}}
+
+/* the sequence rail */
+.rail{display:grid;gap:0}
+.step{display:grid;grid-template-columns:64px 1fr;gap:0 18px;padding:22px 0;border-top:1px solid var(--line)}
+.step:first-child{border-top:0}
+.step .num{font-family:"Bricolage Grotesque",sans-serif;font-size:36px;font-weight:700;color:var(--accent);line-height:1;padding-top:2px}
+.step .num.last{color:var(--ink-3)}
+.step .body{display:grid;gap:10px;min-width:0}
+.step h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.step h3 .who{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;color:var(--ink-3)}
+.step .why{font-size:15px;color:var(--ink-2);line-height:1.5;max-width:70ch}
+.step .why b{color:var(--ink)}
+@media (max-width:520px){.step{grid-template-columns:1fr}.step .num{font-size:26px}}
+
+/* fork */
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fork .side{border:1px solid var(--line);background:var(--surface);padding:16px 18px;display:grid;gap:10px;align-content:start}
+.fork .side h3{font-size:18px}
+.fork dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:15px;line-height:1.45}
+.fork dt{font-weight:600;color:var(--ink-3);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;padding-top:3px;white-space:nowrap}
+.fork dd{margin:0;color:var(--ink-2)}
+.fork dd b{color:var(--ink)}
+@media (max-width:700px){.fork{grid-template-columns:1fr}}
+.numbers{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.numbers div{border:1px solid var(--line);background:var(--surface);padding:8px 12px;min-width:120px;display:grid;gap:2px}
+.numbers .n{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:700;line-height:1}
+.numbers .l{font-size:12px;color:var(--ink-3);line-height:1.3}
+
+ul.plain{margin:0;padding-left:1.1em;display:grid;gap:8px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+ul.plain b{color:var(--ink)}
+.note{border:1px dashed var(--line-2);padding:12px 16px;font-size:15px;color:var(--ink-2);line-height:1.5;margin-top:14px}
+.note b{color:var(--ink)}
+/* step 0 question cards */
+.qgroup{margin-top:28px}
+.qgroup>h3{font-size:21px;margin-bottom:2px}
+.qgroup>.gsub{color:var(--ink-2);font-size:15px;margin-bottom:12px;max-width:66ch}
+.qcard{border:1px solid var(--line);background:var(--surface);padding:14px 18px 12px;display:grid;gap:8px;margin-bottom:10px}
+.qcard.t1{border-left:4px solid var(--accent)}
+.qcard.done{border-left:4px solid var(--line-2);background:var(--mono-bg)}
+.qid{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-3);display:flex;gap:10px;align-items:center}
+.qq{font-family:"Bricolage Grotesque",sans-serif;font-size:20px;line-height:1.25;font-weight:700;text-wrap:balance;margin:0}
+.qex{font-size:15.5px;color:var(--ink-2);line-height:1.45;max-width:72ch}
+.qex b{color:var(--ink)}
+.qopts{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:15px;line-height:1.45;color:var(--ink-2);max-width:78ch}
+.qopts b{color:var(--ink)}
+.qopts li{position:relative;padding-left:26px}
+.qopts li::before{content:attr(data-l);position:absolute;left:0;top:2px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-3)}
+.qnote{font-size:14.5px;line-height:1.45;color:var(--ink);background:var(--mark);padding:6px 10px;max-width:78ch}
+.qmeta{font-size:13px;color:var(--ink-3);line-height:1.45;border-top:1px dashed var(--line);padding-top:8px}
+.qmeta b{color:var(--ink-2);font-weight:600}
+.foot{margin-top:52px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);max-width:80ch;line-height:1.5}
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <div class="eyebrow">br-monorepo · catalogue model · plan as of 2026-09-18 · today: lock the questions · research: Sunday</div>
+    <h1>Catalogue Next Steps</h1>
+    <p class="lede">Two top-layer decisions are locked. Before the fourteen numbered decisions can be taken, the words they use have to be defined: what an attribute is, what a category node is, what a family is. Those concept questions are step 0. The rest runs bottom-up: schema before value, value before axis, axis before group row. Naming and the feed key come last.</p>
+    <div class="strip" role="group" aria-label="State">
+      <div><span class="n closed">2</span><span class="l">locks · 2026-09-16</span></div>
+      <div><span class="n open">14</span><span class="l">decisions open</span></div>
+      <div><span class="n gate">13</span><span class="l">concept questions to lock</span></div>
+      <div><span class="n">6</span><span class="l">steps, in order</span></div>
+      <div><span class="n closed">4</span><span class="l">code items ready now</span></div>
+    </div>
+  </header>
+
+  <!-- ===== Where we are ===== -->
+  <section id="locks">
+    <h2>Where we are</h2>
+    <p class="sub">Locked 2026-09-16 in the <a href="https://github.com/borma-dago/br-monorepo/issues/10966#issuecomment-5693781761">decision comment on #10966</a>, on the strength of the stress-test in #11230. The thirteen-platform evidence is on the <a href="https://claude.ai/artifact/VYKor6JpP6G6ZUGMN2nzKY">Catalogue Decision Matrix</a>.</p>
+    <div class="locks">
+      <div class="lock">
+        <h3>L1 · The category is the product type <span class="chip closed">locked</span></h3>
+        <p>One object. The existing <code>Category</code> tree owns the attribute definitions and the axis eligibility. <code>ProductClass</code> is retired. Confirms D1 · D2 · D3.</p>
+        <div class="verdict warn"><b>Defensible, but a no-op until step 1 is decided.</b> One clean precedent of thirteen (eBay). The surviving argument is good: a separate type would silently become a mirror of the category. But the lock's own reopen condition, "staff cannot keep a 639-node schema coherent", is the likeliest failure, and whether it happens is exactly what D15 and D16 decide. Spend nothing on L1 until they close.</div>
+      </div>
+      <div class="lock">
+        <h3>L2 · Every product belongs to a group <span class="chip closed">locked</span></h3>
+        <p>Shape B. The group is a separate, mandatory table; <code>Product</code> stays the sellable row with price, stock, barcode and visibility. Re-closes D13, which was shape A. Ships before L1.</p>
+        <div class="verdict"><b>Sound.</b> One production create path, already atomic. A <code>NOT NULL</code> key makes the Elasticsearch collapse trap unreachable. The Indomie drift problem that started the work is removed, not tooled. The costs are named and bounded. One caveat: the lock assumes shared content moves <em>up</em> to the group, yet what moves is D10, still open. Decide it explicitly in step 4.</div>
+      </div>
+    </div>
+    <div class="note"><b>Record defects fixed 2026-09-18.</b> The D13 row on #10966 now says shape B (it still said "parent <code>Product</code> row"); the lock comment's "confirms D13" is corrected to "re-closes D13"; the matrix page gained a Locks section and the naming item L2.3 the comment referred to.</div>
+  </section>
+
+  <!-- ===== Step 0: concepts ===== -->
+  <section id="concepts">
+    <h2>Step 0 · Lock the questions before the answers</h2>
+    <p class="sub">The D-numbers were written as if "attribute", "category" and "family" were already defined. They are not. Thirteen questions, one already closed. Green-edged cards are tier 1. Nothing here is answered; the small line under each card is what Sunday's research reads.</p>
+
+    <div class="qgroup">
+      <h3>A · What is an attribute?</h3>
+      <p class="gsub">Six questions about the thing itself: what it is for, what it is, whether an axis is one, whether categories share it, what a value is, and which side of the family line a fact lives on.</p>
+
+      <article class="qcard t1" id="a0">
+        <div class="qid">A0 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">What are attributes for, and are some of them hidden?</h3>
+        <p class="qex">The uses on the table: the <b>variant picker</b>, <b>search filters</b>, a <b>spec sheet</b> on the product page, <b>Google feed</b> fields, and <b>internal rules</b> (age wall, replenishment, purchasing). Which do we want, in what order? And are some attributes customer-facing while others are staff-only?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Visibility is a property of the attribute definition</b>: shown or hidden everywhere it appears.</li>
+          <li data-l="b"><b>Per category membership</b>: <em>Rasa</em> shown for food, hidden for cleaning products.</li>
+          <li data-l="c"><b>Per channel</b>: shown online, hidden at the till, sent to Google.</li>
+          <li data-l="?">Each use pulls the design differently: filters want shared value rows (A4); the feed wants Google's names and a mapping; the picker wants an order; internal rules want a stable code that staff cannot rename away.</li>
+        </ul>
+        <p class="qmeta"><b>Touches</b> A2, A4, D17. <b>Sunday:</b> Square's 10 visible + 10 hidden; Shopify metafield storefront visibility; eBay <code>aspectUsage</code>; Magento's <code>is_visible_on_front</code> / <code>is_filterable</code> / <code>used_in_product_listing</code> flags.</p>
+      </article>
+
+      <article class="qcard t1" id="a1">
+        <div class="qid">A1 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">What is an attribute, and which facts are attributes at all?</h3>
+        <p class="qex">Today title, price and barcode are <b>columns</b>; weight and manufacturer are <b>attributes</b>. What is the rule? And is a definition (name, type, allowed values, owner) a separate thing from a value (one product's answer)?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Universal and read by code → column; category-specific and staff-authored → attribute.</b> Lock condition 2 already moves the four shipping dimensions to columns on this logic.</li>
+          <li data-l="b"><b>Everything is an attribute</b>, even the title (Amazon).</li>
+          <li data-l="c"><b>Only a small fixed set of custom fields</b> beside the columns (Square: 10 visible + 10 hidden).</li>
+          <li data-l="?">Is brand an attribute, or an entity with its own table?</li>
+        </ul>
+        <p class="qmeta"><b>Touches</b> D9, D18. <b>Sunday:</b> where each of the thirteen draws the column-versus-attribute line; Shopify keeps weight on the variant, outside the attribute system.</p>
+      </article>
+
+      <article class="qcard t1" id="a2">
+        <div class="qid">A2 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Is a variant dimension an attribute, or its own object?</h3>
+        <p class="qex"><b>Flavour</b> distinguishes Indomie siblings. It is also a fact to display, to filter on, and to send to Google. One thing with several roles, or two things?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>One object with a role flag</b> (WooCommerce <code>is_variation</code>, eBay, Magento). Then a group's axes are simply some of its category's attributes, and a member's axis value is its ordinary attribute value. Nothing new to store.</li>
+          <li data-l="b"><b>Two objects</b>: options for variation, attributes for everything else (Shopify, Square, Shopee). Then the group declares its axes, and a member stores a "selected option" separately from its attribute values.</li>
+        </ul>
+        <p class="qnote">This is <b>D3</b>, closed 2026-08-13 as (a) on a 4–4 tie and confirmed by Lock 1. Answer A1 first, then confirm or reopen it, and say which on the record.</p>
+        <p class="qmeta"><b>Touches</b> D3, D4, D5, D7, D8. <b>Sunday:</b> what each side pays — duplicated values, two editors, two filter paths.</p>
+      </article>
+
+      <article class="qcard t1" id="a3">
+        <div class="qid">A3 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Is "Rasa" one attribute type shared by every category that wants it, or does each category define its own?</h3>
+        <p class="qex"><b>Food</b> has <em>Rasa</em>. <b>Instant noodles</b> also want <em>Rasa</em>. The same type, reused, or two separate ones? This is the attribute matrix: a category × attribute membership table, or attributes nested under categories.</p>
+        <ul class="qopts">
+          <li data-l="a"><b>One global type; categories subscribe to it</b> (Shopify: 8,240 definitions, 93,007 category edges; Akeneo; Magento). One search filter across categories; values survive a category move; one list to curate.</li>
+          <li data-l="b"><b>Each category owns its own copy</b> (eBay: 197,046 leaf-scoped aspects; the 2a designs as written). Each category curates its own; no cross-category filter; a move loses values.</li>
+          <li data-l="c"><b>Shared type, per-category value list</b>: one <em>Rasa</em>, but noodle flavours and snack flavours are different lists.</li>
+        </ul>
+        <p class="qmeta"><b>Touches</b> A4, D4, D15, D16, D17. <b>Sunday:</b> how many Shopify categories reuse <em>Flavor</em>; distinct names among eBay's aspects; the distinct attribute names our 639 main nodes would need.</p>
+      </article>
+
+      <article class="qcard t1" id="a4">
+        <div class="qid">A4 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">What is a value, and where does its allowed list live?</h3>
+        <p class="qex">Is <b>"Soto"</b> a string typed on each product, or a row that many products point at? Is <b>"215 g"</b> a number with a unit, or text? Who decides the order the picker shows?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>A value is</b> a free string · a shared option row · or hybrid by type (select-typed → row, free text → string).</li>
+          <li data-l="b"><b>The list lives on</b> the attribute (one list everywhere) · the category (per-category list) · the family (Shopify's option values belong to the product).</li>
+          <li data-l="c"><b>Quantities</b> are text · a number under a unit fixed on the definition · a number plus a unit on the value (Akeneo's metric type).</li>
+        </ul>
+        <p class="qmeta"><b>Subsumes</b> D8, D9. <b>Today:</b> 0.7% case drift, 25–32% junk in manufacturer, <code>'0'</code> on 11,071 rows, 28,750 titles carrying a unit token. <b>Sunday:</b> Shopify linked versus unlinked values; Square shared option values; Akeneo option order and metric type; GS1 and BPOM net-content rules.</p>
+      </article>
+
+      <article class="qcard" id="a5">
+        <div class="qid">A5 <span class="chip open">tier 2</span></div>
+        <h3 class="qq">Does an attribute belong to the product, to the product variant, or both?</h3>
+        <p class="qex">"Product" here is the family row Lock 2 gives every product; "product variant" is the sellable member. <b>Brand</b> and <b>description</b> are facts of the product; <b>flavour</b>, <b>barcode</b> and <b>price</b> are facts of the variant. Is each attribute pinned to one side, can it live on either, and who says?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Pinned on the definition</b>: each attribute is product-level or variant-level, fixed (commercetools <code>level</code>).</li>
+          <li data-l="b"><b>Either side, chosen per family</b>: a family decides which of its attributes vary (Akeneo's distribution; Shopify metafields exist on both <code>Product</code> and <code>ProductVariant</code>).</li>
+          <li data-l="c"><b>Always on the variant</b>; the product carries nothing, and shared facts are copied across siblings.</li>
+        </ul>
+        <p class="qmeta">If an attribute is on the product, its variants do not store it. An axis is variant-level by definition (A2). <b>Subsumes</b> D11; touches D10.</p>
+      </article>
+    </div>
+
+    <div class="qgroup">
+      <h3>B · What is a category node?</h3>
+      <p class="gsub">Four questions about the tree, plus one already closed: one category per product, as Amazon has one product type.</p>
+
+      <article class="qcard t1" id="b1">
+        <div class="qid">B1 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Do nodes have types — is a leaf a different kind of thing from an internal node?</h3>
+        <p class="qex">Is <b>Snack</b> a folder that only groups, or a type that can own a schema and hold products?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Two kinds</b>: folders and types.</li>
+          <li data-l="b"><b>One kind</b>; "leaf" only means no children today (Shopify).</li>
+          <li data-l="c"><b>One kind with a per-node switch</b>, so the rule can tighten later without a migration (Akeneo; lock condition 5).</li>
+        </ul>
+        <p class="qmeta"><b>Today:</b> 1,553 leaves, 339 internal nodes, 292 of them holding products. <b>Sunday:</b> eBay's leaf-only rule (error 62009) and what sellers do about it.</p>
+      </article>
+
+      <article class="qcard t1" id="b2">
+        <div class="qid">B2 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">Can a product be assigned to a non-leaf node?</h3>
+        <p class="qex"><b>19,459 products</b> (18%) sit on non-leaf nodes today, <b>1,722</b> of them on a root.</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Yes, any node</b> (eight of thirteen platforms).</li>
+          <li data-l="b"><b>Leaves only</b> (eBay, Walmart, Shopee, Tokopedia), so 19,459 products need a home before Lock 1 ships.</li>
+          <li data-l="c"><b>Per node</b>: an "accepts products" switch.</li>
+        </ul>
+        <p class="qmeta"><b>Sunday:</b> which of our 292 used non-leaf nodes are real types (a product genuinely belongs at "Snack") and which are catch-alls (<em>Mainan dan Alat Lainnya</em>: 1,048 products at depth 1).</p>
+      </article>
+
+      <article class="qcard t1" id="b3">
+        <div class="qid">B3 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">How deep should leaves go?</h3>
+        <p class="qex">For <b>Snack</b>, do we go on to <b>potato snacks</b>? What earns a node its existence: a distinct attribute set, a browse need, a reporting need, a minimum product count?</p>
+        <ul class="qopts">
+          <li data-l="—"><b>Today:</b> depth up to 8; 607 used nodes hold fewer than ten products; 114 nodes cover half the catalogue; 639 cover 90%.</li>
+        </ul>
+        <p class="qmeta"><b>Equals</b> D16; sizes Lock 1's authoring bill. <b>Sunday:</b> Shopify's depth and attributes per node in the food branch; Amazon's 107 food types against Google's 5,595 nodes; how many of our leaves share an identical attribute need.</p>
+      </article>
+
+      <article class="qcard t1" id="b4">
+        <div class="qid">B4 <span class="chip gate">tier 1</span></div>
+        <h3 class="qq">What flows down from parent to child, per kind of fact?</h3>
+        <p class="qex">If <b>Food</b> has <em>Rasa</em>, does <b>Instant noodle</b> get it automatically? Same question for requiredness, allowed values, age-walling, replenishment settings, "accepts products".</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Nothing flows</b>; every node is complete on its own (nine of thirteen).</li>
+          <li data-l="b"><b>Inherit with override</b> (Salesforce: sub-category over parent over global).</li>
+          <li data-l="c"><b>Universal set on the root, additions on the leaves</b>, nothing in between.</li>
+          <li data-l="?">Probably <b>per kind of fact</b>, not one switch: attributes may inherit while age-walling must.</li>
+        </ul>
+        <p class="qmeta"><b>Equals</b> D15. <b>Sunday:</b> eBay's category-features "inheritance override model"; the #11188 survey of 2026-09-15 (one of thirteen inherits down a category tree).</p>
+      </article>
+
+      <article class="qcard done" id="b-closed">
+        <div class="qid">closed 2026-09-18 <span class="chip closed">✅ decided</span></div>
+        <h3 class="qq">One category per product.</h3>
+        <p class="qex">A product has exactly one category, as Amazon has exactly one product type. Closes the first half of D14. Where a merchandising node such as "Promo Ramadan" lives moves to step 5; promo already targets <code>ProductRange</code>, so nothing waits on it.</p>
+      </article>
+    </div>
+
+    <div class="qgroup">
+      <h3>C · What makes products a family?</h3>
+      <p class="gsub">Three questions about the group row that Lock 2 gives every product.</p>
+
+      <article class="qcard" id="c1">
+        <div class="qid">C1 <span class="chip open">tier 2</span></div>
+        <h3 class="qq">What may two siblings differ in, and what must they share?</h3>
+        <p class="qex">Differ <b>only in axis values</b>, plus each one's price, stock and barcode? Or also in title, images, description? Must they share the category? The brand? Can one product be in two families?</p>
+        <p class="qmeta"><b>Why:</b> under Lock 2 every product has a group, so this defines "sibling" for 105,000 rows and is the rule the merge and split screens enforce. <b>Sunday:</b> Google and Meta "consistent content across variants" rules; which fields actually differ across the 33 Indomie rows.</p>
+      </article>
+
+      <article class="qcard" id="c2">
+        <div class="qid">C2 <span class="chip open">tier 2</span></div>
+        <h3 class="qq">Is a 6-pack, or a bundle, a variant of the single — or a separate product?</h3>
+        <p class="qex">#11126 ruled a warehouse-banded pack is its <b>own SKU</b>. D6 named "pack form" as an <b>axis</b>. Is "sachet versus bottle" the same idea as "1 versus 6"?</p>
+        <ul class="qopts">
+          <li data-l="a"><b>Count is an axis</b>: the 6-pack is a sibling of the single.</li>
+          <li data-l="b"><b>Count is a separate product; form is an axis</b> (Amazon: <code>package_level</code> is a mechanism apart from variation).</li>
+          <li data-l="c"><b>Both are separate products</b>, no family link.</li>
+        </ul>
+        <p class="qmeta"><b>Touches</b> D6, #11126, promo bundles. <b>Sunday:</b> Walmart count and multipack fields; GS1's GTIN-per-pack rule; count our own "x6" / "isi 6" titles.</p>
+      </article>
+
+      <article class="qcard" id="c3">
+        <div class="qid">C3 <span class="chip">tier 3</span></div>
+        <h3 class="qq">Can a family have sub-families?</h3>
+        <p class="qex"><b>Shirt → colour → size</b>, two levels; or one level only.</p>
+        <p class="qmeta"><b>Equals</b> D12. Apparel today: 240 of 1,945 products carry a size token. <b>Sunday:</b> #10943; Akeneo's two levels.</p>
+      </article>
+    </div>
+
+
+    <div class="note"><b>Tier 1 today:</b> A0 · A1 · A2 · A3 · A4 · B1 · B2 · B3 · B4. <b>Removed in the 2026-09-18 clean-up:</b> node roles (folded into B1); barcode identity (a Sunday measurement); physical storage of values (step 2); the axis group V (written into A2 and A4; required-and-complete and where the guarantee lives went to step 3; the variant label to step 5); channel (X1) dropped; enforcement (X2) is D18 and belongs to step 1.</div>
+  </section>
+
+  <!-- ===== The order ===== -->
+  <section id="order">
+    <h2>The order, and why it is this way</h2>
+    <p class="sub">Each step needs the one below it to exist. The concepts say what the words mean; the registry says which attributes a category has; a value is what an attribute holds; an axis is an attribute whose value differs between siblings; a group is what siblings share. Nothing in steps 1 to 4 can be designed without step 0.</p>
+    <div class="rail">
+
+      <div class="step">
+        <div class="num">0</div>
+        <div class="body">
+          <h3>The concepts <span class="who">A0 – C3 above · today</span></h3>
+          <p class="why"><b>What the words mean.</b> Lock the thirteen questions in <a href="#concepts">step 0</a>, tier 1 first; research them on Sunday. Their answers rewrite the options in every step below, so the defaults shown there are placeholders until then.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <h3>The registry — the attribute matrix <span class="who">D15 · D16 · then D17 · D18</span></h3>
+          <p class="why"><b>What a category schema is.</b> Which nodes carry a schema, whether it flows down the tree, how requiredness is expressed, and whether the set is a closed contract. This also decides whether L1 is a rename or a 639-node authoring project, and what the schema editor (lock condition 1, the real critical path) looks like.</p>
+          <div class="bt"><table>
+            <thead><tr><th>Decision</th><th>Question</th><th>Options on the table</th></tr></thead>
+            <tbody>
+              <tr class="hi"><td class="a">D15</td><td class="v">Does anything flow down the type tree?</td><td class="v">(a) self-contained per node · (b) inherit down with override · (c) universal root set plus leaf additions. Only Salesforce inherits down a category tree; nine of thirteen are per node.</td></tr>
+              <tr class="hi"><td class="a">D16</td><td class="v">How fine-grained is the registry?</td><td class="v">(a) every used node is a type, 1,684 schemas · (b) a schema on a subset, untyped nodes inherit · (c) a coarser registry, on the order of Amazon's 107 food types. <b>New since #11188: adopt a vendor taxonomy.</b></td></tr>
+              <tr><td class="a">D17</td><td class="v">Where does requiredness live?</td><td class="v">(a) one boolean on the (type, attribute) row · (b) required / recommended / optional · (c) per channel, online vs POS · (d) conditional. Today: one global boolean, and <code>manufacturer</code> required blocks saves on 59,726 products.</td></tr>
+              <tr><td class="a">D18</td><td class="v">Closed contract, enforced where?</td><td class="v">(a) closed, enforced above the DB · (b) closed, enforced in the DB, which no platform does · (c) open bag with typed known attributes.</td></tr>
+            </tbody>
+          </table></div>
+          <p class="why">D14 (a separate placement object for merchandising nodes such as "Promo Ramadan") is part of this group but has no dependants. It can wait for step 5.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <h3>The value <span class="who">D8 · D9</span></h3>
+          <p class="why"><b>What a value is.</b> Framed by A4 above. Adds one storage question moved out of step 0: <b>rows or a document?</b> Today every value is one <code>ProductAttributeValue</code> row per (product, attribute) with six typed columns, 469,179 rows; the alternative is a JSONB document per product (Akeneo moved from rows to <code>raw_values</code> JSONB in 3.0), or rows plus a JSONB projection for reads. A foreign key from a value to an option row exists only with rows. The only part with measurable pain today: case drift on 0.7% of values and junk on 25 to 32% of manufacturer rows. An option type must exist before any axis does, because "Ayam Bawang" cannot be anything but free text in today's six value columns.</p>
+          <div class="bt"><table>
+            <thead><tr><th>Decision</th><th>Question</th><th>Options, and the likely default</th></tr></thead>
+            <tbody>
+              <tr><td class="a">D8</td><td class="v">Shared row, or a string copied per product?</td><td class="v">(a) shared row by FK · (b) copied string with normalisation · <b>(c) hybrid by attribute type: select-typed to a shared row, free text to a string.</b> Ordering, rename and a stable variant key come only with (a) or (c).</td></tr>
+              <tr><td class="a">D9</td><td class="v">Bare label, or a typed quantity with a unit?</td><td class="v"><b>(a) bare label plus typed quantities</b> is mostly forced: lock condition 2 moves the four shipping dimensions to columns. The open sub-question is net content as an axis. 28,750 of 105,786 titles carry a unit token such as "215 GR".</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <h3>The axis <span class="who">D4 · D5 · D6 · D7</span></h3>
+          <p class="why"><b>What makes two members siblings.</b> Framed by A2 and C1 above. Two questions moved here from step 0: must every member fill every axis with a unique combination, and is the axis set immutable once members exist (D7); and where the guarantee lives — a DB constraint with the composite-FK mirror from lock condition 4, a trigger, a validator, or by construction (D18). Mostly forced by the locks and the 2a designs; close them formally in one pass once step 0 is locked.</p>
+          <div class="bt"><table>
+            <thead><tr><th>Decision</th><th>Question</th><th>Likely default</th></tr></thead>
+            <tbody>
+              <tr><td class="a">D4</td><td class="v">Does the type gate which attributes may be axes?</td><td class="v">(b) an <code>is_axis_eligible</code> flag on the attribute. Already sketched as common to all three designs.</td></tr>
+              <tr><td class="a">D5</td><td class="v">Does the family pick, or the type impose?</td><td class="v">(a) the family picks from the eligible set. Eleven of thirteen platforms.</td></tr>
+              <tr><td class="a">D6</td><td class="v">How many axes?</td><td class="v">(b) cap of 3. We need size, flavour and pack form; Shopify, Walmart and Tokopedia cap at 3. A validator, not a schema shape.</td></tr>
+              <tr><td class="a">D7</td><td class="v">Fill every axis, unique combination?</td><td class="v">(a) both at write, in the DB. Already forced by the composite-FK mirror in lock condition 4.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <div class="body">
+          <h3>The group row <span class="who">D10 · D11 · D12</span></h3>
+          <p class="why"><b>What siblings share.</b> Only decidable once the attributes and values that could move up exist. D10 is the one genuinely open item here, and it sets the migration size.</p>
+          <div class="bt"><table>
+            <thead><tr><th>Decision</th><th>Question</th><th>Options, and the likely default</th></tr></thead>
+            <tbody>
+              <tr class="hi"><td class="a">D10</td><td class="v">What does the group carry?</td><td class="v">Field by field: <code>title</code>, <code>slug</code>, <code>description</code>, <code>main_category</code>, images, non-axis values. Never price, stock or barcode. A move needs a dual-write migration and explicit writable serializer fields; a merge must not delete the losing member's images.</td></tr>
+              <tr><td class="a">D11</td><td class="v">Inherit, or replicate?</td><td class="v">(b) partition by level, each fact stored once. Implied by "content has one home", which is the reason B beat C.</td></tr>
+              <tr><td class="a">D12</td><td class="v">May a family nest?</td><td class="v">(a) one level, enforced. Grocery is one axis deep; 240 of 1,945 apparel products carry a size token.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num last">5</div>
+        <div class="body">
+          <h3>Implementation details <span class="who">naming · feed key · collapse totals · D14</span></h3>
+          <p class="why"><b>No model consequence.</b> Decide these when the migration is written. Naming (L2.3): keep <code>Product</code> as the sellable row and name the container; renaming <code>Product</code> to <code>ProductVariant</code> churns every FK, serializer and TS model for nothing. Feed key: an opaque stable <code>item_group_id</code> decoupled from the group PK, because Google treats it as immutable. Collapse totals: Elasticsearch reports <code>hits.total</code> before collapsing, so pick a cardinality aggregation or accept the inflated count. D14, second half: where a merchandising node such as "Promo Ramadan" lives now that a product has exactly one category — the dead <code>ProductCategory</code> M2M is the candidate. The member's short variant label ("Soto · 85 g"), derived from its axis values or stored, also lands here. A consideration with no core decision behind it, kept so it is not forgotten: what happens to existing products when a schema changes — an attribute removed from a category, a value removed from a list, a product moved, an axis added to a family that has members.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== The fork ===== -->
+  <section id="fork">
+    <h2>Step 1 starts with one fork</h2>
+    <p class="sub">Surfaced on #11188. Everything in the registry hangs on it, and it decides how heavy L1 turns out to be. Nothing is recommended here yet; this is the first decision to take.</p>
+    <div class="fork">
+      <div class="side">
+        <h3>Keep authoring our own tree</h3>
+        <dl>
+          <dt>Needs</dt><dd>Inheritance down the tree with override (D15 = b), so 1,892 nodes do not need 1,892 schemas. The only fully worked reference is eBay's category <em>features</em>, delivered as an "inheritance override model" that integrators are told to store and manage client side.</dd>
+          <dt>Precedent</dt><dd><b>One of thirteen</b> inherits attribute definitions down a category tree (Salesforce B2C, single route). Akeneo inherits down its Family tree, a different object, paid edition only.</dd>
+          <dt>Bill</dt><dd>Staff-authored schemas on a depth-8 tree. 114 nodes cover 50% of products, 398 cover 80%, 639 cover 90%; 607 used nodes hold fewer than ten products each. 46 catch-all nodes hold 3,766 products.</dd>
+          <dt>Fits</dt><dd>L1 as written, and the tree's existing business logic (age-walling, replenishment).</dd>
+        </dl>
+      </div>
+      <div class="side">
+        <h3>Adopt the Shopify Standard Product Taxonomy</h3>
+        <dl>
+          <dt>What it is</dt><dd><b>MIT-licensed</b>, 14,606 categories, 8,240 attribute definitions with closed value lists (only 1.0% of nodes have none, median 6), materialised per node with no inheritance. <code>id-ID</code> is a published locale: categories, attribute names and values all translated.</dd>
+          <dt>Example</dt><dd><em>Makanan, Minuman &amp; Tembakau &gt; Item Makanan &gt; Produk Susu &gt; Yoghurt</em> carries <em>Rasa</em> (30 values), <em>Kandungan lemak</em> (8), dietary preferences including <em>Halal</em>, storage requirements, allergen information.</dd>
+          <dt>Gaps</dt><dd><b>No net-content or size attribute</b>: 300 of 8,240 definitions match size/volume/weight and every one is category-specific. Our size axis is not solved by adopting it. The <code>id-ID</code> build has 18 duplicate <code>full_name</code> paths (Tableware and Flatware both render as <em>Peralatan Makan</em>).</dd>
+          <dt>Bill</dt><dd>Re-homing 105,771 products onto a foreign 14,606-node tree, which is the re-labelling cost L1 was chosen to avoid, though it is per category, not per product, and machine work once a mapping exists.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="numbers" aria-label="Our tree today">
+      <div><span class="n">1,892</span><span class="l">category nodes</span></div>
+      <div><span class="n">1,684</span><span class="l">used as main_category</span></div>
+      <div><span class="n">8</span><span class="l">max depth</span></div>
+      <div><span class="n">19,459</span><span class="l">products on non-leaf nodes (18.4%)</span></div>
+      <div><span class="n">5</span><span class="l">attribute definitions today, all universal</span></div>
+    </div>
+    <div class="note"><b>The same fork settles the non-leaf question.</b> Products on non-leaf nodes are not automatically illegal: eight of thirteen platforms permit it. Akeneo's model, leaf-only as a per-tree <em>setting</em>, is what lock condition 5 already asks for, so the rule can tighten later without a migration.</div>
+  </section>
+
+  <!-- ===== Tension ===== -->
+  <section id="tension">
+    <h2>A sequencing tension in the lock, resolved by this order</h2>
+    <p class="sub">Lock condition 1 says build the category attribute schema editor <em>first</em>; condition 3 says ship L2 <em>before</em> L1. The editor belongs to L1 and cannot be designed until step 1 is decided.</p>
+    <ul class="plain">
+      <li><b>Read together they mean:</b> decide the registry (step 1) → build the editor → decide value and axis (steps 2, 3) → ship L2 with groups that can have axes → decide the group row's content (step 4) → only then the L1 authoring at scale.</li>
+      <li><b>So L1's schema change is small and early</b> (<code>ProductAttribute.category</code> replaces <code>product_class</code>, needed by the editor), while <b>L1's authoring bill is late</b> and sized by step 1.</li>
+    </ul>
+  </section>
+
+  <!-- ===== Code now ===== -->
+  <section id="code">
+    <h2>Code that needs no further decision</h2>
+    <p class="sub">All four are named in the lock's conditions or found wrong today. They can start while the decisions above are being taken.</p>
+    <div class="bt"><table>
+      <thead><tr><th>Work</th><th>Why it is decision-free</th><th>Issue</th></tr></thead>
+      <tbody>
+        <tr><td class="a">Shipping dimensions → columns</td><td class="v"><code>weight</code>, <code>length</code>, <code>width</code>, <code>height</code> become <code>NOT NULL</code> columns on the sellable row. 105,885 of 105,885 products carry all four, so nothing to reconcile. Shopify does the same; none of its 8,240 taxonomy attributes is a generic weight or dimension.</td><td class="v"><span class="chip open">not filed</span> nearest is #10015 (validation)</td></tr>
+        <tr><td class="a">Age-walling by ancestry</td><td class="v">Wrong today, independent of either lock: an exact-id list, so adding one child under the cigarettes parent silently unwalls its products. The test settings set the list empty, so no test catches it.</td><td class="v"><span class="chip open">not filed</span></td></tr>
+        <tr><td class="a">Google feed withdrawal</td><td class="v">Nothing ever withdraws a product from the Merchant feed; compounds #10872. Blocks part of the feed-key work.</td><td class="v">#11231</td></tr>
+        <tr><td class="a">Family-level ranking aggregates</td><td class="v"><code>importance_boost</code> and <code>num_purchases_estimate</code> read a per-member <code>ProductRecord</code>; splitting one product into five members divides both. The lock calls this the most serious open item against L2.</td><td class="v"><span class="chip open">not filed</span> design first</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <p class="foot">Sources: the 2026-09-16 lock comment on #10966; #11230 (stress-test and system passes); #11188 (tree management and the inheritance survey of 2026-09-15); the Catalogue Decision Matrix (thirteen-platform records); production numbers as measured on #11188 (2026-09-15) and #11230. Order and defaults are this page's proposal; nothing here is decided.</p>
+</div>

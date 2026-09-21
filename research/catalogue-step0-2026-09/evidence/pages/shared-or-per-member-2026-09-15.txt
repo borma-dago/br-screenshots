@@ -1,0 +1,302 @@
+
+Shared Or Per Member
+
+br-monorepo · #10966 · shape B is decided — every product belongs to a group · 2026-09-15
+
+# Shared or per member
+
+Every field and every relation our catalogue has today, sorted into what the family owns and what each sellable member owns. The fields are read off the real models in py/mono/solvent; the levels are now backed by a field-by-field survey of thirteen platforms, quoted and sourced, rather than by my opinion. Whether the two tables end up named Product → ProductVariant or ProductGroup → Product does not change this list: it is the same split either way.
+
+ family owned once by the group ·
+ member owned by each sellable row ·
+ both a value at each level, with a stated rule ·
+ decide genuinely open ·
+ ours no platform analogue, my reasoning ·
+ tentative decided by the user 2026-09-15, not yet final
+
+## Tentative decisions, 2026-09-15
+
+Taken by Irvan on this page. Tentative means settled enough to design against and cheap to revisit, not locked. Where a decision goes against the platform evidence, the row below says so plainly rather than quietly re-reading the evidence to agree.
+
+Entry | Decision | What it rests on, and what it costs | 
+
+ images | 
+ member first
+family too | 
+ Member owns images; the family may also hold them, provided display can pick. It can — see the next section. The rule is member's images if it has any, otherwise the family's, which is exactly what WooCommerce ships. This is not what I recommended, and the difference is worth stating once: the platforms key a picture to the axis value rather than to the member, so a size-only family will store the same bottle against every member. The chosen shape still works, it just does not stop that. | 
+
+ price · stock · upc | 
+ member | 
+ Unchanged from the analysis, and forced anyway: each references a physical unit that is priced, counted or scanned. | 
+
+ visibility | 
+ member | 
+ Applies to is_public and is_active together. Shopify and commercetools keep it on the family, so this is a real choice against some of the evidence. One consequence to design for: a family whose members are all hidden still exists, so the family page and the category listing need a rule for that case rather than rendering an empty picker. | 
+
+ ProductAttributeValue | 
+ member | 
+ Values stay where they are today, on the sellable row. No migration of the 469,179 existing rows. | 
+
+ category | 
+ family | 
+ And it becomes the product type, per the Q1/D2 lock. Every platform with a real container agrees. Managing the tree in that new role is #11188. | 
+
+ brand | 
+ it is an attribute | 
+ Almost certainly, and that is the point: it is not a field to place, it is the first example of the attribute question. Deferred to the attribute decision below. | 
+
+ attributes | 
+ both mechanism deferred | 
+ Both levels, but the mechanism is undecided. The live options are commercetools' — the level is declared on the attribute definition, with a constraint that can force one value across the family — or Akeneo's, where the family variant assigns each attribute to exactly one level. Nothing downstream should assume either shape yet. | 
+
+ Next decision after these: how attributes are modelled. It is the one remaining piece the rest of the catalogue design leans on. It decides where brand lives, how a family's axis is expressed, what the category-as-product-type actually owns (#11188), and whether a value can sit at the family level at all.
+
+## Images on both: yes, display can pick
+
+The concern was the right one, and it is answered by two platforms that already carry images at both levels. The rule is one line; what needs care is that it has to be stated separately for each surface, which is the mistake Magento documents.
+
+ The rule. images(member) = member's own images if it has any, otherwise the family's. The primary image is whichever of that resolved list has display_order = 0. Nothing merges the two lists, so there is never an ambiguous ordering between a family picture and a member picture.
+
+This is precisely WooCommerce's shipped behaviour. Its variation falls back to the parent in the model — get_image_id() returns the parent's id when the variation has none — and the storefront "swaps the product gallery to that variation's images. Clearing the variation selection brings back the parent product gallery." Salesforce generalises the same idea: untagged image groups "represent the fallback images", and "the system chooses the most specific matching image groups possible".
+
+### Magento's warning: one rule is not enough, name the surfaces
+
+Magento decides this in three independent places, and ships them with different defaults — the detail gallery replaces the parent's images, the cart thumbnail falls back to the parent (<configurable_product_image>parent</configurable_product_image>), and swatches are a per-attribute flag. Left implicit, we would get the same drift. Ours, named:
+
+Surface | What it shows | Where it lives today | 
+
+Product page gallery | The family's images until the shopper picks a member, then that member's if it has any. Clearing the selection returns to the family's. | ts-product-detail-images | 
+
+Card · search result | The resolved primary of whichever row the result is. Stays one cached string, as today. | Product.thumbnail_url_cache :441 | 
+
+Merchant feed | Google requires image_link on every row, so each member resolves its own — its picture if it has one, else the family's. | products_api.py:243 | 
+
+Basket · order line · label · POS | The member's resolved primary. These are about one physical unit, so they never show a family image the member has overridden. | basket :1164 · order :549 | 
+
+### What it costs to build
+
+One nullable column, one constraint. ProductImage.product becomes nullable and gains a sibling family FK, with a check that exactly one of the two is set. That keeps a single table and a single read path, which is what Shopify, Square and WooCommerce all do in their own way.
+
+The feed query is the one real change. It is a single filter today — ProductImage.objects.filter(product_id__in=…, display_order=0) — and becomes two passes: members with their own primary, then the family's primary for the rest.
+
+The thumbnail cache gains a fan-out. Editing a family image has to refresh thumbnail_url_cache on every member that was falling back to it. backfill_thumbnail_url_cache already walks this relationship and is the place to extend.
+
+Nothing migrates. All 63,363 existing image rows stay attached to the member they are on now.
+
+ The one thing this shape does not give you. Because the picture hangs off the member rather than off the axis value, a family that varies only by size will hold the same photograph once per member — five sizes, five uploads of the same bottle — or fall back to the family image and show nothing distinguishing. Every platform that solved this keyed the image to the varying option instead. If that duplication starts to hurt, the upgrade path is additive: the same nullable pointer, aimed at an axis value rather than at a member.
+
+## Three kinds of row, and only one of them is a judgement
+
+The first version of this page put a level on every row in one voice. That was wrong: the rows are not the same kind of claim, and some of what read as a finding was my opinion. They are now separated.
+
+Class | What settles it | Rows | 
+
+ forced | 
+ The row's own meaning. It references a physical unit that is scanned, counted, picked, purchased or shipped, so it can only hang off the sellable member. Nothing to decide. | 
+ upc · price · stock · purchasing · receiving · transport · return-to-supplier · reconciliation · shelf label · basket line · order line · forecast | 
+
+ platform | 
+ Thirteen platforms have already answered it, and their answers are quoted per row with the artifact they came from. Where they disagree, the disagreement is the finding. | 
+ title · description · images · slug · category · product type · attributes · visibility · the search unit · the feed row | 
+
+ ours | 
+ No platform analogue exists. These are my reasoning, labelled as such, and yours to overrule. | 
+ title_staff · notes_staff · is_offline_only · ProductMeta · promo ranges · analytics rows · timestamps | 
+
+## The product row today, field by field
+
+All of catalogue/models.py lines 356–604, in declaration order, plus the three inherited columns.
+
+Field | Level | Why | Today | 
+
+title | both | The family owns the customer-facing name ("Indomie Goreng"); the member owns a short label ("85 g"), not a second full title. Nowhere is the full string stored twice by design — see the table below. Display is composed, as Shopify's displayName is "based on product's title + variant's title". | :398 | 
+
+description | family | The strongest row in the whole survey. Five platforms give the member no description field at all, three inherit it from the family, and of the four that repeat it three tell you to keep it identical — eBay goes as far as "must have the same values". | :418 | 
+
+slug | family with a per-member URL | The family owns the address — Shopify's handle, Square's ecom_seo_data.permalink, commercetools' slug and WooCommerce's parent permalink are all family-only. But two platforms insist the member is reachable on its own: eBay gives each variation a VariationViewItemURL, and Google is explicit that the feed rows must not share a URL — "Make sure to have different landing page URLs submitted for each variant, with each URL using a different path segment and/or query parameters, for example \"/t-shirt/green\" or \"/t-shirt?color=green&size=small\"". So one slug on the family, and a member-addressing query parameter the feed can send. | :412 | 
+
+upc | member | A barcode identifies one sellable thing. GS1: "every variation of your product (e.g. each size, each colour) requires its unique GS1 GTIN". The family has none, which is why D13's nullable-upc problem disappears once the family is a separate table. | :390 | 
+
+main_category | family | Decided 2026-09-15, and it becomes the product type. Every platform with a real family container agrees: Shopify, Shopee, Tokopedia, Square, commercetools and WooCommerce put it on the family only, and Salesforce says the classification category "cannot be overridden" on a variant. Implementation detail left open: whether the member keeps a validated duplicate so age-walling, replenishment, search and the feed keep reading the column they read today. Managing the tree in its new role is #11188. | :434 | 
+
+product_class | family | Superseded by main_category under D1 + D2 and due to be rewritten, not extended. Wherever the type lands, it lands once per family. | :422 | 
+
+attributes | both mechanism deferred | Both levels, mechanism undecided until the attribute decision. The two candidates: commercetools declares the level on the attribute definition itself — AttributeDefinition.level is Product or Variant, with attributeConstraint: SameForAll to force one value across the family — or Akeneo's family variant, which assigns each attribute to exactly one level. Brand is the first thing this decides. | :428 | 
+
+is_public | member | Decided 2026-09-15: member. Against Shopify and commercetools, which keep status on the family, and with Square, Tokopedia and WooCommerce, which carry it at both levels. One case to write a rule for: a family whose members are all hidden still exists, so the family page and the category listing need to know not to render it. | :378 | 
+
+is_active | member | Same decision as is_public, same all-members-hidden case. | mixin | 
+
+is_offline_only | member ours | Our concept; no platform equivalent found. It reads as a property of a sellable unit — a bulk pack can be in-store only while the single sells online — and it drives the feed, which emits members. If the data shows it is in practice set family-wide, it belongs on the family instead. | :386 | 
+
+price_sell_online | member | A pointer to the PriceSell row that prices this unit online. | :446 | 
+
+inventory_facility_online | member | A pointer to the stock row that supplies this unit online. | :454 | 
+
+title_staff | both ours | No platform has this field, so this is my reasoning, not a finding. Staff work on the member — they scan and receive a specific pack — so today's values belong there. A family staff name is only worth adding when the staff UI grows a family screen. | :402 | 
+
+notes_staff | both ours | My reasoning. A note is written about whatever the writer was looking at, so both levels want one and neither needs a rule. The cost of having it in two places is that a reader must check both. | :408 | 
+
+thumbnail_url_cache | both | A cache of whatever the resolution rule returns, so it stays one string per row as today. The new obligation is a fan-out: editing a family image refreshes every member that was falling back to it. | :441 | 
+
+date_created · date_edited | both ours | Mechanical: every table keeps its own. The thing to carry forward is that the search index orders by Product.date_edited, which already lacks an index (#11031), and a second table means a second ordering column to think about. | mixin | 
+
+## Is it normal to carry a title on both rows?
+
+Yes, but almost never as the same string twice. Where the family is a real container, the member's name is either absent, derived from its axis values, or a separate short label — and the displayed string is composed. Checked 2026-09-15 against the records and the vendor field tables.
+
+Pattern | Platforms | What the source says | 
+
+ Member has no name at all | 
+ commercetools | 
+ `name` is on ProductData only; the Modular projection's name is labelled "Name of the parent Product". | 
+
+ Member name is derived and read-only | 
+ Shopify · Square · WooCommerce | 
+ Shopify: ProductVariant.title "has zero write paths" — variant title input fields across all 599 input objects = 0 — and displayName is "based on product's title + variant's title". Square: the variation's name — "when the parent item uses item options, this attribute is auto-generated, read-only"; live, a request sending "name": "cp0905-rev-var" read back as the six option-value names joined together. WooCommerce: the documented variation properties carry no name, yet the live response shows "name":"Red, No" — its two axis values. | 
+
+ Member has its own short label, authored | 
+ Akeneo · Salesforce B2C | 
+ Akeneo ships a separate attribute for exactly this: the family variant puts variation_name at level 1, beside the model's own name. Salesforce: name is authored on the master and inherited, and a variant may define its own value. | 
+
+ Full title repeated on every row | 
+ Amazon · eBay · Walmart · Google | 
+ These are the flat-row platforms, and they police the duplication. Amazon: the measured family carries a byte-identical title stem on parent and all three children. eBay: members' "product.title and product.description values … must have the same values". Walmart: both members of the sample carry the identical productName, differing only in flavor. | 
+
+ What this means for us. Do not store the full title twice. The family holds the name; the member holds a short label that defaults to its axis values — "85 g", "Ayam Bawang" — and is only authored when the derived string reads badly. Compose for display, and index the composed string so staff can still search "Indomie Goreng 85 g". One place already needs the composed form and has the right instinct: the order line copies title onto itself at write time, which should become a snapshot of the composed string so a later rename cannot rewrite history.
+
+## What the platforms actually do, field by field
+
+Collected 2026-09-15 from vendor schemas, reference docs and live responses, one platform at a time, every row quoted and carrying the artifact it came from. Full records in fields/tier1.md, tier2.md and tier3.md. Ordered by how tried-and-tested the platform is, which is my judgement, not a measurement.
+
+Platform | T&T | images | price | stock | barcode / SKU | category · type | brand | visibility | URL | non-axis attrs | weight · shipping | 
+Amazon | 100 | both | member | member | member | both | both | member | n-a | both | member | 
+Shopify | 85 | both | member | member | member | family | family | family | family | family | member | 
+eBay | 80 | both | member | member | member | member | both | member | both | both | member | 
+Google | 70 | member | member | member | member | member | member | member | member | member | member | 
+Walmart | 65 | member | member | member | member | member | member | member | n-a | member | member | 
+Shopee | 60 | family | member | member | both | family | family | both | n-a | family | both | 
+Magento | 60 | both | both | both | both | both | n-a | both | both | both | both | 
+WooCommerce | 55 | both | member | both | both | family | family | both | family | family | both | 
+Salesforce | 50 | both | both | both | both | both | both | OPEN | both | both | n-a | 
+Tokopedia Era B | 45 | family | member | member | member | family | family | both | n-a | family | both | 
+Square | 40 | both | member | member | member | family | n-a | both | family | both | n-a | 
+commercetools | 35 | member | member | member | member | family | n-a | family | family | both | n-a | 
+Akeneo | 30 | either | either | n-a | member | both | either | member | n-a | either | either | 
+
+ Read the rows, not a tally. Two of these look like agreement but are not. Salesforce reads "both" everywhere because a single schema type serves master and variant, and the level is decided per property by a documented fallback chain. Akeneo reads "either" because almost nothing has a fixed level: price, pictures, brand and description are attribute values, and the family variant assigns each one to exactly one level. Google reads "member" everywhere because it has no family object at all — only a shared item_group_id repeated on every row.
+
+## Images: I had this wrong
+
+The first version of this page said the family owns the gallery and "a member may override with its own shot". That is not what the platforms do. They tie a picture to the axis value it illustrates — the red one, the 500 ml one — not to the member, and several of them will not let a member hold pictures at all.
+
+How the picture is addressed | Platforms | What the source says | 
+
+ Keyed to the axis value, on the family | 
+ Salesforce · eBay · Tokopedia Era B · Akeneo | 
+ Salesforce is the clearest: an image group carries "an ordered list of variation attribute values… If an image group applies for all the red variants, for example, it will have one of these elements, namely \"color=red\"", groups with no tag "represent the \"fallback\" images", and "the system chooses the most specific matching image groups possible". eBay: if aspectsImageVariesBy is set, "the links to the images must be passed in through this imageUrls container, and there should be a picture for each variation… if the variesBy.aspectsImageVariesBy field is set to Color, a link should be included to an image demonstrating each available color in the group". Tokopedia: "You can attach images to only 1 type of sales attribute… An image must be provided for each value of the primary attribute." Akeneo's worked example puts "the composition and the pictures" at the colour level. | 
+
+ Member has no pictures at all | 
+ Shopee | 
+ Images are required on the item; the model has no image field. Instrumented: across all 92 API records, 1,704,281 bytes, model-scoped paths matching /image/i = 1, and that one belongs to the kit-item API, not to a variant. Option-scoped image paths in the same sweep = 11. The pictures hang off tier_variation.option_list[].image — the axis value again. | 
+
+ One picture per member, drawn from the family's list | 
+ Shopify | 
+ "Each variant can have one media item applied, which must be from the product's media list", and "you can only add one image to each product variant". A live test assigning a foreign image succeeded and added it to this product's media list, so the subset invariant holds by adding rather than by rejecting. | 
+
+ Member owns pictures, family is the fallback | 
+ WooCommerce · Magento | 
+ WooCommerce: the variation's get_image_id() falls back to parent_data['image_id'], the REST schema gives the variation a singular image against the parent's images array, and the storefront "swaps the product gallery to that variation's images. Clearing the variation selection brings back the parent product gallery." Magento decides it in three separate places, and the cart thumbnail ships defaulting to the parent: <configurable_product_image>parent</configurable_product_image>. | 
+
+ Free-form on both, no relationship | 
+ Square · commercetools | 
+ Square: item and variation each have image_ids, and a live read-back had the item's images and one variation's images populated independently while the sibling variation had none. commercetools is the opposite extreme: there is no images field on the product at all, and "Images: images that are specific to a color and size combination" — every image action requires a variantId or sku. | 
+
+ Repeated per row, because there is no family | 
+ Amazon · Google · Walmart | 
+ Google requires image_link on every variant row and has no family object. Amazon requires one on the parent too: "you must still describe other aspects of the parent product, including an image that represents the generalized product. The only information to omit relates specifically to price, availability, and shipping." Walmart has no family object on the write side at all: every image field sits on the item, and the group's picture is simply a nominated member — isPrimaryVariant, which "will appear as the image when customers search and the first image displayed on the item page. This should be set as \"Yes\" for only one item in a group of variants." It does key one thing to the axis, the swatch: "Enter the swatch image location in \"Swatch Image URL\" and its corresponding variant attribute name in \"Swatch Variant Attribute\". Required for products with visual variations, like color or pattern." | 
+
+### Whether a member needs its own picture depends on the axis, not the member
+
+Amazon publishes this as a table. Reproduced whole:
+
+Dimension type | Description | Image behavior | Example | 
+
+Visual | "Options where a significant visual difference is applied to the product variant" | "Images in the detail page will change depending on the option selected" | "Color or pattern variants" | 
+
+Non-visual | "Options where there is no visual effect on the product regardless of selection" | "Images will remain the same" | "Size variants" | 
+
+ What I recommended, and what was decided. I would have hung ProductImage off the family with a nullable pointer to the axis value it illustrates, resolving by most specific match — Salesforce's rule — with nothing on the member. The decision taken on 2026-09-15 was member-first with the family as fallback, which is WooCommerce's rule. Both work; the difference is that the axis-keyed shape stops a size-only family storing the same photograph once per member, and the chosen shape does not. Our data makes that cheap to live with either way: only 30,740 of 105,754 products carry any image at all.
+
+ The counter-case, stated fairly. Square and commercetools give the member its own free-form list, and commercetools has no family images whatsoever. If we expect members to be photographed independently — different packaging shots per pack size, say — that is the model to copy instead, and the cost is that every member needs its own upload.
+
+## Everything that points at a product
+
+Every ForeignKey, OneToOneField and ManyToManyField targeting Product in the tree, found by scanning py/mono/solvent. The pattern is blunt: everything that touches money, stock or a transaction stays on the member; everything that describes or merchandises moves to the family.
+
+Model | Level | Why | Where | 
+
+ProductImage | member first family too | Decided 2026-09-15. Both levels may hold images; the member's win when it has any, otherwise the family's show. Resolution rule and the four surfaces it applies to are above. | catalogue :787 | 
+
+ProductAttributeValue | member | Decided 2026-09-15: values stay on the sellable row, so none of the 469,179 existing rows move. If the attribute decision later puts some definitions at family level, this table needs a family column then, not now. | catalogue :719 | 
+
+ProductCategory | family | The dead 19.6%-populated M2M. Merchandising placement ("Promo Ramadan") is about the family, and this is the edge D14 wants for placement beside the type. | catalogue :334 | 
+
+ProductMeta | member ours | Our table. quantity_purchasing_allowed_multiples and quantity_per_box describe a pack: a carton holds 24 singles or 12 large bottles, never "24 of the family". Close to forced, but it is our own model, so it is labelled ours. | catalogue :912 | 
+
+ProductRange.products | member ours | My reasoning, and the row I would most expect you to push back on. A promo ends in a price, and prices are per member, so the target stays an M2M of sellable rows, with the family as a staff convenience that fills the range in one click. Letting a range point at a family instead is a real option; it costs a second join everywhere a range is read. | catalogue :904 | 
+
+PriceSell · PriceSellChangeLine | member | Priced per (product, facility). A family price would be a derived range for display only, and the platforms that store that copy are where the bugs are (WooCommerce's parent _price, Magento's stale out-of-stock). | price/sell :31, :182 | 
+
+PricePurchaseRecord | member | You buy a specific pack from a supplier at a specific cost. | price/purchase :66 | 
+
+InventoryFacility · InventoryRecord | member | Stock is counted per sellable unit per facility. A family total is a sum, computed, never stored. | inventory :120 | 
+
+InventoryReconciliationLine | member | Stock opname counts what is on the shelf, which is a barcode. | inventory/reconciliation :147 | 
+
+PurchasingLine · ReceivingLine · TransportLine · ReturnToSupplierLine | member | Every supply-chain document moves physical units. All four are PROTECT, so they also pin a member against deletion. | purchasing :280 · receiving :254 · transport :192 · return_to_supplier :201 | 
+
+ForecastProduct | member | Replenishment forecasts a unit's demand. A family-level forecast is a rollup if anyone wants one. | forecast :24 | 
+
+PrinterLabelProductLine | member | A shelf label prints one barcode and one price. | printer/label :81 | 
+
+Basket Line | member | A customer buys a specific flavour. The picker chooses the member before the line exists. | basket :1164 | 
+
+Order Line | member | Same, and it already copies title onto the line so history survives a rename — that copy should become the composed family-plus-variant string. | order :549 | 
+
+Analytics: ProductRecord · UserProductView | member ours | My reasoning, and changed from the first version. num_purchases counts purchases, which happen to a member, and it drives that member's search boost. A family rollup is a query, not a second stored row, until a page genuinely needs it stored. | analytics :20, :55 | 
+
+## The two derived surfaces: search and the Merchant feed
+
+Surface | Level | What it means | 
+
+Search index | member | Members are what a customer buys and what the till scans, so the sellable document stays per member with the group id added for collapsing. guid is upc today and keeps working, because members keep their barcode. A family document is optional and only needed if we want families to rank as one result. | 
+
+Merchant feed | member | Google wants one row per sellable item with a shared item_group_id, and forbids the group id on a product that is not a variant — so the exporter emits members and suppresses the id for single-member families. Title, description, images and the link come from the family, price and availability from the member. | 
+
+## What the group row gains that no product row has today
+
+The dimension list — a thin through table of ProductAttribute rows with a position, each required to belong to the family's category and to be axis-eligible. Empty for a family of one.
+
+The type — the Category that owns the attributes, and the gate on which of them may be an axis.
+
+A variant key per member — a canonical string of the member's axis values, unique within the family, so D7's uniqueness is a database constraint instead of a validator over many rows.
+
+A primary member — which member the card, the feed and the page default to. Walmart requires exactly one; Google picks the first; we will need one for the thumbnail and the default selection.
+
+## The four things worth deciding deliberately
+
+1 · Does the member keep a copy of main_category? A validated duplicate keeps age-walling (models.py:563), inventory replenishment, the search document and the feed reading the column they read today. Moving it wholly to the group re-points all four. The duplicate is the cheaper migration; the single copy is the cleaner model.
+
+2 · How do non-axis attribute values attach to a family? ProductAttributeValue has one product column. Either add a nullable variant_group beside it with a check that exactly one is set, or give the family its own value table. The first keeps one read path for "all values of this thing"; the second keeps each table's constraint simple.
+
+3 · What shape is the member's URL? The customer page is shop/product/{product_id}/{product_slug} today, and that exact string is what the Merchant feed sends Google. Google will not accept a feed whose variants share a link: "Make sure to have different landing page URLs submitted for each variant, with each URL using a different path segment and/or query parameters". So this is not family-or-member. The family owns the slug, and the member still needs an address — either a query parameter on the family page or the member id kept in the path. Keeping the id in the path is the only option that leaves every existing URL working.
+
+4 · Is the title composed or stored? "Indomie Goreng" + "85 g" can be composed at read time, as Shopify does with displayName, or stored per member as it is today. Composition removes a drift pair; storage keeps the order line, the label and the POS display reading one field. The survey leans to composing: the only platforms that store the full string on every row are the ones with no container, and all of them have to police the duplication.
+
+## One sentence that summarises the whole split
+
+ Money, stock, identity, visibility and pictures stay on the member; words and classification move to the family. Almost every relation pointing at Product today is transactional and does not move at all. After the 2026-09-15 decisions the list that moves is shorter still: the description, the slug, the type and the placement M2M. Images gain a family option but keep their member rows, and attribute values do not move at all until the attribute mechanism is decided. That is the whole migration surface on the content side, and it is the same list whichever of the two tables ends up being called Product.
+
+Read from py/mono/solvent on 2026-09-15: catalogue/models.py (Product 356–604, ProductCategory 334, ProductAttributeValue 719, ProductImage 787, ProductRange 904, ProductMeta 912), price/sell/models.py, price/purchase/models.py, inventory/models.py, inventory/reconciliation/models.py, basket/models.py, order/models.py, purchasing/models/purchasing.py, receiving/models/receiving.py, transport/models/models.py, return_to_supplier/models.py, forecast/models.py, printer/label/models/printer_label_product.py, analytics/models.py, search/search_indexes.py, third_party_api/google/content/products_api.py. Platform comparisons come from the thirteen records under #10966 and the description pass posted as #11031 comment 5675484207. Level assignments are my judgement; the field lists and line numbers are the code.
+

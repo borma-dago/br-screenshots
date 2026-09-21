@@ -1,0 +1,15 @@
+[en] n=8240 · array order alphabetical: 838 · alphabetical ignoring Other/Lainnya: 7715 · ascending by value id: 6913 · 'Other'/'Lainnya' present 8237, of which last 8237
+[id-ID] n=8240 · array order alphabetical: 594 · alphabetical ignoring Other/Lainnya: 7544 · ascending by value id: 1059 · 'Other'/'Lainnya' present 8237, of which last 8237
+attributes whose value ARRAY ORDER is identical en vs id-ID: 1272 · different: 6968
+-> the published order is a function of the LOCALE's labels, not a stored per-value position
+
+distinct attribute NAMES among 8240 definitions: 8240 · names defined more than once: 0 {}
+value ids: en 74820 · id-ID 74820 · identical set: True
+  top    3 attributes cover  27962/93007 edges (30.1%)
+  top   10 attributes cover  35875/93007 edges (38.6%)
+  top   25 attributes cover  45299/93007 edges (48.7%)
+  top   50 attributes cover  53335/93007 edges (57.3%)
+  top  100 attributes cover  59922/93007 edges (64.4%)
+  top  250 attributes cover  68023/93007 edges (73.1%)
+  top  500 attributes cover  73886/93007 edges (79.4%)
+  top 1000 attributes cover  79503/93007 edges (85.5%)

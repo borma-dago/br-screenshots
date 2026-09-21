@@ -1,0 +1,2420 @@
+
+Catalogue Decision Matrix
+
+br-monorepo · #10966 decision record · rewritten 2026-09-07 · evidence only, nothing decided here
+
+# Catalogue Decision Matrix
+
+Three shape questions first — is the type the category, how does a variant family relate to the type, what is the whole model — then the fourteen numbered decisions. Every answer is grouped the same way: the answer, who gives it, and the caveats that sit inside the group. The thirteen platforms are the audited records under #10966; hedges are theirs.
+
+13platform records
+
+4decisions closed
+
+14decisions open
+
+5credential gates
+
+ %Tried and tested
+ Q1Type = category?
+ Q2Variant ↔ type
+ 2aA · B · C
+ 2aDesigns
+ Q3Overall model
+ {}Q3 examples
+ P3The axis
+ P4The value
+ P2The family row
+ P1The registry
+ §Gates
+ §Corrections
+
+## How tried and tested each model is
+
+Every platform list on this page is sorted by this score, and each name carries it. The score is my proposed judgement, not evidence from the records: it estimates how much real catalogue and transaction volume has run through this exact product model, and for how long, relative to Amazon at 100. Reassign freely; the sort follows the number.
+
+Platform | Basis for the number | 
+
+Amazon | The largest product catalogue in the set; the type-and-parentage model has run across 20+ marketplaces for two decades and every other marketplace copied parts of it. | 
+
+Shopify | Millions of merchant stores on one product/variant/option model since the late 2000s; the taxonomy-and-metafield layer is newer (2024) and still changing quarterly. | 
+
+eBay | The leaf-category-owns-aspects model is the oldest marketplace model in the set and serves 15,111 leaves and 197,046 aspects today. | 
+
+Google Merchant Center | Ingests product data from most online retailers, but it is a feed specification, not a system that stores and sells; no per-category schema. | 
+
+Walmart Marketplace | Large US marketplace; the per-type JSON-schema model is thorough (6,967 types) but exercised on one market. | 
+
+Shopee | The largest Southeast Asian marketplace and the most relevant to us; value-level behaviour could not be observed. | 
+
+Magento / Adobe Commerce | The attribute-set plus configurable-product model has powered a large share of self-hosted stores since 2008. | 
+
+WooCommerce | The most installed store platform by count, mostly small shops; the model is the simplest in the set and open at every level. | 
+
+Salesforce B2C | Enterprise storefronts since 2004 (as Demandware); mature, but a smaller number of large tenants and a Help corpus we could not reproduce. | 
+
+Tokopedia / TikTok Shop | Indonesia's largest marketplace, but the old model was terminated in 2025 and the TikTok Shop model is new; no live instance observed. | 
+
+Square | Small-merchant POS at scale; the catalogue model is simple and the attribute system capped at 10 + 10. | 
+
+commercetools | Enterprise headless commerce since 2013; well-defined model, fewer and larger tenants; the Modular variant model is a 2026 beta. | 
+
+Akeneo PIM | A product information manager, not a selling system; the family/variant model is precise but the smallest in reach. | 
+
+🔒 Locked 2026-09-16
+
+The category is the product type · every product belongs to a group
+ One object, not two: the Category tree owns the attribute definitions and the axis eligibility, and ProductClass retires.
+ The variant group is mandatory — a separate table, a NOT NULL key from the sellable row, and a family of one for the products that will never have a sibling.
+ Whether the two tables end up named Product → ProductVariant or ProductGroup → Product stays open.
+
+ Taken after four schema designs, an adversarial review, and four system passes across py/mono/solvent and ts/.
+ The full record — what was rejected and why, what each lock costs, the five conditions it was taken on, and what would reopen it — is
+ #10966 comment 5693781761.
+
+ Order of work: the category attribute schema editor first (it does not exist in any form today and blocks every shape), then the four shipping dimensions out of the attribute system, then lock 2 before lock 1 — the group delivers a capability on day one, the merge is a day-one no-op.
+
+## The decision layers — what is locked, what is next
+
+Two top-layer decisions are settled. They do not answer the rest; they change which questions are next, because each one creates its own bill. Below: the layer that is now live, in dependency order, and what each item unblocks. The fourteen decisions further down this page are the source material — this is the order to take them in, not a new list.
+
+ 🔒 Layer 1 — both LOCKED 2026-09-16, after an eight-pass design review across both stacks. The decision record is
+ #10966 comment 5693781761, which is self-contained; the review is #11230.
+ (1) The product type is the category — one object, D1 · D2 · D3 · D13 closed.
+ (2) Every product belongs to a group — shape B, the group mandatory and a separate table; table naming still open.
+ Also decided tentatively on the Shared or per member page: price, stock, barcode, visibility and attribute values on the member; category on the family; images on the member with the family as fallback. Those settle D10 and most of D11 field by field.
+
+graph LR
+ A["LOCKED
+Category IS the product type"]
+ B["LOCKED
+Every product belongs to a group"]
+
+ C["L2.1
+Do attributes inherit
+down the tree?"]
+ D["L2.2
+Is a value a shared row
+or a copied string?"]
+ E["L2.3
+Which table keeps
+the name Product?"]
+ F["L2.4
+One type plus a
+placement object?"]
+
+ G["D4 axis-eligibility gate"]
+ H["D5 who picks the axes"]
+ I["D6 how many axes"]
+ J["D7 complete and unique"]
+
+ K["D16 registry granularity"]
+ L["D17 requiredness"]
+ M["D18 closed contract"]
+ N["D9 quantity and unit"]
+
+ A --> C
+ A --> F
+ B --> E
+ C --> G
+ G --> H
+ H --> I
+ D --> J
+ C --> K
+ C --> L
+ C --> M
+ D --> M
+ D --> N
+
+ classDef locked fill:#DCEDE5,stroke:#0F6E56,stroke-width:2px,color:#0A5240;
+ classDef next fill:#F5DFDF,stroke:#9A3B3B,stroke-width:2px,color:#7A2F2F;
+ classDef later fill:#FFFFFF,stroke:#BFC8C2,color:#48524D;
+ class A,B locked;
+ class C,D,E,F next;
+ class G,H,I,J,K,L,M,N later;
+
+### Layer 2 — four decisions, none waiting on another
+
+Each is blocking: leave it open and the work downstream either stalls or gets built twice. Two are the direct bill of the two locks; two are structural questions the locks exposed.
+
+Decision | Why it is next | Options, and what our own data says | 
+
+ L2.1 · Does a category's attribute set inherit down the tree?D15 → D16 | 
+ Everything about the registry is unsized until this is answered. Requiredness (D17), the closed contract (D18) and axis eligibility (D4) all hang off a (type, attribute) membership row that does not exist until we know where membership attaches. It also decides whether the 19,459 products sitting on non-leaf nodes are legal or a migration. | 
+ (a) self-contained per node · (b) inherit down with override · (c) a universal set on the root plus leaf additions.
+
+Our five attributes are weight, length, width, height, manufacturer — all universal. Under (a) they must be attached to each of the 1,684 nodes that hold products on day one, which is why (a) is hard to defend. Precedent for (b) is thinner than I first wrote — see the inheritance survey below. Salesforce is the only platform that inherits attribute definitions down a category tree; Akeneo does it down a family tree, which is a different object. commercetools declares the level on the definition itself, but its ProductType is flat, so nothing inherits there at all. | 
+
+ L2.2 · Is an attribute value a shared row, or a string copied per product?D8 → D9 | 
+ An axis needs values that can be enumerated, ordered and renamed. We have no option or enum attribute type — the six are text, integer, boolean, float, date, datetime — so D4 · D5 · D7 and the variant key have nothing to point at until this is settled. It is also the only part of the model with pain that is measurable today. | 
+ (a) a shared value row by FK, which needs a new option attribute type · (b) a copied string with normalisation and a validator · (c) hybrid by attribute type.
+
+Measured on manufacturer, 2026-09-15 — see the table below. Ordering, rename and normalisation are free under (a) and (c), and hand-built under (b). | 
+
+ L2.3 · Which table keeps the name Product?the bill of lock 2 | 
+ Deferred on purpose when shape B was decided, and now the thing that blocks writing any migration. It decides whether 19 relations re-point or stay put, and whether catalogue.view_product, every serializer, every admin registration and the customer URL keep their meaning. | 
+ (a) Product stays the sellable row and a new ProductGroup sits above it — nothing re-points, the new table is genuinely new · (b) Product becomes the family and the sellable row becomes ProductVariant — truer to the four container platforms, where the container is the product row, but every FK, permission string and URL moves.
+
+The tentative layer-1 decisions put price, stock, barcode, visibility and attribute values on the member, which pulls toward (a). | 
+
+ L2.4 · One type plus a separate placement object, or many types?D14 · the bill of lock 1 | 
+ Lock 1 gave the tree schema duty, so a merchandising node like "Promo Ramadan" now has nowhere to live. This was the stated cost of the lock, and it comes due as soon as anyone needs to group products for a reason that is not their schema. | 
+ (a) one type plus a separate multi-valued placement object — the ProductCategory M2M, 19.6% populated and otherwise dead, is the candidate edge · (b) schema-less merchandising nodes in the same tree · (c) one Category class with role-typed edges, as Salesforce does.
+
+Every merchant tool in the survey supports many categories per product; every marketplace is single or capped. | 
+
+### What L2.2 is actually about — manufacturer, measured 2026-09-15
+
+Measure | Value | Reading | 
+
+rows | 46,114 | Of 105,771 products, so 56% have no manufacturer at all — while the attribute is declared required. | 
+
+distinct values | 5,580 | Falls to 5,541 after trimming and case-folding: 39 values differ only by case or whitespace. | 
+
+value is literally "0" | 12,151 | 26.3% of the rows. | 
+
+value is purely numeric | 15,129 | 32.8% of the rows are not a manufacturer name at all. | 
+
+used exactly once | 2,759 | Half the vocabulary is singletons — the signature of free text with no shared row behind it. | 
+
+### Layer 3 — the axis mechanics, gated on L2.1 and L2.2
+
+Decision | Waits on | Why it cannot go first | 
+
+D4 · Is there an axis-eligibility gate on top of the type? | L2.1 | The flag lives on the membership row between a type and an attribute. Where that row lives is L2.1. | 
+
+D5 · Does the family choose its axes, or does the type impose them? | D4 | "Choose from the gated set" is meaningless until there is a gated set. Eleven of thirteen platforms let the family choose; Amazon and Akeneo freeze the choice after creation, which is the sub-question. | 
+
+D6 · How many axes may a family carry? | D5 | A validator, not a schema shape, once D3 is closed. We need three kinds — size, flavour, pack form — so any cap below three is already wrong. | 
+
+D7 · Must every member fill every axis, and must the combination be unique? | L2.2 | A database-level unique on the axis combination needs canonical values, which is exactly what L2.2 decides. No platform in the set enforces this in the database. | 
+
+D12 · May a family nest? | — | Independent and small. Only Akeneo ships two levels. Worth closing early simply to stop the self-FK depth being unconstrained by default. | 
+
+### Layer 4 — enforcement and the authoring bill
+
+Decision | Waits on | Note | 
+
+D16 · How fine-grained is the registry? | L2.1 | If attributes inherit, 1,892 nodes is free. If they do not, it is 1,684 schemas to author by hand. | 
+
+D17 · Where does requiredness live, and is it one-valued? | L2.1 | Live defect today: manufacturer is required and 56% of products have no row, so the flag is already not doing what it says. | 
+
+D18 · Is the attribute set a closed contract, and enforced where? | L2.1 · L2.2 | Today validate_attributes() guards three call sites and nothing in the database ties a value's attribute to the product's type. | 
+
+D9 · Is a value a bare label, or a label plus a typed quantity and unit? | L2.2 | Our units live inside attribute names — Tinggi (cm) — and "600 ml" is title text. Sub-question: may a metric be an axis? Akeneo yes, Walmart's size axis is a string. | 
+
+ The one-line version. Layer 2 is two structural questions — do attributes inherit down the tree, and is a value a row or a string — plus two bills that the locks already incurred: which table keeps the name Product, and where merchandising nodes live. Nothing in layers 3 and 4 can be designed properly before those four. Managing the tree in its new role is filed as #11188, and it needs L2.1 and L2.4 to be answerable.
+
+## The open-question register — your five, and what the notes hold besides
+
+Everything deferred across this page, the two decision briefs, the per-platform records and the issues, in one list. Nothing here is new work invented for the register; each row names where it was already parked.
+
+### Your agenda, 2026-09-15
+
+Item | Which open decisions it is | What it needs before it can be taken | 
+
+ 1 · Attribute ownershipbrand → family, height → member | 
+ D15 plus the deferred half of D11. Your example is exactly the mechanism question: if brand sits at family level and height at member level, then the level is a property of the attribute definition, not of the value. | 
+ Nothing external. The two shapes are already collected: commercetools puts level on the definition (Product or Variant) with attributeConstraint: SameForAll to force one value across a family; Akeneo assigns each attribute to a level through the family variant. This is a choose-one. | 
+
+ 2 · Variant axis design | 
+ D4 eligibility gate · D5 who picks the axes · D6 how many · D7 completeness and uniqueness — and D8 underneath all of them, because an axis needs values that can be enumerated. | 
+ D8 first. See the measurement below: our size axis already exists, written into titles, and it is not sortable as text. | 
+
+ 3 · Do we author more nodes like "eating utensils", or adopt a standard set? | 
+ D16 registry granularity, and the whole of #11188. | 
+ Research running: which public taxonomies exist, their licence, size, whether a node carries attribute definitions as well as a label, and whether Indonesian is published. | 
+
+ 4 · Which table keeps the name Product | 
+ L2.3 — the bill of the shape-B lock, deferred when it was taken. | 
+ Nothing external. It is a migration-cost choice: 19 relations stay put, or all move. | 
+
+ 5 · What inherits down the type tree | 
+ D15 again, from the tree side rather than the attribute side, and it sizes D16 and D17. | 
+ Research running: per platform, whether a child node inherits its parent's attributes, requiredness and axis eligibility, whether a child may override or remove, and whether products may sit on a non-leaf node. | 
+
+### Also deferred, and not in the five
+
+Question | Where it was parked | Why it still matters | 
+
+Where do merchandising nodes live? | D14 · L2.4 | The direct bill of the type=category lock. "Promo Ramadan" has nowhere to sit once the tree owns schema. The ProductCategory M2M, 19.6% populated and otherwise unused, is the candidate edge. | 
+
+Does the member keep a copy of main_category? | Shared or per member, item 1 | A validated duplicate keeps age-walling, replenishment, the search document and the feed reading the column they read today. Moving it wholly to the family re-points all four. | 
+
+How do family-level attribute values physically attach? | Shared or per member, item 2 | ProductAttributeValue has one product column. Either a nullable family column beside it with a check that exactly one is set, or a second table. Falls out of item 1 of your agenda, but is a separate schema call. | 
+
+What shape is a member's URL? | Shared or per member, item 3 | Google refuses a feed whose variants share a landing page. The family owns the slug; the member still needs an address, and keeping its id in the path is the only option that leaves all 105,771 existing URLs working. | 
+
+Is the title composed or stored? | Shared or per member, item 4 | The evidence leans to composing. Only the platforms with no container store the full string per row, and every one of them has to police it. | 
+
+Is a value a bare label, or a quantity and a unit? | D9 | See the measurement below. Ours are currently inside attribute names — Tinggi (cm) — and inside titles. | 
+
+Where does requiredness live? | D17 | Not hypothetical: manufacturer is declared required and 56% of products have no row, so the flag already does not mean what it says. | 
+
+Is the attribute set a closed contract, enforced where? | D18 | Today a validator guards three call sites and nothing in the database ties a value's attribute to the product's type. | 
+
+May a family nest? | D12 | Small and independent. Only Akeneo ships two levels. Worth closing early so the self-FK depth is not unbounded by default. | 
+
+What happens when every member of a family is hidden? | Raised by the visibility decision | Visibility went to the member, so a family can exist with nothing visible in it. The family page and the category listing need a rule. | 
+
+Which member is the primary? | Shared or per member, "what the group row gains" | Walmart requires exactly one; Google takes the first. We need one for the card thumbnail, the feed row and the default selection on the page. | 
+
+What is the canonical variant_key? | q2a design | It is how D7's uniqueness becomes a database constraint instead of a validator over many rows — and it cannot be defined before D8 says what a value is. | 
+
+Does search index families, or only members? | Shared or per member, derived surfaces | Members stay the sellable document with a group id for collapsing. A family document is optional and only needed if families should rank as one result. | 
+
+Feed: suppressing item_group_id on singletons | Shape-B feed rule | Decided by evidence rather than preference — Google forbids the group id on a product that is not a variant — but it is an implementation obligation shape B creates, and it is easy to forget. | 
+
+### Our size axis already exists — it is written into the titles
+
+Measured 2026-09-15 across all 105,786 products. This is the concrete case for taking D8 and D9 before the axis decisions, rather than after.
+
+Measure | Value | 
+
+Titles containing a unit token — ml, gr, kg, pcs, sachet, botol, dus and the rest | 28,750 · 27.2% | 
+
+Titles containing a multiplier, e.g. 12 x 100 | 2,206 | 
+
+ One real family from our own catalogue, quoted as stored:
+
+ SOKLIN SOFTERGENT SAKURA STRAWBERRY 215 GR · 720 GR · 1.44 KG · 2.7 KG
+
+ Four members of one size axis, in two different units. As bare labels they sort 1.44 KG, 2.15 GR… — wrong, and no amount of validation fixes it, because a label has no magnitude. That is D9's question in one row, and it decides whether the size axis can be ordered on the product page at all.
+
+ Two more, showing that we need more than one axis kind at once:
+ REAL GOOD YOGURT DRINK {BLUEBERRY · LYCHEE} × {80 ML · 125 ML} — flavour crossed with size;
+ IMPLORA DAYTODAY LITE MATTE LIP CREAM {#01 UPLIFTED · #03 PASSIONATE · #04 HUMBLE · #05 AMBITION} 4 GR — a shade axis at one size.
+ And a counter-example worth keeping in view: PIXY FIXED MATTE {CUSHION · POWDER FOUNDATION} shares a title prefix but is two different product types, not one family — whatever we build has to be able to say no to that.
+
+## Item 3 — is there a standard set of categories we could adopt?
+
+Twelve public classifications collected 2026-09-15, plus what each audited platform publishes of its own. The question that matters for us is not "is there a list of category names" — there are many — but does a node carry attribute definitions, because under the type=category lock a node without attributes is just a label. Full record in taxonomy/taxonomies.md; the corpus is on disk, so every count below can be re-run.
+
+Taxonomy | Licence | Size | Attributes on a node? | Indonesian? | 
+
+ Shopify Standard Product Taxonomy | 
+ MIT | 
+ 14,606 categories
+8,240 attributes | 
+ Yes — category.attributes[], each with its own values[]. Only 152 categories (1.0%) have none; median 6. | 
+ Yes — id-ID is a published locale, with categories, attribute names and values all translated. | 
+
+ GS1 GPC | 
+ Royalty-free under the GS1 IP Policy; downloads need no login | 
+ 5,318 bricks
+2,085 attributes · 13,733 values | 
+ Yes, on bricks — but 1,655 of 5,318 bricks (31.1%) carry none, and another 1,654 carry exactly one. | 
+ No. 30-odd languages, Thai the only South-East Asian one. | 
+
+ Google Product Taxonomy | 
+ No licence statement on the artifact or the help page | 
+ 5,595 nodes, depth 7 | 
+ No — every line is id - path and nothing else. | 
+ No — id-ID returns 404. | 
+
+ ECLASS | 
+ Paid — €700 for a single licence, up to €45,870; membership €1,570–€21,000/yr | 
+ ~48,000 classes
+~23,000 properties | 
+ Yes, with value lists. | 
+ Offered at "100%" on request, but DeepL machine-translated. | 
+
+ KBKI 2015 · Badan Pusat Statistik | 
+ Free PDF; commercial reproduction needs written permission | 
+ 21,780 commodities at 10 digits | 
+ No — a row is a code and a title. | 
+ Indonesian only, no English edition. | 
+
+ UNSPSC | 
+ Free to download; the Terms of Use and the FAQ contradict each other on redistribution | 
+ 149,849 commodities | 
+ No — UNSPSC's own documentation points at GPC for attributes. | 
+ No. | 
+
+ ETIM · CPV · HS · CPC · Open Food Facts | 
+ Mixed; HS sells the machine-readable file at €975 | 
+ — | 
+ ETIM yes, the rest no. | 
+ ETIM is electrical/technical — instrumented: grocery, snack and cosmetic return 0 hits across its 5,640 classes. | 
+
+### What "eating utensils" actually looks like in the one that fits
+
+The question was whether we hand-author a node. In the Shopify taxonomy that region already exists at several granularities, each node carrying its own attributes with closed value lists. Quoted from the published file:
+
+Node | Its attributes, with value counts | 
+
+ Home & Garden > Kitchen & Dining > Kitchen Tools & Utensils | 
+ Cleaning instructions (3) · Color (19) · Handle material (31) · Pattern (51) · Tool/Utensil material (31) | 
+
+ Business & Industrial > Food Service > Disposable Tableware > Disposable Cutlery > Disposable Spoons | 
+ 5 attributes — the tree goes three levels finer than "eating utensils" would have. | 
+
+ Food, Beverages & Tobacco > Food Items > Dairy Products > Yogurt | 
+ Allergen information (16) · Beta-casein variant (4) · Dietary preferences (28, includes Halal) · Fat content (8) · Flavor (30) · Storage requirements (6) · Yogurt base ingredient (15) | 
+
+ The Indonesian is real, not machine noise. The same yogurt node in id-ID: Makanan, Minuman & Tembakau > Item Makanan > Produk Susu > Yoghurt, with Rasa (Almon, Apel, Bluberi, Ceri, Cokelat…), Kandungan lemak, Persyaratan penyimpanan, Informasi alergen.
+
+ Note that Flavor is a taxonomy attribute with 30 published values — that is our flavour axis, already enumerated, already translated. It is the strongest single argument for adopting rather than authoring.
+
+### Two things to know before adopting it
+
+Finding | Measured | Why it matters | 
+
+ The file does not carry inherited attributes down — each node declares its own set, and a child can have fewer than its parent | 
+ Of the parent/child pairs: 5,295 identical · 4,398 child is a strict superset · 4,668 diverge | 
+ Walk the food chain and you can see it: Food, Beverages & Tobacco declares one attribute, Organic certification; its child Food Items declares seven and does not include it; Dairy Products then drops most of those and adds two of its own. So this is a self-contained-per-node taxonomy, authored centrally. That is a direct data point for your item 5. | 
+
+ There is no net-content or size attribute anywhere in it | 
+ 300 of 8,240 definitions match size, volume, weight or capacity — and every one is category-specific (Bagel size, Battery size, Athletic cup size) | 
+ Our biggest axis, the 215 GR / 720 GR / 1.44 KG / 2.7 KG one, is not in the standard and would not be solved by adopting it. D9 stays ours either way. | 
+
+ The Indonesian translation collapses some distinct paths | 
+ 18 duplicate full_name paths in id-ID, against 0 in English | 
+ Tableware and Flatware both render as Peralatan Makan. Harmless if the id is the identifier and the name is only a label; a real problem if anyone keys on the Indonesian name. | 
+
+## Item 5 — what actually flows down a type tree
+
+ ⚠ A correction to what I wrote in the layer plan. I said self-contained-per-node was "hard to defend" and that inheritance was obviously needed. The survey says the opposite: self-contained per node is what almost everyone ships. Only Salesforce inherits attribute definitions down a category tree, and Akeneo's inheritance is on its family tree, a different object from its category tree. I had also cited Salesforce's "cannot be overridden" as tree precedent; that sentence is about the master→variant product tree, not the category tree, and on the category tree Salesforce's own word is "override". Both are fixed above.
+
+Collected 2026-09-15, thirteen platforms, seven sub-questions each, in inheritance/inheritance.md. The classification into columns below is mine; each platform's own row and artifact is in the record.
+
+Platform | Does a child's attribute set include its parent's? | Product on a non-leaf node? | 
+
+Amazon100 | No tree on the attribute owner. ProductType has three properties; the set arrives materialised as one JSON Schema per call. Browse-node refinements were measured separately: 219 of 237 parent→child pairs are supersets, 18 are not. | Yes — no leaf-only rule; "most specific" is worded as a performance caution. | 
+
+Shopify85 | No. Materialised per node and the child frequently drops: 4,668 of 14,580 pairs in the published file, 4,877 measured live. "inherit appears 0 times in the 95 MB file. | Yes — a product was created on a node with isLeaf:false and no error. | 
+
+eBay80 | Aspects: no — leaf-only and self-contained. Category features: yes, explicitly, and this is the one real inheritance model in the set. | No — error 62009 … must be a leaf category. | 
+
+Google70 | No per-node set exists — one global attribute bag; none of the five methods takes a category. Requiredness is the exception: 16 named Apparel sub-categories are optional where their ancestor is required, as an enumerated prose list. | Yes — discouraged, never forbidden; of 20 ids Google names as submission targets, 14 are parents. | 
+
+Walmart65 | No tree on the attribute owner. 6,967 sibling product-type keys in one flat map; $ref appears 0 times across 451 MB. Each type carries its full set — 383,947 slots over 6,576 distinct names. | No — the feed takes exactly one product type. | 
+
+Shopee60 | No mechanism at all — 0 hits across 1,704,281 + 3,302,641 bytes. The category owns the set and it differs per category. | No — "only the category_id with has_children=false can be used to create or update products". | 
+
+Magento60 | No — attribute sets are flat and unrelated to the category tree; 0 of 63 catalog tables join a category to a product attribute. "Based On" copies once with no standing link. | Yes — no leafness constraint on the category-product table. | 
+
+WooCommerce55 | Neither — a category term carries no attribute definitions at all. 514 lines mention the category taxonomy; 0 of them also mention an attribute taxonomy. | Yes — an ordinary term relationship; nothing tests leafness. | 
+
+Salesforce B2C50 | Yes — the only one, on a category tree. The model is the union of global groups, the classification category's groups, and "any parent categories" of it. A sub-category group overrides the parent's by id collision. Single route, so treat it as one vendor's word. | No leaf rule found in any artifact; a vendor fixture assigns a product to a root that has children. | 
+
+Tokopedia Era B45 | No mechanism named. Bound to one leaf category, and non-leaf nodes cannot be queried for attributes at all. | No — "You can only create or edit products that belong to a leaf category". | 
+
+Square40 | No per-category attribute set exists. The only gate is allowed_object_types. | Yes — the vendor's own example categorises items as "Clothing", the root. | 
+
+commercetools35 | No. ProductType is flat — its property list has no parent, ancestors or children — and the Category tree owns no attribute definitions. | Yes — leaf occurs 0 times in 5,366,096 bytes of spec. | 
+
+Akeneo30 | Yes, but on the Family tree, not the category tree, and only in the paid SaaS edition, where the vendor names it "Attribute Inheritance". Its category tree inherits nothing. Its family-variant levels hold disjoint sets: values flow, definitions do not. | Family yes. Category yes by default, with a per-tree only_leaves switch that makes it leaf-only. | 
+
+### What this means for our three open pieces
+
+Our question | What the survey changes | 
+
+ L2.1 · Do attributes inherit down our tree? | 
+ The industry answer is no, and the reason is worth noticing: the platforms that materialise per node either author the taxonomy centrally (Shopify, Amazon, Walmart, Shopee) or have a flat type registry that is not a tree at all (commercetools, Magento, Walmart). Neither of those describes a 1,892-node tree that our own staff author by hand. So the real choice is not "inherit or not" — it is adopt a centrally-authored taxonomy and materialise per node, or keep authoring our own tree and build inheritance to make it affordable. That ties item 5 directly to item 3. | 
+
+ The 19,459 products on non-leaf nodes | 
+ Not automatically illegal. Amazon, Shopify, Google, Magento, WooCommerce, Square, commercetools and Salesforce all permit it; eBay, Walmart, Shopee and Tokopedia forbid it. The most useful model is Akeneo's: leaf-only is a per-tree setting rather than a law, so the rule can be tightened later without a migration. | 
+
+ If we do build inheritance, what is the reference? | 
+ eBay's, which is the only fully worked one: "Each child category in the tree inherits its settings from its parent category, so the defaults set at the root node flow down through the rest of the tree… there are some categories that 'override' the root settings". It is delivered as an inheritance override model, and eBay tells integrators to "Store the data locally and then manage the data on the client side" — i.e. even the platform that inherits does not compute the effective set on every read. | 
+
+ Route health, stated because two of these rows carry weight. Salesforce's ancestor-category walk rests on one route, a single generated doc set. Every Akeneo Family-tree fact comes from help.akeneo.com only and the feature is absent from the open-source edition. Google's "requiredness reaches descendants" also has one route. And developer.ebay.com refused all six fetch attempts with HTTP 403, so every eBay artifact here is a Wayback capture of eBay's own pages, dated 2025-01-12 to 2026-02-08.
+
+## The three questions, highest level first
+
+D1, D2, D3 and D13 were closed on 2026-08-13 against four platforms. The evidence beneath them is now thirteen, and the reading changed. Nothing here reopens a decision; it lays the thirteen out so each can be confirmed or re-made deliberately.
+
+Q1
+### Is the ProductType the same object as the Category?
+D1 · D2 — closed 2026-08-13
+
+Two different things get called "category": the object that decides which attributes a product has (the type) and the object a customer browses to. One row, or two?
+
+ ✅ Locked 2026-09-09 — one object. The product type is the category; D2 stands on the thirteen-platform evidence.
+ Reasons given: (1) a separate category object means re-homing every product — too much work for the gain; (2) a separate browse/merchandising object can be added later. (2) confirmed: a browse-only secondary category, collection or tag object is additive — a new object and one M2M edge, no schema touched, no product re-homed; the dead ProductCategory table is already that edge, and Shopify, eBay, Square and Salesforce all bolt browsing on this way. The only thing that is not easy later is moving schema ownership off this tree onto a new type object, which is the option rejected here and never needs to happen. What the lock makes concrete: the existing tree keeps schema duty, so every product must sit on a node whose schema it obeys — remeasured 2026-09-15, 19,459 products sit on non-leaf nodes and 1,722 on roots, a tidy-up for D15 / D16. Downstream: D14 becomes "one type plus a separate placement object when needed"; D15 and D16 are the remaining bill.
+
+Filed 2026-09-15 → #11188 · how categories are created and managed once the category IS the product type. The lock makes every tree operation a schema migration for the products underneath it, and none of that is designed. The issue carries the starting position — one ProductClass, five attributes total (weight, length, width, height, manufacturer), so there is no per-type schema to refactor, only one to build — and the open questions: attribute inheritance down the tree, the 19,459 products on non-leaf nodes, what a move, merge, delete or reparent does to the products under it, and where schema editing lives now that attributes are Django-admin-only.
+
+Answer | Who | What it is, and the caveats | 
+
+ One object1 clean + 2 leaf-owns | 
+ eBay80
+Shopee60
+Tokopedia45 | 
+ eBay is the only clean merge: the leaf Category alone decides the aspects (leaf-only, error 62009), and the buyer-facing Browse API returns the same category id on a live listing (T-Shirts 15687 on both surfaces). The record has no vendor sentence about site navigation, and sellers also get 0..2 store categories of their own. Shopee: the leaf category owns the attribute tree (only last-level categories retrieve attributes), but whether the seller's tree is also the buyer's browse tree is not established (U-16; browse → 0 hits over 92 API records). Tokopedia: attributes are leaf-bound in both eras; on Era A the browse URLs are "in the same id space and tree shape" as the seller's category list, a surface terminated 2025-09-30; Era B not established (U6). | 
+
+ Partly2 | 
+ Shopify85
+Salesforce B2C50 | 
+ Shopify: a TaxonomyCategory declares the attribute set through metafield definitions carrying category constraints, but the record's own words are "the two are not one object" — browse is collections, and the field literally named productType is free text. Salesforce: one Category class with three different edges — classification 0..1 ("defines the attributes of the product in the product catalog"), primary 0..1 per catalog (breadcrumb), assignments 0..N. | 
+
+ Two objects6 | 
+ Amazon100
+Walmart65
+Magento60
+Square40
+commercetools35
+Akeneo30 | 
+ Amazon: separate APIs — but the legal browse values are an enum inside the product type's schema, so the type constrains placement. Walmart: the feed has no category field at all; the taxonomy is a workbook. Square: the category scopes nothing; attribute definitions scope by object type, so every item carries the same set (a degenerate type). Magento: 0 of 352 schema table blocks join a category to an attribute; a category even carries its own attribute set. Akeneo: 0 hits over 344 files linking category to attributes, with positive controls of 203 / 62 / 117. commercetools: no attribute field on Category across 29 files. | 
+
+ No type object2 | 
+ Google70
+WooCommerce55 | 
+ Google: one global bag of 145 properties with no per-category schema; the taxonomy gates outside the schema. If that determinant counts as the type, Google is merged — the tally leaves it uncounted. WooCommerce: a store-global attribute registry applied to every product; 0 of 500 product_cat lines touch an attribute taxonomy. | 
+
+ Us D2 ✓ locked 2026-09-09 | 
+ ProductClass: 1 row
+Category: 1,892 nodes | 
+ main_category is 1..1 and non-null on all 104,733 products, so the merge cost zero reclassification; the tree already carries business logic (age-walling, replenishment) despite its docstring saying "merely navigational". The ProductClass table is not a working type: a second row is impossible. | 
+
+#### Reading
+
+All three merges are marketplaces with a vendor-fixed taxonomy — but marketplaces are split three to three: Amazon and Walmart keep the two apart, Google has no type. No merchant back-office or PIM platform in the set merges them: Square, Magento, Akeneo and commercetools keep them apart; Shopify and Salesforce only partly. D2 chose the minority shape, and on thirteen the precedent is one clean case rather than the "1 of 4" it was closed on.
+
+"Same object" is not the same as "the buyer sees the seller's tree." No record in the set carries a vendor sentence saying storefront navigation uses the tree the seller assigns to. What exists is narrower: eBay and Tokopedia Era A show the same category id on a buyer-facing surface; Salesforce says outright that the storefront uses the primary category and only falls back to the classification category; Google auto-assigns its own category and cannot even return it; the rest say nothing. Details per platform below.
+
+#### What each answer would cost us
+
+The gains and costs are inference from our own code and data, not evidence from the records; the last column is evidence.
+
+Option | What we gain | What it costs | Who ships this shape | 
+
+ (a) Same object — D2 as it stands | 
+ No reclassification: main_category is already 1..1 and non-null on all 104,733 products. One tree to maintain, and it already carries business logic (age-walling, replenishment). | 
+ Reorganising the browse tree becomes a schema change. A merchandising-only node such as "Promo Ramadan" classifies nothing and needs a second placement object (D14). Up to 1,682 in-use nodes need a schema unless attributes flow down the tree (D15, D16). | 
+ eBay cleanly; Shopee and Tokopedia at the leaf | 
+
+ (b) Two objects | 
+ Merchandising stays free. The schema can be coarse — Amazon's Food & Beverages registry is 107 types, Akeneo's fixtures 17 families — and the 1,892-node browse tree can be reshaped without touching it. | 
+ Every product needs a type assigned: 104,733 rows, by staff or by a rule derived from main_category. Two trees to keep aligned from then on. | 
+ Amazon, Walmart, Square, Magento, Akeneo, commercetools | 
+
+ (c) One Category class, role-typed edges | 
+ One tree. Only nodes carrying the classification role hold a schema; other nodes are placement only. The dead ProductCategory M2M (19.6% populated) is the obvious placement edge. | 
+ A product's classification node and its placement nodes can diverge, so a primary-vs-classification rule is needed — Salesforce ships a fallback rule for exactly this. | 
+ Salesforce B2C; Shopify is the same idea with collections as the placement object | 
+
+#### Q1 at a glance — the objects, their sizes, and what the buyer sees
+
+Every number is the record's own, with its measurement; "not in record" means the record looked and says so, or never had a route. Extracted 2026-09-07 from each record by an Opus reader working from the record alone; extracts on disk under catalogue-decision-2026-09/q1/.
+
+Tried | Platform | Attribute owner · how many | Attributes per instance · example | Browse object · how many | Does the buyer see the seller's tree? | 
+
+100 | Amazon | ProductType · floor 1,640–1,665 distinct names (two artifacts); the F&B XSD registry has 107 | Noodle: 137 — Flavor, Variety, Cuisine, ContainerType, DietType, Ingredients, ServingSize, StorageInstructions | BrowseNode · 598,957 ids across 24 locales, US 31,354; product 0..N | The same classificationId appears on a customer bestsellers link; whether the seller's submitted node becomes it is open (O6) | 
+
+85 | Shopify | TaxonomyCategory · 14,606; 93,007 category→attribute edges; 152 categories with none | T-Shirts (aa-1-13-8): 15 — Color, Pattern, Sleeve length type, Age group, Neckline, Target gender, Fabric, Size, Size type… Pasta & Noodles: 6 | Collection · rule columns include category, tag, type, vendor (15); dev store had 3 | Storefront can filter by taxonomy id (ProductFilter.category); whether navigation is the taxonomy: not in record | 
+
+80 | eBay | Leaf Category · 15,111 leaves of 17,105 nodes (sandbox tree 0, v134; three operations agree) | 197,046 aspects across the leaves. Athletic Shoes (15709): 37 — US Shoe Size (required), UK Shoe Size, EU Shoe Size, Brand, Color, Silhouette, Style Code, California Prop 65 Warning | The same tree; plus 0..2 seller-defined store categories (root-level only via API) | Same id on the Browse API, live (T-Shirts 15687); no vendor sentence about navigation | 
+
+70 | Google | ProductAttributes · one global set of 145 (products_v1) | color, size, material, pattern, ageGroup, gender, googleProductCategory, productTypes | google_product_category · 5,595 nodes, depth 7, 0..1 · plus product_type 0..N (5 stated, 10 persist) | No buyer surface (it is a feed); Google auto-assigns the category, honours the seller's in three cases, and cannot return it | 
+
+65 | Walmart | Product type (the Visible key) · 6,967; 383,947 attribute slots | Toothpastes: 66 — productName, brand, flavor, netContent, ageGroup, keyFeatures, form, size, count (28–183 per type) | Workbook only: 24 categories, 77 subcategories, 461 type groups, departments 1..12 per type; the item feed has no category field | Not in record — customer view blocked by a bot challenge (H2) | 
+
+60 | Shopee | Leaf category · not published ("there is nothing to count") | Not retrievable without a certified app (H1); the only names in the record are "Weight Type" and numeric ids such as 100061 | One taxonomy; every catalogue API consumes the same category_id | Not established (U-16); browse → 0 hits over 92 API records | 
+
+60 | Magento | eav_attribute_set · 7 in sample data; the Default set installs 43 definitions (static counts) | Top (set 9): 15 — activity, color, material, size, pattern, climate, style_general, sleeve, collar | catalog_category_product M:N; count not recorded | Not in record; the storefront SDL marks attribute_set_id "should not be used on the storefront" | 
+
+55 | WooCommerce | None — a global registry applied to every product; the live install had 4 definitions | numsort terms: S, M, L, XL, Red, 2, 2 kg, 8 GB, 10, 10.5, 500 g | product_cat · 0..N with a forced default; 7 in the live install | Not in record | 
+
+50 | Salesforce B2C | Attribute groups attached to the classification Category · merchant-authored, nothing to count | No instance retrieved; the only named pair is group ProductExtras / attribute warrantyType | The same Category class as primary (0..1 per catalog) and assignments (0..N) | Storefront uses the primary category for breadcrumbs, falls back to the classification one; the classification category "may or may not be in the site catalog" | 
+
+45 | Tokopedia | Leaf Category, both eras · count not recorded | Era A: category 3412 → 2 axes, Warna (12 values) and Ukuran (16). Era B: no instance retrieved (U11) | Era A: the same category list, rendered as browse URLs. Era B: TOKOPEDIA tree, id space unknown | Era A: "in the same id space and tree shape" — but the doc shows no single id on both sides. Era B: open (U6) | 
+
+40 | Square | CustomAttributeDefinition scoped by wrapper type (ITEM, ITEM_VARIATION…) · 10 visible + 10 hidden per account, live | Every item sees every definition; named instances Shoelace_Types, cocoa_brand | CatalogCategory · 0..N plus one reporting_category; count not recorded | Not in record (Square Online deliberately not collected); Dashboard and POS list by category | 
+
+35 | commercetools | ProductType · ≤ 1,000 per project; the sunrise sample has 1 type (main, 21 definitions) for all 2,931 products | main: color, designer, madeInItaly, style, season, commonSize, size, gender, matrixId, baseId… | Category · ≤ 10,000 per project; product 0..N | Not in record; variant projections carry categories | 
+
+30 | Akeneo | Family · 17 in the shipped fixtures, 8–33 attributes each; no cap | camcorders: 12 — description, image_stabilizer, name, optical_zoom, picture, price, release_date, sensor_type, sku, weight… | Category trees, multiple, unlimited depth · 168 fixture rows; product 0..N | Not in record — a PIM; categories are "a way of classifying products" | 
+
+— | Us | ProductClass · 1 row; a second is impossible (default() is a bare objects.get()) | 5 global attributes on every product — height, length, width, weight (float), manufacturer (text); units live in the names | Category treebeard tree · 1,892 rows, 1,682 of them used as some product's main_category; ProductCategory M2M on 20,519 products (19.6%) | Whether our storefront's navigation is the same tree as main_category was not measured in this pass | 
+
+#### Q1 · can a product sit in more than one category?
+
+Cardinality of product → browse category, as each record verified it, with the record's own instance of a product in more than one, and whether a "primary" category exists beside the many.
+
+Answer | Who | What it is, and the caveats | Example from the record | 
+
+ Many, uncapped, on the category itself5 | 
+ Magento60
+WooCommerce55
+Square40
+commercetools35
+Akeneo30 | 
+ Magento: catalog_category_product is M:N, 0..N each way; no primary-category concept in the record. Akeneo: "A product can be classified in one or n categories", across multiple trees of unlimited depth; product models and products each have their own category join. commercetools: "A Product can be assigned to any number of Categories", with per-category categoryOrderHints; 10,000 categories per project. WooCommerce: N:M through the WordPress join table, with a forced default — a write that would leave zero categories gets "Uncategorized"; no primary. Square: categories 0..N plus one designated reporting_category; the old single category_id is deprecated since 2023-12-13. | 
+ Magento "Champ Tee" (MS-Champ, id 2078) sits in three categories: 11 Men, 12 and 16. Akeneo product model amor is in two categories from two different trees, master_men_blazers and supplier_zaro. commercetools "Handbag Moschino Love white" is in Sale > Women and Women > Bags > Handbag. Square live item ILFE56ZBCZJA2REEGFS6SLAH carries cat1 and cat2. WooCommerce: the live example (product 11 Hoodie → Hoodies) carries one; no multi-category instance in the record. | 
+
+ One type-category, many placements on a second object3 | 
+ Amazon100
+Shopify85
+Salesforce B2C50 | 
+ Shopify: category is 0..1; the many are Collections, whose rules may key on the category, on tags, on free-text type or vendor. Salesforce: classification 0..1, primary 0..1 per catalog, assignments 0..N across catalogs — three edges on one class. Amazon: the type is 1..1 per marketplace; the exposed classifications are 0..N with a scalar browseClassification; what a seller may submit is capped at 1 in the US (item_type_keyword) or 232 in CA (recommended_browse_nodes) — four caps in four artifacts, unreconciled. | 
+ Shopify live product "cp0905-rev-color-a": one category (T-Shirts, aa-1-13-8) and membership of smart collection 660159725889 whose rules are TYPE = "cp0905-rev-test" and PRODUCT_CATEGORY_ID = aa-1-13-8. Salesforce vendor example: classificationCategory {storefront-catalog-en, top-seller}, two primaryCategories ({apparel-catalog, mens-accessories}, {storefront-catalog-en, top-seller}) and three assignedCategories across two catalogs. Amazon ASIN B07N4M94X4: type TELEVISION; exposed chain QLED TVs ← Televisions ← Television & Video ← Electronics; the record's example shows one exposed classification, not several. | 
+
+ A small cap1 | 
+ eBay80 | 
+ 1..2 site categories per listing (categoryId + optional secondaryCategoryId), and both carry aspects; the buyer Browse API surfaces at most one. Beside them, 0..2 seller store categories, root-level only via API. | 
+ The pass's createOffer body carried categoryId "15687" plus storeCategoryNames ["/Fashion/Men/Shirts"] and was refused 403 (no user token) — nothing was created. No live listing with a secondary category is in the record. | 
+
+ One taxonomy category, many free-text types1 | 
+ Google70 | 
+ google_product_category 0..1 — "Limit: 1 Category per product", auto-assigned by Google. product_type is the merchant's free text, 0..5 stated, 10 persisted live, and "only the first value will be used". | 
+ Live product cp0905-rev-g2b-a-p11 persisted ten productTypes, "cp0905rev > Type 02" through "Type 11", with no category key; the probe with googleProductCategory "371" carried exactly one. | 
+
+ Single only3 | 
+ Walmart65
+Shopee60
+Tokopedia45 | 
+ Shopee: category_id is a required 1..1 scalar. Tokopedia: 1..1 leaf in both eras ("Please input the deepest category child ID"); Era A also had etalase, a shop display grouping, required on V2. Walmart: no category on the item at all — it is derived through the 1..1 type; the workbook maps each type to one category and 1..12 departments. | 
+ Shopee sample item: "category_id": 100017. Tokopedia Era A product 1372485 sits on one chain, 1759 Fashion Pria → 1799 Pakaian Dalam Pria → 1840 Kaos Dalam Pria. Walmart sku ABC123 carries only Visible.Toothpastes; its category exists only in the workbook. | 
+
+ Us | 
+ main_category 1..1
+ProductCategory M2M 0..N | 
+ Category has 1,892 rows (13 roots, depth up to 8, 1,553 leaves); 1,684 distinct nodes are some product's main_category, non-null on all 105,256 products (re-measured 2026-09-09; 1,682 / 104,733 on 2026-09-03). 292 of the used nodes are not leaves and hold 19,386 products; 208 nodes hold no product at all. The M2M is populated on 19.6% and drives nothing. | 
+ One product carries two M2M rows; every other product has at most one placement beyond its main_category. | 
+
+#### Reading
+
+Every merchant tool and PIM supports many categories per product — five on the category itself, Shopify and Salesforce on a second object. The marketplaces are single or capped: Shopee, Tokopedia and Walmart one; eBay two; Google one taxonomy node; Amazon capped at one on US submission. Where a system keeps one type-category and many placements, the many always live on a different object — collections, assignments, exposed classifications — which is the D14 question in the wild.
+
+#### "Primary" beside the many
+
+Square reporting_category · Salesforce primary category per catalog (breadcrumbs) · Amazon scalar browseClassification · eBay first categoryId (the secondary is not surfaced to buyers) · Google "only the first value" of product_type · WooCommerce a default term, not a primary. Magento, Akeneo and commercetools: no primary in the record (commercetools has order hints only).
+
+#### Q1 platform by platform
+
+Same order as the bucket table. Quotes are the vendor's or the record's; section cites point into the record.
+
+ two objects100
+#### Amazon
+#10976 Rev 9
+
+Attribute owner
+ProductType: "The selector. Choosing it fixes which attributes exist, which categories are reachable, and which variation axes are legal." 1..1 per marketplace; required on create and update. Size: the early "2,475 distinct names" is superseded — "no global count is well defined"; the reproducible floor is 1,640–1,665 distinct names depending on the artifact counted, and the Food & Beverages XSD registry alone has 107 types. Example: Noodle has 137 attributes (direct child elements of its XSD) — Flavor, Variety, Cuisine, ContainerType, DietType, Ingredients, ServingSize, StorageInstructions. Tier-3 dumps (not verified): GROCERY 103 properties, PET_FOOD 105.
+
+Browse object
+BrowseNode — classificationId, displayName, recursive parent. A catalog item exposes classifications 0..N and a scalar browseClassification 0..1. Size: 598,957 distinct node ids across 624 guide files in 24 locales; the US alone 31,354. What a seller may submit is capped at 1 (item_type_keyword, US) or 232 (recommended_browse_nodes, CA) — "four different caps in four Amazon artifacts, unreconciled".
+
+Buyer sees seller's tree?
+Indirectly. The same node id is customer-facing — classificationId 21489946011 "QLED TVs" carries a link into the public bestsellers page — but whether the node the seller submits becomes the exposed classification is open (O6): "No artifact relates them… Different shapes, different APIs."
+
+How they relate
+Separate objects; the type hosts the category field without closing it. The earlier claim that the legal browse values are an enum inside the type's schema was struck: the field is maxLength 15 with anyOf: [{string}, {enum of 5 node ids}], so "any 1–15-char string conforms". Three taxonomies coexist on one item: product type (scalar, selects the schema), browse classification (0..N tree), plus website display group and vendor category.
+
+A product in both
+ASIN B07N4M94X4, Samsung 82-inch QLED: productType TELEVISION; submitted item_type_keyword "qled-televisions"; exposed browseClassification "QLED TVs" 21489946011 ← Televisions 172659 ← Television & Video 1266092011 ← Electronics 172282.
+
+Open
+O6 (submitted node vs exposed classification); U6 (placement cap 1 vs 232); the live per-type schema behind the seller credential (H1).
+
+ partly85
+#### Shopify
+#11011 Rev 5
+
+Attribute owner
+TaxonomyCategory declares the attribute set; a separate MetafieldDefinition with a category constraints carries it onto products. Product.category is 0..1 and nullable; Product itself has zero fields named "attribute". Size: 14,606 categories (one route: the vendor's YAML and its generated release), 93,007 category→attribute edges, 8,240 base attributes, 152 categories with no attributes. Example: T-Shirts (aa-1-13-8) declares 15 — Color, Pattern, Sleeve length type, Age group, Neckline, Target gender, Top length type, Care instructions, Fabric, Size, Clothing features, Decoration technique, Sleeve style, Stretch level, Size type; the vendor's constrained-template filter returns 14 for it. Pasta & Noodles (fb-2-14) declares 6.
+
+Browse object
+Collection, 0..N per product. A smart collection's rules pick from 15 columns — PRODUCT_CATEGORY_ID, PRODUCT_CATEGORY_ID_WITH_DESCENDANTS, TAG, TITLE, TYPE, VENDOR… — so a collection may be built on the taxonomy category or on free-text productType and tags. productType and vendor are non-null free text; category, the only validated classification, is nullable.
+
+Buyer sees seller's tree?
+The Storefront API exposes Product.category and a ProductFilter.category ("A product category to filter on"), so buyers can filter by taxonomy id. Whether storefront navigation is the taxonomy tree: not in record.
+
+How they relate
+Separate objects; the category constrains definitions. "Currently, Shopify only supports constraint subtypes that correspond to product categories on Product metafield definitions." / "If a definition is unconstrained, then the definition applies to all resources." The record's summary: "Its TaxonomyCategory declares it… Or an unconstrained MetafieldDefinition applies it to everything. Two independent surfaces."
+
+A product in both
+Live: Product/10363266007361 "cp0905-rev-color-a" with category aa-1-13-8 (Apparel & Accessories > Clothing > Clothing Tops > T-Shirts, leaf), in smart collection 660159725889 whose rules are TYPE EQUALS "cp0905-rev-test" and PRODUCT_CATEGORY_ID EQUALS aa-1-13-8. Linking option Color to shopify.color-pattern was refused while category was null and accepted after it was set.
+
+Open
+U6-b — only 4 of 44 categories were run through the vendor filter. U11 — the 8,518 template count is single-route. §5 row 8 — TaxonomyCategory.level is 0-based in the release asset and 1-based live.
+
+ one object80
+#### eBay
+#11045 Rev 3
+
+Attribute owner
+The leaf Category of the Taxonomy API's category tree. A listing carries 1..2 of them (categoryId at publish, optional secondaryCategoryId, which "carries aspects too"). Size: 15,111 leaves of 17,105 nodes on sandbox tree 0 version 134, measured three ways (leafCategoryTreeNode:true count, the 34-subtree sum, and 15,111 aspect blocks in fetchItemAspects). Attribute inventory: 197,046 aspects across those leaves. Example: Athletic Shoes (15709) has 37 aspects — US Shoe Size (required, 37 values), UK Shoe Size, EU Shoe Size (60 values), Brand (3,463 values), Color, Silhouette, Style Code, California Prop 65 Warning. The record: "Nothing about the product decides it. The leaf category decides it, alone" (§3).
+
+Browse object
+The Browse API's Item carries exactly three category fields, categoryId, categoryIdPath, categoryPath (§1.8) — one eBay site category, the seller's secondary category not surfaced. Beside it, seller store categories: "A custom category is a category that was created by a seller in their eBay store", 0..2 per listing, root-level only via API (§1.6).
+
+Buyer sees seller's tree?
+Shown by id, not stated in prose. Live listing v1|110590192388|410111412258 "Cotton T-Shirt" returns categoryId "15687", path Clothing, Shoes & Accessories|Men|Men's Clothing|Shirts|T-Shirts, on the buyer Browse API; the Taxonomy API names the same id T-Shirts(15687) with variationsSupported: true. The record has no vendor sentence that site navigation is this tree.
+
+How they relate
+One id, two APIs. "The leaf category, and nothing else, determines which aspects an item carries… Each category has a different set of aspects and different requirements for aspect values." (§1.1, [R-2]). Leaf-only is enforced: error 62009 "The specified category ID must be a leaf category."
+
+Open
+U7 — 3-level store category names vs "root-level only". U18 — the GB tree serves 15709 as Trainers with 35 aspects, not Athletic Shoes with 37. H4 — no user token, so no seller write was observed.
+
+ no type object70
+#### Google Merchant Center
+#11013 Rev 5
+
+Attribute owner
+ProductAttributes, one global bag: "There is no per-category attribute schema." — no endpoint, file or field takes a category and returns a field set (0 hits). Size per API surface: 145 properties in products_v1 (95 in v1beta, 104 in Content API v2.1, 42 in Manufacturer Center). Names include color, size, material, pattern, ageGroup, gender, googleProductCategory, productTypes.
+
+Browse object
+google_product_category, 0..1 ("Limit: 1 Category per product"), from a closed taxonomy of 5,595 nodes, depth 7 (file dated 2021-09-21, unchanged on re-fetch). Second axis product_type, the merchant's own free text, 0..5 stated, 10 persisted live.
+
+Buyer sees seller's tree?
+There is no buyer surface in the record; it is a feed. Google auto-assigns the category — "All products are automatically assigned a product category from Google's continuously evolving product taxonomy" — and honours the seller's value only for category-specific requirements, Ads targeting and alcohol; the auto-assigned value "cannot be read back".
+
+How they relate
+Both category fields are ordinary rows inside the same bag. Category gates requiredness, not existence, with three availability exceptions (size_type, size_system apparel-only, subscription_cost): "No row's requirement is conditioned on the product existing in a category."
+
+A product in both
+No retrieved instance carries both axes. Live: probe with googleProductCategory "371" vs control "5598"; another with productTypes ["cp0905rev > Type 02" … "Type 11"] and no category.
+
+Open
+U6 — which categories the auto-classifier assigns (needs the UI, H2). U15 — whether the reporting view's category columns are the auto-assigned category. U19 — what id 371 actually is.
+
+ two objects · category only through the type65
+#### Walmart Marketplace
+#11046 Rev 3
+
+Attribute owner
+The product type — the single key inside the feed's Visible object; 1..1 per item, enforced structurally by oneOf plus additionalProperties: false. Size: 6,967 types in the recommended item spec (6,947 in the fulfilment feeds, 6,968 in maintenance; the vendor's own page says "6,700"), 383,947 attribute slots, 6,576 distinct names; 28 (Services) to 183 (Other Hardware) per type. Example: Toothpastes has 66 attributes, its required list including productName, brand, condition, shortDescription, keyFeatures, mainImageUrl, ageGroup, flavor, netContent, plus 8 conditional blocks; also form, size, count.
+
+Browse object
+Only in a mapping workbook and a taxonomy read endpoint: category → product-type group → product type, with 1..12 departments per type. Counts: 24 categories, 77 subcategories, 461 type groups. The item feed has no category field at all — an item's category is derived through its type, and the join covers 94.88% of types (357 spec types have no workbook row).
+
+Buyer sees seller's tree?
+Not in record. The customer-facing view was blocked by a bot challenge (H2).
+
+How they relate
+"PT Mapping row — the browse taxonomy, a different object" (§1.5); "no category field exists in the item feed"; and no productTypeId exists anywhere — types are keyed by display-name string.
+
+A product in both
+None shown in both. Type side: sku ABC123, Visible.Toothpastes.flavor = "Peppermint". Browse side, a different type: Beauty → Beauty, Personal Care & Hygiene → Hair Care → 3-in-1 Shampoo, Conditioner & Body Washes.
+
+Open
+U25 — five vendor type populations disagree (6,967 · 6,968 · 6,947 · 6,947 · 6,680 · 6,475). U2/H2 — the customer view.
+
+ leaf owns attributes · tree identity open60
+#### Shopee
+#11047 Rev 2
+
+Attribute owner
+The leaf category from v2.product.get_category. category_id is a required 1..1 scalar on create; only leaves are assignable ("only the category_id with has_children = false can be used"). Size: not published — "Shopee publishes no attribute inventory, no value inventory and no category file of any kind." Attributes per category: unretrievable without a certified app (H1). The only attribute names anywhere in the record are worked-example ones: "Weight Type", "Body Weights Type", ids 100061, 100643, 100602, 101351.
+
+Browse object
+None separate: "The Product module exposes exactly one category taxonomy, and every catalogue API consumes the same category_id" (§1.1).
+
+Buyer sees seller's tree?
+Not established (U-16). Revision 1 called it "the browse/display category" and that was withdrawn: browse → 0 hits over all 92 API records (1.7 MB), 1 hit over 62 guides, in the Terms of Service. The vendor's own words are only "Get category tree data" and "all available categories for the shop".
+
+How they relate
+Single object, no second selector. "Whether a product carries any given attribute is decided by its one leaf category, and by nothing else" (§3). Guide 209: "only last-level categories can retrieve attribute data." The same leaf also keys the separate variation catalogue, get_variations(category_id).
+
+Open
+U-16 (browse identity); U-8 whether an attribute id is shared across categories; U-9 attributes-per-item cap; U-1 whether the category gate on axes is hard; all behind H1.
+
+ two objects60
+#### Magento / Adobe Commerce
+#11082
+
+Attribute owner
+eav_attribute_set — Adobe's "attribute set or product template". Product → set is 1..1 through catalog_product_entity.attribute_set_id, a NOT NULL scalar with no foreign key and no named enforcer. Size: runtime counts were never observed (U7, no live instance); static reading of the sample data gives 7 sets — Top 15, Bottom 13, Bag 11, Gear 10, two Sprite sets 6, Downloadable 2 — and the core installer puts 43 definitions into the Default set. Example: Top (set 9) — activity, color, material, size, pattern, climate, style_general, sleeve, collar.
+
+Browse object
+catalog_category_entity, linked M:N through catalog_category_product, 0..N each way. Count: not recorded.
+
+Buyer sees seller's tree?
+Not in record. Nearest: the storefront GraphQL SDL lists categories: [CategoryInterface] beside attribute_set_id: Int @deprecated("The field should not be used on the storefront."); Adobe's customer sentence attaches to the set — "The attribute set determines the fields that are available during data entry, and the values that appear to the customer."
+
+How they relate
+"The browse category is a different object from the attribute set, with different cardinality and no join between them" (§1.4) — 0 of 352 schema tables declare both a category column and an attribute column (control 5). A category is itself an EAV entity and carries its own attribute_set_id, unrelated to its products'.
+
+A product in both
+MS-Champ "Champ Tee", id 2078, attribute_set_id 9 (Top), type_id configurable, with category links 11 (Men, level 2), 12 and 16.
+
+Open
+U7 — runtime counts. §1.4 — the earlier "category never gates axes" was withdrawn as under-instrumented.
+
+ no type object55
+#### WooCommerce
+#11080
+
+Attribute owner
+None. "No attribute-set, attribute-group, attribute-family or attribute-template object exists in core" — one false-positive hit over 2,833 PHP files against a control of 158. What exists is a flat global registry, woocommerce_attribute_taxonomies, each row "registered as a WordPress taxonomy against every product"; the per-product attribute list is a serialized _product_attributes blob. Size: the live install had 4 definitions (a 5th created over REST was never read back). Example: definition numsort with terms S, M, L, XL, Red, 2, 2 kg, 8 GB, 10, 10.5, 500 g.
+
+Browse object
+product_cat terms, N:M through the WordPress join table, structurally 0..N with a forced default: "There will always be a default category. Every product must be assigned to a category, so the default category will be automatically assigned if the product is not assigned to any other category." The live install tabulates seven (Accessories, Clothing, Decor, Music, Tshirts, Hoodies, Uncategorized).
+
+Buyer sees seller's tree?
+Not in record. The only buyer-side mention is a display branch, if ( is_product_category() ) in the attribute-filter block.
+
+How they relate
+Not at all: "No code path scopes attributes by category" — of 500 lines mentioning product_cat, 0 also mention an attribute taxonomy (control: 12 mention product_tag). One join table carries category, type and attribute value alike; product_cat is hierarchical, attribute taxonomies are not.
+
+A product in both
+Product 11 Hoodie: category 23 Hoodies; attributes pa_color (global, is_variation 1) and a product-local Logo. Counter-case: the Hoodies category has 0 of 4 products with pa_flavour, while Album (Music) and V-Neck T-Shirt (Tshirts) carry it.
+
+Open
+U3 — extensions were not searched; one could add an attribute-set object. U12 — absences are PHP-only.
+
+ partly · one class, three roles50
+#### Salesforce B2C
+#11050 Rev 2
+
+Attribute owner
+Three layers resolve into ProductAttributeModel: the global groups of the Product object type (ObjectTypeDefinition → ObjectAttributeGroup → ObjectAttributeDefinition), the groups of the product's classification category and its ancestors, and the groups of the calling category and its ancestors. Product → classification Category is 0..1; Category → AttributeGroup 0..N. Size: nothing to count — "There is no vendor category list, no vendor attribute registry, no ID space… merchant-authored per instance." No instance was retrieved; the only named pair is group ProductExtras / attribute warrantyType.
+
+Browse object
+The same Category class under two other roles: primary (0..1 per catalog, "defines breadcrumbs on product detail pages") and assignments (0..N, an object of its own, CategoryAssignment).
+
+Buyer sees seller's tree?
+Stated, and it is not the classification tree by default: "Classification category: Based on the product catalog and its attributes / Primary category: Based on the storefront catalog and its attributes. The primary category defines breadcrumbs on product detail pages. Without a primary category, Commerce for B2C uses the classification category." And: "A product has a single classification category which may or may not be in the site catalog." Storefront search mechanics are Help-only and unreproducible (U11).
+
+How they relate
+"The classification category defines the attributes of the product in the product catalog, while the primary category defines the breadcrumbs on the product details page." (§1.5c). Two attribute models exist and both are legitimate: Category.getProductAttributeModel() for a browse category, Product.getAttributeModel() for the product's classification.
+
+A product in both
+Vendor fixture test-product-001: <classification-category catalog-id="TestCatalog">test-products</classification-category> plus category assignments to root and test-products; another example carries classificationCategory {storefront-catalog-en, top-seller} and two primaryCategories across two catalogs.
+
+Open
+U1 — override precedence among global, classification and ancestor groups (needs a sandbox, H1). U9 — no retrieved instance data at all.
+
+ Era A one object (terminated) · Era B open45
+#### Tokopedia / TikTok Shop
+#11048 Rev 3
+
+Attribute owner
+Era A: the category, keyed by cat_id, through two endpoints — get_variant?cat_id ("retrieves a list of variants related to a category_id") and product/annotation?cat_id (product specifications). Product → category 1..1: "Please input the deepest category child ID." Example: category 3412 → two axes, Warna (colour, 12 values) and Ukuran (size, 16 values). Era B: the leaf category, via GET /product/202309/categories/{id}/attributes — "the list of standard built-in product and sales attributes that are bound to the specified category, based on your shop's location." No Era B category instance with its attribute list was retrieved (U11). Counts: not recorded in either era.
+
+Browse object
+Era A: the same category list (product/category, fields name/id/child), plus etalase, a shop-defined display grouping, required on V2 and optional on V3 — no definition or instance retrieved. Era B: GET /product/202309/categories with listing_platform: TIKTOK_SHOP | TOKOPEDIA.
+
+Buyer sees seller's tree?
+Era A, by id space: "A three-level numeric category chain, each level rendering as a browse URL, in the same id space and tree shape that Get All Categories documents" (§1.5) — with the record's own caveat that no single id is shown on both sides in the documentation, and a partial counter (the get_variant example at cat_id=1769 matches browse-side {"name":"Kaos","id":"1769"}). Era B: open (U6): "it does not state whether the two trees share an id space… Still H1".
+
+A product in both
+Era A product 1372485 "Kaos Oblong GTMan Warna Putih Round-neck": browse chain 1759 Fashion Pria → 1799 Pakaian Dalam Pria → 1840 Kaos Dalam Pria, breadcrumb URL /p/fashion-pria/pakaian-dalam-pria/kaos-dalam-pria, axis variantID 29 with values S/M/L/XL. The record does not link 1840 to an attribute list; the only published axis list is for 3412.
+
+Open
+U6 (Era B id space), U11 (no Era B instances), C4 (three disagreeing vendor statements on the category version for Indonesia). Era A was terminated 2025-09-30.
+
+ two objects · category scopes nothing40
+#### Square
+#11049 Rev 3
+
+Attribute owner
+CatalogCustomAttributeDefinition, scoped by allowed_object_types — one of five wrapper types (ITEM, ITEM_VARIATION, MODIFIER, MODIFIER_LIST, CATEGORY), not a product class. Every object of that type sees every definition: "A seller sees placeholders for all available definitions in every supported object even if values haven't yet been assigned." Size: 10 seller-visible + 10 seller-hidden definitions per account, verified live (the 11th → 400 ITEMS_CUSTOM_ATTRIBUTE_LIMIT_EXCEEDED). Named instances: Shoelace_Types (SELECTION), cocoa_brand, and the pass's own cp0905-rev-var-vis-01 (STRING on ITEM_VARIATION). No per-category attribute set exists to enumerate.
+
+Browse object
+CatalogCategory (11 properties), joined by CatalogObjectCategory {id, ordinal}: categories 0..N plus one reporting_category; the old category_id is deprecated since 2023-12-13. Count: not recorded.
+
+Buyer sees seller's tree?
+Not in record — Square Online was deliberately not collected. Seller-side: "Only CatalogItem objects can be assigned to categories. Other types… do not appear in the item list of the Square Dashboard or Point of Sale."
+
+How they relate
+"Not one of the 11 properties scopes attributes" (§1.6). The one gate is keyed on the wrapper type, not the category. Twist: CATEGORY is itself an allowed object type, so a category can carry custom attributes without conferring any; and a category does scope one thing — subscription eligibility.
+
+A product in both
+None shown in both. Live item ILFE56ZBCZJA2REEGFS6SLAH with two categories carries no custom attribute; the vendor's variation HXSNEZN7N3NBGJX2XJ2Z6R5Q with Shoelace_Types carries no category.
+
+Open
+§4 row 3 — how reporting_category is chosen. Row 16 — whether the 10+10 cap is per account or per application.
+
+ two objects35
+#### commercetools
+#11081
+
+Attribute owner
+ProductType (ProductTypeDefinition in GraphQL). 1..1 and immutable: "The Product Type defining the Attributes of the Product. Cannot be changed." Size: at most 1,000 per project (raisable); the vendor's sunrise sample has one type, main, with 21 definitions used by all 2,931 products; 25 draft bodies across the docs. No cap on definitions per type. Example: main — color, designer, madeInItaly, style, season, commonSize, size, matrixId, baseId, gender…
+
+Browse object
+Category (19 properties), 0..N per product: "A Product can be assigned to any number of Categories, and a Category can have any number of Products assigned to it." At most 10,000 per project; plus categoryOrderHints.
+
+Buyer sees seller's tree?
+Not in record. Variant projections carry categories and categoryOrderHints (gained 2026-08-03); no sentence ties Product Search to the tree.
+
+How they relate
+"The Category carries no AttributeDefinition and no ProductType reference." — 29 category files, 20,117 bytes, no property named attributes, attributeDefinitions or productType; "None of the ten [constraint-bearing files] reads a Category to gate a constraint." The only links: a reference attribute may point at a category, and order hints.
+
+A product in both
+Sunrise import row: "Handbag Moschino Love white", productType main, categories Sale>Women and Women>Bags>Handbag — a CSV, not a live response.
+
+Open
+U1 — no live response for any object (OAuth, H1). U3 — any server-side cap on categories per product.
+
+ two objects30
+#### Akeneo PIM
+#11069 Rev 2
+
+Attribute owner
+Family (pim_catalog_family), 0..1 per product with SET NULL: "A product can belong to only one family… Nevertheless, a product does not have to belong to a family. In this case, it has no default attributes." A product model reaches its family only through its FamilyVariant. Size: 17 families in the shipped fixtures, 8–33 attributes each (digital_cameras 33, shoes 24, clothing 23 … mugs 8); no cap on families or attributes per family. Example: camcorders — description, image_stabilizer, name, optical_zoom, picture, power_requirements, price, release_date, sensor_type, sku, total_megapixels, weight, with per-channel requiredness for ecommerce, mobile, print.
+
+Browse object
+Category (pim_catalog_category, nested tree), 0..N per product: "A product can be classified in one or n categories." Multiple trees, "an unlimited number of levels"; 168 rows in the fixture. Its stated purpose is classification; channels are mapped to a category, but channel-root, export and permission uses are not in the record.
+
+Buyer sees seller's tree?
+Not in record — a PIM, not a storefront.
+
+How they relate
+Not at all: "Category is not the attribute-owning object" — attributes occurs 0 times in Category.orm.yml, and across the 344-file category module the terms axis, FamilyVariant, VariantAttributeSet, pim_catalog_family, AttributeInterface and FamilyInterface return 0 each against positive controls of 203 / 62 / 117. A separate system, pim_catalog_category_attribute, attaches attributes to the category record, not to products.
+
+A product in both
+Vendor doc product: family "clothing", parent "jack_brown", categories ["tshirts"], values sku, ean, size, weight, color. Fixture model amor: family variant clothing_colorsize, categories master_men_blazers, supplier_zaro.
+
+Open
+U3 — whether a product with no family variant may hold values outside its family (the validator returns early); fixture AKNSTK has no family yet carries five values. H2 — no installed instance.
+
+Q2
+### What is the structure of a variant family, and how does it relate to the type?
+D13 · D3 closed — D4 · D5 open
+
+Three sub-questions: what the container is, where the axis lives, and whether the type has any say in what a family may vary on.
+
+#### 2a · What the container is
+
+Answer | Who | What it is, and the caveats | 
+
+ A · A parent row in the product table3 clear + 1 hedged | 
+ Amazon100
+Magento60
+(WooCommerce55)
+Salesforce B2C50 | 
+ Amazon: a parent SKU of the same product type, parentage_level = parent, "must not be a buyable product". Magento: a configurable row in the same catalog_product_entity table — no own price or quantity, but it is the row that goes in the cart, and a manual Out-of-Stock on it is one the children cannot undo. Salesforce: the master is a Product; Variant and VariationGroup subclass it; the master carries a derived price range and no SKU. WooCommerce is hedged: parent and child are both wp_posts rows, but the child's post_type is product_variation. All three clear cases pair the parent row with a type object that is separate from the category. | 
+
+ B · Every product belongs to a family container5 | 
+ Shopify85
+Shopee60
+Tokopedia45 (Era B)
+Square40
+commercetools35 | 
+ Shopify: the Product holds the options, the ProductVariant sells; the only parent-of-products construct is CombinedListing, Plus-only. Square: CatalogItem and CatalogItemVariation are different classes; the item has no price, SKU or stock (an inventory change on an ITEM id returns 400). commercetools: "Products themselves are not sellable"; at least one variant is required; Classic embeds variants in the product document, Modular makes Variant a top-level resource. Shopee: the item is the family once has_model; price is then suppressed on the item. Tokopedia Era B: a product with skus[]; no price, stock or identifier on the product. All five make their own product row the container and sell a lighter variant row; for us B keeps Product as the sellable row and adds the container as a new table above it, which moves no existing reference. Shopee has the always-present item but no dummy member: a model-less item is sold directly (model_id 0). | 
+
+ C · The family container is optional; a standalone has none4 | 
+ eBay80
+Google70
+Walmart65
+Akeneo30 | 
+ eBay: InventoryItemGroup has exactly 9 properties, none of them price, quantity or identifier; on the Trading API there is no group object at all. Akeneo: Family → FamilyVariant → ProductModel (its own table, one or two levels, "It's like a product, but it's not a product!") → Product at the leaf; Product.parent is 0..1, so a standalone has no model, and the model holds the common attribute values by level. Walmart: variantGroupId is a shared string. Google: item_group_id is a shared string with no row in any of 51 schemas. All four leave a standalone product ungrouped. eBay's and Akeneo's family is a row; Walmart's and Google's is a bare key, the form that is not viable for us under D1 + D3 (the family's type and axis choice need a row). Akeneo's second level is nesting (D12), not a separate shape. | 
+
+ Us D13 ✓ shape A | 
+ parent Product row | 
+ Same table, stored parentage, nullable self-FK, never sellable. Blocker: upc is unique and non-null. Nesting depth (D12) and what the parent carries (D10) are open. Shapes are A, B and C since 2026-09-10. Separately, and not one of A, B or C: the 2026-09-09 ruling stands for converting the existing Product table into the container, with price, stock and barcode moving to a new variant table. See the pros and cons below. | 
+
+#### Must a standalone product belong to a family container? — the B / C question across all thirteen
+
+Answer | Who | What it is, and the caveats | 
+
+ No — a standalone has no family row9 | 
+ Amazon100
+eBay80
+Google70
+Walmart65
+Shopee60
+Magento60
+WooCommerce55
+Salesforce B2C50
+Akeneo30 | 
+ Amazon: a listing with no variation relationship uses the NONE schema — "Schema for standalone listings with no variation relationships"; the flat files store it as a child with no parent, "sometimes called an 'orphan'" (#10976). eBay re-checked at source 2026-09-10: the Browse contract returns primaryItemGroup "only if the item_id in the request is for an item group (items with variations, such as color and size)"; the Inventory guide: "the seller will place each variation of a product into an inventory item group", and single offers publish with publishOffer, groups with publishOfferByInventoryItemGroup (#11045). Google re-fetched 2026-09-10: "Don't submit a value for the item group ID attribute if your product is not a variant."; the field is "Required … for product variants" only (#11013). Walmart re-checked at source 2026-09-10: in the live item spec variantGroupId is declared on 6,957 product types and appears in 0 of the schema's 152,571 required arrays; its own description reads "Required if item is a variant." (#11046). Shopee: the item exists before any variation "and survives with zero"; model_id is "0 for no model item" — a shape-B platform whose models are optional (#11047). Magento: a simple product's link to a configurable parent is 0..N, so zero is legal (#11082). WooCommerce: a simple product has post_parent 0 (#11080). Salesforce: "Simple product" is one of the six product types; masters exist only for families (#11050). Akeneo: Product.parent is 0..1 (#11069). | 
+
+ Yes — every product carries a container plus at least one member4 | 
+ Shopify85
+Tokopedia (Era B)45
+Square40
+commercetools35 | 
+ Shopify: "There is no 'no variant' state" — a standalone still has one Title option and one Default Title variant (#11011). Tokopedia Era B: skus is 1..N, required (#11048). Square: "An item must have at least one variation"; zero variations returned 400 live (#11049). commercetools: "A Product has a minimum of one Product Variant, called the Master Variant" (#11081). All four ship B: their product row is the container and the sellable variant is the mandatory member. | 
+
+ Mapped onto B and C | 
+ B · C | 
+ C (group optional) is what every flat-row platform does — eBay and Akeneo with a group row, Walmart and Google with a bare key. B (group mandatory) is what the four platforms in the "Yes" row do, with their product row as the container; our B would add the container above Product instead. The mandatory container leaks wherever it ships (Shopify's Default Title in API responses and URLs; Spree's master variant in admin autocomplete). | 
+
+#### 2a · Pros and cons of each container shape — for deciding
+
+*Analysis written 2026-09-09, restructured 2026-09-10. Three kinds of input, kept apart: R the thirteen audited records under #10966; S supplementary published sources outside the thirteen, collected 2026-09-09 under the external-research discipline (verbatim, URL, tier) — ERPNext, Odoo, Spree/Solidus, Vendure, Sylius, BigCommerce, Saleor docs, GS1, Google and Meta feed rules, Algolia, Elasticsearch, and general database-design literature (q2a/shape-a.md, shape-b.md, shape-c.md, literature.md, verify/standalone-check.md); U facts about our own code and data from #11031 / #10778 / the 2026-09-09 re-measure and the schema read in the designs below. Everything marked inference is my reading, not evidence. Nothing here is a decision except where marked; D13 currently stands as shape A.*
+
+> ✅ Three shapes, set by the maintainer on 2026-09-10: A, B and C. They differ on where the family lives and whether every product must have one:
+
+> - A — the family is a parent row in the Product table; only real families have one.
+
+> - B — the family is a separate container row, and every product belongs to one; a standalone is a container of one.
+
+> - C — the family is a separate container row, and only real families have one; a standalone has none.
+
+>
+
+> Recorded separately, and not one of A, B or C. On 2026-09-09 the maintainer ruled out a different design: converting the existing Product table into the container and moving price, stock, barcode, basket and order lines onto a new variant table. That ruling stands. On 2026-09-14 the maintainer confirmed it does not apply to B, which keeps Product as the sellable row. The Akeneo model tree is no longer a shape of its own: it is C with a second level, and the number of levels is D12.
+Three shapes, and who ships each
+
+Shape | The family container | Must every product have one? | The sellable row | Who ships it among the thirteen R | Supplementary systems S | 
+A · parent row in the product table | a Product row with structure = parent, and a self-FK from its children | no — a standalone has no parent | Product (the child) | Amazon, Magento, Salesforce B2C (its VariationGroup adds a middle tier); WooCommerce hedged (same wp_posts table, child post_type = product_variation) | ERPNext (variant_of) | 
+B · every product belongs to a family container | a separate container table; a standalone is a container of one | yes | Product (the member) | Shopify, Square, commercetools, Tokopedia Era B — each makes its own product row the container and sells a lighter variant row; ours would be a new table above Product. Shopee has the always-present item but no dummy member: a model-less item is sold directly (model_id 0) | Spree/Solidus (master variant), Odoo (product.template / product.product), Vendure, Sylius, BigCommerce (base variant), Saleor, Medusa | 
+C · an optional family container | a separate ProductVariantGroup table; only real families get one | no — a standalone has no group | Product (the member) | eBay (InventoryItemGroup) and Akeneo (ProductModel, its own table, one or two levels) as a row; Walmart and Google as a bare key (variantGroupId, item_group_id — a shared string with no row, not viable for us under D1 + D3) | Meta (bare key) | 
+The axis that cuts across all three: where shared content lives
+
+Title, description, images, brand and non-axis attributes are the same for every member of a family. Each shape can put them on the family row, so members inherit or fall back (D11 = inherit), or leave them on every member (D11 = replicate):
+
+Shared content lives on | A | B | C | 
+the family row | always — the parent is a product and has the content fields | the container — as Shopify, Square, commercetools and Tokopedia Era B do with their product row R | the group, for family members only: Akeneo stores common values on the product model by level; eBay's group owns the listing title, description and images R #11069 §2b, #11045 §1.4 | 
+every member, replicated | possible — children copy the parent — but it wastes the parent inference | no platform ships it | Walmart and Google (bare key; drift is policed with disapprovals); eBay additionally requires members' title and description to match the group's S | 
+Shape A — a parent row in the same product table
+
+For
+
+**The sellable row stays Product. Children are ordinary products, so the till, stock records, prices, basket and order lines, promo targets, search documents and the Merchant feed keep pointing at the table they point at today. U** (inference from #11031's code-state table)
+Migration is additive. Two columns, upc made nullable, one parent row per family; no existing row moves. U inference
+One page per family for free. Amazon: children are "grouped together by a parent listings item to provide a single detail page experience." S SP-API workflows guide. Adobe: "A configurable product displays as a single product with dropdown options for variations (like color or size)." S
+Per-child stock and price with a shared identity. Adobe: "Each variation is a separate simple product with its own SKU, enabling individual inventory tracking." S; ERPNext: template edits propagate — "when you update this template, all the variants are also updated accordingly." S
+Shared content has a home with no new machinery: the parent is a product, so title, description, images and attribute values sit where they sit today. U inference
+Fast reads, one table. Ambler via Stack Overflow: "Data access is fast because the data is in one table." S (2010, old)
+Amazon and Magento, the two highest-scored platforms that ship it, pair it with a marked-attribute axis — which is our D3. R
+
+Against
+
+A non-sellable row lives where every sellable read happens. "Never sell a parent" becomes a standing invariant across the twelve sellable-only consumers the design below lists; upc (unique, non-null, checksum-validated) must become nullable, which breaks the search guid field and four other paths. U #11031, #10778
+Every read path needs a rule for which rows show. Magento carries an explicit per-row visibility — 4 (Catalog, Search) on the container, 1 (Not Visible Individually) on the child — and Adobe's own guidance lists slow category pages among the costs of complex products. R #11082 §2c S Adobe. WooCommerce shows a price range on the parent in archive pages and hides variations that have no price. S
+The parent's price and stock are derived, and the derivation is a known bug source. WooCommerce: parent _price "is not set correctly, leading to an invalid state" (#24947); Magento: "The configurable product is still OOS" after children restock (#35494); Adobe: "A configurable product does not have its own price in the catalog." S Our records agree: Magento emits price 0 on the container and its manual Out-of-Stock is one the children cannot undo; WooCommerce deletes and re-derives the parent price. R #11082 §2b, #11080 §2b
+The role column has low selectivity, so every sellable query carries a filter. GitLab: "Don't design new tables using Single Table Inheritance"; tables that "Add overhead by having to filter all of the data by a value". DBA.SE: WHERE type='X' "is basically doing a full table scan anyway". S (a partial index on the role column answers this in PostgreSQL — inference)
+The shape comes with rules about what a child may carry, and they are stricter than they look. Adobe: "Child products can be simple or virtual products without custom options."; "Variation attributes must have a global scope, and customers must be required to choose a value."; "A configurable product must always have a weight." S Amazon: a parent "must not be a buyable product", and re-parenting means deleting the relationship first — "You must remove a child listing from its current parent-child relationship before you relate it to a new parent." S We would write our own rules; these show the kind that accumulate. inference
+Large families hurt. Adobe lists slow product pages, admin saves and checkout for products with many variations and advises splitting them; Magento #32703 broke Elasticsearch at 1,440 children; WooCommerce switches to static dropdowns above 30 variations. S Our families are small — Indomie is 33 live rows, grocery packs are 2–10 — so this is a ceiling we are unlikely to reach. U inference
+Vendor-side oddities of the parent write path. Amazon: creating a parent has returned ACCEPTED without creating one (#2489); reading parentage_level back is inconsistent (#2701). S Amazon-specific, recorded for completeness.
+Shape B — every product belongs to a family container
+
+*Design: keep Product as the sellable row; add a ProductVariantGroup table; Product.variant_group is NOT NULL and a group is created with every product; a standalone is a group of one with no dimensions. Shared content either stays on the members or moves up to the group. The platforms that ship B (Shopify, Square, commercetools, Tokopedia Era B) make their own product row the container instead of adding one above it; their evidence is used below where it carries over.*
+
+For
+
+One code path. Every product is a member, so promo range filling, sibling collapse in search and the variant picker never branch on "does this product have a family?". U inference The Merchant feed is the exception — see the feed bullet under Against.
+The family's type and dimensions always exist. Turning a standalone into a family is "add members and dimensions to the container it already has", with no create-and-re-home step — the argument behind the default variant: Shopify's record, "There is no 'no variant' state". R #11011 §2c
+Simpler constraints. variant_group NOT NULL, variant_key always defined (the empty string on a singleton); no null branches in validators. U inference
+"Never sell a parent" does not arise. The container is not a Product, and the B platforms make it unsellable by type — Square: "A CatalogItem doesn't have a price or SKU. Instead, it contains one or more variations that have prices and SKUs."; commercetools: "You don't sell a Product directly; instead, you sell its Product Variants"; Vendure: a customer adds "a specific ProductVariant to their cart, not the Product itself." S
+**Barcode, price and stock stay on Product, the row that has them. The B platforms put them on the sellable member for the same reason: Odoo "barcodes are associated with each variant, instead of the product template"; GS1 "every variation of your product (e.g. each size, each colour) requires its unique GS1 GTIN". S**
+The most common family model in the set and the literature. Five of the thirteen R; the 161-vote accepted Stack Overflow answer: "There will always be at least one product variant for each product"; Saleor: "prices and stock can only be assigned at a variant level"; Sylius, Vendure, BigCommerce and Odoo all require at least one variant. S
+Scales when built for it. Shopify's 2024–2025 rework: product creation at 2,048 variants "improved by 10 times" and single-variant products "33% faster in the admin". S
+
+Against
+
+One dummy container per product on day one. 105,256 groups, almost all with one member and no dimensions, each with a name that duplicates the product's title and can drift from it. U inference
+The singleton leaks, in every system that has one. Shopify's Default Title option and variant show up in API responses and URLs (open since 2023); Spree's master variant appeared in admin autocomplete (#7302) and was always backorderable (#4365). Square and BigCommerce hide it in the UI — "items with only one variation show the variation's price and SKU as properties of the item"; "a base variant is a virtual projection of the parent product itself". S The same hiding work falls on every admin list and picker that shows families.
+The feed must suppress the singleton. Google: "Don't submit a value for the item group ID attribute if your product is not a variant." S re-fetched 2026-09-10 — so item_group_id may be emitted only for containers with more than one member. *Corrected 2026-09-10: an earlier version of this page said the mandatory-group feed emits item_group_id for every product, which breaks that rule.*
+Shared content still needs a home. If it stays on members, it is replicated — with drift, and a group.name versus title pair on every singleton. If it moves up to the container, as the B platforms do, every consumer that reads title, description or images — search, the feed, labels, the POS display, the order-line title copy — re-points to the container, and search has two tables to join: commercetools' search "can include Product Variants that do not match the search query" unless markMatchingVariants is set; Algolia's variant-level records raise record count and size. U inference S
+Every product read that touches the family joins to a row that says nothing for the products that are not families; the family share is not yet measured. U inference
+Reopens D13, and adds a question D13 never asked: must a standalone be a family of one? U
+No platform adds the container above an existing product table. Every B platform in the thirteen was built with its product row as the container from the start; B for us is that model arrived at from the other direction. R inference
+Recorded separately — the design ruled out on 2026-09-09 (not one of A, B or C)
+
+*Converting the existing Product table into the container and moving price, stock, barcode, basket and order lines onto a new variant table. Ruled out by the maintainer on 2026-09-09; kept here only so its evidence is not lost.*
+
+The largest migration for us. Every reference to "the sellable thing" — stock records, sell prices, basket and order lines, supply-chain lines, labels, search documents, the POS scan path, the Merchant feed, the ?upc= deep link — would move from Product to the new table. U (inference from #11031's code-state table)
+A barcode scan resolves to the variant, then needs the product. Shopify POS: scanning in the search bar "the main product is displayed in the search results, and you can then choose the specific variant"; a merchant thread reports staff "having to manually select each variant"; direct variant matching on any barcode shipped only 2026-09-01. S Square resolves by upc on the variation directly. S
+API and integration ceilings move to the variant list. Shopify webhooks carry full detail for the first 100 variants only; apps not migrated "may have a downgraded or broken experience" above 100; Odoo #25649: performance "very low" at ~1,000 variants. S
+Attribute edits can destroy variants. Odoo: variants not used in an order "are deleted and recreated with the new attributes"; used ones are archived. S
+Django's multi-table inheritance "creates implicit joins back to the parent table on nearly every query" (Kaplan-Moss, 2010) — applicable only if a split is built as ORM inheritance rather than a plain FK. S (inference on applicability)
+Shape C — an optional family container
+
+For
+
+Nothing non-sellable enters the product table, and nothing moves. One small table and one nullable FK; no existing row changes; only real families get a group. U inference
+Matches every flat-row platform on standalones (re-checked at source 2026-09-10). Google: "Don't submit a value for the item group ID attribute if your product is not a variant." Walmart: variantGroupId appears in 0 of the live item spec's 152,571 required arrays — "Required if item is a variant." eBay: the Browse contract returns primaryItemGroup "only if the item_id in the request is for an item group (items with variations, such as color and size)". S R #11013, #11046, #11045
+It is what the feeds want. Google: "Submit each variant as a separate product … and submit the same value for the item group ID attribute"; "Don't submit a parent SKU as a separate product." Meta: each line "needs to be its own product". S Every group has more than one member, so item_group_id = group.id needs no suppression. We already emit a Merchant feed. U #10879
+Search at variant granularity is the natural fit. Algolia: "A filter like color: green AND size: 40 returns only matching variants"; "You can update individual variant attributes (like price or stock)". S
+Every sellable already has its own barcode. GS1: "a unique GS1 identifier at each level of granularity SHALL be required". S
+The family row holds exactly what D1 + D3 require of it: one type (category FK) and the chosen dimensions. U inference
+Tried as a row by eBay and Akeneo. eBay's InventoryItemGroup carries variesBy, shared aspects, title, description and images while price, quantity and identifier stay on each SKU; Akeneo's ProductModel holds the common attribute values by level, and a product need not have one (Product.parent 0..1). R #11045 §1.4, §2b; #11069 §1.6, §2b
+Fits our "every variant gets its own card" decision (#10778 Q1): members are complete rows; no family page is needed. U inference
+
+Against
+
+Shared facts need a policy. Either members replicate them — which is what eBay demands ("the product.title and product.description values … must have the same values") and what Google, Meta and Walmart police with disapprovals ("Keep product content consistent across all variants"; "Sellers are responsible for ensuring uniqueness") — or the group holds them for its members, as Akeneo's product model does, and then a family member reads its description from the group while a standalone reads its own: two content paths. S R (inference on the two paths) Replication without tooling is today's Indomie problem. U #11031 symptom 2
+Two code paths generally: every consumer that wants the family branches on "has a group?". U inference
+The group key is immutable and fragile. Google: "Once you've assigned an item group ID to a product, don't change it."; case-insensitive collisions. eBay: updating a group is "a complete replacement", and omitted SKUs "will be removed from the inventory item group" and from the live listing. S
+The bare-key form is not viable for us, so C here always means a group row. D1 + D3 make every axis an attribute of a type, so a family's axis set is only coherent if all members share main_category, and the family needs a place for its type and its axis choice. The bare-key platforms have none: Google states that all rows in a group carry the same variant_option names and enforces nothing at write R #11013; Walmart repeats variantAttributeNames identically on every member and says "Sellers are responsible for ensuring uniqueness" R #11046 S; eBay had to make the group an object precisely to hold variesBy, checked against the category's aspectEnabledForVariations at publish R #11045. No source advocates the bare key as a storage design; it appears only as a feed or index requirement. S
+Two objects carry a type. group.category and each member's main_category must agree — the same invariant A needs between parent and child (Amazon: same product type; Magento: identical attribute_set_id). R #10976, #11082 inference
+No family page for free, unlike Amazon's detail page or Magento's visible container. R Less important given the show-all-cards decision. U inference
+Reopens D13, which closed on a parent Product row. U
+~~Promo needs a row to point at.~~ Corrected 2026-09-10: PromoProductLine targets ProductRange, an M2M of products, so a family of any shape only fills a range; promo is not an argument for or against any shape. U promo/models.py, catalogue/models.py
+Nesting — not a shape (what was briefly listed as the Akeneo model tree)
+
+A second level (style → colour → size) can sit on top of A, B or C; how many levels is D12. Akeneo is C with two levels (MAXIMUM_LEVEL_NUMBER = 2); Salesforce is A with a middle VariationGroup tier. R #11069, #11050
+
+For a second level: apparel's natural shape, each level owning its attributes — Akeneo's family variant "distribute[s] the family attributes in the different levels of enrichment". S R #11069
+Against: grocery families are one axis deep (flavour, size, pack) and our apparel is not yet split per size — 240 of 1,945 apparel products carry a size token U #10778, #10943; the one platform that ships two levels as its core model has no stock, sellable or barcode concept at all R #11069 §2b; no published critique exists S.
+Side by side, for us
+
+Criterion | A · parent row | B · every product has a container | C · optional container | 
+The family container | a Product row | a separate group row, on every product | a separate group row, on families only | 
+Sellable identity stays Product | ✅ | ✅ | ✅ | 
+Migration surface inference | 2 columns, nullable upc, N parent rows, guard sellable reads | 1 table, 1 non-null FK, 105,256 groups; plus content reads re-pointed if content moves up | 1 table, 1 nullable FK, N groups | 
+"Never sell a parent" enforced by | invariant in code, 12 consumers | nothing to enforce | nothing to enforce | 
+Barcode → sellable at the till | child Product by upc (unchanged) | unchanged | unchanged | 
+Where shared content lives | the parent | the group, or every member — a choice | every member, or the group for families only | 
+Promo range filled from (promo targets ProductRange in every shape) | parent.children | group.members, always present | group.members | 
+The family's type and its axis choice | on the parent (main_category, dimension rows) | on the group, on every product; dimensions may be empty | on the group; members must match | 
+Google / Meta feed | children + item_group_id = parent.id; skip parents | members + item_group_id = group.id only when the group has more than one member | members + item_group_id = group.id | 
+Search index | must exclude parents; guid (= upc) needs a key for parents | native, per row; a group id on every document | native, per row | 
+Standalone product | a standalone row, no parent | a group of one with no dimensions — the Default Title analogue | a row with no group — as Google, Walmart and eBay do | 
+Apparel two levels (style → colour → size) | nest (D12) | a group of groups (D12) | a group of groups, as Akeneo's two levels (D12) | 
+Known pains at our family sizes | parent leaks into reads; derived price and stock bugs | the singleton leaks into admin and API; name-versus-title drift on 100,000+ singletons | drift unless replication is tooled, or two content paths | 
+Precedent among the thirteen | Amazon, Magento, Salesforce (WooCommerce hedged) | Shopify, Square, commercetools, Tokopedia Era B, Shopee — with their product row as the container | eBay and Akeneo as rows; Walmart and Google as a bare key | 
+Reopens a closed decision | no (D13 as written) | yes, D13 | yes, D13 | 
+Reading (mine, not evidence)
+
+Two questions separate the three shapes. **Is the family row a Product?** A says yes: shared content and a page come free, and the cost is a non-sellable row among sellable ones — an invariant on twelve consumers and a nullable barcode. B and C say no: Product stays purely sellable, and the cost is a second typed object. Must every product have a family? B says yes: one code path, bought with 105,256 singleton groups that leak wherever this pattern ships and that the feed must hide from Google. C says no, as every flat-row platform does; the cost is a "has a group?" branch wherever the family matters. Running across both is D11: whether shared content lives on the family row (A always; B and C optionally) or is replicated on members (the source of today's drifting Indomie rows unless tooled). The records place Amazon and Magento, the two most tried-and-tested platforms that share our axis decision, on A; B is shipped by Shopify, Square, commercetools and Tokopedia Era B, each with its product row as the container; C is shipped as a row by eBay and Akeneo. The pains reported for A are the derived-price and index-leak bugs that D10–D12 already enumerate as decisions to make.
+
+#### 2a · Designing A, B and C against our schema
+
+*Design exercise, 2026-09-09, on the real models in py/mono/solvent (read that day: catalogue/models.py, price/sell/models.py, inventory/models.py, basket/models.py, order/models.py, search/search_indexes.py, third_party_api/google/content/products_api.py, promo/models.py, plus every ForeignKey(Product) in the tree). Everything below is a sketch to surface costs, not a migration plan. All three designs assume the closed decisions: the type is the Category (D1, D2), an axis is a ProductAttribute playing a role (D3), and a family is a row (D13 as closed says a Product row; B and C would reopen that).*
+What points at Product today, and which of it is sellable-only
+
+Consumer | Field(s) | Applies to a family row? | 
+Sell price | PriceSell(product, facility) · PriceSellChangeLine.product · Product.price_sell_online | sellable only | 
+Purchase price | PricePurchase.product | sellable only | 
+Inventory | InventoryFacility.product (+ Product.inventory_facility_online) · InventoryRecord · reconciliation · forecast | sellable only | 
+Basket and order | basket Line.product (CASCADE) · order Line.product (SET_NULL, copies title onto the line) | sellable only | 
+Supply chain | purchasing line · receiving line · return-to-supplier · transport line | sellable only | 
+Labels | PrinterLabelProductLine.product (prints the barcode) | sellable only | 
+Meta and analytics | ProductMeta (purchasing multiples, box quantity) · analytics stats | sellable only | 
+Search | ProductIndex: guid = upc (non-null keyword), title, price, in-stock, promo, age-walled | sellable rows; a family document is optional | 
+Merchant feed | products_api.py: offer_id = product.id; no item_group_id today | sellable only; group id needed | 
+Images | ProductImage.product, display_order 0 = primary, thumbnail_url_cache on Product | both | 
+Attributes | ProductAttributeValue(product, attribute), one scalar per pair, types text / integer / boolean / float / date / datetime, no option type | both | 
+Placement | ProductCategory M2M (dead, 19.6%) · main_category 1..1 | both | 
+Promo target | PromoProductLine.product_range → ProductRange.products M2M — promo already targets a range of products, never a single row | a range of members, in either shape | 
+
+Twelve consumers are sellable-only. That list is the invariant surface for any shape that puts a non-sellable row in Product.
+Common to all three designs
+
+**The product type is the Category node** (Q1 locked: one object). It is the thing that decides what a family may vary on, in three steps that are the same in all three designs: (i) ProductAttribute.category replaces product_class — the type owns the attribute definitions (D1 + D2; whether a node also offers its ancestors' attributes is D15); (ii) the type marks which of its attributes may be an axis — ProductAttribute.is_axis_eligible (D4's gate; eBay's aspectEnabledForVariations and Akeneo's type whitelist are the precedents; the alternative is to declare no gate and let any attribute of the type be an axis, as Square and WooCommerce do); (iii) the family picks its dimensions from that eligible set (D5, the eleven-of-thirteen shape). Optionally the type can go one step further and declare named dimension sets a family must choose whole — Amazon's variation_theme — as a ProductTypeVariationTheme table; not sketched here because D5 is open.
+The chain is therefore: Category (type) → owns ProductAttribute rows → some flagged axis-eligible → the family's dimension through-table may only reference those → each member stores a value for each dimension. The type constrains the family at step (ii) and (iii); it never stores the axis itself.
+An option attribute type is needed before any axis exists: today's six value columns cannot hold "Ayam Bawang" as anything but free text (D8).
+Dimension selection is a family-level list of ProductAttribute rows, each required to belong to the family's category and to be axis-eligible there (steps ii–iii above).
+What a dimension row is. ProductVariantDimension / ProductVariantGroupDimension is a real table but a thin one: family FK, attribute FK, position. It marks the role and owns nothing else — the name is the attribute's, the allowed values are the attribute's option list, whether the list is closed or free text is the attribute's setting (and under D1 + D2 grocery Ukuran and apparel Ukuran are two attributes owned by two categories, so no per-family flag is needed), each member's value is its ProductAttributeValue row, and eligibility is the attribute's is_axis_eligible. Precedent: Magento's catalog_product_super_attribute (product id, attribute id, position, per-store label); Amazon is thinner still (a theme string on the parent); Shopify and Square made the option a full object with its own values, the D3 alternative not taken. The row can grow a display-label override or a picker default later without breaking D3.
+Axis storage is the member's own ProductAttributeValue rows for the dimension attributes — D3 taken literally, one table for axis and non-axis values alike.
+**variant_key**: a denormalised canonical string of the member's dimension values (for example flavour=soto;size=85g), unique per family, so D7's uniqueness is a database constraint rather than a validator over many rows. Akeneo stringifies for the same reason; Magento keys the pair.
+Type equality: every member's main_category equals the family's category — a validator (or derived at save) in all three shapes; Amazon's parent is the same product type as its children, Magento's container and child share attribute_set_id.
+Members keep upc exactly as today.
+Design A — the family is a parent Product row
+
+erDiagram
+ Product ||--o{ Product : "parent (self FK, null)"
+ Product ||--o{ ProductVariantDimension : "family = parent row"
+ ProductAttribute ||--o{ ProductVariantDimension : "attribute ∈ family.main_category, axis-eligible"
+ Product ||--o{ ProductAttributeValue : "axis and non-axis values"
+ Product ||--o{ ProductImage : "shared on parent, own on child"
+ Category ||--o{ Product : "main_category, equal on parent and child"
+ Category ||--o{ ProductAttribute : "the type owns its attributes (D1)"
+ ProductAttribute {
+ bool is_axis_eligible "the type's gate (D4)"
+ }
+ Product {
+ string structure "standalone | parent | child"
+ string upc "null on parent"
+ string variant_key "unique within parent"
+ }
+ ProductVariantDimension {
+ int position
+ }
+
+Fields added or changed:
+
+Where | Change | 
+Product.parent | self FK, null, PROTECT, related_name="children" | 
+Product.structure | standalone / parent / child, stored and indexed (the stored role D13 already names) | 
+Product.variant_key | blank on standalone and parent; UniqueConstraint(parent, variant_key) where parent is not null | 
+Product.upc | null=True; uniqueness kept (Postgres does not compare NULLs); the validator skips null | 
+ProductVariantDimension | new through table: family (a Product with structure="parent"), attribute, position; validator: attribute.category == family.main_category and attribute.is_axis_eligible | 
+ProductAttribute | category FK (the type owns it) and is_axis_eligible boolean (the type's gate); the type itself is the existing Category row, no new table | 
+Check constraints | structure='parent' ⇒ upc IS NULL AND parent IS NULL AND price_sell_online IS NULL AND inventory_facility_online IS NULL; structure='child' ⇒ parent IS NOT NULL | 
+
+What a parent row has, never has, and derives (this is D10 answered for the sketch):
+
+The parent row | | 
+Has | title, title_staff, description, slug, main_category (the family's type), its own ProductImage rows (shared images), ProductAttributeValue rows for the type's non-axis attributes (brand, halal, BPOM…), the dimension through-table, is_public / is_active, ProductCategory placements | 
+Never has | upc (null); any PriceSell or PricePurchase; any InventoryFacility / InventoryRecord; a basket or order Line; a purchasing, receiving, return-to-supplier or transport line; a PrinterLabelProductLine; ProductMeta; analytics stats; price_sell_online and inventory_facility_online (both null by check constraint). It is not sellable, scannable, stockable or printable | 
+Derived at read, never stored | a price range over its children (Magento, WooCommerce and Salesforce all derive it; WooCommerce's stored copy is the bug source), "in stock" = any child in stock, a thumbnail = its own primary image or the first child's | 
+
+How the four questions play out:
+
+ | Design A | 
+(1) Axis selection | parent.dimensions (the through table). The family chooses; the type bounds the choice because the attribute must belong to parent.main_category. | 
+(1) Axis storage | The child's ProductAttributeValue rows for those attributes, plus child.variant_key. Nothing new to store an axis value; the same row type the "halal" attribute uses. | 
+(2) Prices, inventory, basket, order, supply chain, labels, meta, analytics | Unchanged tables. Each of the twelve sellable-only consumers gains one rule: refuse a product with structure='parent'. A Product.sellable manager plus a partial index WHERE structure <> 'parent' carries the read side; the write side is a validator per consumer (the database cannot express a cross-table check). | 
+(2) Images | ProductImage.product = parent for shared images, = child for the child's own; display reads the child's images, falling back to the parent's (a D11 choice). thumbnail_url_cache on both rows. | 
+(2) Search | guid is upc, non-null: parents need a synthetic key (for example parent:<id>) or the index excludes them and a separate family document is added. Children index unchanged, with parent_id added for collapsing. | 
+(2) Merchant feed | Children emitted as today with item_group_id = parent.id; parents skipped (Google: "Don't submit a parent SKU as a separate product"). offer_id is already product.id, so nothing else moves. | 
+(2) Promo | Unchanged: ProductRange.products holds the children. The parent row is a convenient way to fill a range, not a new target type. | 
+(3) Type / category | parent.main_category is the family's type. The type decides what the family may vary on: only its own attributes, and only those flagged is_axis_eligible, may appear in ProductVariantDimension. Children must carry the same category. The parent's non-axis attributes are the same category's attributes, so the parent can carry brand, halal, BPOM values in the same table as everything else. | 
+(4) Sharing | The parent is a product, so shared title, description, images and attribute values have a home with no new machinery. Children keep their own display title ("Indomie Goreng 85 g") because every variant gets its own card. Whether children fall back to the parent's description or copy it is D11. | 
+
+Costs this design makes concrete (beyond the pros and cons above): a nullable upc and a search key that assumes it; twelve write paths to guard and every listing read to filter; is_public and is_active semantics for a parent that is browsable but not sellable; stale docstrings in Product.clean() that still describe the old parent/child rules and would need to be replaced, not revived.
+Design B — every product belongs to a ProductVariantGroup (Product stays the sellable row)
+
+erDiagram
+ ProductVariantGroup ||--|{ Product : "variant_group (FK, NOT NULL)"
+ ProductVariantGroup ||--o{ ProductVariantGroupDimension : "dimensions (may be empty)"
+ ProductAttribute ||--o{ ProductVariantGroupDimension : "attribute ∈ group.category, axis-eligible"
+ Category ||--o{ ProductVariantGroup : "category = the family's type"
+ Category ||--o{ Product : "main_category, must equal group.category"
+ Category ||--o{ ProductAttribute : "the type owns its attributes (D1)"
+ ProductAttribute {
+ bool is_axis_eligible "the type's gate (D4)"
+ }
+ Product ||--o{ ProductAttributeValue : "axis and non-axis values"
+ Product ||--o{ ProductImage : "own images"
+ ProductVariantGroup {
+ string name "staff-facing family name"
+ int primary_member "optional; source of shared facts"
+ }
+ Product {
+ string upc "unchanged, non-null unique"
+ string variant_key "empty on a singleton; unique within group"
+ }
+
+Fields added or changed:
+
+Where | Change | 
+ProductVariantGroup | new table: category FK (the family's type), name, optional primary_member FK Product; one is created in the same transaction as every product (category = product.main_category, name = product.title, no dimensions) | 
+ProductVariantGroupDimension | new through table: group, attribute, position; validator: attribute.category == group.category and attribute.is_axis_eligible | 
+ProductAttribute | category FK and is_axis_eligible, exactly as in A — the type is the existing Category row in all three designs | 
+Product.variant_group | FK, NOT NULL, PROTECT, related_name="members"; the migration creates 105,256 groups, one per existing product | 
+Product.variant_key | never null; the empty string on a singleton; UniqueConstraint(variant_group, variant_key) unconditional | 
+"is a family" | derived — members.count() > 1 or dimensions.exists() — not a stored role | 
+Product.upc, every consumer | unchanged | 
+
+How the four questions play out:
+
+ | Design B | 
+(1) Axis selection | group.dimensions, bounded by group.category; empty on a singleton. | 
+(1) Axis storage | The member's ProductAttributeValue rows plus variant_key — identical to A. | 
+(2) Prices, inventory, basket, order, supply chain, labels, meta, analytics | No change at all. There is no non-sellable product, so no rule to add anywhere. | 
+(2) Images | Members carry their own images as today; a ProductVariantGroupImage table only if shared content moves up (see (4)). | 
+(2) Search | Unchanged; variant_group_id on every document for collapsing siblings. guid stays upc. | 
+(2) Merchant feed | Members emitted as today; item_group_id = group.id only when the group has more than one member — Google: "Don't submit a value for the item group ID attribute if your product is not a variant." | 
+(2) Promo | Unchanged: ProductRange.products holds products; a range can be filled from group.members. | 
+(3) Type / category | group.category is the family's type on every product; the equality rule with main_category runs on all 105,256 rows; only that category's axis-eligible attributes may appear in ProductVariantGroupDimension. | 
+(4) Sharing | Two choices. Replicate on members (the default above): primary_member plus copy-on-save tooling keeps members aligned; a group.name versus title drift pair exists on every singleton. Move shared content up to the group: the group gains description, an image table and attribute values; members keep their own title for the card; every consumer that reads description or images reads through the group — the arrangement Shopify, Square and commercetools use, here with the container added above Product rather than in its place. | 
+
+Costs this design makes concrete: 105,256 singleton groups on day one and the hiding work Square and BigCommerce do for a single variation ("show the variation's price and SKU as properties of the item") in every admin list and picker; the feed's singleton suppression; a second typed object with its own admin surface; replication tooling, or the content re-pointing described in (4).
+Design C — the group is optional (delta on B)
+
+Same tables as B with three changes:
+
+Where | Change | 
+Product.variant_group | nullable; only real families get a group; a standalone has none; the migration creates groups for real families only | 
+Product.variant_key | null on a standalone; UniqueConstraint(variant_group, variant_key) where not null | 
+"is a family" | = has a group; every group has more than one member | 
+
+What it changes in the four questions: (1) as B, but a group always has dimensions; (2) no change in the consumers; the feed emits item_group_id = group.id for every member with no suppression, and search carries a group id only on members; (3) the equality rule runs on members only; (4) as B — replicate, or the group holds shared content for its members only (Akeneo's product model, eBay's group), in which case a member reads its description from the group while a standalone reads its own: two content paths. Migration: one table, one nullable FK, and groups for real families only.
+The four questions, side by side
+
+Question | A · parent Product row | B · every product has a group | C · optional group | 
+(1) Where the axis choice lives | through table on the parent product | through table on the group; empty on a singleton | through table on the group | 
+(1) Where a member's axis value lives | its own ProductAttributeValue + variant_key | identical | identical | 
+(2) Tables touched beyond catalogue | none, but 12 write paths gain a "not a parent" rule; search key must handle a null upc | none, and no rule | none, and no rule | 
+(2) Images | parent holds shared, child holds own, fallback on read | members' own; a group image table if content moves up | members' own; a group image table if the group holds content | 
+(2) Feed | children with item_group_id = parent.id; parents skipped | item_group_id = group.id only for groups with more than one member | item_group_id = group.id on every member | 
+(2) Promo | ranges filled from the children | ranges filled from group.members | ranges filled from group.members | 
+(3) Family's type | parent.main_category; the parent's attribute values are that type's | group.category on every product; must equal main_category everywhere | group.category on families; members must match | 
+(3) What the type lets a family vary on | its own attributes flagged is_axis_eligible, enforced on the parent's dimension rows | identical rule, on the group's dimension rows | identical rule, on the group's dimension rows | 
+(4) Shared description, brand, non-axis attributes | on the parent for free; fallback or copy is D11 | replicated on every member, or moved up to the group | replicated on members, or held by the group for its members only | 
+Rows added for a 33-flavour family | 1 parent + 33 children (existing rows become children) | 1 group + 33 members, and 1 group for every other product (105,256 in total) | 1 group + 33 members (existing rows become members) | 
+upc | nullable | untouched | untouched | 
+Reopens a closed decision | no (D13 as written) | yes, D13, plus a question D13 never asked | yes, D13 | 
+What the exercise adds to the pros and cons
+
+The three designs share almost everything. The type's side — Category owning ProductAttribute, the is_axis_eligible gate, the rule that a family's dimensions come from its category's eligible attributes — is identical, as are the dimension table, variant_key, the type-equality rule and the option attribute type. A differs from B and C in whether the family row is a Product; B differs from C in one nullable flag on one foreign key.
+A's invariant surface is a list, not a number: twelve sellable-only consumers plus the two online pointers on Product plus the search key. Each is a one-line rule; the risk is the one that is forgotten.
+Promo does not need the family row in any shape. PromoProductLine targets ProductRange, an M2M of products; the family row is only a convenient way to fill a range.
+**The Merchant feed keys on product.id, not upc,** so item_group_id is a one-field addition in every shape: A skips parents, B suppresses singletons, C needs neither.
+**The search index is the one consumer that reads upc as an identifier** (guid). A must change that; B and C do not.
+Replication is the default content policy of B and C, and it is the same policy the marketplaces enforce — and the same policy that produced today's drifting Indomie rows. The tooling to keep members aligned is the real cost, not the table.
+
+#### 2b · Where the axis lives
+
+Answer | Who | What it is, and the caveats | 
+
+ A marked attribute4 | 
+ Amazon100
+Magento60
+WooCommerce55
+Akeneo30 | 
+ Amazon: variation_theme names which of the type's ordinary attributes are the axes. Magento: a catalog_product_super_attribute join row promotes an ordinary eav_attribute — the record's own headline word is "Both"; it is counted here as marked because no axis entity exists, and moving it makes this bucket 3. WooCommerce: an is_variation boolean per (product, attribute). Akeneo: membership in …_has_axes, declared on the FamilyVariant and immutable; no Axis class, table or column. | 
+
+ Its own object4 | 
+ Shopify85
+Shopee60
+Salesforce B2C50
+Square40 | 
+ Shopify: ProductOption / ProductOptionValue, free text, unrelated to the attribute system unless linked to a metafield definition. Shopee: standardise_tier_variation[], drawn from a category-scoped variation tree; two tiers, hard. Square: CatalogItemOption, shared across items. Salesforce: ProductVariationAttribute, 1:1 to an attribute definition. | 
+
+ Neither1 | 
+ commercetools35 | 
+ No axis construct at all. The nearest thing is attributeConstraint = CombinationUnique on a type's attribute definition — a uniqueness rule, not an axis. | 
+
+ Cannot be assigned4 | 
+ eBay80
+Google70
+Walmart65
+Tokopedia45 | 
+ Google requires both: variant_option {name, value} and the same value repeated in the legacy typed attribute. eBay: Specification is a container, not an entity, while aspectEnabledForVariations marks the category's aspect. Walmart: variantAttributeNames are plain strings, and 280 types list axis names that are not their own attributes. Tokopedia: the two eras answer in opposite directions (Era B a type on the shared attribute, Era A a separate catalogue). These four are exactly the ones that would break the tie. | 
+
+ Us D3 ✓ marked | 
+ a ProductAttribute playing a role | 
+ Chosen on a 4–4 tie; there is no industry rule to adopt. With D1 it makes the type own the axes by construction. | 
+
+#### 2c · Does the type constrain what a family may vary on?
+
+Answer | Who | What it is, and the caveats | 
+
+ Yes6 | 
+ Amazon100
+eBay80
+Walmart65
+Shopee60
+Tokopedia45
+Akeneo30 | 
+ Amazon: the theme enum is per type; the family picks one and it is immutable — on the legacy XSD registry this is "partly" (13 of 55 categories gate at category level, not per type), and the live SP-API model is credential-gated. Akeneo: a static whitelist of 5 attribute types, intersected with the family's own attributes, plus three flag gates. eBay: four gates — the aspect's flag, the category's variationsSupported, marketplace, seller. Walmart: a per-type closed enum of axis names that diverges from the type's own attributes. Shopee and Tokopedia: the leaf category gates, not a product type — Shopee through a separate variation catalogue per leaf, Tokopedia through a SALES_PROPERTY type on the category's attribute. All six are marketplaces or a PIM. | 
+
+ Mixed2 | 
+ Magento60
+Salesforce B2C50 | 
+ Magento: the code predicate reads global / visible / select / user-defined and consults neither the attribute set nor the category; Adobe's Admin prose says the attribute must be in the set; the REST route runs neither check (open, U15). Salesforce: the carrier field is gated to master / group / variant product types; which attribute definitions may back an axis is open (U2). | 
+
+ No3 | 
+ Shopify85
+WooCommerce55
+Square40 | 
+ Shopify: none on an unlinked option; on the linked path the metafield definition's category constraints gate it (observed: refused with category: null, accepted with a category in the set). Square: any option on any item; product_type gates built-in field blocks only. WooCommerce: the product type only shows or hides the checkbox. | 
+
+ N/A or uncounted2 | 
+ Google70
+commercetools35 | 
+ commercetools has no axis to constrain; the type gates attributes and carries the uniqueness rule. Google: mostly no — any axis name persists live, including a nonsense token; 2 of the legacy 8 are apparel-only. | 
+
+ Us D4 · D5 open | 
+ by construction | 
+ D1 + D3 mean the type owns the axes automatically. D4 asks whether a second eligibility mark sits on top; D5 whether the family picks or the type imposes. | 
+
+#### Reading
+
+Our closed pieces are Amazon's and Magento's structure: a parent row in the same table (shape A) and an axis that is a marked attribute. Both of those platforms keep the type separate from the category. The systems where the type has teeth over variants are all marketplaces or the PIM; the merchant storefront tools (Shopify, Square, WooCommerce) leave the family free.
+
+#### What is still open here
+
+Decision | Question | Where the thirteen split | 
+
+D4 | A separate axis-eligibility gate on the type, or none? | eBay, Walmart, Shopee and Akeneo gate; Square and WooCommerce do not; Amazon, Magento, Salesforce and Shopify are partial or mixed | 
+
+D5 | Does the family pick from the type's eligible set, or does the type impose a fixed structure? | 11 of 13 let the family pick; only Akeneo imposes, and the record calls that a judgement | 
+
+D10 · D12 | What the parent carries; whether families nest | Parent contents vary widely (see P2); 11 platforms allow one level, Salesforce and Akeneo two tiers | 
+
+Q3
+### What is the overall product model?
+objects and edges — five archetypes
+
+The thirteen collapse into five shapes. Each row names the objects a platform actually has and the edges its record verified.
+
+Shape | Who | Objects and edges, and the caveats | 
+
+ M1 · Type registry + parent row in the product table3
+= A in 2a | 
+ Amazon100
+Magento60
+Salesforce B2C50 | 
+ A type (product type schema / attribute set / ObjectTypeDefinition) owns the attribute definitions. A product row is parent or child with a self-reference and is 1..1 to the type. A value per product — a copied string at Amazon, a shared option_id at Magento, a shared boolean choosing either at Salesforce. The browse category is a separate object, 0..N. Caveats: the axis is a marked attribute at Amazon and Magento but its own object at Salesforce; Salesforce adds a middle VariationGroup tier. WooCommerce is M1 with no type object and a store-global registry. Tokopedia Era A was M1 with the leaf category as the type and a separate axis catalogue — terminated. | 
+
+ M2 · Product is the container; variants are lighter rows; options are their own objects5
+= B in 2a | 
+ Shopify85
+Shopee60
+Tokopedia45 (Era B)
+Square40
+commercetools35 | 
+ A product that is not itself sold, 0..1 or 1..1 to a type or leaf category; 1..N variants carrying price, SKU and stock; options as their own objects — free text at Shopify and Square, drawn from the leaf category at Shopee and Tokopedia, absent at commercetools; attribute values as metafields, attributes or custom attributes on either level. Caveat: at Shopify the linked-option path ties an option to a category-constrained metafield definition, which is the one place this shape touches the type. | 
+
+ M3 · Flat sellable rows joined by a key or a light group3
+= C in 2a | 
+ eBay80
+Google70
+Walmart65 | 
+ Every row is complete and sellable and is 1..1 to a type or leaf category. The group is a shared string (Google, Walmart) or a 9-property container with nothing sellable (eBay). Facts are copied per row. Caveats: eBay's leaf category is the type (the Q1 merge); Walmart's type is the feed schema and there is no category; Google has no type in the wire schema. | 
+
+ M4 · PIM tree1
+= C in 2a, two levels | 
+ Akeneo30 | 
+ Family (0..1) → FamilyVariant (levels 1–2, axes, and which attribute lives at which level) → ProductModel (own table, self-parent, no stock concept in the corpus) → Product (leaf; identifier here). Shared AttributeOption rows with the code copied into the product. Multiple category trees, unlimited depth, unrelated to the family. Requiredness is per (family, attribute, channel). | 
+
+ M5 · No type: a global attribute registry on a container post1
+= A in 2a, no type object | 
+ WooCommerce55 | 
+ Global pa_* attributes registered against every product; shared wp_terms rows for global values; a variable post with product_variation children; the variation's axis value is a copied slug never validated against the parent's list; product_cat 0..N with a forced default. | 
+
+ Us D1 + D2 + D3 + D13 | 
+ M1's rows,
+M3-eBay's type | 
+ ProductType = Category, one tree, owns the attribute definitions; a product row that is parent or child with a self-FK, 1..1 to the type; the axis is an attribute playing a role; the value shape is open (D8). No platform in the thirteen ships this composite. Amazon and Magento match the parent row and the marked attribute but keep type and category apart. eBay merges type and category but has no parent row and a contested axis. Tokopedia Era A had the merge and the parent row with an own-object axis, on a terminated surface. The seam is Q1. | 
+
+#### M1 · Type registry + parent row
+
+graph TB
+ T["Type
+(schema · attribute set)"]
+ P["Product row
+parent | child
+FK → self"]
+ A["Attribute definition"]
+ V["Value
+copied string (Amazon)
+shared option id (Magento)"]
+ C["Browse category
+(separate)"]
+ T -->|owns| A
+ P -->|1..1| T
+ P -->|child → parent| P
+ P --> V
+ A -.->|marked as axis| V
+ P -.->|0..N| C
+
+Amazon · Magento · Salesforce B2C
+
+#### M2 · Product is the container
+
+graph TB
+ T["Type / leaf category
+(declares attributes)"]
+ P["Product
+(container, not sold)"]
+ VR["Variant · Model · SKU
+(price, SKU, stock)"]
+ O["Option / tier variation
+(own object)"]
+ M["Attribute value"]
+ P -->|0..1 or 1..1| T
+ P -->|1..N| VR
+ P --> O
+ O -.->|names the axis| VR
+ P --> M
+
+Shopify · Square · commercetools (no option object) · Shopee · Tokopedia Era B
+
+#### M3 · Flat rows joined by a key
+
+graph TB
+ T["Type / leaf category"]
+ R["Row · SKU · item
+(complete, sellable)"]
+ G["Group key or light group
+item_group_id · variantGroupId ·
+InventoryItemGroup"]
+ R -->|1..1| T
+ R -->|shares| G
+
+eBay · Walmart · Google
+
+#### M4 · PIM tree
+
+graph TB
+ F["Family (0..1)"]
+ FV["FamilyVariant
+levels 1–2 · axes · distribution"]
+ PM["ProductModel
+(own table, self-parent)"]
+ PR["Product (leaf)"]
+ C["Category trees (0..N)"]
+ F --> FV
+ FV --> PM
+ PM -->|parent| PM
+ PM --> PR
+ PM -.-> C
+ PR -.-> C
+
+Akeneo
+
+#### M5 · Global registry on a container post
+
+graph TB
+ GA["Global attribute (pa_*)"]
+ TM["Term (shared value row)"]
+ VP["variable post"]
+ VV["product_variation post
+axis value = copied slug"]
+ PC["product_cat (0..N)"]
+ GA --> TM
+ VP -->|is_variation flag| GA
+ VP --> VV
+ VP -.-> PC
+
+WooCommerce
+
+#### Us · D1 + D2 + D3 + D13
+
+graph TB
+ PT["ProductType = Category
+one tree (D2)"]
+ A["Attribute definition (D1)"]
+ P["Product row
+parent | child · parentage
+FK → self (D13)"]
+ V["Value (D8 open)"]
+ X["Axis = attribute
+playing a role (D3)"]
+ PT -->|owns| A
+ P -->|1..1| PT
+ P -->|child → parent| P
+ P --> V
+ A --> X
+
+A composite no platform ships. The seam is Q1.
+
+Q3
+### One real instance per platform
+verbatim from the records · extracted 2026-09-09 · sorted by the tried-and-tested score
+
+Each block is an object the platform itself emitted or published, quoted as the record prints it — a live capture where one exists, otherwise the vendor's own sample. Nothing was constructed or completed; elisions are marked and what is missing is stated. The field map says what each key is in that platform's model. Source extracts: catalogue-decision-2026-09/q3/.
+
+ 100
+#### Amazon
+CatalogItem (SP-API), ASIN B07N4M94X4
+
+Route. Vendor sample — Amazon's own OpenAPI model catalogItems_2022-04-01.json, the 200 example for GET /items/{asin}; byte-identical to the sandbox static response. Corroborated live at amazon.com/dp/B07N4M94X4. (#10976 §2c [E-10])
+
+"application/json": {
+ "asin": "B07N4M94X4",
+ …
+ "identifiers": [ { "marketplaceId": "ATVPDKIKX0DER", "identifiers": [
+ { "identifier": "0887276302195", "identifierType": "EAN" },
+ { "identifier": "00887276302195", "identifierType": "GTIN" },
+ { "identifier": "887276302195", "identifierType": "UPC" } ] } ],
+ "productTypes": [ { "marketplaceId": "ATVPDKIKX0DER", "productType": "TELEVISION" } ],
+ "summaries": [ {
+ "marketplaceId": "ATVPDKIKX0DER",
+ "brand": "SAMSUNG",
+ "browseClassification": { "displayName": "QLED TVs", "classificationId": "21489946011" },
+ "color": "Black",
+ "itemClassification": "BASE_PRODUCT",
+ "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+ "modelNumber": "QN82Q60RAFXZA",
+ "partNumber": "QN82Q60RAFXZA",
+ "size": "82-Inch",
+ … } ],
+ "relationships": [ { "marketplaceId": "ATVPDKIKX0DER", "relationships": [ {
+ "type": "VARIATION",
+ "parentAsins": [ "B08J7TQ9FL" ],
+ "variationTheme": { "attributes": [ "color", "size" ], "theme": "SIZE_NAME/COLOR_NAME" } } ] } ],
+ …
+}
+
+What is cut or missing. attributes (~500-line per-type bag), classifications (4-level browse chain), dimensions, images, salesRanks, vendorDetails, and from summaries: manufacturer, packageQuantity, style, websiteDisplayGroup. Price and seller SKU are not on this object at all — they live on the seller-side ListingsItem.
+
+asin
+identifier — the catalog PK, the only required field
+identifiers[].identifiers[]
+external GTIN family (EAN / GTIN / UPC here), per marketplace
+productTypes[].productType
+the type, TELEVISION — selects the attribute schema; one per marketplace
+relationships[].parentAsins
+the family link: this ASIN is a child pointing up at its parent B08J7TQ9FL
+relationships[].variationTheme
+the axis: theme token SIZE_NAME/COLOR_NAME plus the resolved attribute names color, size
+summaries[].itemClassification
+role, BASE_PRODUCT; the parent-side value VARIATION_PARENT was never retrieved as an instance
+summaries[].browseClassification
+the browse category, a scalar beside the 0..N classifications
+
+ 85
+#### Shopify
+Product 1974208299030 with its default variant
+
+Route. Live GraphQL response, unauthenticated, from Shopify's own proxy store (shopify.dev/admin-graphql-direct-proxy/2026-07). (#11011 §2c [R-30])
+
+{"id":"gid://shopify/Product/1974208299030","title":"Rough Snowflake Camisole",
+ "handle":"rough-snowflake-camisole","hasOnlyDefaultVariant":true,
+ "combinedListingRole":null,"variantsCount":{"count":1},
+ "options":[{"name":"Title","values":["Default Title"]}],
+ "variants":{"nodes":[{"id":"gid://shopify/ProductVariant/19523123216406",
+ "title":"Default Title","sku":"",
+ "selectedOptions":[{"name":"Title","value":"Default Title"}]}]}}
+
+What is cut or missing. Nothing — printed whole. This is a standalone product, which is why it carries the synthesized Title / Default Title option and variant: the record notes "There is no 'no variant' state." category, price, barcode and inventoryItem appear only in separate dev-store fragments (§2c′ [R-82], [R-85]).
+
+id (Product)
+the container identifier; the Product is the family row. productType / vendor / tags are free strings; the taxonomy link is category (absent here)
+options[]
+the axis (ProductOption, name + values); 3 per product on the shops measured
+hasOnlyDefaultVariant / variantsCount
+the flag for the synthesized single-cell case, and the grid size
+variants.nodes[].id
+the sellable leaf (ProductVariant), one per combination actually created
+variants.nodes[].selectedOptions
+the binding leaf → axis, the variant's coordinate
+variants.nodes[].sku
+merchant SKU, here the empty string, not null
+combinedListingRole
+parent / child marker for the Plus-only CombinedListing; null = neither
+
+ 80
+#### eBay
+Browse Item v1|110590192388|410111412258 and its item group
+
+Route. Live GET on the sandbox Browse API, application token: getItemsByItemGroup?item_group_id=110590192388; raw 25,104 B; printed by jq. (#11045 §2c [R-47])
+
+[{"description":"High-quality cotton t-shirt available in multiple colors and sizes.",
+ "itemIds":["v1|110590192388|410111412258","v1|110590192388|410111412259"]}]
+
+{"itemId":"v1|110590192388|410111412258","title":"Cotton T-Shirt 1786672804899",
+ "primaryItemGroup":{"itemGroupId":"110590192388","itemGroupType":"SELLER_DEFINED_VARIATIONS",
+ "itemGroupHref":"https://api.sandbox.ebay.com/buy/browse/v1/item/get_items_by_item_group?item_group_id=110590192388",
+ "itemGroupTitle":"Cotton T-Shirt 1786672804899","itemGroupImage":{"imageUrl":"https://example.com/blue-shirt.jpg"}},
+ "localizedAspects":[{"type":"STRING","name":"Color","value":"Blue"},{"type":"STRING","name":"Size","value":"S"},
+ {"type":"STRING","name":"Pattern","value":"Solid"},{"type":"STRING","name":"Material","value":"Cotton"},
+ {"type":"STRING","name":"Brand","value":"Unbranded"},{"type":"STRING","name":"Department","value":"Unisex Adults"},
+ {"type":"STRING","name":"Size Type","value":"Regular"}],
+ "price":{"value":"19.99","currency":"USD"},
+ "categoryId":"15687","categoryPath":"Clothing, Shoes & Accessories|Men|Men's Clothing|Shirts|T-Shirts"}
+
+What is cut or missing. The record's own projection keeps 7 of the member's 36 keys (brand, condition, seller, shippingOptions, categoryIdPath… not printed). The second member differs on Size = M only. No InventoryItemGroup (seller-side) was ever captured: the 20-SKU variesBy example in the record is a vendor doc sample with eBay's own * masks, and every seller write was refused 403 for want of a user token.
+
+itemId
+identifier of the buy-side listing; middle segment is the group id, last the variation
+primaryItemGroup.itemGroupId
+the family link, eBay-minted; addressable via itemGroupHref
+primaryItemGroup.itemGroupType
+SELLER_DEFINED_VARIATIONS, the only live value of the enum in the record
+localizedAspects[]
+axis and non-axis attributes flattened together, all STRING; Color and Size vary, the other five are shared — the buy side does not mark which is which
+price
+per member
+categoryId / categoryPath
+the leaf category that gates the aspects, with its human path
+SKU
+absent on the buy side
+
+ 70
+#### Google Merchant Center
+Processed Product id~ID~cp0905-u3-flavor-mango
+
+Route. Live response from the staging account's research data source: GET …/products/v1/accounts/5310255286/products/id~ID~cp0905-u3-flavor-mango, 2026-09-05, read 38 min after insert; 1,219 B, printed whole. (#11013 §2 [F-37])
+
+{
+ "name": "accounts/5310255286/products/id~ID~cp0905-u3-flavor-mango",
+ "offerId": "cp0905-u3-flavor-mango",
+ "contentLanguage": "id",
+ "feedLabel": "ID",
+ "dataSource": "accounts/5310255286/dataSources/10721231878",
+ "productStatus": {
+ "creationDate": "2026-09-05T08:37:28.471968Z",
+ "lastUpdateDate": "2026-09-05T08:37:28.471968Z",
+ "googleExpirationDate": "2026-10-05T08:37:28.471968Z"
+ },
+ "productAttributes": {
+ "title": "cp0905 u3 flavor - mango",
+ "description": "Catalogue research probe for issue 11013 (cp0905). Not for sale.",
+ "link": "https://staging.bormadago.com/p/cp0905-u3-flavor-mango",
+ "imageLink": "https://staging.bormadago.com/i/cp0905-u3-flavor-mango.jpg",
+ "availability": "IN_STOCK",
+ "condition": "NEW",
+ "itemGroupId": "cp0905-grp-flavor",
+ "price": { "amountMicros": "10000000", "currencyCode": "IDR" },
+ "excludedDestinations": [ "SHOPPING_ADS", "FREE_LISTINGS" ],
+ "itemGroupTitle": "cp0905 u3 flavor group",
+ "variantOptions": [ { "name": "flavor", "value": "mango" } ]
+ },
+ "base64EncodedName": "accounts/5310255286/products/aWR-SUR-Y3AwOTA1LXUzLWZsYXZvci1tYW5nbw"
+}
+
+What is cut or missing. Nothing. This probe was single-purpose, so productTypes, googleProductCategory and gtins are not on it; they appear on other probes in the record (productTypes ten values on cp0905-rev-g2b-a-p11; googleProductCategory "371" on the c1 probe).
+
+offerId
+the merchant SKU; one feed row = one product; identity is contentLanguage ~ feedLabel ~ offerId
+productAttributes
+the one global attribute bag (145 properties); there is no per-category schema
+itemGroupId
+the family link — a plain string shared by siblings, and the only thing that makes this a variant rather than a standalone
+variantOptions[]
+the axis, free-form name (flavor was accepted and persisted); 0..30 per product
+itemGroupTitle
+the group's title, carried on every member — there is no parent row to hold it
+price
+micros as a string
+productStatus
+Google's processing metadata; itemLevelIssues never appeared on any product of the pass
+
+ 65
+#### Walmart Marketplace
+MP_ITEM feed with a two-member variant group
+
+Route. Vendor sample from the developer-portal guide "setting up multiple variants of an item" [R-13]; every unauthenticated read of /v3/items returned 401. (#11046 §2c)
+
+{ "MPItemFeedHeader": { "businessUnit": "WALMART_US", "locale": "en", "version": "2.0.20230221-12_22_32-api" },
+ "MPItem": [
+ { "Orderable": { "productId": "123456", "sku": "ABC123" },
+ "Visible": { "Toothpastes": { "productName": "Colgate Crest Toothpaste", "flavor": "Peppermint",
+ "variantGroupId": "001960968586AX6", "isPrimaryVariant": "Yes",
+ "variantAttributeNames": [ "flavor" ] } } },
+ { "Orderable": { "productId": "123456", "sku": "ABC1245" },
+ "Visible": { "Toothpastes": { "productName": "Colgate Crest Toothpaste", "flavor": "Spearmint",
+ "variantGroupId": "001960968586AX6", "isPrimaryVariant": "No",
+ "variantAttributeNames": [ "flavor" ] } } } ] }
+
+What is cut or missing. Nothing — this is the whole block. It is partial on the offer side: no price and no productIdentifiers, both of which the current spec requires; and its version stamp matches no published spec build (the record flags both).
+
+MPItem[]
+one complete member per row; the schema is required ["Visible","Orderable"] with additionalProperties: false — there is no group node in the envelope
+Orderable.sku
+the seller SKU; price and inventory live only here, on the member
+Visible.Toothpastes
+the single key naming the product type; there is no category field in the feed
+variantGroupId
+the family link — a string repeated identically on every member, no group object
+variantAttributeNames
+the axis list, from the type's closed enum, identical across members
+flavor
+the axis value, inline on the member, unique within the group
+isPrimaryVariant
+Yes on exactly one member — a member, not a container
+
+ 60
+#### Shopee
+batch_add_item item with tier variations and models; attribute_list from a second sample
+
+Route. Vendor doc samples only — the only request sample of v2.product.batch_add_item (api 3279) [R-15], and Guide 211 Example 6 for attribute_list [R-36]. No live call was possible (H1). (#11047 §2c)
+
+"item_list": [ { "category_id": 100017, "item_name": "Example Item 1", …
+ "tier_variation": [ { "name": "Color", "option_list": [ { "option": "Red" }, { "option": "Blue" } ] } ],
+ "model_list": [ { "model_sku": "SKU-001-RED", "original_price": 12.34,
+ "seller_stock": [ { "location_id": "SGZ", "stock": 100 } ],
+ "tier_index": [ 0 ] }, … ] }, … ]
+
+"attribute_list": [ { "attribute_id": 100061,
+ "attribute_value_list": [ { "value_id": 0, "original_value_name": "customized name" },
+ { "value_id": 678 } ] } ]
+
+What is cut or missing. The … are the record's own elisions of a longer sample. gtin_code and price_info appear in no sample anywhere in the corpus. The tier_variation form shown is the deprecated one; the current form is standardise_tier_variation[] with variation_id / variation_option_id.
+
+category_id
+the one leaf category, required 1..1; it alone decides attributes and the axis catalogue
+attribute_list[]
+category-scoped attributes; value_id is a shared catalogue row, value_id: 0 the custom sentinel that makes original_value_name required
+tier_variation[]
+the axis and its options — free text here; 2 axes maximum
+model_list[]
+the variants and the sellable unit; the item itself is the family, there is no separate family row
+tier_index
+axis binding: option indices, one per axis
+model_sku / original_price / seller_stock
+SKU, price and stock, reachable only through the model once the item has models
+
+ 60
+#### Magento / Adobe Commerce
+Configurable container MS-Champ (id 2078) and simple child MS-Champ-S (2079)
+
+Route. Vendor-published emitted REST responses in Adobe's configurable-product tutorial [R-70]–[R-72] (payload dated 2017-11-29); no live instance was stood up. (#11082 Companion C §2c rows 10–19)
+
+// container — catalog_product_entity
+{"id": 2078, "sku": "MS-Champ", "name": "Champ Tee", "attribute_set_id": 9, "price": 0, "visibility": 4, "type_id": "configurable", "created_at": "2017-11-29 19:57:20", …}
+// category_links on 2078 — catalog_category_product
+[{"position": 0, "category_id": "11"}, {"position": 1, "category_id": "12"}, {"position": 2, "category_id": "16"}]
+// custom_attributes on the container — catalog_product_entity_int
+{"attribute_code": "color", "value": "52"}, {"size", "91"}, {"material", "148"}, {"pattern", "196"}
+// the axis — POST /V1/configurable-products/:sku/options
+{"id": 338, "attribute_id": "141", "label": "Size", "position": 0, "values": [{"value_index": 168}, {"value_index": 169}, {"value_index": 170}], "product_id": 2078}
+// the family link — catalog_product_super_link
+"configurable_product_links": [2079, 2080, 2081]
+// stock on the container
+{"item_id": 2078, "product_id": 2078, "stock_id": 1, "qty": 0, "is_in_stock": false, "max_sale_qty": 10000, …}
+
+// child — same table
+{"id": 2079, "sku": "MS-Champ-S", "attribute_set_id": 9, "price": 25, "visibility": 1, "type_id": "simple", …}
+// child stock
+{"qty": 10, "is_in_stock": true}
+
+What is cut or missing. The record prints only one-line fragments with its own …; no whole body and no custom_attributes on the child. Rows 15 and 17 are REST payloads mapped onto catalog_product_super_attribute / super_link; no raw DB row is printed.
+
+type_id
+the family role in the same table: configurable = container, simple = variant
+sku
+identifier on both rows, varchar(64) NOT NULL
+attribute_set_id
+the EAV attribute set (9 = Top), 1..1, identical on parent and child
+configurable_product_options[].attribute_id + values[].value_index
+the axis: one super-attribute row per axis, values are shared option ids
+configurable_product_links[]
+the family link, materialised as super-link rows with FKs both ways into the product table
+price / visibility
+container emits price 0 and visibility 4 (Catalog, Search); child price 25 and visibility 1 (Not Visible Individually)
+category_links[]
+browse placement, M:N, on the container
+
+ 55
+#### WooCommerce
+Variable product 11 Hoodie and variation 27
+
+Route. Live REST v3 responses from a WooCommerce 11.0.1 install: GET /wc/v3/products/11 (6,626 B) and /products/11/variations/27 (2,385 B) [R-72]. (#11080 §2c; full bodies in the record's cited retrieval)
+
+// parent — GET /wp-json/wc/v3/products/11
+"id":11
+"name":"Hoodie"
+"type":"variable"
+"sku":"woo-hoodie"
+"global_unique_id":"01234567890128"
+"price":"42"
+"regular_price":""
+"manage_stock":true
+"stock_quantity":7
+"parent_id":0
+"categories":[{"id":23,"name":"Hoodies","slug":"hoodies"}]
+"attributes":[{"id":1,"name":"color","slug":"pa_color","position":0,"visible":true,"variation":true,"options":["Blue","Green","Red"]},
+ {"id":0,"name":"Logo","slug":"Logo","position":1,"visible":true,"variation":true,"options":["Yes","No"]}]
+"default_attributes":[]
+"variations":[34,27,28,29]
+
+// variation — GET /wp-json/wc/v3/products/11/variations/27
+"id":27
+"type":"variation"
+"parent_id":11
+"name":"Red, No"
+"permalink":"http:\/\/localhost:8089\/product\/hoodie\/?attribute_pa_color=red&attribute_logo=No"
+"sku":"woo-hoodie-red"
+"global_unique_id":""
+"price":"42"
+"regular_price":"45"
+"sale_price":"42"
+"manage_stock":"parent"
+"stock_quantity":7
+"attributes":[{"id":1,"name":"color","slug":"pa_color","option":"Red"},{"id":0,"name":"Logo","slug":"logo","option":"No"}]
+
+What is cut or missing. Dates, descriptions, images, downloads, tax/shipping/weight/dimensions, ratings, upsell/cross-sell/related ids, brands/tags, meta_data, price_html, _links. Keys are shown as the file writes them (\/ escaping).
+
+type: "variable"
+the type, a product_type taxonomy term on the wp_posts row, not a column
+variations[] / parent_id
+the family link both ways, stored once as wp_posts.post_parent on the child
+attributes[].variation: true
+the axis flag, per (product, attribute); on the variation, attributes[].option is the copied axis value
+attributes[].id
+1 = the global pa_color definition; 0 = product-local (Logo)
+sku
+independently valued on parent and child
+price
+parent "42" is derived — sync_price() deletes the parent's own price and rewrites it from the children, so the parent's regular_price is empty
+manage_stock: "parent"
+stock inherited by an explicit sentinel
+categories
+N:M product_cat terms, on the container only
+
+ 50
+#### Salesforce B2C
+Master product apple-ipod-shuffle with its variation attributes and variants
+
+Route. Vendor doc example inside the Shopper Products OpenAPI spec 1.12.0 (GetProductResponseExample); the record has no retrieved instance. (#11050 §2c [R-19])
+
+id: apple-ipod-shuffle
+type: {master: true}
+master: {masterId: apple-ipod-shuffle, orderable: false, price: 45.99}
+price: 45.99 priceMax: 69 primaryCategoryId: electronics-digital-media-players
+variants: # 9 in total
+ - {orderable: true, price: 45.99, productId: apple-ipod-shuffle-silver-1g,
+ variationValues: {color: Silver, memorySize: 1 GB}}
+variationAttributes:
+ - id: color name: Color values: [Silver, Blue, Green, Red, Fuscia]
+ - id: memorySize name: Memory Size values: [{name: 1 GB, orderable: true, value: 1 GB},
+ {name: 2 GB, orderable: true, value: 2 GB}]
+
+What is cut or missing. 8 of the 9 variants, by the record; color values printed as bare labels while memorySize keeps {name, orderable, value}. Classification category and assignments are not on this example — they appear on a different product in the admin-projection example [R-17].
+
+id / master.masterId
+identifier of the family container; the same schema calls it "The ID (SKU) of the master product" and says the master "Doesn't have a SKU" — the record's contradiction C3
+type: {master: true}
+the role, a boolean-flag set rather than an enum
+variants[].productId
+the orderable row's identifier; variants[] is the family link master → child
+variants[].variationValues
+the child's axis selection, a flat {attributeId: value} map
+variationAttributes[]
+the axis definitions on the master with their allowed labels; 1 GB is one opaque string
+price / priceMax
+derived min and max on the non-buyable master; variants[].price is the child's own
+primaryCategoryId
+the browse primary; the classification category is a different edge, absent here
+
+ 45
+#### Tokopedia / TikTok Shop
+Era B: one SKU element of Create Product v202309, with the response; Era A: live PDP family 1372485
+
+Route. Era B: the vendor's own published request_body in the schema file for create-product-202309 [R-1] — no live call (H1). Era A: live capture of the production product page, 2026-09-01 [R-27]. (#11048 §2c)
+
+// Era B — TikTok Shop, one skus[] element of the Create Product request
+{"sales_attributes":[{"id":"100089","value_id":"1729592969712207000","value_name":"Red",
+ "sku_img":{"uri":"tos-maliva-i-o3syd03w52-us/c668cdf70b7f483c94dbe"},"name":"Color",
+ "supplementary_sku_images":[{"uri":"..."}]}],
+ "inventory":[{"warehouse_id":"7068517275539719942","quantity":999,"backorder_quantity":888,"handling_time":5}],
+ "seller_sku":"Color-Red-XM001",
+ "price":{"amount":"1.21","currency":"USD\n","sale_price":"1.21","starting_bid_price":"2.22"},
+ "identifier_code":{"code":"10000000000000","type":"GTIN"},
+ "sku_dimensions":{"length":"10","width":"10","height":"10","unit":"CENTIMETER"},
+ "sku_weight":{"value":"1,32","unit":"KILOGRAM"}}
+// Era B — the response, showing the product ↔ SKU container
+{"code":0,"data":{"product_id":"1729592969712207008","skus":[{"id":"1729592969712207012",
+ "seller_sku":"Color-Red-XM001","sales_attributes":[{"id":"100000","value_id":"1729592969712207123"}],
+ "external_sku_id":"1729592969712207234"}]},"message":"Success"}
+
+// Era A — legacy Tokopedia, live PDP of product 1372485 (three fragments of one page)
+{"errorCode":0,"parentID":"1372485","defaultChild":"1747343136","sizeChart":"","totalStockFmt":""}
+"components.4.data.0.variants.0":{"productVariantID":"31912482","variantID":"29",
+ "name":"ukuran","identifier":"size","option":[
+ {"productVariantOptionID":"108654324","variantUnitValueID":"455","value":"S","hex":"","stock":"0"},
+ {"productVariantOptionID":"108654325","variantUnitValueID":"456","value":"M","hex":"","stock":"0"},
+ {"productVariantOptionID":"108654326","variantUnitValueID":"457","value":"L","hex":"","stock":"0"},
+ {"productVariantOptionID":"108654327","variantUnitValueID":"458","value":"XL","hex":"","stock":"0"}]}
+"children.0":{"productID":"1747343136","price":51000,"priceFmt":"Rp51.000",
+ "optionID":{"type":"json","json":[108654324]},"optionName":{"type":"json","json":["S"]},
+ "productURL":"https://www.tokopedia.com/tanakoshop/kaos-oblong-gtman-warna-putih-round-neck-s"}
+
+What is cut or missing. Era B: this is one skus[] element, not a whole product body; no printed instance carries category_id or product_attributes. "USD\n" and "1,32" are the vendor's own defects. Era A: three keyed fragments of one page, not joined; no Create Product body exists in the record.
+
+B · sales_attributes[].id / value_id
+the axis and its value, by built-in catalogue id; name / value_name are the free-text escape
+B · price / identifier_code / inventory
+price, GTIN and stock — all SKU-level only; the product carries none
+B · data.product_id + data.skus[]
+the family container: one product, N SKUs, in two id spaces
+A · parentID = productID 1372485
+the container is itself a product row, same id space as its children
+A · children[].productID / price
+children are full product rows with their own URL and price; the parent's price is derived (lowest child)
+A · variantID 29 / variantUnitValueID 455
+the global catalogue axis (Ukuran) and value (S); productVariantOptionID is a second, per-product id space
+
+ 40
+#### Square
+CatalogObject ITEM cp0905-rev-item-6opt with one embedded ITEM_VARIATION
+
+Route. Live sandbox response: GET /v2/catalog/object/ERAHZP2RC3N4LFT3RAWMAWXI?include_related_objects=true, square-version: 2026-08-19, 1,745 B, printed whole. (#11049 Companion C §C1 [R-60])
+
+{"object":{"type":"ITEM","id":"ERAHZP2RC3N4LFT3RAWMAWXI","version":1788600970113,"is_deleted":false,
+ "present_at_all_locations":true,
+ "item_data":{"name":"cp0905-rev-item-6opt","is_taxable":true,
+ "variations":[{"type":"ITEM_VARIATION","id":"VJOESNEEUC32G3MHLKWJGMM3","version":1788600970113,"is_deleted":false,
+ "present_at_all_locations":true,
+ "item_variation_data":{"item_id":"ERAHZP2RC3N4LFT3RAWMAWXI",
+ "name":"cp0905-rev-A-val1, cp0905-rev-B-val1, cp0905-rev-C-val1, cp0905-rev-D-val1, cp0905-rev-E-val1, cp0905-rev-F-val1",
+ "ordinal":0,"pricing_type":"FIXED_PRICING","price_money":{"amount":100,"currency":"USD"},
+ "item_option_values":[{"item_option_id":"QSYVES3CG6DREP7ENYG2G63D","item_option_value_id":"FXZYYVVKDCG4JZ3YAM6I22XJ"},
+ {"item_option_id":"LTZVJZCKKX35U2PZY4URHRDW","item_option_value_id":"NAIZGAXTOT3TMTN37LSOQ5ZW"},
+ {"item_option_id":"7M226N2KXCJ43VNAVSDJH2RY","item_option_value_id":"HB5J2GS3ZPMZ7OTBKNGKXBB7"},
+ {"item_option_id":"ZDQC5J33ON3GVTAB24Y2RJPL","item_option_value_id":"VTREJAXHMSMSNMMRZNAX77EY"},
+ {"item_option_id":"4KK363TPOQJ2CHT5Q54PCZY3","item_option_value_id":"WGPVP34VIVJPWG2QOGFYWWY5"},
+ {"item_option_id":"CPQLBHBYYHUN7VJYRJIDXMC3","item_option_value_id":"ZDPXTHMA32GXUM7RTIDOGJB2"}],
+ "sellable":true,"stockable":true}}],
+ "product_type":"REGULAR",
+ "item_options":[{"item_option_id":"QSYVES3CG6DREP7ENYG2G63D"},{"item_option_id":"LTZVJZCKKX35U2PZY4URHRDW"},
+ {"item_option_id":"7M226N2KXCJ43VNAVSDJH2RY"},{"item_option_id":"ZDQC5J33ON3GVTAB24Y2RJPL"},
+ {"item_option_id":"4KK363TPOQJ2CHT5Q54PCZY3"},{"item_option_id":"CPQLBHBYYHUN7VJYRJIDXMC3"}],
+ "is_archived":false}}}
+
+What is cut or missing. Nothing. This item has no sku and no categories / reporting_category; the record's category evidence is a different live item [R-88] and its sku / upc evidence a different variation read-back [R-93], not merged here.
+
+type / id / version
+the CatalogObject wrapper: discriminator, server id, optimistic-lock token; repeated on the nested variation, which is a first-class object
+item_data
+the container: name, product_type: REGULAR, is_taxable
+item_data.item_options[]
+the axes, by reference to standalone ITEM_OPTION rows; six is the observed hard cap
+item_data.variations[]
+the variants, embedded in the read, each ITEM_VARIATION
+item_variation_data.item_id
+the family link back to the parent item
+item_variation_data.item_option_values[]
+the axis coordinates as {item_option_id, item_option_value_id} pointing at shared rows, never copied strings
+price_money / sellable / stockable
+per-variant price in minor units, and the sale and inventory flags
+
+ 35
+#### commercetools
+Product example, a ProductDraft variant with attributes, a Category example, and an AttributeDefinition
+
+Route. Vendor artifacts only — the API-reference example files (product.example.json, category.example.json, product-type.example.json) [R-1] and a training-collection ProductDraft payload [R-5]; no live response (H1). (#11081 Companion C §2c; Companion A §3)
+
+// Product — product.example.json, as the record summarises it
+id `e7ba4c75-…`, 1970 timestamps, 1 category,
+masterVariant `{"attributes":[],"id":1,"images":[…],"prices":[…],"sku":"sku_MB_PREMIUM_TECH_T_…"}`,
+`"variants": []`
+
+// a ProductDraft variant carrying attributes — training collection
+{"sku": "ONB-V-Carton", "key": "ONB-V-Carton",
+ "attributes": [{"name": "bar-flavor", "value": "vanilla"}, {"name": "bar-size", "value": "carton"}]}
+
+// Category — category.example.json
+{"id":"c2f93298-…","version":1,"name":{"en":"Hats"},"slug":{"en":"hats"},
+ "parent":{"typeId":"category","id":"123456"},"ancestors":[],"orderHint":"0.1", …}
+
+// one AttributeDefinition — product-type.example.json
+{"type":{"name":"text"},"isSearchable":false,"inputHint":"SingleLine","name":"size",
+ "label":{"en":"The right size is important."},"isRequired":false,
+ "attributeConstraint":"None","level":"Product"}
+
+What is cut or missing. The record prints §2c as a summary table with its own elisions ([…], id and SKU tails); the only Product example has "variants": [], so no single instance shows a populated family. Ids and 1970 timestamps are vendor placeholders.
+
+productType
+the type link, 1..1, required and immutable; it owns the whole attribute set
+masterData.current (ProductData)
+the family container: categories, name, slug, product-level attributes
+masterVariant / variants[]
+the members (Classic model): 1..1 plus 0..100; id is the sequential within-product identifier, master = 1
+sku / prices[]
+variant-scoped; SKU unique project-wide
+attributes[] {name, value}
+attribute values named by their definition; no axis field exists anywhere
+attributeConstraint
+the nearest thing to an axis — a write-time uniqueness validator on the definition, not stored axis metadata
+
+ 30
+#### Akeneo PIM
+FamilyVariant clothing_color_size, ProductModel jack, and a variant Product with parent jack_brown
+
+Route. Vendor doc samples from api.akeneo.com (concepts/catalog-structure.html [R-74] and concepts/products.html [R-75]); the family variant is confirmed by the shipped fixture CSV row [R-56]. (#11069 §2c)
+
+// FamilyVariant — the structure: levels, axes, attribute distribution
+{"code":"clothing_color_size","labels":{"de_DE":"Kleidung nach Farbe und Größe","en_US":"Clothing by color and size","fr_FR":"Vêtements par couleur et taille"},
+ "variant_attribute_sets":[
+ {"level":1,"axes":["color"],"attributes":["variation_name","variation_image","composition","color","material"]},
+ {"level":2,"axes":["size"], "attributes":["sku","weight","size","ean"]}]}
+
+// ProductModel — the root model
+{"code":"jack","family":"clothing","family_variant":"clothing_color_size","parent":null,"categories":[],
+ "values":{"name":[{"locale":null,"scope":null,"data":"jack"}],"erp_name":[…], …}}
+
+// Product — the leaf, hanging off sub-model jack_brown
+{"uuid":"fc24e6c3-933c-4a93-8a81-e5c703d134d5","family":"clothing","parent":"jack_brown","categories":["tshirts"],"enabled":true,
+ "values":{"sku":[{"locale":null,"scope":null,"data":"1111111195"}],
+ "ean":[{"…","data":"1234567890207"}],
+ "size":[{"…","data":"s"}],
+ "weight":[{"…","data":{"amount":"800.0000","unit":"GRAM","symbol":"g"}}],
+ "color":[…]}}
+
+What is cut or missing. The record's own elisions inside values ([…], and "…" standing for the repeated locale/scope pair). VariantAttributeSet has no standalone instance and no endpoint would produce one; it appears only embedded.
+
+family
+the attribute template, on the root model and the product; 0..1 on a product
+family_variant
+the link to the variant structure, required on a root model
+variant_attribute_sets[].level / axes / attributes
+the tier (1 or 2), the attribute codes that differentiate siblings at that tier, and the values carried there (a superset of the axes)
+code
+the model's identifier; models have no SKU and no uuid
+parent
+the link up: model → model (null at root), product → the model it varies
+uuid / values.sku
+the leaf-only primary key and the identifier attribute, forced into the last level
+weight.data {amount, unit}
+a metric value — typed quantity with unit, drawn from a shared unit registry
+
+## The fourteen open decisions
+
+Same format, one level down. Each bucket names its platforms so the sort can be checked; "Us" is the current state, "Options" the shapes at least one platform ships. Nothing is recommended.
+
+### P3 · The axis
+D4 → D5 → D6, D7 — sequential
+
+D4
+### Does the type gate which attributes may be axes, separately from declaring them?
+gate: Amazon live theme enum
+
+Answer | Who | Caveats | 
+
+A separate gate4 | eBay80
+Walmart65
+Shopee60
+Akeneo30 | eBay: a per-aspect boolean (live: 73,833 true / 123,213 false of 197,046) plus a per-category flag (9,705 / 5,406 of 15,111 leaves). Walmart: the per-type axis enum diverges from the declared attributes — 16 types permit flavor as an axis without declaring it, 36 declare it and cannot vary by it; the vendor's workbook and schema disagree on 2,154 of 6,450 types. Shopee: a separate variation tree per leaf. Akeneo: five attribute types ∩ the family's attributes, plus flag gates; the vendor's UI string names four types where the code holds five. | 
+
+Partly or mixed4 | Amazon100
+Shopify85
+Magento60
+Salesforce B2C50 | Amazon: 114 of 1,492 types declare Flavor with no flavour theme; 13 of 55 legacy categories gate at category level; the live model is gated. Magento: the code predicate ignores set and category; Admin prose says the set; the REST route is open. Salesforce: carrier gated, definitions open. Shopify: none unlinked; category constraints on the linked path, observed. | 
+
+No gate3 | Google70
+WooCommerce55
+Square40 | Google: any name token persists live. | 
+
+Category gates, by attribute type1 | Tokopedia45 | Era B: SALES_PROPERTY vs PRODUCT_PROPERTY inside one category-scoped list; Era A a separate catalogue. | 
+
+N/A1 | commercetools35 | No axis construct to gate. | 
+
+Us
+No axis concept. D1 + D3 already make the type govern axes; this asks whether a second eligibility mark exists on top.
+
+Options
+(a) none — any attribute of the type may be an axis · (b) a per-attribute eligibility flag on the type's membership row · (c) gate by input type only, select / metric / boolean · (d) a per-type closed axis list distinct from the attribute list
+
+D5
+### Does the family choose its axes, or does the type impose them?
+after D4
+
+Answer | Who | Caveats | 
+
+The family chooses, from the gated set where one exists11 | Amazon100 · Shopify85 · eBay80 · Google70 · Walmart65 · Shopee60 · Magento60 · WooCommerce55 · Salesforce50 · Tokopedia45 · Square40 | Amazon: one theme per family from the type's legal set, immutable after creation — a single, login-side route. WooCommerce demonstrates it live: the same global attribute is an axis on one product and not on another. | 
+
+The structure imposes1 | Akeneo30 | Axes are declared on FamilyVariant, x-immutable. The record marks the classification a judgement: a family variant is itself a merchant-authored per-family row, so on a narrower reading the family chooses once and freezes it. | 
+
+N/A1 | commercetools35 | Nothing declares an axis; the uniqueness constraint sits on the type's definition. | 
+
+Us
+Nothing. The only "type imposes" system in the original four was Saleor, now dropped.
+
+Options
+(a) the family picks from the type's eligible set · (b) the type declares fixed axis templates a family adopts (Akeneo) · (c) the type declares named themes and the family picks one (Amazon). Either way: immutable after creation? Amazon and Akeneo say yes.
+
+D6
+### How many axes may a family carry?
+gate: TikTok live cap
+
+Answer | Who | Caveats | 
+
+A hard small cap, 2–34 | Shopify85 3
+Walmart65 3
+Shopee60 2
+Tokopedia45 3 or 2 | Tokopedia: 3 in the API doc, 2 in the Care article ("maksimal 2 kategori varian"), re-read 2026-09-05, the conflict stands. Shopify: 3 per product, shop-scoped, observed enforced (OPTIONS_OVER_LIMIT); 2,048 variants also observed; no Plus shop read. Walmart: 3 in prose, none in 1.33 GB of schema. | 
+
+A mid cap, 5–63 | eBay80 5
+Square40 6
+Akeneo30 5 × 2 levels | eBay: 5 on Trading, min 2 in the XSD, REST publishes none. Akeneo: CE constants; two Serenity help pages disagree on the same day (20 total / 10 per level vs 10 total). Square: the 7th option returns 400, live; 250 variations per item, 250 values per option. | 
+
+A large cap1 | Google70 30 | 30 variant_option entries per product; 31 submitted → 30 persist, the first-submitted dropped; 250 chars per name and value; the published 5,000-char total is not reproduced (15,000 persisted). | 
+
+None5 | Amazon100 · Magento60 · WooCommerce55 · Salesforce50 · commercetools35 | Amazon: unpublished; 9 observed across 825 themes. WooCommerce caps rows per generation run (50 admin / 99 REST), not axes. commercetools caps variants (100 Classic / 10,000 Modular), not axes. | 
+
+Us
+None. We need three kinds: size, flavour, pack form. With D3 a cap is a validator, not a schema shape.
+
+Options
+(a) no cap · (b) 2–3, the marketplace norm · (c) 5–6
+
+D7
+### Must every member fill every axis, and must the combination be unique?
+gates: Merchant Center H3 · eBay user token
+
+Answer | Who | Caveats | 
+
+Both, enforced at write4 | eBay80
+Shopee60
+Magento60
+Akeneo30 | eBay: Trading errors 21916567 / 21916568. Magento: a save-path plugin that ignores is_required. Akeneo: validators; the comparison stringifies; an axis value is immutable once set. Shopee: tier_index length must equal the axis count; models are minted per combination. | 
+
+Both, by construction1 | Square40 | The grid is generated for every combination. | 
+
+Both stated, enforcement unobserved2 | Google70
+Walmart65 | Google: no itemLevelIssues produced for any of 173 products; a duplicate combination was not probed. Walmart: duplicates are unpublished after the fact. | 
+
+Fill stated only2 | Amazon100
+Tokopedia45 | Amazon: a theme makes its attributes mandatory on children; only unique SKU and GTIN per child are stated, no combination rule in the evidence. Tokopedia: same set per SKU; uniqueness stated only within a SKU; at least one axis must be kept on edit; untested at write. | 
+
+Per attribute, not per family1 | commercetools35 | isRequired plus Unique / CombinationUnique; not re-checked when an attribute is removed. | 
+
+Read-time drop1 | Salesforce B2C50 | "only considers variants which are complete". | 
+
+Neither1 | WooCommerce55 | An empty axis value means "any"; "option":"Mint" returned 201 and created no term. | 
+
+No combination row1 | Shopify85 | Option-level DUPLICATED_OPTION_VALUE / OPTION_VALUES_MISSING codes exist; nothing on variant combinations in the consolidated evidence. | 
+
+Us
+Nothing.
+
+Options
+(a) both at write — a DB unique on (parent, axis values) plus not-null per axis · (b) fill required, uniqueness by construction — generate the grid · (c) permissive, empty means "any". Where the check lives is D18's question; no platform in the set enforces it in the database.
+
+### P4 · The value
+D8, D9 — nothing closed; the only part with measurable pain today
+
+D8
+### Is a value a shared row, or a string copied per product?
+gate: Amazon shared-vocabulary half
+
+Answer | Who | Caveats | 
+
+A shared row2 | Magento60
+Square40 | Square: CatalogItemOptionValue is a full object referenced by id. Magento: an option_id integer stored in the value column, labels per store view — and no foreign key on value. Neither is a marketplace. | 
+
+Copied4 | Amazon100
+eBay80
+Google70
+Walmart65 | Amazon: "must be replicated", a single route. eBay: {name: [strings]} per SKU, 0 ids over 867 MB. Every marketplace copies. | 
+
+Hybrid6 | Shopify85
+Shopee60
+WooCommerce55
+Salesforce B2C50
+Tokopedia45
+Akeneo30 | Shopify: an unlinked value is a string on the product; a linked value is a Metaobject gid two products share, live. Shopee: value_id or 0 plus text; the vendor's happy path is all-zero sentinels. Tokopedia: built-in ids vs custom text. Salesforce: a shared boolean picks. WooCommerce: a global attribute's value is a shared term row, a local one a string, and the variation's axis value is always a copied slug. Akeneo: a shared option row, with the code copied into the product and integrity by validator, not FK. | 
+
+Not established1 | commercetools35 | Withdrew its own "copied, no FK" reading as uncited. | 
+
+Us
+Copied value_text with no trim, case-fold or validator. Case drift is 0.70% (5,580 → 5,541 after fold); junk is 24.6–32.1% of manufacturer rows, '0' alone on 11,071.
+
+Options
+(a) a shared value row by FK — needs an option / enum attribute type we do not have · (b) a copied string with normalisation and a validator · (c) hybrid by attribute type — select-typed → shared row, free text → string. Ordering, rename and normalisation come free only with (a) or (c).
+
+D9
+### Is a value a bare label, or a label plus a typed quantity and a unit?
+after D8
+
+Answer | Who | Caveats | 
+
+A typed quantity + unit on the value3 | Walmart65
+Shopee60
+Akeneo30 | Walmart: {unit, measure} objects on values like netContent; the axis-eligible size stays a free string. Shopee: value_unit when the attribute's format_type = 2, unit from the attribute's own list; variation options are bare. Akeneo: pim_catalog_metric is {amount, unit} from a shared unit registry — and it is axis-eligible. | 
+
+Typed, no physical unit2 | eBay80
+commercetools35 | commercetools: 13 attribute types; money carries a currency, not a unit. eBay: the data type lives on the constraint (NUMBER 482 / DATE 15 of 197,046 aspects); every value is a string. | 
+
+Bare, with the unit elsewhere4 | Shopify85
+Salesforce B2C50
+Tokopedia45
+Square40 | Shopify: weight and unit-price on the variant; a measurement attribute type exists in the taxonomy, 0 instances met across 383 nodes. Square: unit on the variation. Salesforce: "1 GB" is one opaque string; unit on the definition and the product. Tokopedia: sku_unit_count, EU-only. | 
+
+Bare, nothing2 | Magento60
+WooCommerce55 | Magento: 0 unit fields across 67 schema files, control 12. WooCommerce: six bare fields; numeric sort is an ORDER BY name+0 hack. | 
+
+Five shapes at once1 | Amazon100 | {value, unit}, unit_count {value, type}, a bare integer and free-text size ≤ 50 characters in one schema. | 
+
+No row1 | Google70 | No D9 row in the consolidated evidence. | 
+
+Us
+Units in attribute names (Tinggi (cm)); "600 ml" is title text; no unit-pricing data path. Net content is non-scalar per GS1 and BPOM.
+
+Options
+(a) bare label plus separate typed quantity attributes on the sellable row · (b) a metric attribute type {amount, unit} with a unit registry · (c) unit fixed on the definition, a number on the value. Sub-question: may a metric be an axis? Akeneo yes; Walmart's size axis is a string.
+
+### P2 · The family row
+D10 → D11; D12 — all follow D13
+
+D10
+### What does a parent row carry, and what must it never carry?
+gates: Amazon parent schema · eBay user token
+
+Answer | Who | Caveats | 
+
+Never price, SKU, stock or identifier4 | eBay80
+Tokopedia45 (Era B)
+Square40
+commercetools35 | eBay's group: title, subtitle, description, images, videos, shared aspects, variantSKUs, variesBy, key. Square: 27 properties, "doesn't have a price or SKU"; an inventory change on an ITEM id returns 400. commercetools: no price or SKU among its properties; at least one variant required. | 
+
+A derived price on the parent3 | Magento60
+WooCommerce55
+Salesforce B2C50 | Salesforce: a price range, no SKU. Magento: price 0 derived, no quantity, but it is the row in the cart. WooCommerce: the parent's price is deleted and re-derived from the children; add-to-cart on the parent returns 400. | 
+
+Priced by level; no identifier, no stock concept1 | Akeneo30 | code is the model's only identity; no enabled, no uuid. It is priced whenever the family variant puts the price attribute at its level — 58 of 81 fixture models. No stock, sellable or barcode concept exists anywhere in the corpus. | 
+
+Identifier on both levels1 | Shopee60 | gtin_code on item and model; price_info suppressed once has_model. | 
+
+Three published parent attributes1 | Amazon100 | parentage_level, child_parent_sku_relationship, variation_theme. Whether the parent carries a GTIN is a contradiction between two Amazon artifacts; "omits the axis value" is unsupported either way. | 
+
+No container3 | Shopify85 · Google70 · Walmart65 | Google and Walmart: a shared string. Shopify: the Product is the container. | 
+
+Us
+D13 fixes the shape; upc unique and non-null blocks it.
+
+Options
+(a) shared descriptive facts plus the axis declaration; never price, stock or barcode · (b) as (a) plus a derived price range for display · (c) the parent may also carry a barcode — collides with upc unique
+
+D11
+### Does a child inherit from its parent, or is every fact replicated?
+after D10
+
+Answer | Who | Caveats | 
+
+Nothing inherited — each row owns its facts6 | Amazon100
+eBay80
+Walmart65
+Magento60
+Tokopedia45 (Era B)
+Square40 | Amazon: "must be replicated", inherit 0 hits. eBay: six shared names, independently valued. Walmart: "repetition, not reference". Square: separate settings with a one-way constraint. Magento: one EAV row per entity, no use_parent; the only cross-row rule runs the other way (a manual Out-of-Stock on the parent). | 
+
+Partitioned by level — each fact stored once2 | commercetools35
+Akeneo30 | Akeneo: the family variant's distribution decides which attribute lives at which level; unique attributes are forced to the last level. commercetools: AttributeDefinition.level Product | Variant, immutable; the cart merges at read time. | 
+
+Inherited at read time3 | Shopee60
+WooCommerce55
+Salesforce B2C50 | Shopee: weight, dimension and days-to-ship fall back to the item. Salesforce: a stated chain variant → variation group → master. WooCommerce: manage_stock via an explicit 'parent' sentinel; price derived from children; SKU and GTIN independent. | 
+
+N/A2 | Shopify85 · Google70 | Shopify: shared field names vary by API version (15 / 21 / 22) and "independently valued" is false for part of the set. Google: no container. | 
+
+Us
+Nothing — today's 33 Indomie rows are maintained by hand and drift.
+
+Options
+(a) replicate on each child · (b) partition by level — each attribute declared parent-level or child-level, stored once · (c) fallback at read — child null → parent value
+
+D12
+### May a family nest — can a parent have a parent?
+after D13
+
+Answer | Who | Caveats | 
+
+One level11 | Amazon100 · Shopify85 · eBay80 · Google70 · Walmart65 · Shopee60 · Magento60 · WooCommerce55 · Tokopedia45 · Square40 · commercetools35 | Amazon: a child belongs to 1..1 parent on three routes. Magento: child → parent is 0..N because the unique is on the pair. Shopify: one exception, CombinedListingChild.parentVariant, Plus-only. Shopee nests the axis (a two-level group id), not the family. Tokopedia: product_families[], US local sellers only. | 
+
+Two tiers2 | Salesforce B2C50
+Akeneo30 | Salesforce: VariationGroup between master and variant; a group belongs to one base product. Akeneo: exactly two levels, MAXIMUM_LEVEL_NUMBER = 2. | 
+
+Us
+D13's self-FK is nullable and depth is unconstrained until this decides it.
+
+Options
+(a) one level, enforced · (b) two levels, capped · (c) unbounded
+
+### P1 · The registry
+D14 – D18 — the bill for D2
+
+D14
+### May a product carry more than one type — and where do merchandising nodes live?
+the direct bill for D2
+
+Answer | Who | Caveats | 
+
+The type is single-valued wherever it exists11 | Amazon100 · Shopify85 · eBay80 (1..2) · Google70 · Walmart65 · Shopee60 · Magento60 · Salesforce50 · Tokopedia45 · commercetools35 · Akeneo30 | Amazon: 1 on write (item_type_keyword maxUniqueItems 1), an array on read. Google: effectively 1..1, auto-assigned. Akeneo: 0..1. eBay: 1..2 aspect-bearing categories. | 
+
+A separate multi-valued placement beside it11 | Amazon100 · Shopify85 · eBay80 · Google70 · Magento60 · WooCommerce55 · Salesforce50 · Tokopedia45 (Era A) · Square40 · commercetools35 · Akeneo30 | Amazon classifications 0..N · Shopify collections · Google product_type, 0..N on the wire, "up to 5" on Help, 10 persist live · eBay 0..2 seller store categories in their own tree · Square categories 0..N plus a reporting_category · Salesforce assignments 0..N · Magento categories M:N · Akeneo categories across multiple trees · commercetools categories uncapped · WooCommerce product_cat with a forced default · Tokopedia Era A etalase. | 
+
+No placement object2 | Walmart65 · Shopee60 | Walmart has no category field in the feed. | 
+
+Us
+main_category 1..1 on all 104,733 rows; the ProductCategory M2M is 19.6% populated, effectively dead. "Promo Ramadan" has nowhere to live.
+
+Options
+(a) one type plus a separate multi-valued placement object — the dead M2M is a candidate · (b) schema-less merchandising nodes in the same tree, D2's stated cost accepted as-is · (c) one Category class with role-typed edges (Salesforce)
+
+D15
+### Does anything flow down the type tree, or is each node self-contained?
+decides whether D16's depth is free
+
+Answer | Who | Caveats | 
+
+Inherits down, with override1 | Salesforce B2C50 | getAttributeModel() includes the parent categories' groups; sub-category over parent over global. | 
+
+Both ways inside one registry1 | Amazon100 | Root PRODUCT holds universal facts; Luggage.xsd declares one set over 13 types while FoodAndBeverages.xsd declares per type — a single route. | 
+
+Per node, leaf-only or flat9 | Shopify85 · eBay80 · Walmart65 · Shopee60 · Magento60 · Tokopedia45 · Square40 · commercetools35 · Akeneo30 | Shopify: the parent fb-2 declares flavor alongside its children — per node, not inherited. eBay: leaf-only, errors 62008 / 62009. Akeneo: 0 hits over 344 files with controls; distribution happens inside the family variant, not the category tree. | 
+
+No tree2 | Google70 · WooCommerce55 | One global bag; a store-global registry. | 
+
+Us
+Category is a treebeard tree of 1,892 nodes; products sit at 1,682 distinct nodes at varying depths.
+
+Options
+(a) self-contained per node · (b) inherit down with override · (c) a universal set on the root plus leaf additions only
+
+D16
+### How fine-grained should the registry be?
+sizes D1's authoring bill
+
+Answer | Who | Caveats | 
+
+A vendor-authored taxonomy5 | Amazon100 ≥ 1,665
+Shopify85 14,606
+eBay80 15,111 leaves
+Google70 5,595
+Walmart65 6,967 | Amazon: a reproducible floor; 107 in Food & Beverages; the global total is unsettleable. Google: the attribute bag is global, so the taxonomy does not size the schema. Walmart: 6,967 in the item feed, 6,947 in the fulfilment feeds, 6,700 on its own page. eBay: sandbox tree 134. | 
+
+Merchant-authored, no cap3 | Magento60 · Salesforce B2C50 · Akeneo30 | Magento's product-type domain is closed at 6. Akeneo caps only the measurement registry (300 families, 50 units, 5 operations). | 
+
+Merchant-authored, capped2 | Square40 10 + 10
+commercetools35 1,000 | commercetools: per project, raisable on request. Square: custom-attribute definitions, live-verified; whether per app or per account is contradicted. | 
+
+N/A or not recorded3 | Shopee60 · WooCommerce55 · Tokopedia45 | WooCommerce has no registry to size. | 
+
+Us
+1,892 nodes, 1,682 used — already finer than Google's global taxonomy; 5 attribute definitions; staff-authored.
+
+Options
+(a) every node is a type — 1,682 schemas if D15 is per node · (b) a schema on a subset of typed nodes, untyped nodes inherit — needs D15 (b) or (c) · (c) a coarser separate registry, on the order of Amazon's 107 food types — D2's rejected shape
+
+D17
+### Where does requiredness live, and is it one-valued?
+gate: Merchant Center H3 for modality
+
+Answer | Who | Caveats | 
+
+One boolean on the definition4 | Shopee60
+Magento60
+Salesforce B2C50
+commercetools35 | commercetools: not supported on nested; a set-typed attribute must be optional. Magento: on the attribute twice (is_required, is_required_in_admin_store); the configurable save plugin ignores both. | 
+
+A boolean plus a second signal2 | eBay80
+Tokopedia45 | eBay: aspectRequired + aspectUsage RECOMMENDED / OPTIONAL, contradictory by design, plus expectedRequiredByDate; 33 of 421 aspects differ between eBay's own two operations. Tokopedia: is_requried [sic] + requirement_conditions on another attribute's value. | 
+
+Schema-shaped, conditional, multi-tier3 | Amazon100
+Google70
+Walmart65 | Amazon: SP-API required + allOf varying on seven request axes; the flat-file surface has Required / Preferred / Optional / conditional tiers. Walmart: required arrays + 46,608 conditionals + a tier string on every one of 383,947 slots, 81 values, per feed. Google: Help says Required / It depends / Optional conditioned on category, country, other fields and account; the API marks REQUIRED on 0 of 145; a live insert rejected none of ten omissions. | 
+
+Per (family, attribute, channel)1 | Akeneo30 | One row per channel; a second flag also sits on the definition. | 
+
+No field3 | Shopify85
+WooCommerce55
+Square40 | Shopify: instrumented over 78 Metafield* types; validations and constraints instead. WooCommerce: only at add-to-cart. | 
+
+Us
+One required boolean on the global attribute, all five true. Defect A1: manufacturer required blocks saves; 59,726 products have no row.
+
+Options
+(a) one boolean on the (type, attribute) membership row · (b) three tiers, required / recommended / optional · (c) per (type, attribute, channel) — online vs POS · (d) conditional on another attribute's value
+
+D18
+### Is the attribute set a closed contract — enforced in the database, or above it?
+gates: Shopee write gate · Merchant Center H3
+
+Answer | Who | Caveats | 
+
+Closed5 | Walmart65
+Magento60
+Salesforce B2C50
+commercetools35
+Akeneo30 | Walmart: additionalProperties: false in the schema. commercetools: by the API; removing a definition deletes every value. Akeneo: a validator, with a hole for products that have no family variant. Magento: the type model, not the database — zero foreign keys on the entity table and none on value. | 
+
+Open bag, closed per definition1 | Shopify85 | A metafield with no definition is accepted; where one exists, type and choices are enforced on write; the category gate is enforced on the linked-option path. | 
+
+Open7 | Amazon100
+eBay80
+Google70
+Shopee60
+WooCommerce55
+Tokopedia45
+Square40 | Amazon: ItemAttributes.additionalProperties = true at transport, root schema unverifiable, a requirementsEnforced switch; an undeclared attribute returns a synchronous error, not a silent drop. Google: 145 typed properties plus four open containers; over-cap data dropped silently on the processed product with no issue row. Tokopedia: enforcement not stated. WooCommerce: the value list is created on write. | 
+
+Enforced in the database0 | — | None found. | 
+
+Us
+validate_attributes() rejects off-class codes at three call sites; no unique_together (product_class, code); nothing in the DB ties a value's attribute to the product's class.
+
+Options
+(a) closed, enforced above the DB — validator or serializer, generalised to per-category · (b) closed and enforced in the DB — no platform in the set · (c) an open bag with typed known attributes
+
+## Still gated on credentials nobody has
+
+Unchanged from #11068 §4 and the 2026-09-06 state on #11071. Everything else the records could close, they closed.
+
+Gate | What it would settle | Touches | 
+
+Amazon SP-API | Needs a Professional seller account. The live per-type schema, parentageLevel PARENT vs CHILD, the theme enum. Tier-3 schema dumps are on #10976 as interim. | D4 · D8 · D10 | 
+
+Shopee app certification | Needs a partner or seller relationship. Real caps, the write-time gate, sentinel behaviour — every value-level fact. | D4 · D6 · D8 · D18 | 
+
+TikTok Shop shop token | The 2-vs-3 axis cap and write-time enforcement. | D6 · D7 | 
+
+eBay user token | RuName + sandbox user + one browser consent. createOrReplaceInventoryItemGroup behaviour. | D7 · D10 | 
+
+Merchant Center H3 maintainer decision | Enable a program on the staging account so itemLevelIssues appear — i.e. whether any rule is enforced at all. | D7 · D17 · D18 | 
+
+## Corrections to the previous version of this page
+
+Found on re-checking every synthesised claim against the consolidated evidence on #11031 and #10966 before this rewrite. Recorded so they are not rediscovered.
+
+Was | Is | Why | 
+
+"Merging is the marketplace shape; separating is the merchant-tooling shape" | All three merges are marketplaces, but marketplaces are split three to three; no merchant back-office or PIM platform merges. | Amazon and Walmart are marketplaces and keep the two objects apart; Google has no type. | 
+
+"Tokopedia Era A had all three of our closed pieces" | Era A had the merge and a parent row; its axis was a separate get_variant catalogue, an own object. | #11031's Q4 cell: "Era A own catalogue". | 
+
+Magento filed under "partitioned by level" (D11) | Magento is "nothing inherited, each row owns its facts". Only Akeneo and commercetools partition by level. | Every EAV row is keyed (entity, attribute, store); nothing declares which level an attribute lives at. | 
+
+Akeneo filed under "never price" (D10) | Akeneo's model is priced whenever the family variant puts price at its level — 58 of 81 fixture models. | #11069 §1.6, §2b. | 
+
+Sources: #11031 (master body and the two per-decision evidence comments consolidated 2026-09-06), #10966 (decision record and its "Open decisions D4–D18" comment), #11071 (state 2026-09-06), #11068 (operator's manual), #11090 (session record), #10778 (requirements), and the thirteen reference(solvent) records under #10966. Production numbers re-measured 2026-09-03 with remeasure.sql. Companion Markdown: ~/copilot/research/catalogue-decision-2026-09/decision-matrix.md.
+

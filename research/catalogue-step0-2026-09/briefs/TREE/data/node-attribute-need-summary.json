@@ -1,0 +1,3118 @@
+{
+ "measured_kind_counts": {
+  "model_code": 454,
+  "pack_count": 202,
+  "colour": 494,
+  "garment_size": 49,
+  "net_content": 617,
+  "scent": 93,
+  "flavour": 199,
+  "material": 88
+ },
+ "inferred_name_counts": [
+  [
+   "Warna",
+   259
+  ],
+  [
+   "Pola",
+   253
+  ],
+  [
+   "Jenis kelamin sasaran",
+   107
+  ],
+  [
+   "Kelompok usia",
+   105
+  ],
+  [
+   "Bahan",
+   103
+  ],
+  [
+   "Preferensi diet",
+   102
+  ],
+  [
+   "Informasi alergen",
+   97
+  ],
+  [
+   "Persyaratan penyimpanan",
+   87
+  ],
+  [
+   "Kain",
+   56
+  ],
+  [
+   "Petunjuk perawatan",
+   53
+  ],
+  [
+   "Bentuk produk",
+   49
+  ],
+  [
+   "Sertifikasi & standar produk",
+   44
+  ],
+  [
+   "Jenis ukuran",
+   42
+  ],
+  [
+   "Bentuk produk makanan",
+   40
+  ],
+  [
+   "Ukuran",
+   37
+  ],
+  [
+   "Keharuman",
+   36
+  ],
+  [
+   "Jenis penggunaan",
+   31
+  ],
+  [
+   "Rasa",
+   30
+  ],
+  [
+   "Jenis kemasan",
+   30
+  ],
+  [
+   "Bentuk",
+   30
+  ],
+  [
+   "Cocok untuk jenis kulit",
+   30
+  ],
+  [
+   "Kandungan Alkohol/Pelarut",
+   29
+  ],
+  [
+   "Petunjuk pembersihan",
+   29
+  ],
+  [
+   "Ukuran aksesori",
+   28
+  ],
+  [
+   "Ukuran baterai",
+   28
+  ],
+  [
+   "Jenis baterai",
+   28
+  ],
+  [
+   "Bahan pegangan",
+   25
+  ],
+  [
+   "Sumber listrik",
+   22
+  ],
+  [
+   "Metode memasak",
+   19
+  ],
+  [
+   "Gaya pengolahan sayuran",
+   19
+  ],
+  [
+   "Jenis penutupan",
+   18
+  ],
+  [
+   "Jenis dispenser",
+   18
+  ],
+  [
+   "Jenis panjang lengan",
+   16
+  ],
+  [
+   "Jenis Kayu",
+   16
+  ],
+  [
+   "Finishing kayu",
+   16
+  ],
+  [
+   "Bahan aktif",
+   16
+  ],
+  [
+   "Gaya potongan buah",
+   16
+  ],
+  [
+   "Fitur pakaian",
+   15
+  ],
+  [
+   "Bahan penyusun",
+   15
+  ],
+  [
+   "Efek perawatan kulit",
+   15
+  ],
+  [
+   "Jenis pemasangan",
+   15
+  ],
+  [
+   "Opsi bawa",
+   14
+  ],
+  [
+   "Bahan perhiasan",
+   14
+  ],
+  [
+   "Ruang yang cocok",
+   14
+  ],
+  [
+   "Bahan pelapis",
+   13
+  ],
+  [
+   "Aroma",
+   13
+  ],
+  [
+   "Bahan peralatan makan",
+   13
+  ],
+  [
+   "Bahan alas kaki",
+   12
+  ],
+  [
+   "Bahan sol luar",
+   12
+  ],
+  [
+   "Fitur sepatu",
+   12
+  ],
+  [
+   "Kesesuaian sepatu",
+   12
+  ],
+  [
+   "Ukuran sepatu",
+   12
+  ],
+  [
+   "Gaya kaki",
+   12
+  ],
+  [
+   "Fitur tas/kotak",
+   12
+  ],
+  [
+   "Bahan tas/kotak",
+   12
+  ],
+  [
+   "Finis",
+   12
+  ],
+  [
+   "Jenis perhiasan",
+   12
+  ],
+  [
+   "Penutup tas/kotak",
+   11
+  ],
+  [
+   "Fitur penyimpanan tas/kotak",
+   11
+  ],
+  [
+   "Fungsi perawatan mulut",
+   11
+  ],
+  [
+   "Aktivitas",
+   10
+  ],
+  [
+   "Garis leher",
+   10
+  ],
+  [
+   "Jenis panjang atasan",
+   10
+  ],
+  [
+   "Area tubuh",
+   10
+  ],
+  [
+   "Tingkat SPF",
+   10
+  ],
+  [
+   "Suplemen makanan",
+   10
+  ],
+  [
+   "Fitur pakaian intim",
+   9
+  ],
+  [
+   "Jenis ketinggian tumit",
+   9
+  ],
+  [
+   "Gaya acara",
+   9
+  ],
+  [
+   "Bahan-bahan",
+   9
+  ],
+  [
+   "Bahan alat/perkakas",
+   9
+  ],
+  [
+   "Hiasan tas",
+   8
+  ],
+  [
+   "Bahan hiasan/trim",
+   8
+  ],
+  [
+   "Tingkat cakupan",
+   8
+  ],
+  [
+   "Bahan bulu sikat",
+   8
+  ],
+  [
+   "Jenis tutup",
+   8
+  ],
+  [
+   "Fitur",
+   8
+  ],
+  [
+   "Asal bahan",
+   8
+  ],
+  [
+   "Tingkat perlindungan UVA",
+   8
+  ],
+  [
+   "Metode pengolahan minyak",
+   8
+  ],
+  [
+   "Tujuan perawatan",
+   8
+  ],
+  [
+   "Kelas efisiensi energi",
+   7
+  ],
+  [
+   "Kekerasan",
+   7
+  ],
+  [
+   "Item aksesori yang disertakan",
+   7
+  ],
+  [
+   "Rasa makanan hewan peliharaan",
+   7
+  ],
+  [
+   "Bahan perangkat keras",
+   7
+  ],
+  [
+   "Sertifikasi keselamatan",
+   6
+  ],
+  [
+   "Konstruksi",
+   6
+  ],
+  [
+   "Jenis panjang celana",
+   6
+  ],
+  [
+   "Finis kosmetik",
+   6
+  ],
+  [
+   "Fitur riasan",
+   6
+  ],
+  [
+   "Warna riasan",
+   6
+  ],
+  [
+   "Bahan wadah",
+   6
+  ],
+  [
+   "Fitur pakaian bayi/balita",
+   6
+  ],
+  [
+   "Bahan mata pisau",
+   6
+  ],
+  [
+   "Tingkat keharuman",
+   6
+  ],
+  [
+   "Tingkat PH",
+   6
+  ],
+  [
+   "Antarmuka perangkat",
+   6
+  ],
+  [
+   "Rute pemberian",
+   6
+  ],
+  [
+   "Jenis pegangan",
+   6
+  ],
+  [
+   "Permukaan pembersihan",
+   6
+  ],
+  [
+   "Jenis panjang rok/gaun",
+   5
+  ],
+  [
+   "Varian beta-kasein",
+   5
+  ],
+  [
+   "Jenis agen eksfoliasi",
+   5
+  ],
+  [
+   "Warna casing",
+   5
+  ],
+  [
+   "Pola casing",
+   5
+  ],
+  [
+   "Gender konektor",
+   5
+  ],
+  [
+   "Bentuk Obat",
+   5
+  ],
+  [
+   "Status resep",
+   5
+  ],
+  [
+   "Bahan alat musik",
+   5
+  ],
+  [
+   "Fitur daya tahan",
+   5
+  ],
+  [
+   "Perlu dirakit",
+   4
+  ],
+  [
+   "Gaya sandal",
+   4
+  ],
+  [
+   "Warna bingkai kacamata",
+   4
+  ],
+  [
+   "Bahan bingkai kacamata",
+   4
+  ],
+  [
+   "Pola bingkai kacamata",
+   4
+  ],
+  [
+   "Bahan lensa kacamata",
+   4
+  ],
+  [
+   "Sterilitas produk",
+   4
+  ],
+  [
+   "Fitur pakaian aktif",
+   4
+  ],
+  [
+   "Metode pembuatan alas kaki",
+   4
+  ],
+  [
+   "Jenis pelindung ujung",
+   4
+  ],
+  [
+   "Jenis kulit",
+   4
+  ],
+  [
+   "Tingkat bantalan kaus kaki",
+   4
+  ],
+  [
+   "Gaya ujung kaus kaki",
+   4
+  ],
+  [
+   "Bentuk bulu sikat",
+   4
+  ],
+  [
+   "Ukuran kepala sikat gigi",
+   4
+  ],
+  [
+   "Warna tali",
+   4
+  ],
+  [
+   "Pola tali",
+   4
+  ],
+  [
+   "Bahan kristal",
+   4
+  ],
+  [
+   "Warna pelat jam",
+   4
+  ],
+  [
+   "Pola pelat jam",
+   4
+  ],
+  [
+   "Layar jam tangan",
+   4
+  ],
+  [
+   "Fitur jam tangan",
+   4
+  ],
+  [
+   "Bahan jam tangan",
+   4
+  ],
+  [
+   "Pergerakan jam",
+   4
+  ],
+  [
+   "Bahan terperinci",
+   4
+  ],
+  [
+   "Kandungan fluorida",
+   4
+  ],
+  [
+   "Jenis pemakaian",
+   4
+  ],
+  [
+   "Efek kondisioner",
+   4
+  ],
+  [
+   "Acara",
+   4
+  ],
+  [
+   "Fungsi kosmetik",
+   4
+  ],
+  [
+   "Fitur perawatan kulit",
+   4
+  ],
+  [
+   "Teknologi konektivitas",
+   4
+  ],
+  [
+   "Peringkat ingress protection (IP)",
+   4
+  ],
+  [
+   "Bahan senar alat musik",
+   4
+  ],
+  [
+   "Desain kalung",
+   4
+  ],
+  [
+   "Peralatan makan yang disertakan",
+   4
+  ],
+  [
+   "Ketinggian pinggang",
+   3
+  ],
+  [
+   "Fitur bra",
+   3
+  ],
+  [
+   "Jenis tali bra",
+   3
+  ],
+  [
+   "Ukuran cup bra",
+   3
+  ],
+  [
+   "Desain bingkai kacamata",
+   3
+  ],
+  [
+   "Warna lensa",
+   3
+  ],
+  [
+   "Pola lensa",
+   3
+  ],
+  [
+   "Warna pelipis",
+   3
+  ],
+  [
+   "Pola pelipis",
+   3
+  ],
+  [
+   "Acara dress",
+   3
+  ],
+  [
+   "Gaya dress",
+   3
+  ],
+  [
+   "Ukuran alas tidur",
+   3
+  ],
+  [
+   "Perawatan bahan",
+   3
+  ],
+  [
+   "Bahan aksesori pakaian",
+   3
+  ],
+  [
+   "Fitur dompet",
+   3
+  ],
+  [
+   "Metode pembuatan sabun",
+   3
+  ],
+  [
+   "Fitur penutup kepala",
+   3
+  ],
+  [
+   "Fitur keamanan bahan kimia",
+   3
+  ],
+  [
+   "Fitur peralatan masak/panggang",
+   3
+  ],
+  [
+   "Musim",
+   3
+  ],
+  [
+   "Gaya panel perut",
+   3
+  ],
+  [
+   "Jenis akses keperawatan",
+   3
+  ],
+  [
+   "Kesesuaian tahap kehamilan",
+   3
+  ],
+  [
+   "Bahan dekorasi",
+   3
+  ],
+  [
+   "Tema",
+   3
+  ],
+  [
+   "Jenis pabrikan",
+   3
+  ],
+  [
+   "Jenis proyek kerajinan",
+   3
+  ],
+  [
+   "Negara",
+   3
+  ],
+  [
+   "Jenis pelembap",
+   3
+  ],
+  [
+   "Jenis ikan",
+   3
+  ],
+  [
+   "Cocok untuk jenis ikan",
+   3
+  ],
+  [
+   "Faktor bentuk komponen audio",
+   3
+  ],
+  [
+   "Kedalaman bit maksimum",
+   3
+  ],
+  [
+   "Fitur furnitur/perabot",
+   3
+  ],
+  [
+   "Cocok untuk jenis bahan",
+   3
+  ],
+  [
+   "Jenis kendaraan",
+   3
+  ],
+  [
+   "Isi biji",
+   3
+  ],
+  [
+   "Cocok untuk jenis rambut",
+   3
+  ],
+  [
+   "Warna alat musik",
+   3
+  ],
+  [
+   "Pola alat musik",
+   3
+  ],
+  [
+   "Warna senar alat musik",
+   3
+  ],
+  [
+   "Pola senar alat musik",
+   3
+  ],
+  [
+   "Tipe sepeda yang kompatibel",
+   3
+  ],
+  [
+   "Fitur ramah alergi",
+   3
+  ],
+  [
+   "Metode budidaya",
+   3
+  ],
+  [
+   "Tahap kematangan sayuran hijau",
+   3
+  ],
+  [
+   "Kondisi pencucian produk",
+   3
+  ],
+  [
+   "Jenis tepi",
+   3
+  ],
+  [
+   "Bentuk produk kimia",
+   3
+  ],
+  [
+   "Bentuk bingkai kacamata",
+   2
+  ],
+  [
+   "Jenis engsel kacamata",
+   2
+  ],
+  [
+   "Pelapis lensa",
+   2
+  ],
+  [
+   "Jenis lensa",
+   2
+  ],
+  [
+   "Desain bingkai optik",
+   2
+  ],
+  [
+   "Tingkat sokongan bra",
+   2
+  ],
+  [
+   "Fit",
+   2
+  ],
+  [
+   "Gaya rok",
+   2
+  ],
+  [
+   "Keadaan jahitan",
+   2
+  ],
+  [
+   "Rekomendasi kelompok usia",
+   2
+  ],
+  [
+   "Bahan mainan/permainan",
+   2
+  ],
+  [
+   "Fitur pencahayaan",
+   2
+  ],
+  [
+   "Kandungan lemak",
+   2
+  ],
+  [
+   "Warna kulit",
+   2
+  ],
+  [
+   "Warna dasar kulit",
+   2
+  ],
+  [
+   "Format es krim",
+   2
+  ],
+  [
+   "Jenis perayaan",
+   2
+  ],
+  [
+   "Jenis pasta gigi",
+   2
+  ],
+  [
+   "Bahan pengisi isolasi",
+   2
+  ],
+  [
+   "Panjang bukaan ritsleting",
+   2
+  ],
+  [
+   "Format set hadiah",
+   2
+  ],
+  [
+   "Keluarga olfaktori",
+   2
+  ],
+  [
+   "Kebutuhan diet hewan peliharaan",
+   2
+  ],
+  [
+   "Bentuk makanan hewan peliharaan",
+   2
+  ],
+  [
+   "Suplemen makanan hewan peliharaan",
+   2
+  ],
+  [
+   "Jenis tepung/bulir",
+   2
+  ],
+  [
+   "Teknik pewarnaan",
+   2
+  ],
+  [
+   "Arah puntiran",
+   2
+  ],
+  [
+   "Fitur penyimpanan makanan",
+   2
+  ],
+  [
+   "Bahan penyimpanan makanan",
+   2
+  ],
+  [
+   "Desain ujung spidol",
+   2
+  ],
+  [
+   "Jenis lapisan belakang pita/trim",
+   2
+  ],
+  [
+   "Jumlah kompartemen",
+   2
+  ],
+  [
+   "Mekanisme pembukaan",
+   2
+  ],
+  [
+   "Lokasi yang cocok",
+   2
+  ],
+  [
+   "Standar ketahanan api",
+   2
+  ],
+  [
+   "Kelas visibilitas tinggi",
+   2
+  ],
+  [
+   "Metode pemasangan logo",
+   2
+  ],
+  [
+   "Jenis penopang pin",
+   2
+  ],
+  [
+   "Jenis tempat duduk",
+   2
+  ],
+  [
+   "Bahan tanaman",
+   2
+  ],
+  [
+   "Struktur kain",
+   2
+  ],
+  [
+   "Jenis pergerakan jam",
+   2
+  ],
+  [
+   "Mode tampilan",
+   2
+  ],
+  [
+   "Gaya angka",
+   2
+  ],
+  [
+   "Jenis Stan/Pajangan",
+   2
+  ],
+  [
+   "Jenis pemutar",
+   2
+  ],
+  [
+   "Jenis pegangan koper",
+   2
+  ],
+  [
+   "Tekstur",
+   2
+  ],
+  [
+   "Gaya barang",
+   2
+  ],
+  [
+   "Inklusi tekstur",
+   2
+  ],
+  [
+   "Jenis steker",
+   2
+  ],
+  [
+   "Jenis pelapis",
+   2
+  ],
+  [
+   "Fitur pakaian renang",
+   2
+  ],
+  [
+   "Metode pemakaian",
+   2
+  ],
+  [
+   "Kandungan kafein",
+   2
+  ],
+  [
+   "Spesies biji kopi",
+   2
+  ],
+  [
+   "Sangrai kopi",
+   2
+  ],
+  [
+   "Konektivitas audio",
+   2
+  ],
+  [
+   "Jenis antarmuka pengisian daya",
+   2
+  ],
+  [
+   "Fitur earphone",
+   2
+  ],
+  [
+   "Teknologi driver headphone",
+   2
+  ],
+  [
+   "Gaya headphone",
+   2
+  ],
+  [
+   "Jenis mikrofon",
+   2
+  ],
+  [
+   "Teknologi peredam kebisingan",
+   2
+  ],
+  [
+   "Jenis sereal",
+   2
+  ],
+  [
+   "Tujuan pemakaian",
+   2
+  ],
+  [
+   "Jenis pisau gunting",
+   2
+  ],
+  [
+   "Jenis corong",
+   2
+  ],
+  [
+   "Tingkat penyerapan",
+   2
+  ],
+  [
+   "Gaya potongan batu permata",
+   2
+  ],
+  [
+   "Jenis batu permata",
+   2
+  ],
+  [
+   "Desain cincin",
+   2
+  ],
+  [
+   "Ukuran cincin",
+   2
+  ],
+  [
+   "Bentuk batu",
+   2
+  ],
+  [
+   "Jenis konektor kabel audio/video (ujung A)",
+   2
+  ],
+  [
+   "Jenis konektor kabel audio/video (ujung B)",
+   2
+  ],
+  [
+   "Bahan rumah kabel",
+   2
+  ],
+  [
+   "Pelindung kabel",
+   2
+  ],
+  [
+   "Pelapisan kontak konektor",
+   2
+  ],
+  [
+   "Orientasi konektor",
+   2
+  ],
+  [
+   "Bahan wadah lilin",
+   2
+  ],
+  [
+   "Bahan lilin",
+   2
+  ],
+  [
+   "Jenis lilin",
+   2
+  ],
+  [
+   "Kekakuan bulu sikat",
+   2
+  ],
+  [
+   "Jenis penutup anting",
+   2
+  ],
+  [
+   "Desain anting",
+   2
+  ],
+  [
+   "Kemurnian logam",
+   2
+  ],
+  [
+   "Fitur pakaian luar",
+   2
+  ],
+  [
+   "Tingkat warna lip balm",
+   2
+  ],
+  [
+   "Gaya potongan keripik",
+   2
+  ],
+  [
+   "Jenis panjang kalung",
+   2
+  ],
+  [
+   "Desain gelang",
+   2
+  ],
+  [
+   "Penempatan yang didukung",
+   2
+  ],
+  [
+   "Tenun/finishing",
+   2
+  ],
+  [
+   "Petunjuk pemanasan",
+   2
+  ],
+  [
+   "Hidangan makan",
+   2
+  ],
+  [
+   "Permukaan yang direkomendasikan",
+   2
+  ],
+  [
+   "Cocok untuk bahan kerajinan",
+   2
+  ],
+  [
+   "Kemudahan dicuci",
+   2
+  ],
+  [
+   "Kondisi",
+   2
+  ],
+  [
+   "Batasan usia",
+   2
+  ],
+  [
+   "Sertifikasi organik",
+   2
+  ],
+  [
+   "Finis perawatan rambut",
+   2
+  ],
+  [
+   "Fungsi panas",
+   2
+  ],
+  [
+   "Sertifikasi badan olahraga",
+   2
+  ],
+  [
+   "Finis perangkat keras",
+   2
+  ],
+  [
+   "Bahan selang",
+   2
+  ],
+  [
+   "Cocok untuk jenis gas",
+   2
+  ],
+  [
+   "Model penutup peralatan masak",
+   2
+  ],
+  [
+   "Fitur tutup",
+   2
+  ],
+  [
+   "Warna papan jari",
+   2
+  ],
+  [
+   "Bahan papan jari",
+   2
+  ],
+  [
+   "Pola papan jari",
+   2
+  ],
+  [
+   "Ukuran gitar",
+   2
+  ],
+  [
+   "Warna leher",
+   2
+  ],
+  [
+   "Bahan leher",
+   2
+  ],
+  [
+   "Pola leher",
+   2
+  ],
+  [
+   "Formulir produk perlengkapan hewan peliharaan",
+   2
+  ],
+  [
+   "Warna rambut yang kompatibel",
+   2
+  ],
+  [
+   "Area aplikasi kendaraan",
+   2
+  ],
+  [
+   "Fitur lampu peluit",
+   2
+  ],
+  [
+   "Gaya suara siulan",
+   2
+  ],
+  [
+   "Jenis wadah debu",
+   2
+  ],
+  [
+   "Fitur lem tembak",
+   2
+  ],
+  [
+   "Gaya nozel pistol lem",
+   2
+  ],
+  [
+   "Pengoperasian lem tembak",
+   2
+  ],
+  [
+   "Teknologi lem tembak",
+   2
+  ],
+  [
+   "Suhu",
+   2
+  ],
+  [
+   "Jenis wadah kimia",
+   2
+  ],
+  [
+   "Fitur pembersih kaca dan permukaan",
+   2
+  ],
+  [
+   "Fitur pembersih kaca",
+   2
+  ],
+  [
+   "Aksesori pompa",
+   2
+  ],
+  [
+   "Metode fermentasi",
+   2
+  ],
+  [
+   "Variasi kecap",
+   2
+  ],
+  [
+   "Jenis chuck",
+   2
+  ],
+  [
+   "Fitur bor",
+   2
+  ],
+  [
+   "Gaya pengolahan bawang putih",
+   2
+  ],
+  [
+   "Varietas bawang putih",
+   2
+  ],
+  [
+   "Warna pegangan",
+   2
+  ],
+  [
+   "Pola pegangan",
+   2
+  ],
+  [
+   "Gaya kaos dalam",
+   1
+  ],
+  [
+   "Bahan gusset",
+   1
+  ],
+  [
+   "Jenis pemakaian bra",
+   1
+  ],
+  [
+   "Cakupan bra",
+   1
+  ],
+  [
+   "Gaya bra",
+   1
+  ],
+  [
+   "Gaya kantong",
+   1
+  ],
+  [
+   "Tipe mata boneka",
+   1
+  ],
+  [
+   "Fitur boneka",
+   1
+  ],
+  [
+   "Jenis serat rambut boneka",
+   1
+  ],
+  [
+   "Jenis boneka",
+   1
+  ],
+  [
+   "Skala rumah boneka",
+   1
+  ],
+  [
+   "Konfigurasi kancing depan",
+   1
+  ],
+  [
+   "Gaya ventilasi selubung",
+   1
+  ],
+  [
+   "Gaya lapel",
+   1
+  ],
+  [
+   "Setelan jas",
+   1
+  ],
+  [
+   "Jenis konstruksi selimut",
+   1
+  ],
+  [
+   "Tingkat kehangatan",
+   1
+  ],
+  [
+   "Jenis tutup bohlam",
+   1
+  ],
+  [
+   "Finishing bohlam",
+   1
+  ],
+  [
+   "Bentuk bohlam",
+   1
+  ],
+  [
+   "Ukuran bohlam",
+   1
+  ],
+  [
+   "Warna lampu",
+   1
+  ],
+  [
+   "Pola cahaya",
+   1
+  ],
+  [
+   "Temperatur cahaya",
+   1
+  ],
+  [
+   "Bahan dasar yogurt",
+   1
+  ],
+  [
+   "Warna bedak wajah",
+   1
+  ],
+  [
+   "Jenis bedak wajah",
+   1
+  ],
+  [
+   "Gaya tepi",
+   1
+  ],
+  [
+   "Desain rangka",
+   1
+  ],
+  [
+   "Opsi pencahayaan",
+   1
+  ],
+  [
+   "Jenis cermin",
+   1
+  ],
+  [
+   "Orientasi",
+   1
+  ],
+  [
+   "Jenis hewan",
+   1
+  ],
+  [
+   "Kebutuhan makanan hewan kecil",
+   1
+  ],
+  [
+   "Bentuk makanan hewan kecil",
+   1
+  ],
+  [
+   "Bahan makanan hewan kecil",
+   1
+  ],
+  [
+   "Jenis penutup/katup balon",
+   1
+  ],
+  [
+   "Bentuk balon",
+   1
+  ],
+  [
+   "Gas inflasi yang kompatibel",
+   1
+  ],
+  [
+   "Kekuatan developer",
+   1
+  ],
+  [
+   "Tingkat cakupan uban",
+   1
+  ],
+  [
+   "Warna rambut",
+   1
+  ],
+  [
+   "Formulasi pewarna rambut",
+   1
+  ],
+  [
+   "Bentuk peralatan baking",
+   1
+  ],
+  [
+   "Bahan peralatan masak/panggang",
+   1
+  ],
+  [
+   "Jenis masker debu",
+   1
+  ],
+  [
+   "Kelas filtrasi",
+   1
+  ],
+  [
+   "Bahan roda gigi",
+   1
+  ],
+  [
+   "Fitur masker pelindung",
+   1
+  ],
+  [
+   "Fitur pensil",
+   1
+  ],
+  [
+   "Level susu formula",
+   1
+  ],
+  [
+   "Area aplikasi mist",
+   1
+  ],
+  [
+   "Kelompok usia kucing",
+   1
+  ],
+  [
+   "Fitur pakaian hamil",
+   1
+  ],
+  [
+   "Jenis kue",
+   1
+  ],
+  [
+   "Menentukan jenis frosting atau icing",
+   1
+  ],
+  [
+   "Tenunan handuk",
+   1
+  ],
+  [
+   "Aplikasi menjahit yang dimaksudkan",
+   1
+  ],
+  [
+   "Sistem ukuran benang jahit",
+   1
+  ],
+  [
+   "Konstruksi benang",
+   1
+  ],
+  [
+   "Finishing / perlakuan ulir",
+   1
+  ],
+  [
+   "Bahan benang",
+   1
+  ],
+  [
+   "Format paket thread",
+   1
+  ],
+  [
+   "Sistem berat benang",
+   1
+  ],
+  [
+   "Metode pengambilan uang",
+   1
+  ],
+  [
+   "Jenis bilah pemotong rumput",
+   1
+  ],
+  [
+   "Variasi bumbu",
+   1
+  ],
+  [
+   "Tingkat kilau pita",
+   1
+  ],
+  [
+   "Jenis permukaan pita satin",
+   1
+  ],
+  [
+   "Fitur tempat sampah",
+   1
+  ],
+  [
+   "Desain lilin ulang tahun",
+   1
+  ],
+  [
+   "Jenis lilin ulang tahun",
+   1
+  ],
+  [
+   "Bentuk madu",
+   1
+  ],
+  [
+   "Metode pengolahan madu",
+   1
+  ],
+  [
+   "Varietas madu",
+   1
+  ],
+  [
+   "Madu berkualitas USDA",
+   1
+  ],
+  [
+   "Jenis mata pisau",
+   1
+  ],
+  [
+   "Jenis sandaran lengan",
+   1
+  ],
+  [
+   "Jenis sandaran",
+   1
+  ],
+  [
+   "Fitur kursi",
+   1
+  ],
+  [
+   "Jenis proyek rajutan",
+   1
+  ],
+  [
+   "Kategori bobot benang",
+   1
+  ],
+  [
+   "Fitur taplak meja",
+   1
+  ],
+  [
+   "Bentuk keju",
+   1
+  ],
+  [
+   "Tekstur keju",
+   1
+  ],
+  [
+   "Area target serum",
+   1
+  ],
+  [
+   "Ukuran kartu",
+   1
+  ],
+  [
+   "Jenis pesan internal",
+   1
+  ],
+  [
+   "Desain personalisasi",
+   1
+  ],
+  [
+   "Hubungan penerima",
+   1
+  ],
+  [
+   "Desain kuas cat",
+   1
+  ],
+  [
+   "Jenis filter rokok",
+   1
+  ],
+  [
+   "Ukuran rokok",
+   1
+  ],
+  [
+   "Deskripsi kekuatan rokok",
+   1
+  ],
+  [
+   "Jenis tembakau",
+   1
+  ],
+  [
+   "Fitur baterai",
+   1
+  ],
+  [
+   "Teknologi baterai",
+   1
+  ],
+  [
+   "Teknologi baterai yang kompatibel",
+   1
+  ],
+  [
+   "Jenis konektor",
+   1
+  ],
+  [
+   "Bahan housing",
+   1
+  ],
+  [
+   "Sumber cahaya",
+   1
+  ],
+  [
+   "Bentuk kopi instan",
+   1
+  ],
+  [
+   "Jenis pencahayaan",
+   1
+  ],
+  [
+   "Warna rangka",
+   1
+  ],
+  [
+   "Bahan rangka",
+   1
+  ],
+  [
+   "Pola rangka",
+   1
+  ],
+  [
+   "Warna kaki",
+   1
+  ],
+  [
+   "Bahan kaki",
+   1
+  ],
+  [
+   "Pola kaki",
+   1
+  ],
+  [
+   "Warna permukaan meja",
+   1
+  ],
+  [
+   "Bahan permukaan meja",
+   1
+  ],
+  [
+   "Pola permukaan meja",
+   1
+  ],
+  [
+   "Fitur sepeda",
+   1
+  ],
+  [
+   "Jenis suspensi sepeda",
+   1
+  ],
+  [
+   "Jenis roda gigi",
+   1
+  ],
+  [
+   "Bahan filter",
+   1
+  ],
+  [
+   "Teknologi filtrasi air",
+   1
+  ],
+  [
+   "Polarisasi lensa",
+   1
+  ],
+  [
+   "Kategori warna lensa",
+   1
+  ],
+  [
+   "Pelapisan batang",
+   1
+  ],
+  [
+   "Tekstur batang",
+   1
+  ],
+  [
+   "Sumber protein",
+   1
+  ],
+  [
+   "Lapisan senar gitar",
+   1
+  ],
+  [
+   "Kategori ukuran ketebalan set senar gitar",
+   1
+  ],
+  [
+   "Jenis lilitan senar gitar",
+   1
+  ],
+  [
+   "Tipe ujung tali",
+   1
+  ],
+  [
+   "Bahan insulasi",
+   1
+  ],
+  [
+   "Jenis insulasi",
+   1
+  ],
+  [
+   "Fitur perlengkapan sanitasi kewanitaan",
+   1
+  ],
+  [
+   "Ketebalan pembalut",
+   1
+  ],
+  [
+   "Gaya panty liner",
+   1
+  ],
+  [
+   "Jenis ketebalan",
+   1
+  ],
+  [
+   "Sumber gelatin atau zat pengental",
+   1
+  ],
+  [
+   "Metode pengolahan marshmallow",
+   1
+  ],
+  [
+   "Ukuran marshmallow",
+   1
+  ],
+  [
+   "Jenis lengkung bulu mata",
+   1
+  ],
+  [
+   "Bahan bulu mata",
+   1
+  ],
+  [
+   "Gaya bulu mata",
+   1
+  ],
+  [
+   "Jenis bulu mata",
+   1
+  ],
+  [
+   "Resolusi yang kompatibel",
+   1
+  ],
+  [
+   "Bahan kuas",
+   1
+  ],
+  [
+   "Kepala sikat yang dapat diganti",
+   1
+  ],
+  [
+   "Orientasi serat kayu",
+   1
+  ],
+  [
+   "Jenis pemantik api",
+   1
+  ],
+  [
+   "Finis pengencang",
+   1
+  ],
+  [
+   "Bahan pengisi",
+   1
+  ],
+  [
+   "Rating kehangatan",
+   1
+  ],
+  [
+   "Kelompok usia anjing",
+   1
+  ],
+  [
+   "Saluran output audio",
+   1
+  ],
+  [
+   "Tujuan audio",
+   1
+  ],
+  [
+   "Asisten suara yang kompatibel",
+   1
+  ],
+  [
+   "Desain speaker",
+   1
+  ],
+  [
+   "Jenis penutup speaker",
+   1
+  ],
+  [
+   "Fitur speaker",
+   1
+  ],
+  [
+   "Teknologi speaker",
+   1
+  ],
+  [
+   "Bentuk bantal menyusui",
+   1
+  ],
+  [
+   "Bentuk produk minuman",
+   1
+  ],
+  [
+   "Fitur amplop",
+   1
+  ],
+  [
+   "Penempatan pelindung pada sarung tangan",
+   1
+  ],
+  [
+   "Insulasi sarung tangan",
+   1
+  ],
+  [
+   "Bahan sarung tangan",
+   1
+  ],
+  [
+   "Standar sertifikasi sarung tangan sepeda motor",
+   1
+  ],
+  [
+   "Tujuan sarung tangan sepeda motor",
+   1
+  ],
+  [
+   "Konstruksi sarung tangan sepeda motor tahan air",
+   1
+  ],
+  [
+   "Sistem ukuran perlengkapan pelindung sepeda motor",
+   1
+  ],
+  [
+   "Fitur alat pelindung",
+   1
+  ],
+  [
+   "Model kerah gorden",
+   1
+  ],
+  [
+   "Jenis lapisan gorden",
+   1
+  ],
+  [
+   "Kontrol cahaya",
+   1
+  ],
+  [
+   "Jenis saus salad",
+   1
+  ],
+  [
+   "Bahan sampul buku",
+   1
+  ],
+  [
+   "Bentuk popcorn",
+   1
+  ],
+  [
+   "Varietas biji jagung popcorn",
+   1
+  ],
+  [
+   "Variasi tanggal",
+   1
+  ],
+  [
+   "Ukuran lonceng",
+   1
+  ],
+  [
+   "Konfigurasi katup alat musik tiup logam",
+   1
+  ],
+  [
+   "Jenis tangkai mouthpiece kornet",
+   1
+  ],
+  [
+   "Nada penalaan",
+   1
+  ],
+  [
+   "Bahan alat seni/kerajinan",
+   1
+  ],
+  [
+   "Ukuran peniti",
+   1
+  ],
+  [
+   "Tipe konektor RF antena",
+   1
+  ],
+  [
+   "Jenis antena",
+   1
+  ],
+  [
+   "Pita frekuensi/radio yang didukung",
+   1
+  ],
+  [
+   "Polarisasi",
+   1
+  ],
+  [
+   "Mekanisme pengaturan",
+   1
+  ],
+  [
+   "Kompatibilitas lubang cerobong asap",
+   1
+  ],
+  [
+   "Warna lensa kacamata",
+   1
+  ],
+  [
+   "Pola lensa kacamata",
+   1
+  ],
+  [
+   "Bahan gasket kacamata pelindung",
+   1
+  ],
+  [
+   "Bahan tali kacamata pelindung",
+   1
+  ],
+  [
+   "Jenis bridge hidung",
+   1
+  ],
+  [
+   "Finishing tepi serbet",
+   1
+  ],
+  [
+   "Jenis asbak",
+   1
+  ],
+  [
+   "Tingkat kepedasan",
+   1
+  ],
+  [
+   "Tekstur saus pasta",
+   1
+  ],
+  [
+   "Aneka saus pasta",
+   1
+  ],
+  [
+   "Jenis gembok yang kompatibel",
+   1
+  ],
+  [
+   "Jenis bilah kunci",
+   1
+  ],
+  [
+   "Iodisasi",
+   1
+  ],
+  [
+   "Varietas jamur",
+   1
+  ],
+  [
+   "Jenis kompor yang kompatibel",
+   1
+  ],
+  [
+   "Gaya corong teko",
+   1
+  ],
+  [
+   "Jenis mangkuk",
+   1
+  ],
+  [
+   "Fitur peralatan makan",
+   1
+  ],
+  [
+   "Varietas apel",
+   1
+  ],
+  [
+   "Profil rasa",
+   1
+  ],
+  [
+   "Jenis pengumpul debu",
+   1
+  ],
+  [
+   "Bahan furnitur/perabot",
+   1
+  ],
+  [
+   "Fitur celemek",
+   1
+  ],
+  [
+   "Model celemek",
+   1
+  ],
+  [
+   "Tekstur permen",
+   1
+  ],
+  [
+   "Jenis ukuran kondom",
+   1
+  ],
+  [
+   "Jenis kondom",
+   1
+  ],
+  [
+   "Komposisi pelumas",
+   1
+  ],
+  [
+   "Efek pelumas",
+   1
+  ],
+  [
+   "Tekstur permukaan",
+   1
+  ],
+  [
+   "Bentuk kuas maskara",
+   1
+  ],
+  [
+   "Efek maskara",
+   1
+  ],
+  [
+   "Formulasi maskara",
+   1
+  ],
+  [
+   "Sistem Pengukuran",
+   1
+  ],
+  [
+   "Satuan pengukuran",
+   1
+  ],
+  [
+   "Olahraga",
+   1
+  ],
+  [
+   "Logo olahraga",
+   1
+  ],
+  [
+   "Tingkat pemurnian gula",
+   1
+  ],
+  [
+   "Sumber gula",
+   1
+  ],
+  [
+   "Metode pengisian daya",
+   1
+  ],
+  [
+   "Perangkat yang kompatibel",
+   1
+  ],
+  [
+   "Tipe semikonduktor konversi daya",
+   1
+  ],
+  [
+   "Jenis konektor USB",
+   1
+  ],
+  [
+   "Bentuk tumit",
+   1
+  ],
+  [
+   "Jenis tumit sepatu",
+   1
+  ],
+  [
+   "Jenis sistem koil",
+   1
+  ],
+  [
+   "Fitur kasur",
+   1
+  ],
+  [
+   "Jenis lapisan atas kasur",
+   1
+  ],
+  [
+   "Fitur ember",
+   1
+  ],
+  [
+   "Sumber lemak",
+   1
+  ],
+  [
+   "Model piring",
+   1
+  ],
+  [
+   "Desain ujung pena/bulu",
+   1
+  ],
+  [
+   "Fitur ketel listrik",
+   1
+  ],
+  [
+   "Kontrol suhu",
+   1
+  ],
+  [
+   "Item perawatan rambut yang disertakan",
+   1
+  ],
+  [
+   "Manfaat penataan rambut",
+   1
+  ],
+  [
+   "Jenis rambut",
+   1
+  ],
+  [
+   "Tingkat ketahanan",
+   1
+  ],
+  [
+   "Tingkat transparansi pita organza",
+   1
+  ],
+  [
+   "Jenis kompartemen penyimpanan",
+   1
+  ],
+  [
+   "Fitur pelampung renang",
+   1
+  ],
+  [
+   "Metode pembersihan",
+   1
+  ],
+  [
+   "Lapisan akhir lem kerajinan",
+   1
+  ],
+  [
+   "Jenis aplikator lem",
+   1
+  ],
+  [
+   "Formulasi dasar lem",
+   1
+  ],
+  [
+   "Fitur penata laci",
+   1
+  ],
+  [
+   "Fitur tempat peralatan dapur",
+   1
+  ],
+  [
+   "Jenis pemurnian minyak kelapa",
+   1
+  ],
+  [
+   "Desain tusuk gigi",
+   1
+  ],
+  [
+   "Bahan bantalan pengeriting",
+   1
+  ],
+  [
+   "Jenis penjepit bulu mata",
+   1
+  ],
+  [
+   "Penggunaan berkebun",
+   1
+  ],
+  [
+   "Kandungan gizi",
+   1
+  ],
+  [
+   "Jenis pelepas",
+   1
+  ],
+  [
+   "Bahan dasar remah roti",
+   1
+  ],
+  [
+   "Metode pengolahan kacang",
+   1
+  ],
+  [
+   "Jenis Kacang/Biji",
+   1
+  ],
+  [
+   "Tingkat garam",
+   1
+  ],
+  [
+   "Status lambung/perut",
+   1
+  ],
+  [
+   "Desain cakar",
+   1
+  ],
+  [
+   "Tekstur grip pegangan",
+   1
+  ],
+  [
+   "Varietas biji wijen",
+   1
+  ],
+  [
+   "gaya potongan kentang",
+   1
+  ],
+  [
+   "Penggunaan kentang yang dimaksudkan",
+   1
+  ],
+  [
+   "Varietas kentang",
+   1
+  ],
+  [
+   "Jenis bantalan",
+   1
+  ],
+  [
+   "Komponen sistem cairan pendingin disertakan",
+   1
+  ],
+  [
+   "Kondisi barang",
+   1
+  ],
+  [
+   "Bahan barang",
+   1
+  ],
+  [
+   "Jenis kendaraan bermotor",
+   1
+  ],
+  [
+   "Jenis penggerak pompa air",
+   1
+  ],
+  [
+   "Bahan rumah pompa air",
+   1
+  ],
+  [
+   "Bahan impeler pompa air",
+   1
+  ],
+  [
+   "Jenis pemasangan pompa air",
+   1
+  ],
+  [
+   "Efek perawatan rambut",
+   1
+  ],
+  [
+   "Peringkat Sold Secure",
+   1
+  ],
+  [
+   "Jenis tali tas",
+   1
+  ],
+  [
+   "Penutup Koper/Tas",
+   1
+  ],
+  [
+   "Jenis penggunaan perekat",
+   1
+  ],
+  [
+   "Kecepatan pengeringan",
+   1
+  ],
+  [
+   "Formulasi perekat bulu mata palsu",
+   1
+  ],
+  [
+   "Insulasi untuk gelas minum",
+   1
+  ],
+  [
+   "Bahan peralatan minum",
+   1
+  ],
+  [
+   "Bentuk peralatan minum",
+   1
+  ],
+  [
+   "Kompatibilitas microwave",
+   1
+  ],
+  [
+   "Gaya pengolahan bayam",
+   1
+  ],
+  [
+   "Varietas bayam",
+   1
+  ],
+  [
+   "Gaya pengolahan tahu",
+   1
+  ],
+  [
+   "Bahan permukaan yang kompatibel",
+   1
+  ],
+  [
+   "Fitur item pembersih kendaraan",
+   1
+  ],
+  [
+   "Bentuk produk lilin/pemoles kendaraan",
+   1
+  ],
+  [
+   "Sisi tangan",
+   1
+  ],
+  [
+   "Kelompok usia bayi",
+   1
+  ],
+  [
+   "Metode pengolahan beras",
+   1
+  ],
+  [
+   "Varietas padi",
+   1
+  ],
+  [
+   "Bentuk produk kopi",
+   1
+  ],
+  [
+   "Metode dekafeinasi",
+   1
+  ],
+  [
+   "Ukuran gilingan",
+   1
+  ],
+  [
+   "Aplikasi ragi",
+   1
+  ],
+  [
+   "Jenis ujung tusuk sate",
+   1
+  ],
+  [
+   "Tingkat warna berlian",
+   1
+  ],
+  [
+   "Tingkat fluoresensi",
+   1
+  ],
+  [
+   "Tingkat kejernihan batu permata",
+   1
+  ],
+  [
+   "Metode pembuatan batu",
+   1
+  ],
+  [
+   "Batu potong berkualitas tinggi",
+   1
+  ],
+  [
+   "Tekstur gilingan tepung",
+   1
+  ],
+  [
+   "Metode pengolahan tepung",
+   1
+  ],
+  [
+   "Komponen sepeda yang kompatibel",
+   1
+  ],
+  [
+   "Kondisi berkendara yang sesuai",
+   1
+  ],
+  [
+   "Fungsi alat meliputi",
+   1
+  ],
+  [
+   "Bahan kemasan",
+   1
+  ],
+  [
+   "Jenis aplikator perawatan mata",
+   1
+  ],
+  [
+   "Bahan bola",
+   1
+  ],
+  [
+   "Ukuran bola",
+   1
+  ],
+  [
+   "Lampiran/format bulu",
+   1
+  ],
+  [
+   "Jenis pengolahan bulu",
+   1
+  ],
+  [
+   "Bentuk produk bulu",
+   1
+  ],
+  [
+   "Gaya bulu sintetis",
+   1
+  ],
+  [
+   "Peralatan bar yang disertakan",
+   1
+  ],
+  [
+   "Bahan peralatan bar",
+   1
+  ],
+  [
+   "Varietas bawang merah",
+   1
+  ],
+  [
+   "Presentasi jagung",
+   1
+  ],
+  [
+   "Varietas jagung",
+   1
+  ],
+  [
+   "Spesifikasi DOT cairan rem",
+   1
+  ],
+  [
+   "Posisi rem",
+   1
+  ],
+  [
+   "Sistem servis rem yang kompatibel",
+   1
+  ],
+  [
+   "Bahan perangkat keras drum",
+   1
+  ],
+  [
+   "Model stik drum",
+   1
+  ],
+  [
+   "Tekstur pegangan",
+   1
+  ],
+  [
+   "Bentuk ujung pemukul",
+   1
+  ],
+  [
+   "Bahan abrasif",
+   1
+  ],
+  [
+   "Daya gosok",
+   1
+  ],
+  [
+   "Varietas minyak bunga matahari",
+   1
+  ],
+  [
+   "Varietas buah kiwi",
+   1
+  ],
+  [
+   "Kelas produk",
+   1
+  ],
+  [
+   "Varietas pisang",
+   1
+  ],
+  [
+   "Aneka ragam choy sum",
+   1
+  ],
+  [
+   "Varietas terong",
+   1
+  ],
+  [
+   "Teknologi perangkat",
+   1
+  ],
+  [
+   "Teknologi tampilan",
+   1
+  ],
+  [
+   "Metode pengukuran",
+   1
+  ],
+  [
+   "Sertifikasi perangkat medis",
+   1
+  ],
+  [
+   "Metrik yang didukung",
+   1
+  ],
+  [
+   "Metrik pelacakan",
+   1
+  ],
+  [
+   "Satuan berat yang didukung",
+   1
+  ],
+  [
+   "Mekanisme pelepas sendok",
+   1
+  ],
+  [
+   "Grade telur",
+   1
+  ],
+  [
+   "Metode produksi telur",
+   1
+  ],
+  [
+   "Ukuran telur",
+   1
+  ],
+  [
+   "Hewan sumber telur",
+   1
+  ],
+  [
+   "Kekuatan gelang",
+   1
+  ],
+  [
+   "Jenis aplikator lip gloss",
+   1
+  ],
+  [
+   "Efek lip gloss",
+   1
+  ],
+  [
+   "Formulasi lip gloss",
+   1
+  ],
+  [
+   "Opasitas riasan bibir",
+   1
+  ],
+  [
+   "Penggunaan cat dasar",
+   1
+  ],
+  [
+   "Formulasi produk",
+   1
+  ],
+  [
+   "Varietas lemon",
+   1
+  ],
+  [
+   "Varietas kubis",
+   1
+  ],
+  [
+   "Manfaat perawatan jenggot",
+   1
+  ],
+  [
+   "Formulasi krim cukur",
+   1
+  ],
+  [
+   "Sensitivitas tes kehamilan",
+   1
+  ],
+  [
+   "Tampilan hasil",
+   1
+  ],
+  [
+   "Format tes",
+   1
+  ],
+  [
+   "Metode tes",
+   1
+  ],
+  [
+   "Sampel tes",
+   1
+  ],
+  [
+   "Fitur papan renang",
+   1
+  ],
+  [
+   "Jenis input kopi",
+   1
+  ],
+  [
+   "Warna daging buah",
+   1
+  ],
+  [
+   "Varietas melon",
+   1
+  ],
+  [
+   "Ukuran wortel",
+   1
+  ],
+  [
+   "Varietas wortel",
+   1
+  ],
+  [
+   "Jenis dispenser pelumas",
+   1
+  ],
+  [
+   "Peringkat perlindungan matahari (UPF)",
+   1
+  ],
+  [
+   "Fitur visibilitas",
+   1
+  ],
+  [
+   "Preferensi diet hewan peliharaan",
+   1
+  ],
+  [
+   "Bentuk badan ukulele",
+   1
+  ],
+  [
+   "Konfigurasi elektronik ukulele",
+   1
+  ],
+  [
+   "Penyetelan senar ukulele re-entrant",
+   1
+  ],
+  [
+   "Jenis penyetel ukulele",
+   1
+  ],
+  [
+   "Desain rak",
+   1
+  ],
+  [
+   "Gaya sumpit",
+   1
+  ],
+  [
+   "Penggunaan makanan",
+   1
+  ],
+  [
+   "Bentuk suplemen makanan",
+   1
+  ],
+  [
+   "Mekanisme pelepasan",
+   1
+  ],
+  [
+   "Fokus kesehatan suplemen",
+   1
+  ],
+  [
+   "Jenis pengaturan batu",
+   1
+  ],
+  [
+   "Varietas alpukat",
+   1
+  ],
+  [
+   "Varietas asam jawa",
+   1
+  ],
+  [
+   "Bentuk seledri",
+   1
+  ],
+  [
+   "Varietas seledri",
+   1
+  ],
+  [
+   "Gaya topi renang",
+   1
+  ],
+  [
+   "Fitur stopwatch",
+   1
+  ],
+  [
+   "Bahan peralatan kantor",
+   1
+  ],
+  [
+   "Filtrasi dan status induk",
+   1
+  ],
+  [
+   "Varietas cuka",
+   1
+  ],
+  [
+   "Kultivar atau varietas buah",
+   1
+  ],
+  [
+   "Tahap kematangan",
+   1
+  ],
+  [
+   "Varietas kale",
+   1
+  ],
+  [
+   "Hiasan gaun",
+   1
+  ],
+  [
+   "Jenis ekor gaun",
+   1
+  ],
+  [
+   "Hewan penghasil susu",
+   1
+  ],
+  [
+   "Bahan dasar krim",
+   1
+  ],
+  [
+   "Ragam krim",
+   1
+  ],
+  [
+   "Varietas manggis",
+   1
+  ],
+  [
+   "Varietas kembang kol",
+   1
+  ],
+  [
+   "Tahap pertumbuhan produk",
+   1
+  ],
+  [
+   "Varietas selada air",
+   1
+  ],
+  [
+   "Minyak dasar",
+   1
+  ],
+  [
+   "Penggunaan minyak rambut",
+   1
+  ],
+  [
+   "Efek minyak rambut",
+   1
+  ],
+  [
+   "Portabilitas",
+   1
+  ],
+  [
+   "Pengaturan kecepatan pompa",
+   1
+  ],
+  [
+   "Tingkat hisapan",
+   1
+  ],
+  [
+   "Jenis wadah kotak P3K",
+   1
+  ],
+  [
+   "Standar kepatuhan kit P3K",
+   1
+  ],
+  [
+   "Penggunaan kit pertolongan pertama",
+   1
+  ],
+  [
+   "Fitur produk higiene absorben",
+   1
+  ],
+  [
+   "Bahas interior yang kompatibel",
+   1
+  ],
+  [
+   "Format penghilang noda",
+   1
+  ],
+  [
+   "Jenis perekat",
+   1
+  ],
+  [
+   "Bentuk perban",
+   1
+  ],
+  [
+   "Tingkat kompresi",
+   1
+  ],
+  [
+   "Bahan plester medis",
+   1
+  ],
+  [
+   "Warna pelapis sandaran",
+   1
+  ],
+  [
+   "Bahan pelapis sandaran",
+   1
+  ],
+  [
+   "Pola pelapis sandaran",
+   1
+  ],
+  [
+   "Orientasi kursi panjang atau modular",
+   1
+  ],
+  [
+   "Mekanisme sandaran",
+   1
+  ],
+  [
+   "Warna pelapis tempat duduk",
+   1
+  ],
+  [
+   "Bahan pelapis tempat duduk",
+   1
+  ],
+  [
+   "Pola pelapis tempat duduk",
+   1
+  ],
+  [
+   "Fitur sofa",
+   1
+  ]
+ ]
+}

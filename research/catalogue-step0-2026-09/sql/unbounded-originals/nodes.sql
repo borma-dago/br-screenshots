@@ -1,0 +1,6 @@
+-- nodes.sql — every category with its product count (main_category), depth, leaf flag, cumulative share. For TREE (B1–B3) and the A3↔B3 shared measurement.
+WITH
+p AS (SELECT * EXCEPT(rn) FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY id ORDER BY datastream_metadata.source_timestamp DESC, datastream_metadata.change_sequence_number DESC) rn FROM `solvent-staging.production_append_public.catalogue_product`) WHERE rn=1 AND datastream_metadata.change_type != 'DELETE'),
+c AS (SELECT * EXCEPT(rn) FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY id ORDER BY datastream_metadata.source_timestamp DESC, datastream_metadata.change_sequence_number DESC) rn FROM `solvent-staging.production_append_public.catalogue_category`) WHERE rn=1 AND datastream_metadata.change_type != 'DELETE'),
+nodes AS (SELECT c.id, c.name, c._name_en AS name_en, c.path, c.depth, c.numchild, c.full_code, c.is_public, COUNT(p.id) AS products, COUNTIF(p.is_active) AS products_active FROM c LEFT JOIN p ON p.main_category_id = c.id GROUP BY 1,2,3,4,5,6,7,8)
+SELECT *, SUM(products) OVER (ORDER BY products DESC, id ROWS UNBOUNDED PRECEDING) AS cum_products FROM nodes ORDER BY products DESC, id;

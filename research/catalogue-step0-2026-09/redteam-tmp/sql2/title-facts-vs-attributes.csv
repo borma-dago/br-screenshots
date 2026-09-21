@@ -1,0 +1,14 @@
+measure,value
+products_total,106161
+title_gram_differs_from_weight_attr,2640
+title_gram_equals_weight_attr,10036
+title_gram_parsed,13464
+title_gram_parsed_and_weight_attr_is_zero,788
+title_gram_parsed_and_weight_attr_nonzero,12676
+title_has_ISI_N,3519
+title_has_multiplier_NxM,1691
+title_has_pack_word,2000
+title_has_unit_token,26317
+title_has_unit_token_active_online,15011
+weight_attr_nonzero_products,33517
+weight_attr_zero_products,72644

@@ -1,0 +1,411 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Shared Or Per Member</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F4F7F4; --surface:#FFFFFF; --ink:#1A211E; --ink-2:#48524D; --ink-3:#75807A;
+  --line:#D6DDD8; --line-2:#BFC8C2;
+  --accent:#0F6E56; --accent-ink:#0A5240; --accent-soft:#DCEDE5;
+  --open:#A35C05; --open-soft:#F6E7D0;
+  --gate:#9A3B3B; --gate-soft:#F5DFDF;
+  --mono-bg:#E9EEEA; --mark:#FFF3C4;
+  --shadow:0 1px 0 rgba(20,30,25,.06);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121715; --surface:#191F1C; --ink:#E3E9E5; --ink-2:#ACB6B0; --ink-3:#7C8781;
+    --line:#28312C; --line-2:#3A453F;
+    --accent:#5CC7A4; --accent-ink:#8CDCC1; --accent-soft:#16332A;
+    --open:#E2A54B; --open-soft:#382812;
+    --gate:#E08A8A; --gate-soft:#3A2121;
+    --mono-bg:#202824; --mark:#4A3F12; --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121715; --surface:#191F1C; --ink:#E3E9E5; --ink-2:#ACB6B0; --ink-3:#7C8781;
+  --line:#28312C; --line-2:#3A453F;
+  --accent:#5CC7A4; --accent-ink:#8CDCC1; --accent-soft:#16332A;
+  --open:#E2A54B; --open-soft:#382812;
+  --gate:#E08A8A; --gate-soft:#3A2121;
+  --mono-bg:#202824; --mark:#4A3F12; --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.55;font-variant-numeric:tabular-nums}
+code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;background:var(--mono-bg);padding:.05em .3em;border-radius:3px}
+h1,h2,h3{font-family:"Bricolage Grotesque","Source Sans 3",system-ui,sans-serif;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:23px;font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+.page{max-width:1120px;margin:0 auto;padding:0 26px 72px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+header.top{padding:42px 0 24px;border-bottom:1px solid var(--line-2);display:grid;gap:16px}
+.lede{font-size:18px;line-height:1.5;color:var(--ink-2);max-width:74ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+section{padding:34px 0 0}
+section>h2{margin-bottom:6px}
+section>.sub{color:var(--ink-2);margin-bottom:16px;max-width:80ch;font-size:15px}
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+thead th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--mono-bg);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td.f{font-family:"IBM Plex Mono",monospace;font-size:12.5px;white-space:nowrap}
+td.lv{width:108px;white-space:nowrap}
+td.src{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;padding:2px 7px;border-radius:2px;white-space:nowrap}
+.tag.g{color:var(--accent-ink);background:var(--accent-soft)}
+.tag.m{color:var(--open);background:var(--open-soft)}
+.tag.both{color:var(--ink);background:var(--mono-bg);border:1px solid var(--line-2)}
+.tag.q{color:var(--gate);background:var(--gate-soft)}
+.tag.ours{color:var(--open);background:transparent;border:1px dashed var(--open)}
+.tag.na{color:var(--ink-3);background:transparent;border:1px solid var(--line)}
+.tag.dec{color:#fff;background:var(--accent);font-weight:500}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.dec{color:#0B1F19}}
+:root[data-theme="dark"] .tag.dec{color:#0B1F19}
+table.mx td,table.mx th{padding:6px 8px;font-size:13px}
+table.mx td.lv{width:auto}
+table.mx .tag{font-size:10.5px;padding:1px 5px}
+.cls{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);white-space:nowrap}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 15px;font-size:15px;line-height:1.55;margin-top:14px}
+.note.warn{border-left-color:var(--open);background:var(--open-soft)}
+.note.q{border-left-color:var(--gate);background:var(--gate-soft)}
+ul{margin:10px 0 0;padding-left:1.15em;display:grid;gap:8px;font-size:15px;color:var(--ink-2);max-width:86ch}
+ul strong{color:var(--ink)}
+mark{background:var(--mark);color:inherit;padding:0 .15em}
+.foot{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);max-width:86ch}
+</style>
+
+<div class="page">
+  <header class="top">
+    <div class="eyebrow">br-monorepo · #10966 · shape B is decided — every product belongs to a group · 2026-09-15</div>
+    <h1>Shared or per member</h1>
+    <p class="lede">Every field and every relation our catalogue has today, sorted into what the family owns and what each sellable member owns. The fields are read off the real models in <code>py/mono/solvent</code>; the levels are now backed by a field-by-field survey of thirteen platforms, quoted and sourced, rather than by my opinion. Whether the two tables end up named <code>Product → ProductVariant</code> or <code>ProductGroup → Product</code> does not change this list: it is the same split either way.</p>
+    <div class="legend">
+      <span class="tag g">family</span> owned once by the group ·
+      <span class="tag m">member</span> owned by each sellable row ·
+      <span class="tag both">both</span> a value at each level, with a stated rule ·
+      <span class="tag q">decide</span> genuinely open ·
+      <span class="tag ours">ours</span> no platform analogue, my reasoning ·
+      <span class="tag dec">tentative</span> decided by the user 2026-09-15, not yet final
+    </div>
+  </header>
+
+  <section>
+    <h2>Tentative decisions, 2026-09-15</h2>
+    <p class="sub">Taken by Irvan on this page. Tentative means settled enough to design against and cheap to revisit, not locked. Where a decision goes against the platform evidence, the row below says so plainly rather than quietly re-reading the evidence to agree.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Entry</th><th>Decision</th><th>What it rests on, and what it costs</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="f">images</td>
+            <td class="lv"><span class="tag dec">member first</span><br><span class="tag g">family too</span></td>
+            <td><strong>Member owns images; the family may also hold them, provided display can pick.</strong> It can — see the next section. The rule is member's images if it has any, otherwise the family's, which is exactly what WooCommerce ships. This is <em>not</em> what I recommended, and the difference is worth stating once: the platforms key a picture to the axis value rather than to the member, so a size-only family will store the same bottle against every member. The chosen shape still works, it just does not stop that.</td>
+          </tr>
+          <tr>
+            <td class="f">price · stock · <code>upc</code></td>
+            <td class="lv"><span class="tag dec">member</span></td>
+            <td>Unchanged from the analysis, and forced anyway: each references a physical unit that is priced, counted or scanned.</td>
+          </tr>
+          <tr>
+            <td class="f">visibility</td>
+            <td class="lv"><span class="tag dec">member</span></td>
+            <td>Applies to <code>is_public</code> and <code>is_active</code> together. Shopify and commercetools keep it on the family, so this is a real choice against some of the evidence. One consequence to design for: a family whose members are all hidden still exists, so the family page and the category listing need a rule for that case rather than rendering an empty picker.</td>
+          </tr>
+          <tr>
+            <td class="f">ProductAttributeValue</td>
+            <td class="lv"><span class="tag dec">member</span></td>
+            <td>Values stay where they are today, on the sellable row. No migration of the 469,179 existing rows.</td>
+          </tr>
+          <tr>
+            <td class="f">category</td>
+            <td class="lv"><span class="tag dec">family</span></td>
+            <td>And it becomes the product type, per the Q1/D2 lock. Every platform with a real container agrees. Managing the tree in that new role is <a href="https://github.com/borma-dago/br-monorepo/issues/11188" style="color:inherit"><strong>#11188</strong></a>.</td>
+          </tr>
+          <tr>
+            <td class="f">brand</td>
+            <td class="lv"><span class="tag q">it is an attribute</span></td>
+            <td>Almost certainly, and that is the point: it is not a field to place, it is the first example of the attribute question. Deferred to the attribute decision below.</td>
+          </tr>
+          <tr>
+            <td class="f">attributes</td>
+            <td class="lv"><span class="tag both">both</span> <span class="tag q">mechanism deferred</span></td>
+            <td><strong>Both levels, but the mechanism is undecided.</strong> The live options are commercetools' — the level is declared on the attribute definition, with a constraint that can force one value across the family — or Akeneo's, where the family variant assigns each attribute to exactly one level. Nothing downstream should assume either shape yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note q">
+      <strong>Next decision after these: how attributes are modelled.</strong> It is the one remaining piece the rest of the catalogue design leans on. It decides where brand lives, how a family's axis is expressed, what the category-as-product-type actually owns (<a href="https://github.com/borma-dago/br-monorepo/issues/11188" style="color:inherit">#11188</a>), and whether a value can sit at the family level at all.
+    </div>
+  </section>
+
+  <section>
+    <h2>Images on both: yes, display can pick</h2>
+    <p class="sub">The concern was the right one, and it is answered by two platforms that already carry images at both levels. The rule is one line; what needs care is that it has to be stated separately for each surface, which is the mistake Magento documents.</p>
+
+    <div class="note">
+      <strong>The rule.</strong> <code>images(member) = member's own images if it has any, otherwise the family's</code>. The primary image is whichever of that resolved list has <code>display_order = 0</code>. Nothing merges the two lists, so there is never an ambiguous ordering between a family picture and a member picture.
+    </div>
+
+    <p class="sub" style="margin-top:16px">This is precisely WooCommerce's shipped behaviour. Its variation falls back to the parent in the model — <code>get_image_id()</code> returns the parent's id when the variation has none — and the storefront "swaps the product gallery to that variation's images. Clearing the variation selection brings back the parent product gallery." Salesforce generalises the same idea: untagged image groups "represent the fallback images", and "the system chooses the most specific matching image groups possible".</p>
+
+    <h3 style="margin-top:22px">Magento's warning: one rule is not enough, name the surfaces</h3>
+    <p class="sub">Magento decides this in three independent places, and ships them with different defaults — the detail gallery replaces the parent's images, the cart thumbnail falls back to the parent (<code>&lt;configurable_product_image&gt;parent&lt;/configurable_product_image&gt;</code>), and swatches are a per-attribute flag. Left implicit, we would get the same drift. Ours, named:</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Surface</th><th>What it shows</th><th>Where it lives today</th></tr></thead>
+        <tbody>
+          <tr><td class="f">Product page gallery</td><td>The family's images until the shopper picks a member, then that member's if it has any. Clearing the selection returns to the family's.</td><td class="src">ts-product-detail-images</td></tr>
+          <tr><td class="f">Card · search result</td><td>The resolved primary of whichever row the result is. Stays one cached string, as today.</td><td class="src">Product.thumbnail_url_cache :441</td></tr>
+          <tr><td class="f">Merchant feed</td><td>Google requires <code>image_link</code> on every row, so each member resolves its own — its picture if it has one, else the family's.</td><td class="src">products_api.py:243</td></tr>
+          <tr><td class="f">Basket · order line · label · POS</td><td>The member's resolved primary. These are about one physical unit, so they never show a family image the member has overridden.</td><td class="src">basket :1164 · order :549</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:22px">What it costs to build</h3>
+    <ul>
+      <li><strong>One nullable column, one constraint.</strong> <code>ProductImage.product</code> becomes nullable and gains a sibling family FK, with a check that exactly one of the two is set. That keeps a single table and a single read path, which is what Shopify, Square and WooCommerce all do in their own way.</li>
+      <li><strong>The feed query is the one real change.</strong> It is a single filter today — <code>ProductImage.objects.filter(product_id__in=…, display_order=0)</code> — and becomes two passes: members with their own primary, then the family's primary for the rest.</li>
+      <li><strong>The thumbnail cache gains a fan-out.</strong> Editing a family image has to refresh <code>thumbnail_url_cache</code> on every member that was falling back to it. <code>backfill_thumbnail_url_cache</code> already walks this relationship and is the place to extend.</li>
+      <li><strong>Nothing migrates.</strong> All 63,363 existing image rows stay attached to the member they are on now.</li>
+    </ul>
+
+    <div class="note warn">
+      <strong>The one thing this shape does not give you.</strong> Because the picture hangs off the member rather than off the axis value, a family that varies only by size will hold the same photograph once per member — five sizes, five uploads of the same bottle — or fall back to the family image and show nothing distinguishing. Every platform that solved this keyed the image to the varying option instead. If that duplication starts to hurt, the upgrade path is additive: the same nullable pointer, aimed at an axis value rather than at a member.
+    </div>
+  </section>
+
+  <section>
+    <h2>Three kinds of row, and only one of them is a judgement</h2>
+    <p class="sub">The first version of this page put a level on every row in one voice. That was wrong: the rows are not the same kind of claim, and some of what read as a finding was my opinion. They are now separated.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Class</th><th>What settles it</th><th>Rows</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="f">forced</td>
+            <td>The row's own meaning. It references a physical unit that is scanned, counted, picked, purchased or shipped, so it can only hang off the sellable member. Nothing to decide.</td>
+            <td><code>upc</code> · price · stock · purchasing · receiving · transport · return-to-supplier · reconciliation · shelf label · basket line · order line · forecast</td>
+          </tr>
+          <tr>
+            <td class="f">platform</td>
+            <td>Thirteen platforms have already answered it, and their answers are quoted per row with the artifact they came from. Where they disagree, the disagreement is the finding.</td>
+            <td>title · description · <strong>images</strong> · slug · category · product type · attributes · visibility · the search unit · the feed row</td>
+          </tr>
+          <tr>
+            <td class="f">ours</td>
+            <td>No platform analogue exists. These are my reasoning, labelled as such, and yours to overrule.</td>
+            <td><code>title_staff</code> · <code>notes_staff</code> · <code>is_offline_only</code> · <code>ProductMeta</code> · promo ranges · analytics rows · timestamps</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>The product row today, field by field</h2>
+    <p class="sub">All of <code>catalogue/models.py</code> lines 356–604, in declaration order, plus the three inherited columns.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Field</th><th class="lv">Level</th><th>Why</th><th class="src">Today</th></tr></thead>
+        <tbody>
+          <tr><td class="f">title</td><td class="lv"><span class="tag both">both</span></td><td>The family owns the customer-facing name ("Indomie Goreng"); the member owns a <em>short label</em> ("85 g"), not a second full title. Nowhere is the full string stored twice by design — see the table below. Display is composed, as Shopify's <code>displayName</code> is "based on product's title + variant's title".</td><td class="src">:398</td></tr>
+          <tr><td class="f">description</td><td class="lv"><span class="tag g">family</span></td><td>The strongest row in the whole survey. Five platforms give the member no description field at all, three inherit it from the family, and of the four that repeat it three tell you to keep it identical — eBay goes as far as "must have the same values".</td><td class="src">:418</td></tr>
+          <tr><td class="f">slug</td><td class="lv"><span class="tag g">family</span> <span class="tag q">with a per-member URL</span></td><td>The family owns the address — Shopify's <code>handle</code>, Square's <code>ecom_seo_data.permalink</code>, commercetools' <code>slug</code> and WooCommerce's parent permalink are all family-only. But two platforms insist the member is reachable on its own: eBay gives each variation a <code>VariationViewItemURL</code>, and Google is explicit that the feed rows must not share a URL — "Make sure to have different landing page URLs submitted for each variant, with each URL using a different path segment and/or query parameters, for example \"/t-shirt/green\" or \"/t-shirt?color=green&amp;size=small\"". So one slug on the family, and a member-addressing query parameter the feed can send.</td><td class="src">:412</td></tr>
+          <tr><td class="f">upc</td><td class="lv"><span class="tag dec">member</span></td><td>A barcode identifies one sellable thing. GS1: "every variation of your product (e.g. each size, each colour) requires its unique GS1 GTIN". The family has none, which is why D13's nullable-<code>upc</code> problem disappears once the family is a separate table.</td><td class="src">:390</td></tr>
+          <tr><td class="f">main_category</td><td class="lv"><span class="tag dec">family</span></td><td>Decided 2026-09-15, and it becomes the product type. Every platform with a real family container agrees: Shopify, Shopee, Tokopedia, Square, commercetools and WooCommerce put it on the family only, and Salesforce says the classification category "cannot be overridden" on a variant. Implementation detail left open: whether the member keeps a validated duplicate so age-walling, replenishment, search and the feed keep reading the column they read today. Managing the tree in its new role is <a href="https://github.com/borma-dago/br-monorepo/issues/11188" style="color:inherit">#11188</a>.</td><td class="src">:434</td></tr>
+          <tr><td class="f">product_class</td><td class="lv"><span class="tag g">family</span></td><td>Superseded by <code>main_category</code> under D1 + D2 and due to be rewritten, not extended. Wherever the type lands, it lands once per family.</td><td class="src">:422</td></tr>
+          <tr><td class="f">attributes</td><td class="lv"><span class="tag both">both</span> <span class="tag q">mechanism deferred</span></td><td>Both levels, mechanism undecided until the attribute decision. The two candidates: commercetools declares the level on the attribute definition itself — <code>AttributeDefinition.level</code> is <code>Product</code> or <code>Variant</code>, with <code>attributeConstraint: SameForAll</code> to force one value across the family — or Akeneo's family variant, which assigns each attribute to exactly one level. Brand is the first thing this decides.</td><td class="src">:428</td></tr>
+          <tr><td class="f">is_public</td><td class="lv"><span class="tag dec">member</span></td><td>Decided 2026-09-15: member. Against Shopify and commercetools, which keep status on the family, and with Square, Tokopedia and WooCommerce, which carry it at both levels. One case to write a rule for: a family whose members are all hidden still exists, so the family page and the category listing need to know not to render it.</td><td class="src">:378</td></tr>
+          <tr><td class="f">is_active</td><td class="lv"><span class="tag dec">member</span></td><td>Same decision as <code>is_public</code>, same all-members-hidden case.</td><td class="src">mixin</td></tr>
+          <tr><td class="f">is_offline_only</td><td class="lv"><span class="tag m">member</span> <span class="tag ours">ours</span></td><td><em>Our concept; no platform equivalent found.</em> It reads as a property of a sellable unit — a bulk pack can be in-store only while the single sells online — and it drives the feed, which emits members. If the data shows it is in practice set family-wide, it belongs on the family instead.</td><td class="src">:386</td></tr>
+          <tr><td class="f">price_sell_online</td><td class="lv"><span class="tag dec">member</span></td><td>A pointer to the <code>PriceSell</code> row that prices this unit online.</td><td class="src">:446</td></tr>
+          <tr><td class="f">inventory_facility_online</td><td class="lv"><span class="tag dec">member</span></td><td>A pointer to the stock row that supplies this unit online.</td><td class="src">:454</td></tr>
+          <tr><td class="f">title_staff</td><td class="lv"><span class="tag both">both</span> <span class="tag ours">ours</span></td><td><em>No platform has this field, so this is my reasoning, not a finding.</em> Staff work on the member — they scan and receive a specific pack — so today's values belong there. A family staff name is only worth adding when the staff UI grows a family screen.</td><td class="src">:402</td></tr>
+          <tr><td class="f">notes_staff</td><td class="lv"><span class="tag both">both</span> <span class="tag ours">ours</span></td><td><em>My reasoning.</em> A note is written about whatever the writer was looking at, so both levels want one and neither needs a rule. The cost of having it in two places is that a reader must check both.</td><td class="src">:408</td></tr>
+          <tr><td class="f">thumbnail_url_cache</td><td class="lv"><span class="tag both">both</span></td><td>A cache of whatever the resolution rule returns, so it stays one string per row as today. The new obligation is a fan-out: editing a family image refreshes every member that was falling back to it.</td><td class="src">:441</td></tr>
+          <tr><td class="f">date_created · date_edited</td><td class="lv"><span class="tag both">both</span> <span class="tag ours">ours</span></td><td>Mechanical: every table keeps its own. The thing to carry forward is that the search index orders by <code>Product.date_edited</code>, which already lacks an index (#11031), and a second table means a second ordering column to think about.</td><td class="src">mixin</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Is it normal to carry a title on both rows?</h2>
+    <p class="sub">Yes, but almost never as the same string twice. Where the family is a real container, the member's name is either absent, derived from its axis values, or a separate short label — and the displayed string is composed. Checked 2026-09-15 against the records and the vendor field tables.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Pattern</th><th>Platforms</th><th>What the source says</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="f">Member has no name at all</td>
+            <td>commercetools</td>
+            <td>`name` is on <code>ProductData</code> only; the Modular projection's <code>name</code> is labelled "Name of the <em>parent</em> Product".</td>
+          </tr>
+          <tr>
+            <td class="f">Member name is derived and read-only</td>
+            <td>Shopify · Square · WooCommerce</td>
+            <td><strong>Shopify</strong>: <code>ProductVariant.title</code> "has zero write paths" — variant <code>title</code> input fields across all 599 input objects = 0 — and <code>displayName</code> is "based on product's title + variant's title". <strong>Square</strong>: the variation's <code>name</code> — "when the parent item uses item options, this attribute is auto-generated, read-only"; live, a request sending <code>"name": "cp0905-rev-var"</code> read back as the six option-value names joined together. <strong>WooCommerce</strong>: the documented variation properties carry no <code>name</code>, yet the live response shows <code>"name":"Red, No"</code> — its two axis values.</td>
+          </tr>
+          <tr>
+            <td class="f">Member has its own short label, authored</td>
+            <td>Akeneo · Salesforce B2C</td>
+            <td><strong>Akeneo</strong> ships a separate attribute for exactly this: the family variant puts <code>variation_name</code> at level 1, beside the model's own <code>name</code>. <strong>Salesforce</strong>: <code>name</code> is authored on the master and inherited, and a variant may define its own value.</td>
+          </tr>
+          <tr>
+            <td class="f">Full title repeated on every row</td>
+            <td>Amazon · eBay · Walmart · Google</td>
+            <td>These are the flat-row platforms, and they police the duplication. <strong>Amazon</strong>: the measured family carries a byte-identical title <em>stem</em> on parent and all three children. <strong>eBay</strong>: members' "product.title and product.description values … must have the same values". <strong>Walmart</strong>: both members of the sample carry the identical <code>productName</code>, differing only in <code>flavor</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <strong>What this means for us.</strong> Do not store the full title twice. The family holds the name; the member holds a short label that defaults to its axis values — "85 g", "Ayam Bawang" — and is only authored when the derived string reads badly. Compose for display, and index the composed string so staff can still search "Indomie Goreng 85 g". One place already needs the composed form and has the right instinct: the order line copies <code>title</code> onto itself at write time, which should become a snapshot of the composed string so a later rename cannot rewrite history.
+    </div>
+  </section>
+
+  <section>
+    <h2>What the platforms actually do, field by field</h2>
+    <p class="sub">Collected 2026-09-15 from vendor schemas, reference docs and live responses, one platform at a time, every row quoted and carrying the artifact it came from. Full records in <code>fields/tier1.md</code>, <code>tier2.md</code> and <code>tier3.md</code>. Ordered by how tried-and-tested the platform is, which is my judgement, not a measurement.</p>
+    <!-- field-matrix --><div class="tw"><table class="mx"><thead><tr><th>Platform</th><th>T&amp;T</th><th>images</th><th>price</th><th>stock</th><th>barcode / SKU</th><th>category · type</th><th>brand</th><th>visibility</th><th>URL</th><th>non-axis attrs</th><th>weight · shipping</th></tr></thead><tbody><tr><td class="f">Amazon</td><td class="src">100</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td></tr><tr><td class="f">Shopify</td><td class="src">85</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag m">member</span></td></tr><tr><td class="f">eBay</td><td class="src">80</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td></tr><tr><td class="f">Google</td><td class="src">70</td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td></tr><tr><td class="f">Walmart</td><td class="src">65</td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td></tr><tr><td class="f">Shopee</td><td class="src">60</td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td></tr><tr><td class="f">Magento</td><td class="src">60</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td></tr><tr><td class="f">WooCommerce</td><td class="src">55</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td></tr><tr><td class="f">Salesforce</td><td class="src">50</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag q">OPEN</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag na">n-a</span></td></tr><tr><td class="f">Tokopedia Era B</td><td class="src">45</td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td></tr><tr><td class="f">Square</td><td class="src">40</td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag na">n-a</span></td></tr><tr><td class="f">commercetools</td><td class="src">35</td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag g">family</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag na">n-a</span></td></tr><tr><td class="f">Akeneo</td><td class="src">30</td><td class="lv"><span class="tag both">either</span></td><td class="lv"><span class="tag both">either</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag both">both</span></td><td class="lv"><span class="tag both">either</span></td><td class="lv"><span class="tag m">member</span></td><td class="lv"><span class="tag na">n-a</span></td><td class="lv"><span class="tag both">either</span></td><td class="lv"><span class="tag both">either</span></td></tr></tbody></table></div><!-- /field-matrix -->
+    <div class="note warn">
+      <strong>Read the rows, not a tally.</strong> Two of these look like agreement but are not. <strong>Salesforce</strong> reads "both" everywhere because a single schema type serves master and variant, and the level is decided per property by a documented fallback chain. <strong>Akeneo</strong> reads "either" because almost nothing has a fixed level: price, pictures, brand and description are attribute values, and the family variant assigns each one to exactly one level. <strong>Google</strong> reads "member" everywhere because it has no family object at all — only a shared <code>item_group_id</code> repeated on every row.
+    </div>
+  </section>
+
+  <section>
+    <h2>Images: I had this wrong</h2>
+    <p class="sub">The first version of this page said the family owns the gallery and "a member may override with its own shot". That is not what the platforms do. They tie a picture to <em>the axis value it illustrates</em> — the red one, the 500 ml one — not to the member, and several of them will not let a member hold pictures at all.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>How the picture is addressed</th><th>Platforms</th><th>What the source says</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="f">Keyed to the axis value, on the family</td>
+            <td>Salesforce · eBay · Tokopedia Era B · Akeneo</td>
+            <td><strong>Salesforce</strong> is the clearest: an image group carries "an ordered list of variation attribute values… If an image group applies for all the red variants, for example, it will have one of these elements, namely \"color=red\"", groups with no tag "represent the \"fallback\" images", and "the system chooses the most specific matching image groups possible". <strong>eBay</strong>: if <code>aspectsImageVariesBy</code> is set, "the links to the images must be passed in through this imageUrls container, and there should be a picture for each variation… if the variesBy.aspectsImageVariesBy field is set to Color, a link should be included to an image demonstrating each available color in the group". <strong>Tokopedia</strong>: "You can attach images to only 1 type of sales attribute… An image must be provided for each value of the primary attribute." <strong>Akeneo</strong>'s worked example puts "the composition and the pictures" at the colour level.</td>
+          </tr>
+          <tr>
+            <td class="f">Member has no pictures at all</td>
+            <td>Shopee</td>
+            <td>Images are required on the item; the model has no image field. Instrumented: across all 92 API records, 1,704,281 bytes, model-scoped paths matching <code>/image/i</code> = 1, and that one belongs to the kit-item API, not to a variant. Option-scoped image paths in the same sweep = 11. The pictures hang off <code>tier_variation.option_list[].image</code> — the axis value again.</td>
+          </tr>
+          <tr>
+            <td class="f">One picture per member, drawn from the family's list</td>
+            <td>Shopify</td>
+            <td>"Each variant can have one media item applied, which must be from the product's media list", and "you can only add one image to each product variant". A live test assigning a foreign image succeeded and <em>added it to this product's media list</em>, so the subset invariant holds by adding rather than by rejecting.</td>
+          </tr>
+          <tr>
+            <td class="f">Member owns pictures, family is the fallback</td>
+            <td>WooCommerce · Magento</td>
+            <td><strong>WooCommerce</strong>: the variation's <code>get_image_id()</code> falls back to <code>parent_data['image_id']</code>, the REST schema gives the variation a singular <code>image</code> against the parent's <code>images</code> array, and the storefront "swaps the product gallery to that variation's images. Clearing the variation selection brings back the parent product gallery." <strong>Magento</strong> decides it in three separate places, and the cart thumbnail ships defaulting to the parent: <code>&lt;configurable_product_image&gt;parent&lt;/configurable_product_image&gt;</code>.</td>
+          </tr>
+          <tr>
+            <td class="f">Free-form on both, no relationship</td>
+            <td>Square · commercetools</td>
+            <td><strong>Square</strong>: item and variation each have <code>image_ids</code>, and a live read-back had the item's images and one variation's images populated independently while the sibling variation had none. <strong>commercetools</strong> is the opposite extreme: there is no images field on the product at all, and "Images: images that are specific to a color and size combination" — every image action requires a <code>variantId</code> or <code>sku</code>.</td>
+          </tr>
+          <tr>
+            <td class="f">Repeated per row, because there is no family</td>
+            <td>Amazon · Google · Walmart</td>
+            <td><strong>Google</strong> requires <code>image_link</code> on every variant row and has no family object. <strong>Amazon</strong> requires one on the parent too: "you must still describe other aspects of the parent product, including an image that represents the generalized product. The only information to omit relates specifically to price, availability, and shipping." <strong>Walmart</strong> has no family object on the write side at all: every image field sits on the item, and the group's picture is simply a nominated member — <code>isPrimaryVariant</code>, which "will appear as the image when customers search and the first image displayed on the item page. This should be set as \"Yes\" for only one item in a group of variants." It does key one thing to the axis, the swatch: "Enter the swatch image location in \"Swatch Image URL\" and its corresponding variant attribute name in \"Swatch Variant Attribute\". Required for products with visual variations, like color or pattern."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:22px">Whether a member needs its own picture depends on the axis, not the member</h3>
+    <p class="sub">Amazon publishes this as a table. Reproduced whole:</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Dimension type</th><th>Description</th><th>Image behavior</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="f">Visual</td><td>"Options where a significant visual difference is applied to the product variant"</td><td>"Images in the detail page will change depending on the option selected"</td><td>"Color or pattern variants"</td></tr>
+          <tr><td class="f">Non-visual</td><td>"Options where there is no visual effect on the product regardless of selection"</td><td>"Images will remain the same"</td><td>"Size variants"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>What I recommended, and what was decided.</strong> I would have hung <code>ProductImage</code> off the family with a nullable pointer to the axis <em>value</em> it illustrates, resolving by most specific match — Salesforce's rule — with nothing on the member. The decision taken on 2026-09-15 was member-first with the family as fallback, which is WooCommerce's rule. Both work; the difference is that the axis-keyed shape stops a size-only family storing the same photograph once per member, and the chosen shape does not. Our data makes that cheap to live with either way: <mark>only 30,740 of 105,754 products carry any image at all</mark>.</div>
+    <div class="note warn">
+      <strong>The counter-case, stated fairly.</strong> Square and commercetools give the member its own free-form list, and commercetools has no family images whatsoever. If we expect members to be photographed independently — different packaging shots per pack size, say — that is the model to copy instead, and the cost is that every member needs its own upload.
+    </div>
+  </section>
+
+  <section>
+    <h2>Everything that points at a product</h2>
+    <p class="sub">Every <code>ForeignKey</code>, <code>OneToOneField</code> and <code>ManyToManyField</code> targeting <code>Product</code> in the tree, found by scanning <code>py/mono/solvent</code>. The pattern is blunt: everything that touches money, stock or a transaction stays on the member; everything that describes or merchandises moves to the family.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Model</th><th class="lv">Level</th><th>Why</th><th class="src">Where</th></tr></thead>
+        <tbody>
+          <tr><td class="f">ProductImage</td><td class="lv"><span class="tag dec">member first</span> <span class="tag g">family too</span></td><td>Decided 2026-09-15. Both levels may hold images; the member's win when it has any, otherwise the family's show. Resolution rule and the four surfaces it applies to are above.</td><td class="src">catalogue :787</td></tr>
+          <tr><td class="f">ProductAttributeValue</td><td class="lv"><span class="tag dec">member</span></td><td>Decided 2026-09-15: values stay on the sellable row, so none of the 469,179 existing rows move. If the attribute decision later puts some definitions at family level, this table needs a family column then, not now.</td><td class="src">catalogue :719</td></tr>
+          <tr><td class="f">ProductCategory</td><td class="lv"><span class="tag g">family</span></td><td>The dead 19.6%-populated M2M. Merchandising placement ("Promo Ramadan") is about the family, and this is the edge D14 wants for placement beside the type.</td><td class="src">catalogue :334</td></tr>
+          <tr><td class="f">ProductMeta</td><td class="lv"><span class="tag m">member</span> <span class="tag ours">ours</span></td><td><em>Our table.</em> <code>quantity_purchasing_allowed_multiples</code> and <code>quantity_per_box</code> describe a pack: a carton holds 24 singles or 12 large bottles, never "24 of the family". Close to forced, but it is our own model, so it is labelled ours.</td><td class="src">catalogue :912</td></tr>
+          <tr><td class="f">ProductRange.products</td><td class="lv"><span class="tag m">member</span> <span class="tag ours">ours</span></td><td><em>My reasoning, and the row I would most expect you to push back on.</em> A promo ends in a price, and prices are per member, so the target stays an M2M of sellable rows, with the family as a staff convenience that fills the range in one click. Letting a range point at a family instead is a real option; it costs a second join everywhere a range is read.</td><td class="src">catalogue :904</td></tr>
+          <tr><td class="f">PriceSell · PriceSellChangeLine</td><td class="lv"><span class="tag m">member</span></td><td>Priced per (product, facility). A family price would be a derived range for display only, and the platforms that store that copy are where the bugs are (WooCommerce's parent <code>_price</code>, Magento's stale out-of-stock).</td><td class="src">price/sell :31, :182</td></tr>
+          <tr><td class="f">PricePurchaseRecord</td><td class="lv"><span class="tag m">member</span></td><td>You buy a specific pack from a supplier at a specific cost.</td><td class="src">price/purchase :66</td></tr>
+          <tr><td class="f">InventoryFacility · InventoryRecord</td><td class="lv"><span class="tag m">member</span></td><td>Stock is counted per sellable unit per facility. A family total is a sum, computed, never stored.</td><td class="src">inventory :120</td></tr>
+          <tr><td class="f">InventoryReconciliationLine</td><td class="lv"><span class="tag m">member</span></td><td>Stock opname counts what is on the shelf, which is a barcode.</td><td class="src">inventory/reconciliation :147</td></tr>
+          <tr><td class="f">PurchasingLine · ReceivingLine · TransportLine · ReturnToSupplierLine</td><td class="lv"><span class="tag m">member</span></td><td>Every supply-chain document moves physical units. All four are <code>PROTECT</code>, so they also pin a member against deletion.</td><td class="src">purchasing :280 · receiving :254 · transport :192 · return_to_supplier :201</td></tr>
+          <tr><td class="f">ForecastProduct</td><td class="lv"><span class="tag m">member</span></td><td>Replenishment forecasts a unit's demand. A family-level forecast is a rollup if anyone wants one.</td><td class="src">forecast :24</td></tr>
+          <tr><td class="f">PrinterLabelProductLine</td><td class="lv"><span class="tag m">member</span></td><td>A shelf label prints one barcode and one price.</td><td class="src">printer/label :81</td></tr>
+          <tr><td class="f">Basket Line</td><td class="lv"><span class="tag m">member</span></td><td>A customer buys a specific flavour. The picker chooses the member before the line exists.</td><td class="src">basket :1164</td></tr>
+          <tr><td class="f">Order Line</td><td class="lv"><span class="tag m">member</span></td><td>Same, and it already copies <code>title</code> onto the line so history survives a rename — that copy should become the composed family-plus-variant string.</td><td class="src">order :549</td></tr>
+          <tr><td class="f">Analytics: ProductRecord · UserProductView</td><td class="lv"><span class="tag m">member</span> <span class="tag ours">ours</span></td><td><em>My reasoning, and changed from the first version.</em> <code>num_purchases</code> counts purchases, which happen to a member, and it drives that member's search boost. A family rollup is a query, not a second stored row, until a page genuinely needs it stored.</td><td class="src">analytics :20, :55</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>The two derived surfaces: search and the Merchant feed</h2>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Surface</th><th class="lv">Level</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td class="f">Search index</td><td class="lv"><span class="tag m">member</span></td><td>Members are what a customer buys and what the till scans, so the sellable document stays per member with the group id added for collapsing. <code>guid</code> is <code>upc</code> today and keeps working, because members keep their barcode. A family document is optional and only needed if we want families to rank as one result.</td></tr>
+          <tr><td class="f">Merchant feed</td><td class="lv"><span class="tag m">member</span></td><td>Google wants one row per sellable item with a shared <code>item_group_id</code>, and forbids the group id on a product that is not a variant — so the exporter emits members and suppresses the id for single-member families. Title, description, images and the link come from the family, price and availability from the member.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>What the group row gains that no product row has today</h2>
+    <ul>
+      <li><strong>The dimension list</strong> — a thin through table of <code>ProductAttribute</code> rows with a position, each required to belong to the family's category and to be axis-eligible. Empty for a family of one.</li>
+      <li><strong>The type</strong> — the <code>Category</code> that owns the attributes, and the gate on which of them may be an axis.</li>
+      <li><strong>A variant key per member</strong> — a canonical string of the member's axis values, unique within the family, so D7's uniqueness is a database constraint instead of a validator over many rows.</li>
+      <li><strong>A primary member</strong> — which member the card, the feed and the page default to. Walmart requires exactly one; Google picks the first; we will need one for the thumbnail and the default selection.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The four things worth deciding deliberately</h2>
+    <div class="note q"><strong>1 · Does the member keep a copy of <code>main_category</code>?</strong> A validated duplicate keeps age-walling (<code>models.py:563</code>), inventory replenishment, the search document and the feed reading the column they read today. Moving it wholly to the group re-points all four. The duplicate is the cheaper migration; the single copy is the cleaner model.</div>
+    <div class="note q"><strong>2 · How do non-axis attribute values attach to a family?</strong> <code>ProductAttributeValue</code> has one <code>product</code> column. Either add a nullable <code>variant_group</code> beside it with a check that exactly one is set, or give the family its own value table. The first keeps one read path for "all values of this thing"; the second keeps each table's constraint simple.</div>
+    <div class="note q"><strong>3 · What shape is the member's URL?</strong> The customer page is <code>shop/product/{product_id}/{product_slug}</code> today, and that exact string is what the Merchant feed sends Google. Google will not accept a feed whose variants share a link: "Make sure to have different landing page URLs submitted for each variant, with each URL using a different path segment and/or query parameters". So this is not family-or-member. The family owns the slug, and the member still needs an address — either a query parameter on the family page or the member id kept in the path. Keeping the id in the path is the only option that leaves every existing URL working.</div>
+    <div class="note q"><strong>4 · Is the title composed or stored?</strong> "Indomie Goreng" + "85 g" can be composed at read time, as Shopify does with <code>displayName</code>, or stored per member as it is today. Composition removes a drift pair; storage keeps the order line, the label and the POS display reading one field. The survey leans to composing: the only platforms that store the full string on every row are the ones with no container, and all of them have to police the duplication.</div>
+  </section>
+
+  <section>
+    <h2>One sentence that summarises the whole split</h2>
+    <div class="note">
+      <strong>Money, stock, identity, visibility and pictures stay on the member; words and classification move to the family.</strong> Almost every relation pointing at <code>Product</code> today is transactional and does not move at all. After the 2026-09-15 decisions the list that moves is shorter still: the description, the slug, the type and the placement M2M. Images gain a family option but keep their member rows, and attribute values do not move at all until the attribute mechanism is decided. That is the whole migration surface on the content side, and it is the same list whichever of the two tables ends up being called <code>Product</code>.
+    </div>
+  </section>
+
+  <p class="foot">Read from <code>py/mono/solvent</code> on 2026-09-15: <code>catalogue/models.py</code> (Product 356–604, ProductCategory 334, ProductAttributeValue 719, ProductImage 787, ProductRange 904, ProductMeta 912), <code>price/sell/models.py</code>, <code>price/purchase/models.py</code>, <code>inventory/models.py</code>, <code>inventory/reconciliation/models.py</code>, <code>basket/models.py</code>, <code>order/models.py</code>, <code>purchasing/models/purchasing.py</code>, <code>receiving/models/receiving.py</code>, <code>transport/models/models.py</code>, <code>return_to_supplier/models.py</code>, <code>forecast/models.py</code>, <code>printer/label/models/printer_label_product.py</code>, <code>analytics/models.py</code>, <code>search/search_indexes.py</code>, <code>third_party_api/google/content/products_api.py</code>. Platform comparisons come from the thirteen records under #10966 and the description pass posted as #11031 comment 5675484207. Level assignments are my judgement; the field lists and line numbers are the code.</p>
+</div>
+
+</body></html>

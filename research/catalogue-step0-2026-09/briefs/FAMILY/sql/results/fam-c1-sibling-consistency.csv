@@ -1,0 +1,19 @@
+section,bucket,value
+A · category · would a name-only family straddle categories?,distinct 3-word prefixes with >=2 products,11411
+A · category · would a name-only family straddle categories?,"of those, spanning >1 main_category",2945
+A · category · would a name-only family straddle categories?,products inside prefixes that span >1 category,11323
+B · brand proxy (manufacturer) inside a proxy family,all members share one manufacturer value,3550
+B · brand proxy (manufacturer) inside a proxy family,at least one member has no manufacturer row,4731
+B · brand proxy (manufacturer) inside a proxy family,members disagree on manufacturer,1908
+B · brand proxy (manufacturer) inside a proxy family,no member has a manufacturer row,3717
+B · brand proxy (manufacturer) inside a proxy family,proxy families,10090
+C · description / images inside a proxy family,all members share one description string,5998
+C · description / images inside a proxy family,at least one member has an empty description,6599
+C · description / images inside a proxy family,at least one member has no image,6002
+C · description / images inside a proxy family,every member has a DIFFERENT description,3912
+C · description / images inside a proxy family,every member has an empty description,5997
+C · description / images inside a proxy family,no member has an image,5299
+D · one product in two families — data signal,ProductCategory M2M rows,20520
+D · one product in two families — data signal,exact duplicate normalised titles across the catalogue,2112
+D · one product in two families — data signal,products carrying a duplicated normalised title,4273
+D · one product in two families — data signal,products with >1 ProductCategory row,1
