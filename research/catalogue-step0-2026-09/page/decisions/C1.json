@@ -1,0 +1,186 @@
+{
+ "id": "C1",
+ "options": {
+  "i": "C1-i strict, policed — siblings differ only in axis values + price/stock/barcode; the platform refuses a family whose members disagree",
+  "ii": "C1-ii family-owned — the member has no title/description/category/brand field; the question cannot arise",
+  "iii": "C1-iii free — siblings may differ in title, description and images",
+  "AMB": "Ambiguous"
+ },
+ "subtallies": [
+  {
+   "name": "Sibling rule (13 + Meta)",
+   "cells": [
+    [
+     "i — policed (flat-feed platforms replicate and validate)",
+     [
+      "Amazon",
+      "eBay",
+      "Walmart",
+      "Meta"
+     ]
+    ],
+    [
+     "ii — family-owned (the member has no such field)",
+     [
+      "Shopify",
+      "Shopee",
+      "Tokopedia Era B",
+      "Square",
+      "commercetools"
+     ]
+    ],
+    [
+     "iii — free",
+     [
+      "Magento",
+      "WooCommerce"
+     ]
+    ],
+    [
+     "ambiguous",
+     [
+      "Google (i for title-level facts, unstated for the rest)",
+      "Salesforce B2C (ii by default, iii by override)",
+      "Akeneo (configurable by level)"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "Can one product be in two families?",
+   "cells": [
+    [
+     "no",
+     [
+      "Walmart",
+      "Amazon",
+      "Salesforce B2C",
+      "commercetools",
+      "WooCommerce",
+      "Akeneo",
+      "Google",
+      "Shopee",
+      "Tokopedia",
+      "Square",
+      "Shopify",
+      "eBay"
+     ]
+    ],
+    [
+     "yes (0..N by the pair-unique link)",
+     [
+      "Magento"
+     ]
+    ]
+   ]
+  }
+ ],
+ "framing": "The split is architectural, not substantive: C1-i and C1-ii are the same answer in two architectures — the flat-feed platforms replicate-and-police, the container platforms store once. 8 of 13 hold that siblings must not differ in title, description or category; only Magento and WooCommerce permit it, and both have a container that is itself an ordinary row/post. Meta's own 6-row sample contradicts Meta's own rule (identical image_link against “images do change”) — a vendor sample is not a specification.",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "i",
+   "h": "the [E-25] rule carries the row; the byte-identity measurement is on a defective sample",
+   "shape": "<em>“Required attributes that must be identical across a family. Terms like ‘item type keyword’, ‘model name’, ‘style’ and ‘brand’ are key non-varying attributes for which all child ASINs must have the same values. Child ASINs with different non-varying attribute values cannot be grouped into a single variation family.”</em> Measured: parent and all three children byte-identical on <code>title</code> stem, <code>description</code>, <code>bullet-point1</code>, all five <code>search-terms</code>, <code>item-type</code>, <code>target-audience</code>, <code>main-image-url</code>, <code>warnings</code> — but both of Amazon's flavour examples are internally defective (Clif Bar: <code>flavor</code> empty on all four rows, <code>parent-sku</code> empty on the children); the four Size/Color families in <code>Flat.File.Home.xls</code> are clean. One family only: <em>“a single, non-sellable parent product”</em>, feed error 8032 on re-parenting. Stated why: a family whose non-varying attributes disagree “cannot be grouped” — the rule sits at admission because the family has no content row of its own.",
+   "cite": "#10976 §1.8, §2 [E-12][E-25], 10976.md:412"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "ii",
+   "h": "",
+   "shape": "The variant has <b>no description field at all</b>. Product-only: <code>title</code>, <code>handle</code>, <code>category</code>, <code>vendor</code>, <code>productType</code>, <code>tags</code>, <code>media</code>, <code>seo</code>, <code>status</code>, <code>options</code>, <code>collections</code>. The variant keeps <code>title</code>, <code>media</code>, <code>selectedOptions</code>, <code>price</code>, <code>sku</code>, <code>barcode</code>. Inference: the cheapest enforcement is an absent column.",
+   "cite": "#11011 §2b; #11031 field survey §B"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "AMB",
+   "h": "i for title-level facts; description/brand/gtin/category not stated (U9)",
+   "shape": "<em>“All variants of the same product must have the same item group title <code>[item_group_title]</code>”</em> and it must differ from the member <code>[title]</code>. <em>“Not stated anywhere retrieved: whether description, brand, gtin or google_product_category must be identical across a group”</em>; a live probe with divergent <code>brand</code> produced 0 <code>itemLevelIssues</code> — but no product in the entire pass carried any, so the control does not discriminate. Stated why grouping exists: <em>“Submitting unique GTINs for each variant and adding the item group ID ensures that the product and its variants are shown to customers as a group rather than separately.”</em> Google also says landing pages per variant should differ (<code>/t-shirt/green</code>, <code>?color=green</code>) — and elsewhere “align grouping with your landing page experience”. <b>Re-read 2026-09-21 (help 6324507):</b> the only stated match rules are <code>item_group_id</code> and <code>item_group_title</code> (“Don’t submit variants without variant attributes”); nothing on description/brand/gtin/category — U9 stands. The landing-page tension is inside Google's own page: “align grouping with your landing page experience” (requirements) vs “different landing page URLs for each variant” (best practices). Live probe deliberately not re-run: non-discriminating until H3 (itemLevelIssues) is enabled.",
+   "cite": "#11013 §2 [R-9][F-50], §4 U9, 11013.md:379, :925; gap-pass-2026-09-21/merchant-center/RESULT.md"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "i",
+   "h": "i and ii simultaneously — on the Wayback route only",
+   "shape": "Group: <em>“the title and description values will become the listing title and listing description of the live, multiple-variation eBay listing”</em>; members: <em>“the product.title and product.description values … must have the same values.”</em> Neither string is in #11045 (0 hits); both are at #11031 §B from a Wayback capture of the vendor page (developer.ebay.com returns 403 directly). #11045 §1.4 shows the group's <code>title</code>/<code>description</code> as 0..1 optional and states no member-match rule.",
+   "cite": "#11031 §B (11031.md:1192); #11045 §1.4"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "i",
+   "h": "content half is a best practice; two of the five “must” bullets contested (U26)",
+   "shape": "Hard rules: <em>“All items in a variant group must: share the same <code>variantGroupId</code> · use the same <code>variantAttributeNames</code> · provide values for the same variant attributes · represent a unique combination of variant attribute values · contain exactly one primary variant.”</em> Content rule under <b>Best practices</b>: <em>“Keep product content consistent across all variants except for the attributes that vary.”</em> U13: no vendor page states a rule for any field other than <code>variantGroupId</code> and the axis names. <em>“An item can belong to only one variant group.”</em> Stated why: <em>“display multiple versions of the same product on a single Walmart item page … compare available options without navigating between multiple item pages.”</em>",
+   "cite": "corpus/walmart/wm-multiple-variants.txt (2026-09-19); #11046 §2b, §4 U13, §5 #27"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "ii",
+   "h": "the 32-child item schema contradicts its own sample (contradiction 18)",
+   "shape": "<code>description</code> is one of the item's 32 declared <code>item_list</code> children; a <code>model</code> carries <code>model_sku</code>, <code>tier_index</code>, price, stock and one image. (<code>batch_add_item</code> declares 112 request paths with neither <code>tier_variation</code> nor <code>model_list</code> among them, while its only sample posts both.)",
+   "cite": "#11047 §1.x, §2c [R-15][R-16], §5 #18"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "ii",
+   "h": "Era B",
+   "shape": "<code>description</code> is a depth-0 product field; <code>skus[]</code> carry sales attributes, price, inventory, identifier and a SKU image. Product level also: <code>title</code>, <code>main_images</code>, <code>category_id</code>, <code>brand_id</code>, <code>product_attributes</code>, <code>package_dimensions</code>, <code>certifications</code>, <code>size_chart</code>.",
+   "cite": "#11048 §1.x [R-1]"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "ii",
+   "h": "images free-form and independent on both levels; single-route",
+   "shape": "<code>CatalogItem.description_html</code> — <em>“The item's description as expressed in valid HTML elements.”</em>; <code>CatalogItemVariation</code> has 23 property anchors, <code>description</code> → 0 hits. The variation keeps <code>name</code>, <code>sku</code>, <code>upc</code>, <code>price_money</code>, its own <code>image_ids</code>.",
+   "cite": "#11031 §B (11031.md:1197); #11049 §1.x"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "AMB",
+   "h": "ii by default, iii by override; no retrieved instance data (U9)",
+   "shape": "<em>“If the variant does not define an own value, the value is retrieved by fallback from variation groups (sorted by their position) or the variation master.”</em> — <code>name</code> and <code>description</code> are inheritable <b>and</b> overridable. <em>“While you assign a variation group to only one base product, you assign multiple variation groups to that base product.”</em>",
+   "cite": "#11050 §1.2, §2b [R-4][R-5], §4 U9"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "AMB",
+   "h": "configurable by level; one vendor doc family",
+   "shape": "Default is the product model — <em>“the common attributes are the name, the collection, the description, the brand, etc.”</em> — but <em>“if you move the Description attribute from the common attributes to the variant attributes level 1, the description previously filled in will be kept for all variant products, but you can change it.”</em> <code>Product.parent</code> 0..1.",
+   "cite": "#11031 §B (11031.md:1202); #11069"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "iii",
+   "h": "iii for description/sku/gtin; parent-only for name/category/images",
+   "shape": "Variation property table: <code>description | string | Variation description.</code> The core template renders <code>&lt;div class=\"woocommerce-variation-description\"&gt;</code> and swaps it after the shopper selects attributes; the storefront also <em>“swaps the product gallery to that variation's images.”</em> Parent-only: <code>name</code>, <code>slug</code>, <code>type</code>, <code>categories</code>, <code>tags</code>, <code>brands</code>, <code>images</code>, <code>attributes</code>. <code>post_parent</code>: a non-<code>product</code> parent is reset to 0. Inference: inherited schema (a post row already had those columns), not a decision.",
+   "cite": "#11031 §B (11031.md:1200); #11080 §2b; templates/single-product/add-to-cart/variation.php"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "ii",
+   "h": "",
+   "shape": "<code>ProductData.description</code> — <em>“Description of the Product.”</em> Classic <code>ProductVariant</code> has 13 properties, none a description; Modular <code>VariantData</code> is <code>sku?, images?, attributes?, assets?</code>; Modular <code>VariantProjection.description?</code> is “Description of the parent Product” — a read-only beta projection. <code>Variant --1..1--&gt; Product</code>.",
+   "cite": "#11031 §B (11031.md:1201); #11081 §1.x, 1.7"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "iii",
+   "h": "the one platform where a product can be in two families",
+   "shape": "Every product row has <code>description</code> and <code>short_description</code>; <code>ConfigurableVariant</code> exposes exactly <code>attributes</code> and <code>product</code>. Whether a child's description ever renders on a configurable page is not stated (0 hits on Adobe's page, updated 2026-06-15). <code>catalog_product_super_link</code> has both FKs on <code>catalog_product_entity.entity_id</code> with <code>UNIQUE (product_id, parent_id)</code> — child → parent <b>0..N</b>. Inference: inherited schema, not a decision.",
+   "cite": "#11031 §B (11031.md:1199); #11082 §1.5 (11082.md:246)"
+  }
+ ],
+ "meta": "Meta (14th row, corpus/meta/, P0 2026-09-19): “Make sure the item_group_id has the same value across all sizes and colors, and that images and external links match the color of the item” · Correct example: “The name of the product and the item_group_id fields match (so that the name does not change when variants are selected, but images do).” Its own 6-row CSV sample carries byte-identical title, description, link, image_link, brand, google_product_category, product_type, price — differing only in id, color, size. Maps to i. Contradictions recorded: Meta vs Google on per-variant landing pages; Meta vs Meta on images."
+}

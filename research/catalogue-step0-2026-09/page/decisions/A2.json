@@ -1,0 +1,274 @@
+{
+ "id": "A2",
+ "options": {
+  "P1": "One object with a role flag — the axis is an ordinary attribute, marked",
+  "P2": "Two objects — a dedicated option/axis object beside the attribute system",
+  "BOTH": "Both mechanisms, required together (value written twice)",
+  "NONE": "Neither — no axis object exists to classify",
+  "AMB": "Ambiguous / era-split"
+ },
+ "subtallies": [
+  {
+   "name": "(a) Declaration — what marks an axis",
+   "cells": [
+    [
+     "P1 role flag / name list",
+     [
+      "Amazon",
+      "Walmart",
+      "Akeneo",
+      "WooCommerce",
+      "Magento"
+     ]
+    ],
+    [
+     "P2 dedicated object",
+     [
+      "Shopify",
+      "Shopee",
+      "Square",
+      "Salesforce B2C"
+     ]
+    ],
+    [
+     "both",
+     [
+      "Google"
+     ]
+    ],
+    [
+     "neither",
+     [
+      "commercetools"
+     ]
+    ],
+    [
+     "ambiguous",
+     [
+      "eBay"
+     ]
+    ],
+    [
+     "era-split",
+     [
+      "Tokopedia"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "(b) Value storage — where a member's axis value lives",
+   "cells": [
+    [
+     "same store as ordinary values",
+     [
+      "Amazon",
+      "eBay",
+      "Walmart",
+      "Akeneo",
+      "WooCommerce",
+      "Magento"
+     ]
+    ],
+    [
+     "separate store",
+     [
+      "Shopify",
+      "Shopee",
+      "Square",
+      "Salesforce B2C"
+     ]
+    ],
+    [
+     "written twice",
+     [
+      "Google"
+     ]
+    ],
+    [
+     "n/a",
+     [
+      "commercetools"
+     ]
+    ],
+    [
+     "era-split",
+     [
+      "Tokopedia"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "(d) D5 — who picks the axes (10 of 13 covered)",
+   "cells": [
+    [
+     "the family chooses from the gated set",
+     [
+      "eBay",
+      "Walmart",
+      "Shopee",
+      "Tokopedia",
+      "Square",
+      "Salesforce B2C",
+      "Magento",
+      "WooCommerce"
+     ]
+    ],
+    [
+     "the structure imposes",
+     [
+      "Akeneo"
+     ]
+    ],
+    [
+     "neither",
+     [
+      "commercetools"
+     ]
+    ],
+    [
+     "not covered",
+     [
+      "Amazon",
+      "Shopify",
+      "Google"
+     ]
+    ]
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "P1",
+   "h": "same store",
+   "shape": "The discriminator is an ordinary attribute: <code>color</code>, <code>shirt_size</code>, <code>number_of_items</code> are plain schema properties, no different from <code>item_weight</code>. The whole variant mechanism is three ordinary attributes in the <code>variations</code> property group: <code>parentage_level</code>, <code>child_parent_sku_relationship</code>, <code>variation_theme</code>. The product type carries a list of eligible <b>themes</b>, not attributes; <code>ItemVariationTheme.attributes</code> is <em>“names of the Amazon catalog item attributes”</em> — <code>array of string</code>, names not <code>$ref</code>s. The child's axis value sits in the same <code>attributes</code> map as everything else: <code>\"parentage_level\":[{\"value\":\"child\"}] … \"color\":[{\"value\":\"Red\"}]</code>. Hedge: the theme token ≠ the attribute name (<code>SIZE</code> resolves to <code>shirt_size</code>), so three strings exist per axis; the per-type theme enum is the legacy-XSD shape, <code>ItemVariationTheme.theme</code> is a bare string with no <code>enum</code>. <b>First-party 2026-09-21:</b> <code>ItemVariationTheme.theme</code> is a string with example <code>\"COLOR_NAME/STYLE_NAME\"</code> and no enum; <code>attributes</code> is <code>&lt; string &gt; array</code>; the stated purpose of a family is <em>“a single detail page experience.”</em>",
+   "cite": "#10976 §1.2, 1.5, §6, Companion A §5C, “variation_theme — settled” comment; gap-pass-2026-09-21/amazon/catalog-items-api-v2022-04-01-reference.md, submit-listings-data.md"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "P2",
+   "h": "separate store, with an opt-in bridge back",
+   "shape": "<code>ProductOption</code> (7 fields: own <code>id</code>, <code>name</code> free text, <code>position</code>, <code>values</code>, <code>optionValues</code>, <code>linkedMetafield</code>), <code>ProductOptionValue</code> (6 fields: own <code>id</code>, <code>hasVariants</code>, <code>linkedMetafieldValue</code>, <code>swatch</code>), <code>SelectedOption {name, value, optionValue: ProductOptionValue!}</code>. <code>ProductVariantSetInput.optionValues</code> is the <b>only non-null field</b> across the whole product-create input. The one axis that generates variants is free text, bound to neither the taxonomy nor metafields unless you opt in via <code>linkedMetafield</code> (“currently in early access”; needs a <code>list.metaobject_reference</code> definition; linking <code>shopify.color-pattern</code> was refused while <code>Product.category</code> was null, accepted once set). Options are reached only through their product (<code>productOptionsCreate(productId!)</code>) — values per product, no shop-level option registry (counter-search: “Not found”).",
+   "cite": "#11011 §1.3, 1.5, §2, Rev-5 E13"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "BOTH",
+   "h": "written twice",
+   "shape": "<em>“Use all standard variants: specify the standard <code>[color]</code>, <code>[pattern]</code>, <code>[material]</code>, <code>[age_group]</code>, <code>[gender]</code> and <code>[size]</code> attributes in addition to variant option <code>[variant_option]</code> even when these are part of the set of variant-identifying properties.”</em> — under <em>Minimum requirements</em>, disapproval-backed. <code>VariantOption</code> is nested inside <code>message ProductAttributes</code> (<code>ProductAttributes.VariantOption</code>) — a repeated field, not a resource; <code>name</code> and <code>value</code> free text ≤250 chars, <code>name</code> unvalidated (the nonsense token <code>qzxjvwkmp</code> persisted). Nothing retrieved requires the two written values to be equal. Google publishes five different lists of which attributes are axes; no closed set.",
+   "cite": "#11013 §1.5, 1.6, §2, §5, Companion C §3"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "AMB",
+   "h": "ambiguous on declaration · same store on value",
+   "shape": "Declaration is a child container with no identity: <code>Specification</code> — <em>“used to specify product aspects for which variations within an inventory item group vary, and the order in which they appear”</em> — no id, no URI, reachable only through its group (P2-shaped). But eligibility is a boolean on an ordinary category aspect: <code>aspectEnabledForVariations</code> on 197,046 of 197,046 aspects, <code>true</code> 73,833 / <code>false</code> 123,213 (P1-shaped) — <em>“Not all aspects are allowed as a pivoting aspect.”</em> Value storage unambiguous: <em>“Each member of the inventory item group should have these same aspect names specified through the <code>product.aspects</code> container”</em>; case-sensitive; on Trading the axis set is the same <code>ns:NameValueListArrayType</code> as ordinary Item Specifics.",
+   "cite": "#11045 §1.2, 1.5, 1.9, §2, §2b"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "P1",
+   "h": "by name; a stated departure from #11031's “cannot be assigned”",
+   "shape": "The axis is an attribute <b>name</b> carried as a string in an array on each member — no object, no identifier: <code>valueId</code> 0 · <code>attributeId</code> 0 · <code>$ref</code> 0 over 451 MB. Four fields travel together on 6,957 of 6,967 types: <code>variantGroupId</code> (string 1..300), <code>variantAttributeNames</code> (array of a per-type enum, <code>minItems 1</code>, no max), <code>isPrimaryVariant</code> (<code>[\"No\",\"Yes\"]</code>), <code>swatchImages[].swatchVariantAttribute</code>. The axis value is an ordinary attribute value inside the same <code>Visible.&lt;ProductType&gt;</code> node, copied per item (<code>\"flavor\":\"Peppermint\"</code> / <code>\"Spearmint\"</code>, both with <code>\"variantGroupId\":\"001960968586AX6\"</code>). Counter-fact carried: 280 types list 18,737 axis names that are not their own type's attributes, against the vendor's own rule; the swatch enum differs from the axis enum on 1,711 types (24.6 %).",
+   "cite": "#11046 §1.4, §2, §5 #3"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "P2",
+   "h": "two disjoint namespaces; weaker typing on the axis side",
+   "shape": "Over all 92 records (1.7 MB) the number containing both <code>attribute_id</code> and <code>variation_id</code> is <b>0</b>. No attribute carries an axis flag (<code>is_axis</code> 0, <code>is_variation</code> 0 — with the control that <code>mandatory</code>, <code>is_oem</code>, <code>support_search_value</code> do appear). The axis catalogue is a separate three-level tree: <code>get_variations(category_id)</code> → <code>standardise_variation_list[] {variation_id, variation_name, variation_group_list[] {variation_group_id, variation_option_list[] {variation_option_id, variation_option_name}}}</code>. Governance is a sentinel on both sides: custom variation → <code>variation_id=0</code> + <code>variation_name</code>; custom attribute value → <code>value_id=0</code> + <code>original_value_name</code>. <b>Typing asymmetric:</b> an attribute value is typed and carries a unit; a variation option is a bare label (<code>value_unit</code> 0, <code>format_type</code> 0 in the variation corpus).",
+   "cite": "#11047 §1.2, 1.4, Announcement 873"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "AMB",
+   "h": "era-split, opposite directions — Era B (live) is P1",
+   "shape": "<b>Era A — P2:</b> a global axis catalogue by id: <code>get_variant?cat_id=</code> → <code>variant_details[] {variant_id, has_unit, identifier, name, status, is_primary, units[] {variant_unit_id, unit_values[] {variant_unit_value_id, value, hex, icon}}}</code> + <code>variant_id_combinations</code>; the attribute system is a different endpoint (Annotation). <b>Era B — P1, the clearest role-flag instance in the thirteen:</b> one call serves both roles, <code>attributes[].type: SALES_PROPERTY | PRODUCT_PROPERTY</code> — <em>“SALES_PROPERTY: sales attributes that define product variants; PRODUCT_PROPERTY: product attributes that describe the product as a whole.”</em> The flag scopes four sibling fields (<code>is_requried</code>, <code>is_customizable</code>, <code>requirement_conditions</code>, <code>is_multiple_selection</code> apply only to <code>PRODUCT_PROPERTY</code>). Consumed on different objects: <code>product_attributes</code> at Product depth 0, <code>skus[].sales_attributes</code> on the SKU. Asymmetric: a custom <em>axis</em> name is allowed (≤20 chars, id auto-generated), a custom <em>product attribute</em> is refused (<code>12052247</code>). A global↔local translation table <code>sales_attribute_mappings</code> exists (open).",
+   "cite": "#11048 §1.2, 1.4, 1.6, 1.7, 1.8, 1.10, §3, Companion C §2"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "P2",
+   "h": "the two systems never meet",
+   "shape": "<code>CatalogItemOption</code> (5: <code>name</code>, <code>display_name</code>, <code>description</code>, <code>show_colors</code>, <code>values</code>) and <code>CatalogItemOptionValue</code> (5: <code>item_option_id</code>, <code>name</code>, <code>description</code>, <code>color</code>, <code>ordinal</code>) are first-class <code>CatalogObject</code> types with their own ids — <em>“a list of options (such as a color or size of a T-shirt) that can be assigned to item variations.”</em> The value is a <b>shared row referenced by id</b>: the variation carries only <code>{item_option_id, item_option_value_id}</code>, and the option is reusable across items. Whether a custom attribute could ever be an axis is not stated; the governance vocabulary (<code>enforce</code>, <code>allowed</code>, <code>enum</code>, <code>selection</code>, <code>maxLength</code>) fires only on custom-attribute schemas, never on option schemas. Separate query classes for options (<code>CatalogQueryItemsForItemOptions</code>) vs custom-attribute search.",
+   "cite": "#11049 §1.3, 1.4, 1.7, §2 steps 5/8, §3"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "P2",
+   "h": "the vendor says it migrated here from P1",
+   "shape": "<em>“Several methods … have a version taking a <code>ProductVariationAttribute</code> parameter, and another deprecated version accepting a <code>ObjectAttributeDefinition</code> … The latter are historical leftovers from when object attributes were used directly as the basis for variation, and the value lists were stored directly on the ObjectAttributeDefinition. … values are now stored on the ProductVariationAttribute.”</em> <code>ProductVariationAttribute</code> = 3 properties (<code>attributeID</code>, <code>displayName</code>, <code>ID</code>); every one corresponds to exactly one <code>ObjectAttributeDefinition</code>. Value side has a shared/local switch: <code>VariationAttribute.shared: boolean</code>, <code>shared-variation-attribute</code> reference vs a local inline copy. The only record stating a migration between the options — P1 → P2, because of value lists on a shared definition.",
+   "cite": "#11050 §1.3, 1.8; #11031 P4 D8"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "P1",
+   "h": "same store; axes immutable once set",
+   "shape": "No <code>Axis</code> entity, table or column (0 hits in <code>Attribute.orm.yml</code> / <code>Attribute.php</code>; control 117 hits in <code>Pim/Structure</code>). <code>axes</code> and <code>attributes</code> both target <code>AttributeInterface</code>; <em>“is an axis”</em> = a row in <code>pim_catalog_variant_attribute_set_has_axes</code>. Eligibility is a static 5-element type list — <code>pim_catalog_metric</code>, <code>pim_catalog_simpleselect</code>, <code>pim_catalog_boolean</code>, <code>pim_reference_data_simpleselect</code>, <code>akeneo_reference_entity</code> — intersected with the family's own attributes, minus localizable/scopable/locale-specific/unique ones. Value in <code>raw_values</code> like every other value. Cost: axis-value comparison stringifies (<code>(string)$value</code>, joined with <code>','</code>, <code>mb_strtolower</code>; metric as <code>'%.4F %s'</code>). Every axis is force-added to the same set's <code>attributes</code> — the two roles are structurally inseparable.",
+   "cite": "#11069 §1.3, 1.4, 1.5"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "P1",
+   "h": "same definition, different value key",
+   "shape": "No axis object: an axis is an ordinary attribute carrying one boolean — <code>WC_Product_Attribute.$data = ['id'=>0,'name'=>'','options'=>[],'position'=>0,'visible'=>false,'variation'=>false]</code>. The flag is <b>per (product, attribute)</b>, not per definition: the same global <code>pa_flavour</code> is <code>variation:false</code> on product 22 and <code>true</code> on product 10 — shape 1's per-family dimension row, as a boolean inside a serialised blob. Cost: one global value has three representations (parent → <code>term_id</code>; variation → slug string; lookup table → <code>term_id</code> again). Local attributes excluded from filtering (<code>// Custom product attribute, not suitable for attribute-based filtering.</code>). No validation of a variation's value against the parent's list: <code>\"option\":\"Mint\"</code> → 201, stored <code>attribute_pa_flavour='mint'</code>, no term created.",
+   "cite": "#11080 §1.3, 1.10, §2 step 6, §5 #8"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "NONE",
+   "h": "leans P1 without being it",
+   "shape": "No retrieved artifact declares a selection axis or a generated grid: <code>\\b(axis|axes|variationTheme)\\b</code> → 0 over 5,387 files (the 59 naive hits are all <code>taxes</code>). Nearest construct is a property of the ordinary definition: <code>attributeConstraint ∈ {None, Unique, CombinationUnique, SameForAll}</code> — <em>“CombinationUnique: … should have different combinations in each variant. Use this constraint for variant dimensions such as color and size.”</em> Hedges: scoped four different ways across the vendor's pages; not checked when an attribute is removed; the vendor's own reference dataset sets <code>color</code>/<code>size</code> to <code>None</code> (0 <code>CombinationUnique</code> across 21 definitions); whether any object stores a family's axes is unresolved (U12).",
+   "cite": "#11081 §1.2, §2, §4 U12, §5 #2/#12"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "P1",
+   "h": "same store, via a per-parent join row",
+   "shape": "An ordinary EAV attribute becomes an axis by one row scoped to one parent: <code>catalog_product_super_attribute {product_super_attribute_id PK, product_id FK CASCADE, attribute_id (no FK), position; UNIQUE (product_id, attribute_id)}</code> + <code>catalog_product_super_attribute_label {…, store_id, use_default, value varchar(255)}</code>. Eligibility, complete: <code>canUseAttribute()</code> = <code>SCOPE_GLOBAL && getIsVisible() && usesSource() && getIsUserDefined()</code> — consults neither the set, the category nor <code>apply_to</code>. The per-family facts (<code>position</code>, label, per-store label) live on the join row — exactly the “dimension row” shape. Value: an ordinary EAV value, <code>option_id</code> integer in <code>catalog_product_entity_int.value</code> — a shared row referenced by integer. Two enforcement paths disagree: REST <code>POST /V1/configurable-products/:sku/options</code> runs neither <code>canUseAttribute()</code> site (U15); the Admin picker admits a different population. (#11031's “Both” headline is not in the record.)",
+   "cite": "#11082 §1.6, 1.7, §2 step 5, §5 C6/C7"
+  }
+ ],
+ "costs": [
+  [
+   "Duplicated values",
+   "P1: Amazon “most product facts must be replicated across the family”; Walmart copies the axis value per item; eBay repeats the aspect per member",
+   "P2: Shopify options are per product (no shop-level registry); Square is the counter-case — option values shared across items; WooCommerce: three representations of one value"
+  ],
+  [
+   "Two editors",
+   "Akeneo: one editor, axis force-added to the set; Magento: a set gate implemented as an auto-fix modal",
+   "Square: two mechanisms, neither keyed to what the product is; Shopee: two disjoint namespaces, 0 of 92 records carry both ids"
+  ],
+  [
+   "Two filter paths",
+   "Magento: one value store serves both",
+   "Square: separate query classes for options vs custom attributes"
+  ],
+  [
+   "Weaker typing on one side",
+   "—",
+   "Shopee: attribute value typed + unit; variation option a bare label"
+  ],
+  [
+   "A bridge back",
+   "—",
+   "Shopify shipped linkedMetafield (“early access”); Salesforce migrated away from P1 and says why"
+  ]
+ ]
+}

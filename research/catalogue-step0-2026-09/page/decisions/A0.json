@@ -1,0 +1,212 @@
+{
+ "id": "A0",
+ "options": {
+  "V1": "Visibility / purpose flags on the attribute definition",
+  "V2": "Per category membership",
+  "V3": "Per channel",
+  "NONE": "No per-attribute control"
+ },
+ "subtallies": [
+  {
+   "name": "V1 — a per-attribute visibility / filterability / purpose control on the definition",
+   "cells": [
+    [
+     "yes",
+     [
+      "Amazon",
+      "Shopify",
+      "eBay",
+      "Walmart",
+      "Shopee",
+      "Square",
+      "Akeneo",
+      "WooCommerce",
+      "commercetools",
+      "Magento"
+     ]
+    ],
+    [
+     "no / not established",
+     [
+      "Google",
+      "Tokopedia",
+      "Salesforce B2C"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "V2 — does the category decide anything about attributes?",
+   "cells": [
+    [
+     "category decides which attributes EXIST (membership, not visibility)",
+     [
+      "eBay",
+      "Walmart",
+      "Shopee",
+      "Tokopedia",
+      "Amazon",
+      "Salesforce B2C",
+      "Google",
+      "Shopify"
+     ]
+    ],
+    [
+     "category decides nothing (family / ProductType / attribute set decides)",
+     [
+      "Square",
+      "Akeneo",
+      "commercetools",
+      "WooCommerce",
+      "Magento"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "V3 — per channel",
+   "cells": [
+    [
+     "per-channel visibility of the definition",
+     [
+      "Shopify"
+     ]
+    ],
+    [
+     "per-channel values or requiredness",
+     [
+      "Akeneo",
+      "Magento",
+      "Amazon",
+      "Walmart"
+     ]
+    ],
+    [
+     "per-channel at the product level only",
+     [
+      "Google",
+      "Tokopedia",
+      "Square"
+     ]
+    ],
+    [
+     "not answered",
+     [
+      "eBay",
+      "Shopee",
+      "Salesforce B2C",
+      "WooCommerce",
+      "commercetools"
+     ]
+    ]
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "V1",
+   "h": "V2 by product type; per-marketplace selectors",
+   "shape": "Two flags on every property of the type definition — <b>verified first-party 2026-09-21</b> (meta-schema page, <code>Purpose: Informational</code>; the record had them only from P2/P3 dumps): <code>hidden</code> — <em>“whether a property should be hidden in Amazon user interfaces”</em>; <code>editable</code> — <em>“whether or not a property value can be modified for an existing item.”</em> Observed <code>editable:true, hidden:false</code> on <code>item_name</code>, <code>variation_theme.name</code>, <code>parentage_level.value</code>; <code>editable:false, hidden:true</code> on <code>child_relationship_type</code> and <code>marketplace_id</code>. Purpose is declared per property group: <code>product_details</code> = <em>“to support search, browse and detail page content”</em>; <code>safety_and_compliance</code> = compliance, hazmat, legal warnings. Filters: the browse-tree guides' Refinements sheet — 2,600,729 rows, 1,407 distinct attributes globally (US 1,035); the search API exposes exactly two refinement axes, <code>brands</code> and <code>classifications</code>. <em>“A new optional attribute is introduced to improve the product detail page.”</em> occurs 267,595 times in release notes. Per-channel = a per-marketplace selector on every value (<code>\"selectors\": [\"marketplace_id\",\"language_tag\"]</code>).",
+   "cite": "#10976 §1.3, 1.6, §2c, Tier-3 §2.3/2.5/2.8, Companion C §1.6/1.8/2.5; gap-pass-2026-09-21/amazon/product-type-definition-meta-schema.md"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "V1",
+   "h": "the richest instance: V1 + V2 + V3 all on the definition",
+   "shape": "<b>V3 on the definition:</b> <code>MetafieldDefinition.access: MetafieldAccess! {admin, storefront, customerAccount}</code> — live <code>{\"admin\":\"PUBLIC_READ_WRITE\",\"storefront\":\"PUBLIC_READ\",\"customerAccount\":\"NONE\"}</code> on <code>shopify.color-pattern</code>, <code>storefront: NONE</code> on a custom one; <code>StandardMetafieldDefinitionTemplate.visibleToStorefrontApi: Boolean!</code> (all 28 constrained templates true). <b>V1:</b> <code>capabilities {smartCollectionCondition, adminFilterable, uniqueValues}</code> each <code>{eligible, enabled, status}</code>; <code>pinnedPosition: Int</code>. <b>V2:</b> conditional metafields — <em>“By default, metafield definitions apply to every resource on their owner type … <code>Shoe size</code> is a valid metafield for Shoes but wouldn't apply to Sweaters … Currently, Shopify only supports constraint subtypes that correspond to product categories on Product metafield definitions.”</em> One constraint on <code>shopify.color-pattern</code> pages to 7,750 category ids. Filters: <code>CollectionRuleColumn</code> (15 values) includes <code>PRODUCT_METAFIELD_DEFINITION</code> and <code>VARIANT_METAFIELD_DEFINITION</code> — a definition is itself a first-class filter column at both levels. <b>Live 2026-09-21:</b> membership, not visibility, is what the category decides — Pasta &amp; Noodles has no <code>Flavor</code> at all while Snack Foods has the global one.",
+   "cite": "#11011 §1.8, 1.9, §2c′, Rev-5 E8"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "NONE",
+   "h": "V3 lives on the product, not the attribute",
+   "shape": "No field equivalent to Amazon's <code>hidden</code>. Per-channel at product level: <code>excludedDestinations</code> (13-value enum: <code>SHOPPING_ADS · DISPLAY_ADS · LOCAL_INVENTORY_ADS · FREE_LISTINGS · FREE_LOCAL_LISTINGS · YOUTUBE_SHOPPING · … · CLOUD_RETAIL</code>), <code>includedDestinations</code>, <code>shopping_ads_excluded_country</code>, <code>pause</code>; the spec's list of 7 disagrees with the API's 13. Per-surface availability by publication, not flag: <code>[lifestyle_image_link]</code> “only available for browsy surfaces”; <code>[short_title]</code> “only for Demand Gen Ads”. The three requirement markers are the closest thing to a purpose tier: <b>Required</b> (won't serve) · <b>It depends</b> (product/country) · <b>Optional</b> (“boost performance”). <code>custom_label_0-4</code>: ≤1,000 unique values each; buyer visibility not answered. Landing-page match is a stated purpose for variant-identifying values.",
+   "cite": "#11013 §1.4, 1.6, 1.8, Companion A §A.6/A.8/A.11"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "V1",
+   "h": "eleven flags per aspect; V2 by construction",
+   "shape": "<code>AspectConstraint</code>, exactly 11 properties: <code>aspectEnabledForVariations</code> · <code>aspectMode</code> (<em>“free text or by selecting from available options”</em>) · <code>aspectRequired</code> · <code>itemToAspectCardinality</code> (single/multi, ≤30 values) · <code>aspectUsage</code> (<code>OPTIONAL</code> 136,195 / <code>RECOMMENDED</code> 60,851 — and <em>contradicts <code>aspectRequired</code> by design</em>: required aspects return <code>RECOMMENDED</code>; the two Taxonomy operations disagree on 33 of 421 aspects) · <code>aspectApplicableTo</code> (<code>ITEM</code> 19,206 / <code>PRODUCT</code> 87,560) · <code>aspectDataType</code> (<code>STRING</code> 196,549 / <code>NUMBER</code> 482 / <code>DATE</code> 15 / <code>STRING_ARRAY</code> 0, “reserved for internal use”) · <code>aspectAdvancedDataType</code> (<code>NUMERIC_RANGE</code>, 25) · <code>aspectFormat</code> (<code>int32</code> 229 / <code>double</code> 101 / <code>YYYYMMDD</code> 12 / <code>YYYY</code> 3) · <code>aspectMaxLength</code> (15,629) · <code>expectedRequiredByDate</code> (6) · <code>valueConstraints</code> (429,323 conditional-logic occurrences). <code>relevanceIndicator/searchCount</code> gated to Buyer Demand Data apps (0 in corpus). Buyer filters closed 2026-09-19 on two routes: Seller Center — <em>“Buyers use item specifics to filter their search results”</em>; Browse API <code>Refinement.aspectDistributions</code>, <code>aspect_filter=categoryId:15724,Color:{Red}</code>.",
+   "cite": "#11045 §1.1, 1.2, 1.5, 1.8, §3, §5 C16; corpus/ebay"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "V1",
+   "h": "a per-slot PURPOSE tier on 100 % of slots; a different vocabulary per feed type",
+   "shape": "All 383,947 slots carry a <code>comments</code> string, 81 distinct values: <code>@group=Recommended to improve search and browse on Walmart website</code> 258,217 · <code>@group=Required for the item to be visible on Walmart website</code> 58,595 · <code>@group=Recommended to create a variant experience on Walmart website</code> 27,828 (= 6,957 types × the 4 variant fields, the whole tier) · <code>@group=Required to sell on Walmart website</code> 13,781 · <code>@group=Condition Details</code> 6,996. The clearest statement in the thirteen of what an attribute is FOR: sell · be visible · improve search and browse · create a variant experience. The maintenance feed uses a different vocabulary entirely (<code>Product Content to improve search &amp; browse</code> 238,474 · <code>Basic Item Info</code> · <code>Site Experience</code> · <code>Compliance &amp; Regulatory</code> · <code>Images</code>), a fourth on <code>MP_ITEM_MATCH</code>; <code>businessUnit ∈ [SAMSCLUB, WALMART_CA, WALMART_US, ASDA_GM]</code>. Viewing/editing restrictions exist only as workbook column headers (<code>Restrict Viewing by</code>, <code>Restrict Editing For</code>) with no values; <code>searchable/facet/filterable/refinement</code> 0 hits. Display ranking of variant attributes published nowhere. Internal-rule facts sit in the fixed <code>Orderable</code> block.",
+   "cite": "#11046 §1.1, 1.2, 1.3, §2, §4 U8/U12, Companion C Edit 6"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "V1",
+   "h": "flags on the definition; V2 by construction",
+   "shape": "<code>attribute_info {input_type (5), input_validation_type (5), format_type (2), date_format_type, attribute_unit_list, max_value_count, is_oem, support_search_value}</code> + <code>mandatory</code>. <code>support_search_value</code> is the only filterability-shaped flag, and no description is quoted. V2: <em>“only last-level categories can retrieve attribute data.”</em> Compliance-as-attribute, dated: a 2026-01-23 announcement adds a blocking validation keyed to <code>attribute_id 101351</code> against government open data; “Ativação do Atributo de Anvisa como obrigatório”. But tax, size chart, certification, purchase limit, complaint policy are fixed item fields, not attributes. No buyer-visibility flag reported.",
+   "cite": "#11047 §1.2, 1.3, deprecations"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "NONE",
+   "h": "no visibility flag in either era",
+   "shape": "Era A: only <code>sort_order</code> on the Annotation group and <code>has_unit/status/is_primary</code> on the axis catalogue; <code>is_variant</code> 0, <code>is_mandatory</code> 0. Era B: <code>id, name, type, is_requried, values[{id,name,icon_url}], value_data_format, is_customizable, requirement_conditions, is_multiple_selection</code> — no filterability, searchability, facet or buyer-visibility flag. V2 + V3 in one sentence: attributes <em>“bound to the specified category, based on your shop's location”</em>; <code>listing_platforms ∈ {TOKOPEDIA, TIKTOK_SHOP}</code> is a per-product channel field. Product-level visibility: <code>is_not_for_sale</code> (GWP-only, hidden from search). Internal rules worked as attributes: EU unit price pairs <code>sku_unit_count</code> with “base unit count” and “unit type” product attributes; Indonesian “Imported Goods” attribute <code>102254</code> (values <code>1000058</code>/<code>1000059</code>, single route). <b>Structured spec 2026-09-21 (<code>api_meta</code>):</b> <code>requirement_conditions[] {condition_type: VALUE_ID_MATCH, attribute_id, attribute_value_id}</code> — <em>“the ‘Battery type’ attribute is required if the seller selects the value ‘Batteries’ for ‘Contains Batteries or Cells?’”</em> — conditional requiredness on the definition; <code>value_data_format</code> (<code>POSITIVE_INT_OR_DECIMAL</code>) applies to cascading attributes only.",
+   "cite": "#11048 §1.2, 1.4, 1.6, 1.7, 1.8, 1.9; gap-pass-2026-09-21/tiktok/RESULT.md"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "V1",
+   "h": "two visibility enums on the definition (the card's pointer)",
+   "shape": "<code>CatalogCustomAttributeDefinition.seller_visibility</code> (enum 2) / <code>app_visibility</code> (enum 3): observed <code>SELLER_VISIBILITY_READ_WRITE_VALUES</code>, <code>SELLER_VISIBILITY_HIDDEN</code>, <code>APP_VISIBILITY_READ_WRITE_VALUES</code>; <code>APP_VISIBILITY_READ_ONLY_VALUES</code> rejected live as <code>INVALID_ENUM_VALUE</code> (unreconciled). The cap is expressed in visibility terms: 10 seller-visible + 10 seller-hidden, live-verified. Per object type: <code>ITEM</code> / <code>ITEM_VARIATION</code> visible in Dashboard and API; <code>MODIFIER</code>, <code>MODIFIER_LIST</code>, <code>CATEGORY</code> API-only. Per channel in prose: <em>“The Square Point of Sale application doesn't show custom attributes for any object type.”</em> V2: no — <em>“they appear on every item and item variation in the seller's catalog.”</em> Filterability: no per-custom-attribute flag; searchability only on built-ins (<code>CatalogItemOption.name</code>, <code>sku</code>, <code>abbreviation</code>).",
+   "cite": "#11049 §1.2, 1.3, 1.5, 1.6, 1.7, §3, §4 row 4"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "V2",
+   "h": "V2 is the design: attribute groups attach to categories, with a precedence rule",
+   "shape": "<em>“An attribute group is a grouping of attribute assignments that's attached to a category. Attributes can belong to more than one attribute group. The attribute assignments display on the product details page and during some product comparisons.”</em> Three layers: global (system object type Product) → the classification category's groups and its ancestors' → the browse category's (<code>Category.getProductAttributeModel()</code>). Override precedence: category group overrides global with the same ID; sub-category overrides parent (single-route). Entry point: <code>Product.getAttributeModel()</code>. V1: only <code>@system: xsd:boolean</code>; no shown/hidden flag. V3: the classification-vs-primary split (attributes vs breadcrumbs). Currency warning: OCAPI deprecated April 2026; the whole help.salesforce.com corpus unreproducible.",
+   "cite": "#11050 §1.5c, 1.7, 1.8, 1.9, §3, U1/U11"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "V1",
+   "h": "V3 is first-class as requiredness; V1 carries the filter flag",
+   "shape": "Per channel is a table: <code>pim_catalog_attribute_requirement.required</code> under <code>UNIQUE (channel_id, family_id, attribute_id)</code>; on the wire <code>\"attribute_requirements\":{\"ecommerce\":[…],\"mobile\":[…],\"print\":[…]}</code> — models “required on the web but not at the till” exactly. <code>scopable</code> is the per-channel flag on the definition (immutable; a scopable attribute cannot be an axis, <code>AXES_WRONG_TYPE</code>); every value is <code>{locale, scope, data}</code>. V1: <code>useable_as_grid_filter</code> (true on <code>auto_exposure</code>, <code>color</code>; no vendor definition quoted), <code>sort_order</code>, <code>group</code> → <code>AttributeGroup</code>, <code>unique</code>, <code>localizable</code>, <code>is_locale_specific</code>. V2 absent (0 hits, controls 203/62/117) — but a separate <code>pim_catalog_category_attribute</code> attaches attributes to the category <em>record</em>. Headline purpose is <b>completeness</b>: <em>“which family attributes are required for the completeness calculation.”</em> No <code>visible</code> flag anywhere.",
+   "cite": "#11069 §1.1, 1.4, 1.6, 1.8, §2c, §5 C3"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "V1",
+   "h": "per (product, attribute); filterability decided by global-vs-local",
+   "shape": "<code>WC_Product_Attribute.visible</code> → <code>is_visible</code> 1/0 in the product's <code>_product_attributes</code> blob (meaning not stated in the record). On the definition: <code>attribute_public int(1) DEFAULT 1</code> → REST <code>has_archives</code> — DDL default 1, lands as 0 through REST; all four live rows read 0. Filterability structural: <code>wc_product_attributes_lookup</code> re-normalises the variation's slug to a term id for global attributes only; local ones skipped (<code>// Custom product attribute, not suitable for attribute-based filtering.</code>), gated by <code>woocommerce_attribute_lookup_enabled</code>. Ordering is a purpose: <code>attribute_orderby ∈ menu_order|name|name_num|id</code> — <em>“affects the sorting order of the dropdown selector(s)”</em>. V2 absent (500 <code>product_cat</code> lines, 0 touch an attribute taxonomy). V3 not answered.",
+   "cite": "#11080 §1.3, 1.4, 1.7, 1.10, §5 #7"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "V1",
+   "h": "one flag, plus a deprecation caveat on the whole level mechanism",
+   "shape": "<code>AttributeDefinition {isSearchable, inputHint (SingleLine|MultiLine), inputTip?, label, isRequired, attributeConstraint, level}</code>; no meaning stated for <code>inputHint</code>/<code>inputTip</code>. <code>AttributeLevelEnum [Product, Variant]</code> — <em>“Product: Attribute is defined at Product level (not supported by Product Projection Search)”</em>, and Product Projection Search is deprecated; <code>nested</code>/<code>set</code> types do not support <code>isSearchable</code>. Shown vs internal: not answered; nearest is per request — <em>“Variant-level Attribute names to include … Product-level Attributes are silently omitted.”</em> on a PDP read model. V2 absent: <code>api/types/category/</code> has no <code>attributes</code>/<code>productType</code> property (adjacent unmeasured: <code>Category.custom?: CustomFields</code>). <code>level</code> is immutable in the UI.",
+   "cite": "#11081 §1.2, 1.3, 1.8, 1.10, §2b"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "V1",
+   "h": "maximum resolution: one flag per use; V3 as value scope",
+   "shape": "<code>catalog_eav_attribute</code>, 24 columns merged: <code>is_global</code>, <code>is_visible</code>, <code>is_searchable</code>, <code>is_filterable</code>, <code>is_comparable</code>, <code>is_visible_on_front</code>, <code>is_html_allowed_on_front</code>, <code>is_used_for_price_rules</code>, <code>is_filterable_in_search</code>, <code>used_in_product_listing</code>, <code>used_for_sort_by</code>, <code>apply_to</code>, <code>is_visible_in_advanced_search</code>, <code>position</code>, <code>is_wysiwyg_enabled</code>, <code>is_used_for_promo_rules</code>, <code>is_required_in_admin_store</code>, <code>is_used_in_grid</code>, <code>is_visible_in_grid</code>, <code>is_filterable_in_grid</code>, <code>frontend_input_renderer</code> + <code>search_weight float NOT NULL default 1</code> (CatalogSearch) + <code>additional_data text</code> (Swatches). Closed at source 2026-09-19: defaults <code>is_global</code>/<code>is_visible</code> = 1, all others 0; <b><code>is_filterable</code> is a three-valued enum</b> — 0 No · 1 Filterable (with results) · 2 Filterable (no results) — <em>“Can be used only with catalog input type Yes/No, Dropdown, Multiple Select and Price.”</em> V3 = value scope: <code>SCOPE_STORE=0, SCOPE_GLOBAL=1, SCOPE_WEBSITE=2</code>; values <code>UNIQUE (entity_id, attribute_id, store_id)</code>, option labels per store view. Internal rules as flags: <code>is_used_for_promo_rules</code>, <code>is_used_for_price_rules</code> (written by no PropertyMapper). V2 absent over 352 <code>&lt;table&gt;</code> blocks; the <b>attribute set</b> gates data entry.",
+   "cite": "#11082 §1.2, 1.3, 1.4, 1.7, 1.9, §2c; corpus/magento db_schema.xml, FilterableOptions.php"
+  }
+ ],
+ "coupling": "A0↔A5: commercetools (level beside isSearchable) and Shopify (ownerType beside access/capabilities) carry level and visibility as independent fields on one definition; no record ties them — “family-level = visible” has no precedent."
+}

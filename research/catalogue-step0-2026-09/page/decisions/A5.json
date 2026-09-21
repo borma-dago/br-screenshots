@@ -1,0 +1,180 @@
+{
+ "id": "A5",
+ "options": {
+  "a": "A5-a pinned on the definition (a1 = a level field on the definition; a2 = fixed by the API's structure)",
+  "b": "A5-b either side, chosen per family",
+  "c": "A5-c always on the member; the family carries nothing",
+  "d": "A5-d both levels, read-time fallback",
+  "AMB": "Ambiguous"
+ },
+ "subtallies": [
+  {
+   "name": "Where the level is decided",
+   "cells": [
+    [
+     "a1 — a level field on the attribute definition",
+     [
+      "Shopify (MetafieldDefinition.ownerType)",
+      "Square (allowed_object_types)",
+      "Tokopedia Era B (attributes[].type)",
+      "commercetools (AttributeDefinition.level)"
+     ]
+    ],
+    [
+     "a2 — fixed by the API's structure, no level field",
+     [
+      "Shopee",
+      "WooCommerce"
+     ]
+    ],
+    [
+     "b — chosen per family",
+     [
+      "Akeneo"
+     ]
+    ],
+    [
+     "c — always on the member / no level concept",
+     [
+      "Amazon",
+      "Google",
+      "Walmart",
+      "Magento"
+     ]
+    ],
+    [
+     "d — read-time fallback as the primary model",
+     [
+      "Salesforce B2C"
+     ]
+    ],
+    [
+     "ambiguous",
+     [
+      "eBay"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "d as a mechanism beside another model",
+   "cells": [
+    [
+     "read-time fallback for some fields",
+     [
+      "Salesforce B2C (documented chain)",
+      "WooCommerce (stock: $value = 'parent')",
+      "Shopee (weight / dimension / pre_order)"
+     ]
+    ]
+   ]
+  }
+ ],
+ "framing": "The four (c)s are the four platforms with no family content row on the write side: Google and Walmart have no container object there, Amazon's parent and child are rows of one flat schema, Magento's container and child are rows of one table. (c) is what you do when you have nowhere else to put it — Lock 2 has already decided we will have somewhere else. Google's group-level values (item_group_id, item_group_title) are a key and a title, not a content row.",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "c",
+   "h": "replication enforced by admission control, not storage",
+   "shape": "<em>“Most product facts must be replicated across all listings within the variation family”</em>; a programmatic classification found <em>“zero fields populated on the parent row and on no child row”</em> — on two independent observations (six of the seven flat-file Example sheets are cell-identical, SHA1 <code>c55c37cfc4ba</code>). Stated rule: <em>“Terms like ‘item type keyword’, ‘model name’, ‘style’ and ‘brand’ are key non-varying attributes for which all child ASINs must have the same values. Child ASINs with different non-varying attribute values cannot be grouped into a single variation family.”</em>",
+   "cite": "#10976 §2 [E-12][E-25][E-28], 10976.md:391, :418"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "a",
+   "h": "a1 — the level is a field on the definition",
+   "shape": "<code>MetafieldDefinition.ownerType: MetafieldOwnerType!</code> — <em>“The resource type that the metafield definition is attached to.”</em> The enum includes both <code>PRODUCT</code> and <code>PRODUCTVARIANT</code>, and a definition names exactly one (so Shopify is <b>not</b> a per-family example — the card was wrong). Enum size is version-dependent (25 at 2026-04, 26 at 2026-07, 28 at unstable); <code>PRODUCT</code>/<code>PRODUCTVARIANT</code> are in every set. Level sits beside <code>access</code> and <code>capabilities</code> as an independent field.",
+   "cite": "#11011 §1.8, contradiction 7"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "c",
+   "h": "no family object on the write side",
+   "shape": "<em>“Google and Walmart read ‘member’ everywhere because neither has a family object on the write side. Google's only group-level values are <code>item_group_id</code> and <code>item_group_title</code>, repeated on every row.”</em> Inference: a flat feed cannot reference — a row is self-describing or it is unusable.",
+   "cite": "#11031 field survey §A (11031.md:1263)"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "AMB",
+   "h": "slots at both levels + a level-ish flag, but the flag is about eBay's catalogue product vs a seller's instance",
+   "shape": "<code>aspectApplicableTo ∈ {ITEM, PRODUCT}</code> — <em>“a product aspect (relevant to catalog products in the category) or an item/instance aspect, which is an aspect whose value will vary based on a particular instance of the product.”</em> Present on 106,766 of 197,046 (<code>[\"PRODUCT\"]</code> 87,560 · <code>[\"ITEM\"]</code> 19,206; array length 1 in every instance; absent on 90,280). Structural slots at both levels: <code>InventoryItemGroup.aspects</code> and <code>InventoryItem.product.aspects</code>. No retrieved artifact says a <code>PRODUCT</code> aspect must be written on the group — assigning (a) would be the brief's classification, not eBay's statement.",
+   "cite": "#11045 §1.2 [R-2], 1.4, 1.6, U12-c"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "c",
+   "h": "no container on the write side",
+   "shape": "<em>“shared by repetition, not reference”</em>; <em>“nothing in the 451 MB file binds one item's value to another's.”</em> <code>variantGroupId</code> is a string carried on every member. Inference: (c) here is a property of the transport, not a model choice.",
+   "cite": "#11046 §2, §2b"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "a",
+   "h": "a2 — fixed by structure; a (d) fallback for weight / dimension / pre_order",
+   "shape": "The item carries <code>attribute_list</code>; the <code>model</code> has <b>no attribute slot at all</b>. Three physical fields inherit — <em>“Shared fields are inherited, not independently valued by default”</em>: <em>“If don't set the weight of this model, will use the weight of item by default. If set the dimension of this model, them must set the weight of this model.”</em> and the same for <code>dimension</code>. Inference: when the platform authors the definition, pinning the level costs the seller nothing and saves validating N members.",
+   "cite": "#11047 §1.5 (11047.md:420, :423, :427-429), §2b"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "a",
+   "h": "Era B — the cleanest a1 instance in the set",
+   "shape": "<code>attributes[].type</code>, whole: <em>“<code>SALES_PROPERTY</code>: Indicates sales attributes that define product variants. <code>PRODUCT_PROPERTY</code>: Indicates product attributes that describe the product as a whole.”</em> Consumed at two levels: <code>product_attributes</code> on the Product, <code>skus[].sales_attributes</code> on the SKU. Inference: a marketplace that owns the vocabulary pins the level on the definition. <b>Structured spec 2026-09-21:</b> Create Product carries <code>package_dimensions</code>/<code>package_weight</code> on the product <em>and</em> <code>sku_dimensions</code>/<code>sku_weight</code> on the SKU — one kind of fact with a slot at both levels; <code>product_attributes[] {id Y, values[] {id, name}}</code> vs <code>skus[].sales_attributes[] {id, value_id, value_name, name, sku_img}</code>.",
+   "cite": "#11048 §1.6, 1.7, 1.8 [R-2]; gap-pass-2026-09-21/tiktok/RESULT.md"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "a",
+   "h": "a1 — with the hedge that the array may carry both types",
+   "shape": "<code>CatalogCustomAttributeDefinition.allowed_object_types</code>, 1..N, required, immutable — <em>“The set of CatalogObject types that this custom atttribute may be applied to. Currently, only ITEM, ITEM_VARIATION, MODIFIER, MODIFIER_LIST, and CATEGORY are allowed. At least one type must be included.”</em> (misspelling the vendor's). An ITEM-allowed and an ITEM_VARIATION-allowed definition are separate definitions, so values do not flow down; the record's example value is <code>[\"ITEM\",\"ITEM_VARIATION\"]</code>. Immutability stated: <em>“You cannot edit the source_application, type, key, max_allowed_selections, or allowed_object_types of a custom attribute after creation.”</em>",
+   "cite": "#11049 §1.7 [R-1][R-11], §4"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "d",
+   "h": "read-time fallback as the primary model",
+   "shape": "One <code>&lt;product&gt;</code> complexType serves master and variant; <em>“If the variant does not define an own value, the value is retrieved by fallback from variation groups (sorted by their position) or the variation master.”</em> Inference: with a single schema type, “which level owns this?” has no schema answer, so it became a read-time rule.",
+   "cite": "#11050 §2b [R-4]"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "b",
+   "h": "the canonical documented per-family shape",
+   "shape": "<code>FamilyVariant.variant_attribute_sets[].{level, axes, attributes}</code> assigns each attribute to exactly one level. Vendor instance, whole: <code>{\"code\":\"clothing_color_size\", … \"variant_attribute_sets\":[{\"level\":1,\"axes\":[\"color\"],\"attributes\":[\"variation_name\",\"variation_image\",\"composition\",\"color\",\"material\"]},{\"level\":2,\"axes\":[\"size\"],\"attributes\":[\"sku\",\"weight\",\"size\",\"ean\"]}]}</code>. What moving a level does: <em>“if you move the Description attribute from the common attributes to the variant attributes level 1, the description previously filled in will be kept for all variant products, but you can change it.”</em> (vendor doc page + shipped fixture, not a live read).",
+   "cite": "#11069 §2b, §2c [R-74]; #11031 field survey §B"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "a",
+   "h": "a2 — fixed by structure; a (d) sentinel for stock",
+   "shape": "Container-only postmeta: <code>_product_attributes</code> (the whole attribute list), <code>_default_attributes</code>, the <code>product_cat</code>/<code>product_type</code> terms and the child id list; the variation stores only <code>attribute_&lt;key&gt;</code> rows (its selected axis values). Separately, <code>manage_stock</code>/<code>stock_quantity</code> inherit by an explicit sentinel — <code>$value = 'parent';</code>.",
+   "cite": "#11080 §2b [R-42][R-5][R-75]"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "a",
+   "h": "a1 — the canonical documented shape; no live response for any object (U1)",
+   "shape": "<code>AttributeDefinition.level</code>, 1..1, draft default <code>Variant</code>; <code>AttributeLevelEnum: [Product, Variant]</code> — <em>“Product: Attribute is defined at Product level (not supported by Product Projection Search).”</em> Merchant Center: <em>“The Attribute level option cannot be changed after saving the Attribute.”</em> Gate: <em>“If the Attribute is defined at Product level, then <code>attributeConstraint</code> must be <code>None</code>. Otherwise, an InvalidOperation error is returned.”</em> — being product-level <b>is</b> same-for-all. (The search caveat names a deprecated API: Product Projection Search no longer generally available as of 2026-08-31.)",
+   "cite": "#11081 §1.2 [R-1][R-26], §2b, §4 U1; AttributeDefinitionDraft.raml:36-41"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "c",
+   "h": "no inheritance mechanism in the schema",
+   "shape": "<em>“There is no inheritance mechanism in the schema”</em> — no <code>use_parent</code> column on any of the five value tables; every EAV value row is keyed <code>(entity_id, attribute_id, store_id)</code> so parent and child each own theirs. <code>is_global</code> is a <b>store</b> scope (<code>SCOPE_STORE=0, SCOPE_GLOBAL=1</code>), not a product/variant level. Inference: (c) is the cheapest thing that works in an EAV store scoped by website/store view.",
+   "cite": "#11082 §1.4, §2b"
+  }
+ ]
+}

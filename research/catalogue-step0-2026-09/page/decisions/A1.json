@@ -1,0 +1,117 @@
+{
+ "id": "A1",
+ "options": {
+  "O1": "Fixed core of built-in fields + an extensible attribute system",
+  "O2": "Everything is an attribute (only identity/structure stays outside)",
+  "O3": "Large built-in core + a capped set of custom fields"
+ },
+ "unanimous": "13 of 13 keep a fixed core of identity + structure outside the extensible system — nobody puts everything in the bag. 8 of 13 keep definition and value as separate objects (3 partial: Amazon, eBay, WooCommerce; 2 no: Google, Walmart — both flat feeds).",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "O2",
+   "h": "write path; the read model would file O1",
+   "shape": "Seven property groups on the product-type definition (<code>product_identity</code> verified on the first-party reference 2026-09-21: <code>propertyNames [item_name, brand, external_product_id, gtin_exemption_reason, merchant_suggested_asin, product_type, product_category, product_subcategory, item_type_keyword]</code>; <code>requirements ∈ {LISTING, LISTING_PRODUCT_ONLY, LISTING_OFFER_ONLY}</code>, <code>requirementsEnforced ∈ {ENFORCED, NOT_ENFORCED}</code>) — <code>offer</code> · <code>images</code> · <code>shipping</code> · <code>variations</code> · <code>safety_and_compliance</code> · <code>product_identity</code> · <code>product_details</code> — so price (<code>list_price</code>), images, weight and the title are all <b>properties of the type schema</b>; <code>item_name</code>, <code>brand</code>, <code>product_description</code> sit in <code>PET_FOOD</code>'s root <code>required</code>. Outside the bag: <code>sku</code> (a URL path parameter, never a schema attribute). The read side projects scalars beside the bag (<code>ItemSummaryByMarketplace.brand/.itemName/.manufacturer/.color/.size/.style</code>) plus first-class <code>identifiers</code>, <code>images</code>, <code>dimensions</code>, <code>classifications</code>, <code>relationships</code>. The bag is declared open: <code>\"ItemAttributes\": {…\"additionalProperties\": true}</code>. Definition = <code>Attribute</code> (name PK) + <code>ProductTypeAttribute</code> join carrying <code>marketplaceId</code>, <code>parentageLevel</code>, requiredness — <em>requiredness is a property of the join</em>; JSON-side <code>type/constraints/enum</code> UNKNOWN. 2,336 distinct attribute names; 213 types → 208 distinct attributes, 1,154 pairs, 107 used by exactly one type. Brand: an attribute <em>and</em> a read scalar <em>and</em> a search refinement; a family's “non-varying attributes” (brand, model name, style) must match across children.",
+   "cite": "#10976 §1.1–1.7, §2; #11031 §2; gap-pass-2026-09-21/amazon/reference-getdefinitionsproducttype.md"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "O1",
+   "h": "",
+   "shape": "<code>Product</code> 83 fields, <code>ProductVariant</code> 52. Built-in: <code>title</code>, <code>handle</code>, <code>descriptionHtml</code>, <code>productType</code> (free text), <code>vendor</code>, <code>tags</code>, <code>category</code>, <code>options</code>, <code>price</code>, <code>compareAtPrice</code>, <code>sku</code>, <code>barcode</code>, <code>inventoryItem</code>. <b>No <code>weight</code> on <code>ProductVariant</code></b>: it hangs off <code>inventoryItem.measurement.weight {unit: WeightUnit!, value: Float!}</code> (REST still shows <code>grams/weight/weight_unit</code>). Length/width/height not answered. Extension = <code>MetafieldDefinition</code> (17 fields; owner types incl. <code>PRODUCT</code> and <code>PRODUCTVARIANT</code>); 48 basic + 12 reference + 53 list types, and <em>“the value is always entered and stored as a string, regardless of type”</em>; a value may exist with <code>definition: null</code>. Second definition surface: the taxonomy — 8,240 base + 316 extended attributes, 93,007 category→attribute edges, 74,820 values; <code>flavor</code> on 293 categories. Brand: <code>vendor: String!</code>, free text, no validation; the word “brand” occurs zero times in the record.",
+   "cite": "#11011 §1.1, 1.2, 1.6, 1.7, 1.8, §2c′"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "O1",
+   "h": "no definition object at all; no per-category schema",
+   "shape": "One global flat set: <b>145</b> properties on Merchant API <code>products_v1</code> (95 on v1beta, 104 on Content API v2.1; 85 in the human spec). Every fact is a flat property: <code>title</code>, <code>description</code>, <code>price</code>, <code>gtins</code>, <code>brand</code> (Max 70 chars, required except movies/books/music), <code>productWeight</code>, <code>productLength/Height/Width</code>, <code>shippingWeight</code>, <code>googleProductCategory</code>, <code>productTypes</code>, <code>color</code>, <code>size</code>, <code>material</code>, <code>pattern</code>, <code>itemGroupId</code>, <code>variantOptions</code>, <code>productDetails</code>. Four open merchant-named bags beside them: <code>customAttributes</code> (≤2,500, 102.4 kB total, recursive), <code>productDetails</code> (≤100; suggested keys incl. <em>Scent</em>, <em>Flavor</em>), <code>cloudExportAdditionalProperties</code>, <code>variantOptions</code>. The 145 names <em>are</em> the schema; the bags are <code>{name, value}</code> with no definition. Category gates <em>requiredness</em>, and in one case existence (<code>subscription_cost</code>: “approved product categories only”).",
+   "cite": "#11013 §1.3, 1.4, §3, Companion A/D"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "O1",
+   "h": "",
+   "shape": "Inventory API <code>Product</code> built-ins: <code>brand</code>, <code>ean</code>, <code>epid</code>, <code>isbn</code>, <code>mpn</code>, <code>upc</code> (<b>every identifier is variant-level</b>) + <code>title</code>, <code>description</code>, <code>imageUrls</code>, <code>subtitle</code>, <code>videoIds</code>, and <code>aspects</code>. Price/quantity on the <code>Offer</code>. Extension = the <b>aspect</b>, owned by the leaf category: 197,046 aspects over 15,111 leaves; <em>“Each category has a different set of aspects and different requirements for aspect values.”</em> The aspect has <b>no id</b>: an item's values are <code>aspects = {name: [strings]}</code> (Trading: <code>NameValueListArrayType</code>). Definition = <code>AspectConstraint</code>, exactly 11 properties, identified only by <code>localizedAspectName</code> within a category. Caps: name 40 chars, value 50, 30 values per multi-value aspect. Brand: built-in field <em>and</em> aspect; catalog-matched (ePID/GTIN) aspects are auto-filled and <em>“Sellers cannot change the value of aspects that are based on a catalog product.”</em>",
+   "cite": "#11045 §1.1, 1.2, 1.3, 1.10, §2b"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "O1",
+   "h": "the cleanest published instance of the line",
+   "shape": "Two fixed blocks, nothing else: <code>MPItem {Visible, Orderable}</code>, <code>additionalProperties: false</code>. <code>Orderable</code> = 23 properties, required <code>sku</code>, <code>productIdentifiers</code>, <code>price</code>, <code>ShippingWeight</code>, <code>country_of_origin_substantial_transformation</code> (+ <code>inventory</code>, <code>msrp</code>, <code>product_package_dimensions_and_weight</code>, <code>fulfillmentLagTime</code>, …). <code>Visible</code> = the per-product-type attribute set where merchandising facts live: <code>productName</code>, <code>brand</code>, <code>shortDescription</code>, <code>mainImageUrl</code>, <code>netContent</code>, <code>flavor</code> are type slots (required for <code>Toothpastes</code>). 6,967 types · 383,947 slots · 6,576 distinct names · 28–183 per type. <b>No definition object on the write path</b>: <code>$ref</code> 0, <code>$id</code> 0, <code>valueId</code> 0 over 451 MB — every attribute written out in full per type, so <code>color</code> has 126 distinct definitions, <code>size</code> 438, <code>flavor</code> 50. Governance is a description prefix: <code>\"Closed List - …\"</code> (has <code>enum</code>) · <code>\"Alphanumeric, N characters - …\"</code> · <code>\"Number, Value range: A to B - …\"</code> · <code>\"Decimal, …\"</code>. No cap.",
+   "cite": "#11046 §1.1, 1.2, 1.3, §2, Companion C"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "O1",
+   "h": "",
+   "shape": "Item fixed fields: <code>item_name</code> REQ, <code>description</code> REQ, <code>original_price</code> REQ, <code>weight</code> REQ, <code>item_sku</code>, <code>has_model</code>, <code>condition</code>, <code>gtin_code</code>, <code>brand {brand_id int32 REQ, original_brand_name string REQ}</code>, <code>dimension {package_height/length/width}</code>, <code>logistic_info</code> REQ, <code>seller_stock</code>, <code>price_info</code> … plus <code>attribute_list</code>. Definition object with shared value rows: <code>get_attribute_tree(category_id)</code> → <code>attribute_id</code>, <code>name</code>, <code>mandatory</code>, <code>attribute_value_list[{value_id, name, value_unit, child_attribute_list}]</code>, <code>attribute_info {input_type (5), input_validation_type (5), format_type (2), date_format_type, attribute_unit_list, max_value_count, is_oem, support_search_value}</code>; <em>“only last-level categories can retrieve attribute data.”</em> A typed value carries a unit (<code>name</code> = “5kg”, <code>value_unit</code> = the unit); axis labels do not. Brand: a reference to a platform-owned brand entity (<code>brand_id</code>). No documented cap.",
+   "cite": "#11047 §1.2, 1.3, 1.9"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "O1",
+   "h": "both eras agree; never merged",
+   "shape": "<b>Era A</b> (terminated 2025-09-30): fixed columns <code>name</code> ≤70, <code>category_id</code>, <code>price</code>, <code>status</code>, <code>stock</code>, <code>min_order</code>, <code>weight</code>, <code>weight_unit</code>, <code>condition</code>, <code>sku</code> ≤50, <code>description</code> ≤2000, <code>dimension</code>, <code>annotations []string</code>, <code>etalase</code>, <code>variant</code>; extension = the <b>Annotation</b> (“product specification based on category ID”), group = a bare <code>variant</code> string name with no id, <code>sort_order</code>, <code>values[{id, name, data}]</code>. No brand or GTIN field in the create body. <b>Era B</b>: 34 depth-0 fields incl. <code>title</code>, <code>description</code>, <code>category_id</code>, <code>brand_id</code>, <code>main_images</code>, <code>package_dimensions</code>, <code>package_weight</code>, <code>product_attributes</code>, <code>certifications</code>, <code>size_chart</code>; price, inventory and identifiers are SKU-level (<code>skus.price</code>, <code>skus.inventory</code>, <code>skus.identifier_code</code> with <code>GTIN|EAN|UPC|ISBN|JAN</code>). Definition: <code>GET /product/202309/categories/{id}/attributes</code> → <code>id</code>, <code>name</code>, <code>type</code>, <code>is_requried</code> [sic], <code>values[{id, name, icon_url}]</code>, <code>value_data_format</code>, <code>is_customizable</code>, <code>requirement_conditions</code>, <code>is_multiple_selection</code>. Vendor's own split: <em>product attributes</em> (manufacturer, origin, materials) vs <em>sales attributes</em> (“specific to the variant (aka SKU) such as size, color, length”). Brand: platform-owned Brand entity (<code>brand_id</code>; “Brand does not exist” error).",
+   "cite": "#11048 §1.1, 1.4, 1.6, 1.8, 1.11, Companion C §2"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "O3",
+   "h": "the cap's scope (account vs app_id) unresolved by the vendor's own artifacts",
+   "shape": "<code>CatalogItem</code> = 27 properties enumerated whole (<code>name</code>, <code>description_html</code>, <code>categories</code>, <code>item_options</code>, <code>variations</code>, <code>product_type</code>, <code>is_alcoholic</code>, <code>food_and_beverage_details</code>, <code>kitchen_name</code>, …). Price, SKU, UPC on the <b>variation</b>: <code>price_money</code>, <code>sku</code>, <code>upc</code>, <code>measurement_unit_id</code>. Extension: <b>10 seller-visible + 10 seller-hidden custom attributes</b> — live-verified: the 11th <code>SELLER_VISIBILITY_READ_WRITE_VALUES</code> definition → HTTP 400 <code>ITEMS_CUSTOM_ATTRIBUTE_LIMIT_EXCEEDED</code> (“for app_id … exceeded limit of 10”). Definition = <code>CatalogCustomAttributeDefinition</code> (12 properties; required <code>type</code>, <code>name</code>, <code>allowed_object_types</code>; <code>key</code> immutable; <code>type ∈ STRING|BOOLEAN|NUMBER|SELECTION</code>). Value = <code>CatalogObject.custom_attribute_values</code>, a map keyed by the definition's <code>key</code> landing in <code>string_value / number_value / boolean_value / selection_uid_values</code> — <em>inline, not a shared row</em>. Weight: not a product field; the variation points at a <code>CatalogMeasurementUnit</code>. Brand: not answered (only <code>\"cocoa_brand\"</code> as a key example).",
+   "cite": "#11049 §1.1, 1.2, 1.5, 1.7, 1.8, §5 #10"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "O1",
+   "h": "",
+   "shape": "One <code>Product</code> row for every role. <code>catalog.xsd complexType.Product</code> opens with <code>ean</code>, <code>upc</code>, <code>unit</code>, <code>unit-quantity</code> (<code>xsd:decimal</code>), <code>unit-measure</code> (<code>String.60</code>), then <code>classification-category</code>, <code>variations</code>, <code>images</code>, <code>product-set-products</code>, <code>bundled-products</code>, <code>custom-attributes</code>. Three-level definition: <code>ObjectTypeDefinition → ObjectAttributeGroup → ObjectAttributeDefinition</code> with <code>unit: String</code> (“inches for length or pounds for weight”) and <code>valueTypeCode</code> (18 constants: <code>INT NUMBER STRING TEXT HTML DATE IMAGE BOOLEAN MONEY QUANTITY DATETIME EMAIL PASSWORD SET_OF_STRING SET_OF_INT SET_OF_NUMBER ENUM_OF_STRING ENUM_OF_INT</code>) vs the XSD's 16 (no <code>MONEY</code>/<code>QUANTITY</code> — the two disagree). System/custom switch: <code>@system: xsd:boolean default=\"false\"</code> on the attribute reference; REST prefixes custom attributes <code>c_</code>. Brand: zero occurrences in the record.",
+   "cite": "#11050 §1.1, 1.4, 1.5, 1.7, §5 C7"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "O2",
+   "h": "the purest case",
+   "shape": "Non-attribute columns on <code>pim_catalog_product</code>, whole: <code>uuid</code>, <code>id</code>, <code>identifier</code>, <code>enabled</code>, <code>raw_values</code>, <code>created</code>, <code>updated</code>, <code>rawQuantifiedAssociations</code> + edges <code>family</code>, <code>parent</code>, <code>familyVariant</code>, <code>groups</code>, <code>categories</code>. <b>Everything describing content is an attribute</b>; 19 CE types incl. <code>pim_catalog_identifier</code>, <code>pim_catalog_price_collection</code>, <code>pim_catalog_image</code>, <code>pim_catalog_metric</code>. Title = an attribute the family nominates (<code>attributeAsLabel = name</code>); price = <code>price_collection</code>; weight = metric, typed: <code>{\"amount\":\"800.0000\",\"unit\":\"GRAM\",\"symbol\":\"g\"}</code>; barcode = <b>no such concept</b> (0 files over 17.5 MB). Definition = <code>pim_catalog_attribute</code> (~30 columns: <code>is_required</code>, <code>is_unique</code>, <code>is_localizable</code>, <code>is_scopable</code>, <code>sortOrder</code>, <code>useableAsGridFilter</code>, <code>metricFamily</code>, <code>defaultMetricUnit</code>; type immutable). Values in <code>raw_values</code> JSON as <code>{locale, scope, data}</code>; option values are shared <code>AttributeOption</code> rows but the product <b>copies the code string</b> (“referential integrity is a validator, not a foreign key”). The <b>Family</b> decides the attribute set, never the category (0 hits over 344 files). Brand: ships both — a <code>pim_catalog_simpleselect</code> attribute in the demo catalogue <em>and</em> (EE) a Reference Entity, with the stated trigger: <em>“its own attributes (a label, a logo, a description or photos) … dedicated pages on one's e-commerce website”</em>.",
+   "cite": "#11069 §1.1, 1.4, 1.5, 1.7, 1.8, §2c; corpus/akeneo"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "O1",
+   "h": "shipping-dimension home not answered (_weight 0 hits)",
+   "shape": "No tables of its own: products, variations, categories, types and attribute values are WordPress rows (<code>wp_posts</code>, <code>wp_terms</code>, <code>wp_term_taxonomy</code>, <code>wp_term_relationships</code>, <code>wp_postmeta</code>) + two WooCommerce tables: <code>woocommerce_attribute_taxonomies</code> (the global registry) and <code>wc_product_attributes_lookup</code> (a filter index). <code>post_title</code> = title; <code>_sku</code>, <code>_global_unique_id</code> (GTIN), <code>_price</code> = postmeta. <b>Three attribute objects:</b> (1) per-product <code>WC_Product_Attribute {id, name, options, position, visible, variation}</code> serialised into one <code>_product_attributes</code> postmeta row; (2) global definition, six columns <code>attribute_id</code>, <code>attribute_name</code>, <code>attribute_label</code>, <code>attribute_type</code>, <code>attribute_orderby</code>, <code>attribute_public</code> — none references a category or type; (3) the value = a WordPress term, <em>“a bare label — six fields, none a quantity, unit or dimension”</em>, shared across products. A product-local attribute has no definition row (<code>id</code> 0; <code>is_taxonomy() { return 0 < id }</code>). No attribute-set object (1 false-positive hit over 2,833 PHP files). Brand: <code>product_brand</code> is a core taxonomy since 9.4.0 (2024-11-11) — “similar to Categories”, dedicated brand pages — the one merchant-owned brand entity in the thirteen.",
+   "cite": "#11080 §1, 1.3, 1.4, 1.5, §2; corpus/woocommerce"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "O1",
+   "h": "thinnest core of the nine; closest to O2",
+   "shape": "<code>ProductData</code> 13 properties: <code>name</code>, <code>categories</code>, <code>categoryOrderHints?</code>, <code>description?</code>, <code>slug</code>, <code>metaTitle?</code>, <code>metaDescription?</code>, <code>metaKeywords?</code>, <code>masterVariant</code>, <code>variants</code>, <code>searchKeywords</code>, <code>attributes</code>, <code>defaultVariant?</code>. <code>ProductVariant</code> 13: <code>id</code>, <code>sku?</code>, <code>key?</code>, <code>prices?</code>, <code>attributes?</code>, <code>price?</code>, <code>images?</code>, <code>assets?</code>, <code>availability?</code>, … <b>Weight is an ordinary attribute</b> — <code>{\"name\":\"weight\",\"value\":250}</code>, no unit anywhere. <b>No barcode/GTIN field</b> on Product or Variant. Definition = <code>AttributeDefinition {type, name (^[A-Za-z0-9_-]+$ 2..256), label, isRequired, attributeConstraint, inputTip?, inputHint, isSearchable, level}</code> — <em>“Not a resource: no id, no version; reached only through its ProductType.”</em> Value = <code>Attribute {name, value: any}</code>. Closed lists live on the definition, per ProductType; the same <code>name</code> across types must have the same <code>type</code>. Brand: only vendor-authored attribute names (<code>brand</code>, <code>tablet-brand</code>). No cap per type; 50 Product + 50 Variant attributes indexable.",
+   "cite": "#11081 §1.2, 1.4, 1.5, 1.6, 1.9, §2b, §2c"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "O2",
+   "h": "one registry, two storage strategies — the model behind option 4",
+   "shape": "<code>catalog_product_entity</code> = 8 columns: <code>entity_id</code>, <code>attribute_set_id</code>, <code>type_id</code>, <code>sku</code>, <code>has_options</code>, <code>required_options</code>, <code>created_at</code>, <code>updated_at</code>. Everything else is an <code>eav_attribute</code> row — the default set installs 43 definitions (<code>name</code>, <code>sku</code>, <code>description</code>, <code>price</code>, <code>weight</code>, <code>manufacturer</code>, <code>image</code>, <code>color</code>, <code>status</code>, <code>visibility</code>, <code>country_of_manufacture</code>, …). <b>Reconciled at source:</b> <code>sku</code> is installed as <code>'type' => 'static'</code> → <code>backend_type='static'</code>, and <code>isStatic()</code> returns true for <code>TYPE_STATIC</code> or <code>''</code> — so Magento has a definition row for every product fact, and <code>backend_type</code> says whether the value lives in an EAV table or a column. Definition = <code>eav_attribute</code> (17 columns incl. <code>frontend_input</code>, <code>backend_type</code>, <code>source_model</code>, <code>is_user_defined</code>, <code>is_required</code>, <code>is_unique</code>; <code>UNIQUE (entity_type_id, attribute_code)</code>) + overlay <code>catalog_eav_attribute</code> (22 columns). Value: five typed tables (<code>varchar</code>, <code>int</code>, <code>decimal</code>, <code>text</code>, <code>datetime</code>), <code>UNIQUE (entity_id, attribute_id, store_id)</code>; select values are shared <code>eav_attribute_option</code> rows referenced by integer, labels fanned out per store view. <code>frontend_input</code> is the free-text-vs-closed-list switch. Brand: the installed <code>manufacturer</code> attribute (<code>select</code>, <code>user_defined</code>). Barcode: no vendor term (0 hits). No cap.",
+   "cite": "#11082 §1.1, 1.5, 1.7, 1.9, §3.2; corpus/magento CategorySetup.php:410-421, AbstractAttribute.php:794-801"
+  }
+ ],
+ "hedges": "Amazon O2 on the write path (read model would be O1) · commercetools O1 but weight is an attribute and no GTIN field exists · Square O3 on a cap of unresolved scope (if per-application, it is O1) · WooCommerce O1 with shipping dimensions unmeasured · Google O1 but with no per-category schema at all, so option 1's second clause has no analogue.",
+ "brand": "Brand sub-question, revised 2026-09-19: attribute — Amazon, Walmart, commercetools, Magento (+ Akeneo CE); built-in scalar — Shopify (vendor), Google (brand), eBay (Product.brand + a Brand aspect); platform-owned registry — Shopee (brand_id), Tokopedia Era B (brand_id); merchant-owned entity — WooCommerce (product_brand taxonomy, 9.4.0), Akeneo EE (Reference Entity); not established — Square, Salesforce."
+}

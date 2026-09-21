@@ -1,0 +1,312 @@
+{
+ "id": "A4",
+ "options": {
+  "a": "Value shape: (a) free string copied per product",
+  "b": "(b) shared option row many products point at",
+  "c": "(c) hybrid by type — select-typed → row, free text → string",
+  "NE": "Not established"
+ },
+ "subtallies": [
+  {
+   "name": "2a · Value shape (= D8) — every row, 14 with Tokopedia split",
+   "cells": [
+    [
+     "(b) shared row",
+     [
+      "Magento",
+      "Square"
+     ]
+    ],
+    [
+     "(a) copied string",
+     [
+      "Amazon",
+      "eBay",
+      "Google",
+      "Walmart"
+     ]
+    ],
+    [
+     "(c) hybrid",
+     [
+      "Shopify",
+      "Shopee",
+      "WooCommerce",
+      "Salesforce B2C",
+      "Tokopedia Era A",
+      "Tokopedia Era B",
+      "Akeneo"
+     ]
+    ],
+    [
+     "not established",
+     [
+      "commercetools"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "2a · holding out the three named-ambiguous rows (commercetools, Salesforce, Amazon)",
+   "cells": [
+    [
+     "(b) shared row",
+     [
+      "Magento",
+      "Square"
+     ]
+    ],
+    [
+     "(a) copied",
+     [
+      "eBay",
+      "Google",
+      "Walmart"
+     ]
+    ],
+    [
+     "(c) hybrid",
+     [
+      "Shopify",
+      "Shopee",
+      "WooCommerce",
+      "Tokopedia Era A",
+      "Tokopedia Era B",
+      "Akeneo"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "2b · Where the allowed list lives (multi-valued per platform)",
+   "cells": [
+    [
+     "(A) on the attribute — one list everywhere",
+     [
+      "Magento",
+      "Akeneo",
+      "Square",
+      "Shopee",
+      "Shopify (taxonomy values)",
+      "WooCommerce (global terms)",
+      "Tokopedia (built-in ids)"
+     ]
+    ],
+    [
+     "(B) on the category / product type",
+     [
+      "eBay",
+      "Amazon",
+      "Walmart",
+      "Shopify (linked options)"
+     ]
+    ],
+    [
+     "(C) on the product / family",
+     [
+      "Shopify (unlinked option values)",
+      "WooCommerce (local attributes)"
+     ]
+    ],
+    [
+     "(D) no allowed list at all",
+     [
+      "Google",
+      "Walmart (flavor: 0 of 6,967 types close it)",
+      "eBay (FREE_TEXT aspects, 156,337 of 197,046)"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "2c · Quantities (= D9), 14 rows",
+   "cells": [
+    [
+     "typed quantity + unit on the value",
+     [
+      "Walmart",
+      "Shopee",
+      "Akeneo",
+      "Tokopedia Era B"
+     ]
+    ],
+    [
+     "typed, no physical unit",
+     [
+      "eBay",
+      "commercetools"
+     ]
+    ],
+    [
+     "bare, unit elsewhere",
+     [
+      "Shopify",
+      "Salesforce B2C",
+      "Square"
+     ]
+    ],
+    [
+     "bare, nothing",
+     [
+      "Magento",
+      "WooCommerce",
+      "Tokopedia Era A"
+     ]
+    ],
+    [
+     "five shapes at once",
+     [
+      "Amazon"
+     ]
+    ],
+    [
+     "text + a unit-pricing pair",
+     [
+      "Google"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "Ordering — every system delivers an ordered array; what differs is how the order is made",
+   "cells": [
+    [
+     "set by a human per value",
+     [
+      "Square (CatalogItemOptionValue.ordinal)",
+      "Shopify (productOptionsReorder, array order)",
+      "Akeneo (sort_order)",
+      "Magento (sort_order)",
+      "WooCommerce (menu_order)"
+     ]
+    ],
+    [
+     "generated from the label",
+     [
+      "Shopify taxonomy build (sort_by_localized_name, Other last; custom on 7 of 8,240)",
+      "Akeneo (auto_option_sorting toggle)",
+      "WooCommerce (name / name_num = ORDER BY name+0, measured broken)"
+     ]
+    ],
+    [
+     "from a stored quantity",
+     []
+    ],
+    [
+     "array order, no stated rule",
+     [
+      "eBay (AspectValue has only localizedValue + valueConstraints)",
+      "Amazon (enum array order)"
+     ]
+    ]
+   ]
+  }
+ ],
+ "framing": "Nobody ships pure free strings with no list anywhere, and nobody ships pure rows with no free text. Hybrid is modal, and in every case the hybrid is governed by a flag or kind on the definition — #10778 V2 exactly. The one thing no platform does: keep one shared definition and give it a different value list per category. GS1 (netContent is a QuantitativeValue because a measurement without a unitCode is not interpretable across trading partners) and BPOM/Kemendag (the printed unit is a function of the magnitude) carry the only stated rationale for a typed quantity.",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "a",
+   "h": "copied; the shared-vocabulary half is ❓UNKNOWN (U16); quantities: five shapes at once",
+   "shape": "<em>“<code>name</code> is stable; the label is not.”</em> The value is a scalar inside an array-of-objects envelope written onto the child: <code>[{ \"value\": 4, \"marketplace_id\": \"ATVPDKIKX0DER\" }]</code>. Whether <code>Flavor</code>, <code>flavor.value_id</code> and <code>Flavor Standardized Values</code> are three attributes or three views of one is not established. The enum lives inside the per-(ProductType, marketplace) schema and is <b>soft</b>: a free string is schema-valid, a suggested closed list sits alongside. Quantities: <code>{value, unit}</code>, <code>unit_count {value, type}</code>, a bare integer and free-text size ≤50 chars in one schema. Amazon staff on the enum-vs-validator mismatch: <em>“getDefinitionsProductType publishes human-readable display values in enum/enumNames … while the server-side validator only accepts undocumented snake_case codes … a valid concern.”</em>",
+   "cite": "#10976 §1.3, correction pass; AMZ:13590"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "c",
+   "h": "hybrid split by option kind, not attribute type; list on the attribute (taxonomy) / category (linked) / product (unlinked)",
+   "shape": "<em>“An unlinked option value is a string on the product … A linked option value carries <code>linkedMetafieldValue: \"gid://shopify/Metaobject/253676454209\"</code> — a reference to a Metaobject row that exists independently of the product; two products linked to the same metaobject each read back the same gid.”</em> Unlinked, measured live: 600 products → 600 distinct <code>ProductOptionValue</code> ids for one value name. Taxonomy values: a <code>TaxonomyValue</code> belongs to exactly one attribute (0 of 74,820 shared). Metafield values are <em>always stored as a string regardless of type</em>. Quantities: weight and unit-price on the variant; a <code>measurement</code> attribute type exists in the taxonomy, 0 instances across 383 nodes. <b>The clearest stated “why” for a shared row — the rename argument:</b> <em>“instead of a color option with the text value ‘Red’, you reference a metaobject that includes the color name, hex code, and taxonomy references … you can edit the color <code>black</code> to be <code>graphite</code> and your variant values are updated anywhere that color is used.”</em> <b>Live 2026-09-21:</b> 16 categories → 99 <code>TaxonomyChoiceListAttribute</code> (values are <code>TaxonomyValue {id: ID!, name: String!}</code> rows) and <b>0</b> <code>TaxonomyMeasurementAttribute</code>; the measurement type's <code>options</code> introspect as <code>[Attribute {key: String!, value: String}]</code> — bare strings, no unit field.",
+   "cite": "#11011 §1.7, 1.8; #11031 §P4 dev-store pass; gap-pass-2026-09-21/shopify/RESULT.md"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "a",
+   "h": "every value is a string on the product; quantities are text + a unit-pricing pair",
+   "shape": "Four open layers where the merchant names the key and writes a free string, plus one typed layer: <code>ProductDetail {sectionName, attributeName, attributeValue}</code> (140/140/1000 chars, ≤100); <code>CustomAttribute {name, value}</code> (≤2,500 per product); <code>VariantOption {name, value}</code> (0..30; <code>name</code> free text ≤250, no enumeration); <code>CloudExportAdditionalProperties</code>. Flavour is only a <em>suggested key name</em> in <code>product_detail</code> — <em>“not a comprehensive or exhaustive list.”</em> Quantities: “Value + unit” packed into one feed string; <code>unit_pricing_measure</code> / <code>unit_pricing_base_measure</code> beside it; no dedicated net-content field. Inference: feeds from merchants whose catalogues Google does not host — no place a shared row could live that both sides can address.",
+   "cite": "#11013 §1.3 (layer table 11013.md:139–145), §3 (:482), Q3 in evidence-A4-records"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "a",
+   "h": "copied; typed on the constraint, no physical unit; FREE_TEXT on 156,337 of 197,046",
+   "shape": "<code>aspects = {name: [strings]}</code> on each SKU; <em>“There is no identifier on an aspect or an aspect value”</em> (0 hits for <code>aspectId</code>, <code>valueId</code>, <code>aspectValueId</code> over 867 MB). The list lives on the leaf category (the same id under two trees returns two different lists). Data type on the constraint (<code>NUMBER</code> 482 / <code>DATE</code> 15 of 197,046); every value is a string. <b>Why free text coexists with a closed list, in the vendor's words:</b> <em>“Most categories support free-text names and values in item specifics and in variations. However, some categories require certain item specifics (e.g., Brand), and some item specifics (e.g., Color) may require you to select a value from a predefined set.”</em>",
+   "cite": "#11045 §1.2, §3; #11031 §P4"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "a",
+   "h": "copied; typed {unit, measure} on netContent; flavor never closed",
+   "shape": "<em>“The axis value is copied per item; there is no shared value row — written inline on each member (<code>\"flavor\":\"Peppermint\"</code> / <code>\"Spearmint\"</code>)”</em>; <em>“Shared values are shared by repetition, not reference.”</em> The list is written out per product type — but for <code>flavor</code> all 385 declarations are <code>\"type\":\"string\", maxLength 600</code>, no <code>enum</code>: 0 of 6,967 types close it. Quantities: <code>{unit, measure}</code> objects on values like <code>netContent</code>; the axis-eligible <code>size</code> stays a free string. Inference: a flat feed contract — the seller transmits a complete document per SKU, and Walmart never hands the seller an id to point at.",
+   "cite": "#11046 §2 (11046.md:374), §2b (:405)"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "c",
+   "h": "shared row by id, or the sentinel 0 + free text; typed value carries a unit",
+   "shape": "<code>value_id int</code> on the catalogue row (attribute 1 : N); <code>value_id int32 required</code> on the item with <code>0</code> = custom sentinel (<em>“‘value_id’ must be 0 and ‘original_value_name’ is required”</em>). List on the attribute: <code>search_attribute_value_list</code> keyed by <code>attribute_id</code> alone. Quantities: <code>value_unit</code> when the attribute's <code>format_type = 2</code>, unit from the attribute's own <code>attribute_unit_list</code> (<code>name</code> = “5kg”, <code>value_unit</code> = the unit); variation options are bare. Inference: a marketplace that wants a clean catalogue but cannot block a seller's listing.",
+   "cite": "#11047 §1.2"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "c",
+   "h": "both eras hybrid; Era A bare, Era B typed quantity via a product attribute + a unit-price formula",
+   "shape": "<b>Era A:</b> <code>VariantUnitValue {variant_unit_value_id int, status int, value string, equivalent_value_id int, english_value string, hex string, icon string}</code> — a value row per variant unit; <em>“To create a custom variant simply fill <code>value</code> with desired value.”</em> No unit field. <b>Era B:</b> <code>id string</code> ← built-in attribute id, <code>value_id string</code> ← built-in value id (from Get Attributes), beside a seller-typed custom attribute whose <em>“system will auto-generate an ID after listing.”</em> Quantity: <code>skus.sku_unit_count</code> pairs a magnitude on the SKU with “base unit count” and “unit type” <b>product attributes</b> served by Get Attributes — <em>“if the SKU represents 500ml of water, this value would be 500 if the unit type is defined as ml”</em> — and the only stated unit-price formula in the set: <em>“Unit price = Selling price / (SKU unit count / base unit count).”</em> <b>Structured spec 2026-09-21:</b> a product-attribute value is written as <code>{id, name}</code>, a sales-attribute value as <code>{id, value_id, value_name, name}</code> — id-bearing row or a name, the hybrid stated in the schema; every money and quantity field is a <code>string</code>.",
+   "cite": "#11048 §1.2 (11048.md:139-140), §1.7 (:307-312), §1.8, §3 (:487); gap-pass-2026-09-21/tiktok/RESULT.md"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "b",
+   "h": "shared row; list on the option; unit on the variation",
+   "shape": "<code>CatalogItemOptionValue</code> is a top-level catalog object with its own id; a variation stores <code>{\"item_option_id\", \"item_option_value_id\"}</code> pairs. Vendor: <em>“that option can be applied to define the color attribute for any new catalog items”</em>; <em>“because ‘Polo shirt’ and ‘Club shirt’ are variations of ‘Shirt’, they're restricted to the same option values. If the seller later receives teal polo shirts, they must add ‘Teal’ to the color option set.”</em> Custom-attribute values, by contrast, are inline (<code>string_value / number_value / boolean_value / selection_uid_values</code>). Quantity: the variation points at a <code>CatalogMeasurementUnit</code>.",
+   "cite": "#11049 §1.7; corpus/square/api.json, item-options guide"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "c",
+   "h": "local vs shared is a first-class choice; no retrieved instance data (U9)",
+   "shape": "The import XSD offers <code>variation-attribute</code> (inline, own values) <b>or</b> <code>shared-variation-attribute</code> (a reference carrying only <code>attribute-id</code> + <code>variation-attribute-id</code>); the object carries <code>shared: boolean</code>. The value is <code>@value</code> (<code>NonEmptyString.256</code>, 1..1 required, e.g. <code>red</code>, <code>1 GB</code>) with <code>&lt;display-value&gt;</code> localized 0..N and <code>position</code> (Data API only). Quantities: <code>1 GB</code> is one opaque string; the unit sits on the definition (<code>unit: String</code>) and the product (<code>unit-quantity xsd:decimal</code>, <code>unit-measure String.60</code>). Provenance caveat: two artifacts labelled “REAL INSTANCE” are vendor-authored examples.",
+   "cite": "#11050 §1.3, 1.4, §2, U9"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "c",
+   "h": "shared row at the definition, copied code at the product; metric is {amount, unit} and axis-eligible",
+   "shape": "<em>“The definition is a shared row; the product copies the code.”</em> <code>pim_catalog_attribute_option UNIQUE (code, attribute_id)</code>, labels in <code>pim_catalog_attribute_option_value (locale_code, option_id)</code>; the product stores the option code as a string inside <code>raw_values</code> JSON. <em>“Referential integrity is a validator, not a foreign key”</em> — case-insensitive: <code>in_array(strtolower($value->getData()), …)</code>. <code>AttributeOption.attribute</code> manyToOne, exactly 1; no family/category field. Quantity: <code>pim_catalog_metric</code> = <code>{amount, unit}</code> from a shared unit registry (<code>{\"amount\":\"800.0000\",\"unit\":\"GRAM\",\"symbol\":\"g\"}</code>, symbol resolved from the measurement family), and it is axis-eligible. Ordering, both mechanisms stated: <em>“Options can be automatically sorted by alphabetical order using the toggle button … you can manually drag and drop option rows to reorder.”</em>",
+   "cite": "#11069 §1.1, 1.5, §2c"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "c",
+   "h": "shared term for the attribute, copied slug for the axis; bare, nothing",
+   "shape": "<em>“The attribute value is a bare label — <code>id</code> (integer, readonly), <code>name</code>, <code>slug</code>, <code>description</code>, <code>menu_order</code> (integer), <code>count</code>”</em>, <b>but</b> <em>“A variation stores its axis value as a copied string, always, even for a global attribute”</em> — <code>update_post_meta($product_id, 'attribute_' . $key, wp_slash($value))</code>. Global terms on the attribute; local attributes on the product only. Quantities: six bare fields; numeric sort is an <code>ORDER BY name+0</code> hack (<code>attribute_orderby = name_num</code>). The only explicit global-vs-local trade statement: <em>“defined globally, so they’re easy to update across the entire store … or defined individually, at the product level.”</em>",
+   "cite": "#11080 §1.5 (11080.md:372), §1.6 (:394), :338"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "NE",
+   "h": "the record withdrew its own “copied, not a foreign key” reading; typed, no physical unit",
+   "shape": "<code>AttributePlainEnumValue {key: string, label: string}</code> — a pair nested inside the ProductType document, not an addressable row. 13 attribute types; <code>money</code> carries a currency, not a unit; no unit fields (four instruments, all 0). (B) on both: <em>“the enum values can be different for each ProductType”</em> while <em>“each AttributeDefinition must have the same type.”</em> Why values differ per type: <em>“You wouldn't ask for the Neckline of a pair of jeans, would you?”</em>",
+   "cite": "#11081 §0, 1.4, §3, §6"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "b",
+   "h": "shared row referenced by integer; list on the attribute; bare, nothing",
+   "shape": "<em>“The value is a shared row referenced by an integer, not a string copied onto each product; the label is fanned out per store view, never per product.”</em> <code>eav_attribute_option (option_id)</code> → <code>eav_attribute_option_value (value_id, option_id, store_id, value varchar(255))</code>, <code>UNIQUE (store_id, option_id)</code>; the product stores <code>catalog_product_entity_int.value</code> (int). The running store holds the <b>union</b> of two fixtures' <code>size</code> lists (20 options). Quantities: 0 unit fields across 67 schema files (control 12). Inference for the row: labels are per <code>store_id</code>, so the label cannot be the identity — a store-view translation of “Green” must not create a second value.",
+   "cite": "#11082 §1.2, 1.7 (11082.md:379), §3.2"
+  }
+ ]
+}

@@ -1,0 +1,186 @@
+{
+ "id": "B3",
+ "options": {
+  "a": "(a) every used node is a type — 1,686 schemas",
+  "b": "(b) a schema on a subset of nodes; untyped nodes inherit",
+  "c": "(c) a coarser registry, ~Amazon's 107 food types",
+  "d": "(d) adopt a vendor taxonomy (→ the fork)",
+  "NA": "No schema on the tree (the type lives elsewhere) — no depth opinion"
+ },
+ "subtallies": [
+  {
+   "name": "Who authors the tree, and does a node carry a schema?",
+   "cells": [
+    [
+     "centrally authored, per-node schema",
+     [
+      "Amazon (per product type)",
+      "Shopify",
+      "eBay (per leaf)",
+      "Walmart (per product type, flat)",
+      "Shopee (per leaf)",
+      "Tokopedia (per leaf, both eras)"
+     ]
+    ],
+    [
+     "centrally authored, no schema",
+     [
+      "Google"
+     ]
+    ],
+    [
+     "merchant-authored, per-node schema",
+     [
+      "Salesforce B2C (classification category + ancestors — the one merchant-authored precedent, and the one that inherits)"
+     ]
+    ],
+    [
+     "merchant-authored, no schema on the tree",
+     [
+      "Square",
+      "Akeneo (Family owns it)",
+      "WooCommerce",
+      "commercetools (ProductType is flat)",
+      "Magento (attribute set)"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "Granularity for the same domain",
+   "cells": [
+    [
+     "107",
+     [
+      "Amazon food product types"
+     ]
+    ],
+    [
+     "764",
+     [
+      "Shopify food branch (max level 6)"
+     ]
+    ],
+    [
+     "5,595",
+     [
+      "Google whole taxonomy, no schema"
+     ]
+    ],
+    [
+     "14,606",
+     [
+      "Shopify whole (max level 7)"
+     ]
+    ]
+   ]
+  }
+ ],
+ "framing": "The split is not about depth — it is about who authors. No vendor publishes a depth rule or an “earns a node” criterion; the closest is Amazon's and Google's “most specific”, both guidance. The schema-carrying set (7) is the six central authors + Salesforce, which is also the only one that inherits down the tree — the closest analogue to our situation, not an outlier. The spread 107 : 764 : 5,595 : 14,606 tracks what the tree is FOR, not how detailed groceries are.",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "c",
+   "h": "per product type, materialised; not creatable by sellers",
+   "shape": "<code>FoodAndBeverages.xsd</code> roots at <code>FoodAndBeverages</code> with <code>ProductType</code> an <code>xsd:choice</code> of <b>107</b> element refs; the JSON registry floor is 1,640 distinct <code>…/ProductType/&lt;name&gt;</code>; <em>“no global count is well defined.”</em> Schema per product type, one JSON Schema per call. Stated: product types are not creatable — 12 patterns over 877 doc files → 0 hits; additions are announced via <code>PRODUCT_TYPE_DEFINITIONS_CHANGE.NewProductTypes</code>; a seller may only “submit a request to update it using the Category update tool.” Inference: 107 is small because Amazon, not the seller, pays for every one. The join is mutable in Amazon's hands: 15,299 of 26,135 flavour release-note rows are “attribute deleted and no longer associated with the product type.”",
+   "cite": "#10976 §1.1, 1.2"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "b",
+   "h": "14,606 nodes, schema at every level",
+   "shape": "14,606 categories, 26 verticals, max level 7; food branch 764 nodes, max level 6. Schema per node — median 6 attributes, 1.04 % carry none. Stated purpose, not depth rule (repo README): <em>“Our open-source, standardized product taxonomy establishes a universal language for product classification … Spanning 25+ essential verticals.”</em> Nothing about what earns a node (the repo's <code>docs/</code> not in the sparse checkout). Live 2026-09-21: Coffee 11 attributes, Pasta &amp; Noodles 6, Chocolate 6, Snack Foods 5.",
+   "cite": "#11011 §1.7; corpus ad206247; data/shopify-corpus-stats.json; gap-pass-2026-09-21/shopify/RESULT.md"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "d",
+   "h": "deep and free because nobody authors a schema per node",
+   "shape": "5,595 nodes, 21 roots, depth 7; <em>“every line is <code>id - path</code>”</em> — no schema. Stated: <em>“All products are automatically assigned a product category from Google's continuously evolving product taxonomy.”</em> Inference: depth is cheap for Google because the taxonomy is an ad-targeting classification the platform fills in for you.",
+   "cite": "#11013 §1.7; #11031 2026-09-15 §A"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "a",
+   "h": "per leaf",
+   "shape": "Sandbox tree 17,105 nodes, 15,111 leaves (three operations agree); production tree not fetched. Schema per leaf — <em>“Each category has a different set of aspects.”</em> Gap pass 2026-09-21: Food &amp; Beverages subtree has 122 leaves; grocery leaves carry 24–27 aspects each (6–14 variation-enabled).",
+   "cite": "#11045 §1.2 (X1) [R-2]; gap-pass-2026-09-21/ebay/RESULT.md"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "c",
+   "h": "flat; no tree",
+   "shape": "6,967 product types in one flat map; 383,947 attribute slots, 6,576 distinct names; <code>$ref</code> = 0 across 451,013,258 B. Schema materialised in full per product type; the workbook taxonomy (24 / 77 / 461) is not in the feed.",
+   "cite": "#11031 2026-09-15 §B; #11046"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "a",
+   "h": "size credential-gated, not measured",
+   "shape": "A tree with <code>has_children</code>; schema per leaf — <em>“Each product category has different attribute data.”</em> Size not published (“there is nothing to count”).",
+   "cite": "#11047 §1.2, §2 [R-39]"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "a",
+   "h": "Era A 3-level; Era B 3-level (v1) or 7-level (v2, US)",
+   "shape": "Era A: a 3-level tree (<code>category_version v1</code>), axes per category via <code>get_variant?cat_id=</code>. Era B: <em>“For US shops, pass v2, which represents the 7-level category tree. For other regions, v1 represents the 3-level category tree and is the default.”</em> Schema per leaf via <code>GET /product/202309/categories/{id}/attributes</code>.",
+   "cite": "#11048 §1.5, 1.9 [R-92], §2"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "NA",
+   "h": "merchant-authored; no per-category attribute set",
+   "shape": "Seller-authored nodes carrying <code>is_top_level</code>, <code>parent_category</code>, <code>path_to_root</code>, <code>root_category</code>; no per-category attribute set exists — the only gate is <code>allowed_object_types</code>.",
+   "cite": "#11049 §1.6, 1.7"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "b",
+   "h": "the one merchant-authored per-node schema — and it inherits",
+   "shape": "Merchant-authored catalogs; the classification category's attribute groups plus <em>“any parent categories”</em> — the union of global groups + the classification category's groups + its ancestors', with <em>“the sub-category group overrides the parent group”</em> (single-route). Inference: makes depth affordable by inheriting down the tree.",
+   "cite": "#11050 §1.5; #11031 2026-09-15 §B"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "NA",
+   "h": "unlimited levels; the Family owns the schema",
+   "shape": "<em>“an unlimited number of levels (categories, subcategories, subsubcategories..)”</em>; <code>Category.attributes</code> absent — the Family owns the schema. Inference: unlimited levels with no schema on the category is the only safe default when the tree is the customer's.",
+   "cite": "#11069 §1.x [R-28][R-74]"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "NA",
+   "h": "",
+   "shape": "Merchant-authored <code>product_cat</code> terms — 9 properties, none an attribute set.",
+   "cite": "#11080 §1.7"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "NA",
+   "h": "",
+   "shape": "Merchant-authored <code>Category</code> tree; <code>ProductType</code> is flat and separate.",
+   "cite": "#11081 §1.10"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "NA",
+   "h": "",
+   "shape": "Merchant-authored category EAV tree; <em>“0 of 63 Catalog tables join a category to a product attribute”</em> — the attribute set is the schema owner.",
+   "cite": "#11082 §1.2, 1.4"
+  }
+ ]
+}

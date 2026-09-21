@@ -1,0 +1,206 @@
+{
+ "id": "A3",
+ "options": {
+  "a": "One global type; categories subscribe (join table)",
+  "b": "Each category owns its own copy",
+  "c": "Shared type, per-category value list",
+  "a′": "One global type, subscribed, with a per-membership display name (Shopify's extended attributes)",
+  "d": "No category-scoped attribute concept at all",
+  "AMB": "Ambiguous, by the record's own admission"
+ },
+ "subtallies": [
+  {
+   "name": "Counting every row (14 — Tokopedia's eras separate)",
+   "cells": [
+    [
+     "(a) global type, subscribed",
+     [
+      "Amazon",
+      "Shopify",
+      "Salesforce B2C",
+      "Akeneo",
+      "Magento",
+      "Tokopedia Era B"
+     ]
+    ],
+    [
+     "(b) per-category copy",
+     [
+      "eBay",
+      "Walmart",
+      "commercetools"
+     ]
+    ],
+    [
+     "(c) shared type, per-category list — pure",
+     []
+    ],
+    [
+     "(d) no category-scoped concept",
+     [
+      "Google",
+      "Square",
+      "WooCommerce"
+     ]
+    ],
+    [
+     "ambiguous",
+     [
+      "Shopee",
+      "Tokopedia Era A"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "Holding every hedged row out (the honest margin)",
+   "cells": [
+    [
+     "(a)",
+     [
+      "Shopify",
+      "Salesforce B2C",
+      "Akeneo",
+      "Magento"
+     ]
+    ],
+    [
+     "(b)",
+     [
+      "eBay",
+      "Walmart",
+      "commercetools"
+     ]
+    ],
+    [
+     "(c)",
+     []
+    ],
+    [
+     "(d)",
+     [
+      "Google",
+      "Square",
+      "WooCommerce"
+     ]
+    ],
+    [
+     "ambiguous",
+     [
+      "Shopee",
+      "Tokopedia Era A",
+      "Amazon",
+      "Tokopedia Era B"
+     ]
+    ]
+   ]
+  }
+ ],
+ "framing": "On most platforms the attribute-owning object is NOT the browse category — Magento's eav_attribute_set, Akeneo's Family, commercetools'/Amazon's/Walmart's ProductType, Salesforce's object type + category groups. Only Shopify, eBay, Shopee, Tokopedia merge the two, and Lock 1 merges them for us. The (c) column is empty: no platform ships a shared definition with a per-category value list (commercetools is (c) on values, (b) on the object). Counter-finding: Shopify does not reuse one Flavor across domains — it mints more global types (Flavor 293 categories/30 values · Pet food flavor 43/54 · Baby food flavor 41/4 · E-liquid flavor 22/10; 329 size-like definitions, 219 on ≤1 category). (a)'s headline benefit — one filter across categories — materialises for Color (11,730 edges), Pattern (11,686), Material (4,546), not for flavour or size.",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "a",
+   "h": "name-PK registry + ProductTypeAttribute join; legacy XSD surface behaves like (b)",
+   "shape": "<em>“<code>name</code> is stable; the label is not. Every one of the 381 legacy <code>…/Flavor</code> XPaths maps to exactly one JSON pointer — <code>/attributes/flavor/0/value</code>”</em>; <em>“Requiredness is a property of this join, not of the Attribute. The same attribute is required for one product type and optional for another.”</em> Measured: 213 product types → 208 distinct attributes, 1,154 pairs. Hedge: on the legacy XSD surface divergence is real — 101–124 names with differing <code>maxLength</code> measured (149–157 on the complete set). Inference for why: a JSON Schema is compiled per (type × marketplace × parentage level) with monthly deltas; a stable <code>name</code> lets a schema be regenerated without invalidating stored values; the join is mutable (15,299 of 26,135 flavour release-note rows are “attribute deleted and no longer associated with the product type”).",
+   "cite": "#10976 §1.3, 1.4, §2; #10966 audit a3/b8"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "a",
+   "h": "on two surfaces: taxonomy join + metafield constraint list",
+   "shape": "Taxonomy: 8,240 base attributes, 93,007 category→attribute edges; <em>“Extended attributes are aliases — no values of their own … they reuse the base attribute's GID”</em> — 316 extended names over 2,891 edges, the mechanism behind option (a′). Metafields: <em>“Currently, Shopify only supports constraint subtypes that correspond to product categories on Product metafield definitions.”</em> — one definition, a constraint list of category ids (7,750 on <code>shopify.color-pattern</code>). Stated rationale for the constraint: <em>“<code>Shoe size</code> is a valid metafield for Shoes but wouldn't apply to Sweaters.”</em> No statement explains why the taxonomy attribute is global rather than per node. <b>Live 2026-09-21 (Admin API 2026-07):</b> <code>Flavor</code> is one gid (<code>TaxonomyAttribute/1458</code>) with the identical 30 <code>{id, name}</code> values on Chocolate, Snack Foods, Snack Cakes, Soda, Coffee and Coffee Cakes; absent on Pasta &amp; Noodles and Condiments — one global type, per-category membership, no per-category value list.",
+   "cite": "#11011 §1.7, 1.8, §3; corpus-analysis/shopify_attr_reuse.out; gap-pass-2026-09-21/shopify/RESULT.md"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "d",
+   "h": "the record withdrew half its own claim — three attributes are availability-gated by category",
+   "shape": "<em>“There is no per-category attribute schema. The bag is one global set: 145 properties in Merchant API products_v1.”</em> Instrument: <code>categoryAttribute|category_attribute|attributesFor|productTypeDefinition|schemaFor</code> → 0. Inference: Google receives a flat feed from sellers it does not control; a per-category schema would require every seller to resolve a taxonomy node before serialising a row.",
+   "cite": "#11013 §1.3, 1.4"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "b",
+   "h": "the strongest (b): no object identity exists",
+   "shape": "<em>“Each category has a different set of aspects and different requirements for aspect values.”</em> <em>“There is no identifier on an aspect or an aspect value.”</em> — <code>aspectId</code> 0 · <code>valueId</code> 0 · <code>aspectValueId</code> 0 · <code>\"id\":</code> 0. Two leaves carrying <code>Flavor</code> cannot be one object. Inference: aspect lists are versioned per (category_tree_id, category_id, marketplace); per-leaf materialisation lets a set change without a global migration — the same category id under two trees returns two different aspect lists.",
+   "cite": "#11045 §1.1, 1.2, 1.7"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "b",
+   "h": "the only platform that measures how far the copies diverge",
+   "shape": "<em>“Every attribute is written out in full at every product type; nothing is referenced.”</em> 6,576 names written out 383,947 times; 1,767 have more than one distinct definition — <code>flavor</code> 50, <code>color</code> 126, <code>size</code> 438. Vendor states the consequence, not the reason: <em>“Based on the chosen Product Type, attribute requirements, values, and recommendations will vary.”</em>",
+   "cite": "#11046 §1.2, 1.3"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "AMB",
+   "h": "declared ambiguous by the record itself (open item U-8)",
+   "shape": "<em>“Each product category has different attribute data.”</em> <b>and</b> <code>v2.product.search_attribute_value_list</code> is keyed by <code>attribute_id</code> alone, with no <code>category_id</code> — value rows belong to the attribute. Open: <em>“Whether an <code>attribute_id</code> is shared across categories or re-minted per category.”</em> Shopee publishes no attribute inventory, no value inventory, no category file — nothing to count.",
+   "cite": "#11047 §1.2, §3, §4 U-8"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "AMB",
+   "h": "Era A ambiguous leaning (a); Era B (a) on one route",
+   "shape": "<b>Era A:</b> <em>“Variant / VariantUnit / VariantUnitValue — the global axis catalogue”</em>, retrieved for a <code>category_id</code>; the record calls it global and the ids look global, but no second category's response was ever retrieved; the parallel Annotation system has no stable id and is (b)-shaped. <b>Era B:</b> attributes <em>“bound to the specified category”</em>, yet the changelog's “Imported Goods” attribute is one id (<code>102254</code>) with one value pair (<code>1000058/1000059</code>) <em>“to all categories except digital”</em> — one id across every category but one. Single route (a changelog), so nothing moved to VERIFIED.",
+   "cite": "#11048 §1.2, 1.8"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "d",
+   "h": "",
+   "shape": "<em>“After a custom attribute definition is set to be applicable to an object … that definition is available for all objects of that type.”</em> — a “flavour” definition allowed on <code>ITEM</code> appears on every item in the seller's catalogue. Inference: single-tenant seller tooling where the merchant authors both categories and attributes; the 10+10 cap removes the problem scoping would solve.",
+   "cite": "#11049 §3, Retrievals [R-11]; corpus/square/add-custom-attributes.html:57"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "a",
+   "h": "the only one with genuine inheritance down the category tree",
+   "shape": "<em>“An attribute group is a grouping of attribute assignments that's attached to a category. Attributes can belong to more than one attribute group.”</em> The attribute model = the global product attribute groups + the classification category's groups + <em>“product attribute groups of any parent categories”</em>. Override order (<em>“the sub-category group overrides the parent group”</em>) is single-route. Rationale only <em>“to help you manage product attributes”</em>; inference: a single-tenant storefront where the merchant owns the tree, so inheritance costs nothing.",
+   "cite": "#11050 §1.7, 1.8"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "a",
+   "h": "the subscriber is the Family, not the category",
+   "shape": "<em>“Family owns the attribute set, through a many-to-many join table — an attribute is reusable across families.”</em> Vendor: <em>“A product family can use all of the attributes available in the PIM. Several families of products can use the same attributes.”</em> Clearest stated purpose of any: <em>“The family helps managing the product's completeness as you can say at the family level, which family attributes are required for the completeness calculation.”</em>",
+   "cite": "#11069 §1.1"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "d",
+   "h": "global definition registry; the one unhedged “no” in #11031's tally",
+   "shape": "<code>woocommerce_attribute_taxonomies</code>: six columns, <em>“none of them references a category, a product type, or any grouping object”</em>; 500 <code>product_cat</code> lines, 0 also match <code>attribute_taxonom</code>. <b>The only explicit design rationale for globality in the thirteen:</b> <em>“Attributes can be defined globally, so they’re easy to update across the entire store, and available to be used on any product, or … defined individually, at the product level, and they will only exist for that single product.”</em>",
+   "cite": "#11080 §1.4, 1.7; 11080.md:338, :629"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "b",
+   "h": "(b) on the object, (c) on the values; name-uniqueness scope is an open contradiction (U6)",
+   "shape": "<code>AttributeDefinition</code> is <em>“Not a resource: no <code>id</code>, no <code>version</code>; reached only through its ProductType”</em>; <em>“the enum values can be different for each ProductType”</em> / <em>“To use the same <code>name</code> in multiple ProductTypes, each AttributeDefinition must have the same <code>type</code>.”</em> <b>The only explicit argument for per-type scoping:</b> a <code>T-Shirt</code> type has <code>Color</code> = Red/Green/Blue, a <code>Jeans</code> type has <code>Color</code> = Blue/Black/Grey; <em>“You wouldn't ask for the Neckline of a pair of jeans, would you? By defining appropriate Attribute types for each Product Type, you prevent irrelevant or nonsensical data from being entered.”</em> Contradiction: resource doc says name <em>“unique within the Project”</em>, draft doc says <em>“unique within the ProductType”</em>.",
+   "cite": "#11081 §1.2, 1.4, §3, U6"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "a",
+   "h": "one flavor row per entity type; membership via eav_entity_attribute",
+   "shape": "<code>eav_attribute UNIQUE (entity_type_id, attribute_code)</code>; <em>“the attribute-owning object exists and it is the attribute set … a product points at exactly one, through a single NOT NULL scalar column”</em> (<code>attribute_set_id</code>); membership = <code>eav_entity_attribute</code> rows. Merged-list proof: <code>customAttributeMetadata</code> lists 20 <code>size</code> options — the union of the two fixture lists. Adobe states the purpose of the set: <em>“The attribute set determines the fields that are available during data entry, and the values that appear to the customer.”</em> The browse category plays no part in any schema table.",
+   "cite": "#11082 §1.1, 1.2, §3.1, §3.2"
+  }
+ ]
+}

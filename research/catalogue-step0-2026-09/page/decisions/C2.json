@@ -1,0 +1,178 @@
+{
+ "id": "C2",
+ "options": {
+  "a": "C2-a count is an axis — the 6-pack is a sibling of the single",
+  "b": "C2-b count is a separate product; form is an axis",
+  "c": "C2-c both are separate products, no family link",
+  "NC": "Not collected"
+ },
+ "subtallies": [
+  {
+   "name": "Is count a legal variant axis?",
+   "cells": [
+    [
+     "named explicitly as a count axis",
+     [
+      "Amazon (NUMBER_OF_ITEMS / ITEM_PACKAGE_QUANTITY)",
+      "Walmart (count · countPerPack · multipackQuantity)",
+      "eBay (Number in Pack, aspectEnabledForVariations true on 12/12 grocery leaves — gap pass 2026-09-21, sandbox)"
+     ]
+    ],
+    [
+     "expressible, no vendor statement either way",
+     [
+      "Google",
+      "Shopify",
+      "Shopee",
+      "Tokopedia",
+      "Square",
+      "Salesforce B2C",
+      "Magento",
+      "WooCommerce",
+      "commercetools",
+      "Akeneo"
+     ]
+    ],
+    [
+     "not collected",
+     []
+    ]
+   ]
+  },
+  {
+   "name": "Restricts axis eligibility by a mechanism not about count",
+   "cells": [
+    [
+     "yes",
+     [
+      "eBay (per aspect)",
+      "Walmart (per product type — ten food types have no variant mechanism at all)",
+      "Akeneo (per attribute type — a count fits metric or simple select)"
+     ]
+    ]
+   ]
+  },
+  {
+   "name": "Carries a separate pack / bundle mechanism beside variation",
+   "cells": [
+    [
+     "yes",
+     [
+      "Amazon (ItemRelationship.type = PACKAGE_HIERARCHY; ItemClassification = PRODUCT_BUNDLE — first-party 2026-09-21)",
+      "Walmart (Virtual Pack: bundleType=VIRTUALPACK, bundleComponentItemQuantity, bundle_component_gtin)",
+      "Google ([is_bundle] boolean + [multipack] integer, offer attributes)",
+      "Shopee (add_kit_item / update_kit_item / get_kit_item_info with component_list[] and its own tier_variation_list[])",
+      "Tokopedia Era B (combined_skus[] {product_id, sku_id, sku_count} on the SKU — structured spec 2026-09-21)"
+     ]
+    ]
+   ]
+  }
+ ],
+ "framing": "Card correction: (a) and (b) are not alternatives on any platform that has both — Amazon and Walmart each name count as a legal axis AND carry a separate pack/bundle mechanism, because the two answer different questions (“same product in different amounts?” vs “a container for other rows?”). GS1 splits our one word into three: consumer multipack (§2.3, same level as the single, new GTIN — consumer distinguishes: YES) · case/carton (§2.8 — higher-level packaging only: NO) · predefined assortment of different products (§2.9 — own GTIN separate from the components': YES). GS1 is P1 (a member-organisation copy; the gs1.org URL 404s). The nine “expressible but unnamed” platforms did not decide anything — silence is not support for (a).",
+ "rows": [
+  {
+   "p": "Amazon",
+   "s": 100,
+   "o": "a",
+   "h": "explicitly — and (b)'s mechanism exists beside it, not instead",
+   "shape": "<em>“if you set the <code>variation_theme</code> to <code>SIZE/COLOR/NUMBER_OF_ITEMS</code>, then <code>shirt_size</code>, <code>color</code>, and <code>number_of_items</code> become mandatory”</em>; the legacy→JSON theme map carries <code>count</code> → <code>ITEM_PACKAGE_QUANTITY</code>; the Health workbook's valid-values list is <code>Color · Count · SizeName · SizeName-ColorName</code>. Separately, <code>ItemRelationship.type</code> is an enum of exactly two: <code>VARIATION</code> — <em>“is a variation parent or variation child of the related items”</em> — and <code>PACKAGE_HIERARCHY</code> — <em>“is a package container or is contained by the related items that are identified by ASIN.”</em> The distinction Amazon draws is <b>containment</b>, not count. <b>New, first-party 2026-09-21:</b> <code>ItemClassification</code> has four values — <code>BASE_PRODUCT</code>, <code>OTHER</code>, <code>PRODUCT_BUNDLE</code> (<em>“A parent catalog item that represents a bundle of items”</em>), <code>VARIATION_PARENT</code> — so a bundle is a <em>classified catalogue item</em>, a third parent kind beside the two relationship types.",
+   "cite": "#10976 §1.5 [E-9][E-14], §1.8 [E-16], §5 #19; gap-pass-2026-09-21/amazon/catalog-items-api-v2022-04-01-reference.md"
+  },
+  {
+   "p": "Walmart",
+   "s": 65,
+   "o": "a",
+   "h": "explicitly — with a separate bundle mechanism; count is its most universal axis",
+   "shape": "<em>“Common variant attributes include: Color · Size · Pattern · Character · Count · Count per pack · Multipack quantity · Theme.”</em> 6,957 product types each carry their own <code>variantAttributeNames.items.enum</code>, 2,323 distinct axis names, enum size 1 / 2,323 / mean 11.75; <code>Toothpastes</code> allows 9 = <code>[character, character_group, count, countPerPack, flavor, form, multipackQuantity, pieceCount, size]</code>, <code>Tires</code> 18, and <em>“they intersect only in <code>count</code>, <code>countPerPack</code>, <code>multipackQuantity</code>”</em> — the only axes a toothpaste and a tyre share. Ten food types (Apples, Avocados, Bananas, Fresh Herbs, Grapes, Mushrooms, Onions, Packaged Salads, Pears, Watermelons) have no variant mechanism at all. Virtual Pack: <code>bundleType=VIRTUALPACK</code> + the component's <code>gtin</code>. Stated why: <em>“display multiple versions of the same product on a single Walmart item page … vary by color, size, flavor, pattern, count.”</em>",
+   "cite": "corpus/walmart/wm-multiple-variants.txt; #11046 §1.4 (:200-201, :217), §1.9 (:327 [R-17]), 11046.md:501"
+  },
+  {
+   "p": "Google",
+   "s": 70,
+   "o": "a",
+   "h": "expressible; the multipack is an offer attribute as well, which is orthogonal",
+   "shape": "<code>[multipack]</code> is an ordinary product attribute — Integer, example <code>6</code>: <em>“Required (for multipack products in Australia, Brazil, Czechia, France, Germany, Italy, Japan, Netherlands, Spain, Switzerland, the UK and the US) · Optional for all other products and target countries”</em>; <code>[is_bundle]</code> (<code>yes/no</code>) with the identical qualifier. Named variant attributes are eight — <em>“color, size, pattern, material, age group, gender, size type and size system”</em> — and <em>“no artifact stating a closed set found”</em>; every list introduced by “such as” or “like”. Inference: <code>item_group_id</code> exists to render a picker; <code>multipack</code> exists to let a comparison normalise price-per-unit — different jobs, different fields.",
+   "cite": "#11013 attributes 32 (:691), 44 (:703), §2 [F-11] (:251, :254)"
+  },
+  {
+   "p": "eBay",
+   "s": 80,
+   "o": "a",
+   "h": "closed by the gap pass 2026-09-21: Number in Pack pivots on 12 of 12 grocery leaves (sandbox)",
+   "shape": "Axis eligibility is per aspect: <em>“Not all aspects are allowed as a pivoting aspect … look for a value of <code>true</code> in the <code>aspectEnabledForVariations</code> field.”</em> <b>Gap pass 2026-09-21, sandbox tree 0 v134, 12 grocery leaves (Noodles, Pasta &amp; Noodles, Chips, Soft Drinks, Instant Coffee, Cookies, Chocolate Blocks, Cooking Sauces, Water, Tea, Juices, Nuts):</b> <code>Number in Pack</code> is <code>aspectEnabledForVariations: true</code> on <b>12 of 12</b>; <code>Unit Quantity</code> is <code>false</code> on 12 of 12 (<code>aspectApplicableTo: [\"ITEM\"]</code>); <code>Number of Servings</code> true on 6 of 12. Verbatim, leaf 257998: <code>Number in Pack {aspectDataType: STRING, itemToAspectCardinality: SINGLE, aspectMode: FREE_TEXT, aspectRequired: false, aspectUsage: OPTIONAL, aspectEnabledForVariations: true}</code>, no suggested values — count is a bare free-text label. <code>Item Weight</code> pivots with suggested values <code>\"250 g\"</code>, <code>\"1 kg\"</code> — label+unit strings, never typed. <code>Flavor</code> pivots on 11 of 12 (5 suggested values on Noodles: Beef, Chicken, Chili, Curry, Seafood); the Pasta &amp; Noodles leaf has no Flavor aspect at all.",
+   "cite": "#11045 §3 [R-18]; corpus/gap-pass-2026-09-21/ebay/RESULT.md (sandbox, 2026-09-21)"
+  },
+  {
+   "p": "Shopify",
+   "s": 85,
+   "o": "a",
+   "h": "expressible, unnamed",
+   "shape": "<code>ProductOption.name</code> is free text — <em>“<code>\"Flavor\"</code> needs no taxonomy involvement at all for an unlinked option.”</em> Max 3 options per product. <b>Live 2026-09-21:</b> the taxonomy carries pack <em>form</em> as a choice list — <code>Package type</code> (1456: Bag, Bottle, Box, Can, Canister, Case, Dispenser, Flip-top, …) on Soda — and no count / pack-quantity attribute on any of 9 food nodes sampled.",
+   "cite": "#11011 §3; gap-pass-2026-09-21/shopify/RESULT.md"
+  },
+  {
+   "p": "Shopee",
+   "s": 60,
+   "o": "a",
+   "h": "expressible, unnamed; a kit item is “a variant family the standardisation has not reached”",
+   "shape": "<em>“If you want to use customized variations, then pass <code>variation_id=0</code> and pass <code>variation_name</code>.”</em> Kit items: <code>add_kit_item</code> (49 request paths) / <code>update_kit_item</code> / <code>get_kit_item_info</code>, carrying <code>item_setting.model_list[] {tier_index, model_sku, original_price, component_list[] {component_item_id, component_model_id, quantity, main_component}}</code> and its own free-text <code>tier_variation_list[]</code> — <em>“a row that owns axes and whose members carry <code>tier_index</code> and their own price and SKU.”</em>",
+   "cite": "#11047 §1.4 [R-45], §1.7, §5 #21"
+  },
+  {
+   "p": "Tokopedia",
+   "s": 45,
+   "o": "a",
+   "h": "Era B — expressible, unnamed; cap of 3 sales attributes",
+   "shape": "<em>“Provide either a built-in ID or a custom name; if both are provided, the ID takes priority.”</em> <em>“You can only have up to 3 types of sales attributes per product.”</em> <b>Structured spec 2026-09-21:</b> a separate bundle mechanism on the SKU — <code>combined_skus[] {product_id Y, sku_id Y, sku_count: int Y}</code> — beside the sales-attribute axis; <code>sku_unit_count: string</code>.",
+   "cite": "#11048 §1.x [R-42]; gap-pass-2026-09-21/tiktok/RESULT.md"
+  },
+  {
+   "p": "Square",
+   "s": 40,
+   "o": "a",
+   "h": "expressible, unnamed",
+   "shape": "The axis is <code>item_options</code> with free-text option values (<code>CatalogItemOptionValue.name</code>).",
+   "cite": "#11049 §1.x"
+  },
+  {
+   "p": "Salesforce B2C",
+   "s": 50,
+   "o": "a",
+   "h": "expressible, unnamed",
+   "shape": "Variation attributes are defined per master (<code>ProductVariationAttribute</code>); no attribute-kind restriction retrieved.",
+   "cite": "#11050 §1.x"
+  },
+  {
+   "p": "Magento",
+   "s": 60,
+   "o": "a",
+   "h": "expressible, unnamed",
+   "shape": "The axis predicate is <code>is_global == SCOPE_GLOBAL</code> + <code>usesSource()</code> (a select type) + visible + user-defined; no restriction on what the attribute means.",
+   "cite": "#11082 §1.4, 1.6"
+  },
+  {
+   "p": "WooCommerce",
+   "s": 55,
+   "o": "a",
+   "h": "expressible, unnamed",
+   "shape": "The axis flag is one bool per attribute entry — <code>is_variation</code>.",
+   "cite": "#11080 §1.3"
+  },
+  {
+   "p": "commercetools",
+   "s": 35,
+   "o": "a",
+   "h": "expressible, unnamed",
+   "shape": "Any <code>AttributeDefinition</code> may carry <code>attributeConstraint: CombinationUnique</code> — <em>“Set of Attributes that have this constraint, should have different combinations in each variant.”</em>",
+   "cite": "#11081 §1.2"
+  },
+  {
+   "p": "Akeneo",
+   "s": 30,
+   "o": "a",
+   "h": "expressible, type-gated; six vendor statements, three different answers on which types may be an axis (C3)",
+   "shape": "<em>“Only the following attribute types are allowed: simple select, multi select, reference data, metric, boolean.”</em> (the CE array names 5, the spec names 5 with different membership, the Serenity page names up to 10 incl. Number and Text). A count fits <code>metric</code> or <code>simple select</code> on every version.",
+   "cite": "#11069 §1.x [R-84], §4 U2, §5 C3"
+  }
+ ]
+}
