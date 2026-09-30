@@ -1,0 +1,1040 @@
+<title>Borma Dago Marketing Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#ECF0F5; --ink:#17243B; --muted:#586379; --line:#D7DDE7;
+  --accent:#1E7449; --accent-soft:#E1F1E8;
+  --warn:#8F5500; --warn-soft:#FBEFD9;
+  --bad:#A2382C; --bad-soft:#FAE6E2;
+  --info:#2A5696; --info-soft:#E3EBF7;
+  --added:#6343B0; --added-soft:#F1ECFB;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E131C; --surface:#151C28; --surface-2:#1B2433; --ink:#E3E8F0; --muted:#9BA6B9; --line:#2A3446;
+    --accent:#5DC08C; --accent-soft:#15322A;
+    --warn:#E2AD55; --warn-soft:#382A12;
+    --bad:#EE8B7D; --bad-soft:#3A1F1B;
+    --info:#88AEE8; --info-soft:#1A2943;
+    --added:#BCA8F4; --added-soft:#231C38;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E131C; --surface:#151C28; --surface-2:#1B2433; --ink:#E3E8F0; --muted:#9BA6B9; --line:#2A3446;
+  --accent:#5DC08C; --accent-soft:#15322A;
+  --warn:#E2AD55; --warn-soft:#382A12;
+  --bad:#EE8B7D; --bad-soft:#3A1F1B;
+  --info:#88AEE8; --info-soft:#1A2943;
+  --added:#BCA8F4; --added-soft:#231C38;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--info)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--info);outline-offset:2px;border-radius:4px}
+.page{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:32px 64px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:13px}
+nav.toc p{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+nav.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+nav.toc a{color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--ink)}
+main{min-width:0;max-width:780px}
+header.top{display:grid;gap:10px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(30px,5vw,44px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:26px;font-weight:700;margin-bottom:14px}
+h3{font-size:18px;font-weight:700}
+.lede{font-size:17px;color:var(--muted);max-width:62ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+section{padding-block:36px;border-bottom:1px solid var(--line);scroll-margin-top:16px}
+section:last-of-type{border-bottom:0}
+p{margin:0 0 12px;max-width:68ch}
+ul{margin:0 0 12px;padding-left:20px}
+li{margin-bottom:4px}
+code,.code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.note{font-size:13px;color:var(--muted)}
+
+/* formula */
+.formula{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:10px;margin:18px 0 8px}
+.lever{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.lever b{font-family:var(--display);font-size:20px}
+.lever span{font-size:13px;color:var(--muted)}
+.times{align-self:center;font:500 24px var(--mono);color:var(--muted)}
+.result{font-family:var(--display);font-size:17px;margin:4px 0 18px}
+.result em{font-style:normal;color:var(--accent);font-weight:700}
+
+/* targets */
+.targets{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.target{border-top:3px solid var(--accent);background:var(--surface);border-radius:0 0 10px 10px;padding:14px 16px}
+.target.b2c{border-top-color:var(--info)}
+.target h3{margin-bottom:6px}
+.target p{font-size:14px;margin:0 0 4px}
+
+.callout{background:var(--accent-soft);border-radius:10px;padding:14px 16px;margin-top:16px}
+.callout p{margin:0}
+.callout.warn{background:var(--warn-soft)}
+.callout.warn strong{color:var(--warn)}
+
+/* channels */
+.channels{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.channel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:8px;align-content:start}
+.channel .tag{font:500 12px var(--mono);color:var(--accent)}
+.channel dl{margin:0;display:grid;gap:6px;font-size:14px}
+.channel dt{font:500 11px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.channel dd{margin:0}
+
+/* tables */
+.table-wrap{overflow-x:auto;margin:10px 0 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font:500 11px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.nowrap{white-space:nowrap}
+tr.grp td{background:var(--surface-2);font:500 11px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);padding-block:7px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 2px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.findings{background:var(--added-soft);border:1px solid var(--line);border-left:4px solid var(--added);border-radius:10px;padding:14px 18px;margin-top:8px}
+.findings ul{margin:8px 0 6px}
+.findings p{margin:0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:2px;align-content:start}
+.fact b{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+.fact span{font-size:12.5px;color:var(--muted);line-height:1.4}
+
+/* chips */
+.chip{display:inline-block;font:500 11px/1.5 var(--mono);padding:1px 8px;border-radius:999px;white-space:nowrap;background:var(--surface-2);color:var(--muted)}
+.chip.mgmt{background:var(--warn-soft);color:var(--warn)}
+.chip.mkt{background:var(--accent-soft);color:var(--accent)}
+.chip.eng{background:var(--info-soft);color:var(--info)}
+.chip.ok{background:var(--accent-soft);color:var(--accent)}
+.chip.part{background:var(--warn-soft);color:var(--warn)}
+.chip.miss{background:var(--bad-soft);color:var(--bad)}
+
+/* detail sections */
+.sub{margin-top:22px}
+.sub h3{margin-bottom:8px}
+.steps{list-style:none;padding:0;display:grid;gap:8px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;margin:0}
+.steps li::before{counter-increment:s;content:counter(s);font:500 13px/26px var(--mono);text-align:center;width:26px;height:26px;border-radius:50%;background:var(--surface-2);color:var(--ink)}
+.quote{border-left:3px solid var(--line);padding:4px 0 4px 14px;margin:10px 0;color:var(--muted);font-style:italic;max-width:66ch}
+
+/* diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;margin:10px 0}
+pre.mermaid{margin:0;background:transparent;text-align:center}
+
+/* templates */
+details.tpl{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+details.tpl summary{cursor:pointer;padding:10px 14px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;list-style:none}
+details.tpl summary::-webkit-details-marker{display:none}
+details.tpl summary::before{content:"+";font:500 14px var(--mono);color:var(--muted);width:12px}
+details.tpl[open] summary::before{content:"−"}
+details.tpl summary .code{background:none;padding:0;font-weight:500;color:var(--accent)}
+details.tpl summary .when{font-size:12px;color:var(--muted);margin-left:auto}
+.mail{padding:4px 16px 16px 36px;font-size:14px}
+.mail .hdr{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-bottom:10px;font-size:13px}
+.mail .hdr dt{color:var(--muted)}
+.mail .hdr dd{margin:0;font-weight:600}
+.mail p{margin:0 0 8px}
+.mail .btn{display:inline-block;margin-top:6px;padding:5px 12px;border-radius:6px;background:var(--accent);color:var(--surface);font-weight:600;font-size:13px}
+.mail .internal{font-size:13px;color:var(--warn);margin-top:8px}
+.group-h{font:500 12px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 0 8px}
+
+.added-tag{display:inline-block;font:500 10.5px/1.5 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--added);border:1px solid var(--added);border-radius:4px;padding:0 6px}
+.src-tag{display:inline-block;font:500 10.5px/1.5 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.sec-label{margin:-6px 0 12px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.added-note{background:var(--added-soft);border-left:3px solid var(--added);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0 14px;font-size:14px;max-width:68ch}
+.added-note .added-tag{margin-bottom:6px}
+.added-note p{margin:0 0 6px}
+.added-note p:last-child{margin-bottom:0}
+.added-note ul{margin:0 0 6px}
+.added-note .src{font-size:12px;color:var(--muted)}
+section.is-added{background:linear-gradient(var(--added),var(--added)) left top/3px 100% no-repeat;padding-left:18px}
+.readme{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.readme p{margin:0}
+.readme > span{justify-self:start}
+.target .added-note,.channel .added-note{margin:8px 0 0;font-size:13px}
+.tpl-flag{font:500 10px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--added)}
+nav.toc a.added::after{content:" \2022";color:var(--added)}
+footer{padding-top:24px;font-size:13px;color:var(--muted)}
+
+@media (max-width:900px){
+  .page{grid-template-columns:minmax(0,1fr);gap:20px;padding-block:20px 48px;padding-inline:16px}
+  nav.toc{position:static}
+  nav.toc ol{display:flex;flex-wrap:wrap;gap:6px 14px}
+}
+@media (max-width:620px){
+  .formula{grid-template-columns:1fr}
+  .times{justify-self:center;line-height:1}
+  .targets,.channels{grid-template-columns:1fr}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mail{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="page">
+<nav class="toc" aria-label="Contents">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#start">Start here</a></li>
+    <li><a href="#channels">The four channels</a></li>
+    <li><a href="#decisions">Decisions needed</a></li>
+    <li><a class="added" href="#data">What our data says</a></li>
+    <li><a class="added" href="#open">What it leaves open</a></li>
+    <li><a class="added" href="#system">What it needs from us</a></li>
+    <li><a href="#offer">The offer</a></li>
+    <li><a href="#social">A. Instagram &amp; TikTok</a></li>
+    <li><a href="#google">B. Google &amp; SEO</a></li>
+    <li><a href="#email">C. Email &amp; WhatsApp</a></li>
+    <li><a href="#maps">D. Google Maps</a></li>
+    <li><a href="#reminder">Key reminder</a></li>
+    <li><a href="#templates">Email templates</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="top">
+  <div class="eyebrow">Issue #10799 · Online Growth Specialist hire</div>
+  <h1>Borma Dago Marketing Strategy</h1>
+  <p class="lede">A reading copy of the <em>Online Marketing Strategy</em> PDF for bormadago.com and the Borma Dago app. The briefing runs from "Start here" to "What it needs from bormadago.com". Everything after that is the full plan, reorganised.</p>
+  <div class="meta">
+    <span>Source: 21-page PDF, created 29 Sep 2026</span>
+    <a href="https://github.com/borma-dago/br-screenshots/blob/main/2026-09/10799-online-marketing-strategy.pdf">Open the original PDF</a>
+    <a href="https://github.com/borma-dago/br-monorepo/issues/10799">Issue #10799</a>
+  </div>
+  <div class="readme" aria-label="How to read this page">
+    <span class="src-tag">From the PDF</span><p>The plan's own content, reorganised and shortened. Email templates are verbatim.</p>
+    <span class="added-tag">Added by Claude · not in the PDF</span><p>Findings checked on 29 Sep 2026 against our warehouse, the code and DNS, plus Claude's reading of the plan. Every addition carries this label. Contents entries marked • are additions.</p>
+  </div>
+  <aside class="findings" aria-label="Prep findings">
+    <span class="added-tag">Added by Claude · not in the PDF</span>
+    <div class="eyebrow" style="margin-top:6px">Prep findings · the short version</div>
+    <ul>
+      <li><strong>Online is small and concentrated.</strong> 1,904 orders from 608 customers in Jun–Aug 2026. 61 of those customers bring 57% of online revenue.</li>
+      <li><strong>Margins are thin.</strong> The online gross margin is about 8.2%, or Rp16k on the median order. The plan's example Rp20k welcome voucher costs more than a median order earns.</li>
+      <li><strong>The B2C margin assumption doesn't hold online yet.</strong> Online, household earns less than groceries (6.7% vs 8.7%), and fashion has almost no online sales.</li>
+      <li><strong>B2B customers can't be identified</strong> anywhere in the system or the warehouse.</li>
+      <li><strong>SEO and email both need engineering first.</strong> Google can't read the site without running its JavaScript, and there is no sitemap. No consent or unsubscribe exists for email or WhatsApp.</li>
+    </ul>
+    <p class="note">Details: <a href="#data">What our data says</a> · <a href="#system">What it needs from bormadago.com</a></p>
+  </aside>
+</header>
+
+<section id="start">
+  <h2>Start here</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> summarised</div>
+  <p>The goal is more online revenue through Borma's own channels (bormadago.com and the app), with no marketplace commission. Every activity in the plan has to move at least one of three levers:</p>
+  <div class="formula" aria-label="Revenue equals customers times purchase frequency times average order value">
+    <div class="lever"><b>Customers</b><span>How many people buy online</span></div>
+    <div class="times" aria-hidden="true">×</div>
+    <div class="lever"><b>Frequency</b><span>How often each one buys</span></div>
+    <div class="times" aria-hidden="true">×</div>
+    <div class="lever"><b>Order value</b><span>How much each order is worth</span></div>
+  </div>
+  <p class="result">= <em>online revenue</em></p>
+
+  <p>The plan splits customers into two groups and pulls a different lever for each:</p>
+  <div class="targets">
+    <div class="target">
+      <h3>B2B · HORECA, warung, small businesses around Dago</h3>
+      <p>Thin margin, large and recurring orders.</p>
+      <p><strong>Lever:</strong> more business clients, reordering more often.</p>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>B2B customers can't be identified today. There is no customer type, company or NPWP field in the system or the warehouse. A keyword scan of names and addresses flags 8 possible businesses (1.8% of online revenue), unverified.</p><p class="src">Source: warehouse, online orders Jun–Aug 2026; backend code, <code>solvent-master</code> ab86cd3</p></div>
+    </div>
+    <div class="target b2c">
+      <h3>B2C · retail customers</h3>
+      <p>High-margin goods: household items and fashion.</p>
+      <p><strong>Lever:</strong> bigger orders, through bundles and complementary recommendations.</p>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>Online, household earns <em>less</em> than groceries (6.7% vs 8.7% gross margin), and fashion sold only Rp0.05M online in three months. The claim holds across all channels (household 14.9%, fashion 31.1%, groceries 11.1%).</p><p class="src">Source: warehouse, online orders Jun–Aug 2026</p></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>The order of work the plan asks for:</strong> build the offer first, then the content. And none of the marketing works long-term without good product quality, service and prices. The plan closes on that point.</p>
+  </div>
+</section>
+
+<section id="channels">
+  <h2>The four channels</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> summarised</div>
+  <p>Each channel has one job. The "first move" is the starting point the plan itself names for that channel.</p>
+  <div class="channels">
+    <article class="channel">
+      <span class="tag">A</span>
+      <h3>Instagram &amp; TikTok</h3>
+      <dl>
+        <div><dt>Job</dt><dd>Reach new people, build trust, then sell with one clear call to order.</dd></div>
+        <div><dt>First move</dt><dd>Talk to current B2B customers and turn their words into content and ad hooks.</dd></div>
+        <div><dt>Rule</dt><dd>Launch 10 ad versions on small budgets, keep the winners, cut the rest.</dd></div>
+      </dl>
+    </article>
+    <article class="channel">
+      <span class="tag">B</span>
+      <h3>Google Search &amp; SEO</h3>
+      <dl>
+        <div><dt>Job</dt><dd>Rank on Google's first page for what Bandung business owners search, so ads are no longer needed.</dd></div>
+        <div><dt>First move</dt><dd>Run Search ads first. Keywords that produce orders become the SEO priorities.</dd></div>
+        <div><dt>Rule</dt><dd>One keyword group, one ad group, one landing page.</dd></div>
+      </dl>
+    </article>
+    <article class="channel">
+      <span class="tag">C</span>
+      <h3>Email &amp; WhatsApp</h3>
+      <dl>
+        <div><dt>Job</dt><dd>Get people who already know Borma to buy more often and more per order.</dd></div>
+        <div><dt>First move</dt><dd>Platform and domain setup, tag contacts, turn on four automations.</dd></div>
+        <div><dt>Rule</dt><dd>About three useful emails for every promo. One email, one goal, one button.</dd></div>
+      </dl>
+    </article>
+    <article class="channel">
+      <span class="tag">D</span>
+      <h3>Google Maps</h3>
+      <dl>
+        <div><dt>Job</dt><dd>Control how Borma Dago appears on Maps and in local search.</dd></div>
+        <div><dt>First move</dt><dd>Reviews, marked the most important task in this section.</dd></div>
+        <div><dt>Rule</dt><dd>Genuine reviews only. No incentives for Google reviews.</dd></div>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section id="decisions">
+  <h2>Decisions needed before launch</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> collected from across the plan</div>
+  <p>The plan marks several things as waiting on management. Each one blocks specific ads or emails.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Decision</th><th>What waits on it</th><th>Input needed</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Free shipping</strong>: whether to offer it, and the minimum order value (B2B and B2C)</td><td>Emails B2, C3, C4, C5; any free-shipping ad</td><td>Shipping cost per order vs margin per order. Critical for B2B, where margin is thin.</td></tr>
+        <tr><td><strong>Missing/damaged-item guarantee</strong> and a written complaint SOP</td><td>Guarantee ads, "replacement sent" footage, the guarantee in the B2B offer</td><td>Reporting window, proof, what qualifies, resolution, owner and response time, logging</td></tr>
+        <tr><td><strong>Voucher amounts and minimum orders</strong></td><td>Welcome voucher (A1), re-engagement voucher (E1), birthday voucher</td><td>Margin per order and break-even basket size</td></tr>
+        <tr><td><strong>B2B terms</strong>: delivery days, volume pricing, payment terms and invoices</td><td>The Borma for Business offer, the B2B page, email D4</td><td>Operations capacity, pricing policy</td></tr>
+        <tr><td><strong>Testimonial incentive</strong>: type and value</td><td>B2B testimonial programme (optional)</td><td>Management approval</td></tr>
+        <tr><td><strong>Prize-draw permit</strong></td><td>December giveaway (B3)</td><td>Check with legal / Borma head office</td></tr>
+        <tr><td><strong>Email platform</strong>: Mailchimp, Brevo, MailerLite or Klaviyo</td><td>Every email automation</td><td>Price and connection to bormadago.com order data</td></tr>
+        <tr><td><strong>Customer satisfaction in staff KPIs</strong>, if not already there</td><td>Protecting the Google rating</td><td>HR / management</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Every figure written as [ ] in the PDF is a placeholder to fill from data and management policy. The next section works out the ones our data can answer.</p>
+</section>
+
+<section id="data" class="is-added">
+  <h2>What our data says</h2>
+  <div class="sec-label"><span class="added-tag">Added by Claude · not in the PDF</span> whole section</div>
+  <p>Online channel only (bormadago.com and the app), June to August 2026. The figures come from the warehouse using the sales report's definitions, and the totals match the sales report (Rp592.0M, 1,904 orders). Gross margin is estimated as revenue minus quantity × <em>today's</em> purchase price, so treat it as approximate.</p>
+  <div class="facts">
+    <div class="fact"><b>1,904</b><span>online orders, about 635 a month</span></div>
+    <div class="fact"><b>608</b><span>online customers, 218 of them new to online</span></div>
+    <div class="fact"><b>Rp311k</b><span>average order; median goods value Rp193k</span></div>
+    <div class="fact"><b>8.2%</b><span>online gross margin (estimate); 14.7% across all channels</span></div>
+    <div class="fact"><b>Rp16k</b><span>gross margin on the median order; average Rp24.5k</span></div>
+    <div class="fact"><b>Rp10k</b><span>median delivery fee paid by the customer; actual courier cost isn't recorded</span></div>
+  </div>
+
+  <div class="sub">
+    <h3>The placeholders, worked out</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Placeholder</th><th>Plan's example</th><th>What the data says</th></tr></thead>
+        <tbody>
+          <tr><td>Welcome voucher (A1)</td><td class="nowrap">Rp20,000 off<br>min. Rp150,000</td><td>That is 125% of the median order's margin. At 8.2% margin, the order needs about Rp244k of goods to cover it, which is above the median basket of Rp193k. The current new-user voucher gives Rp8,013 per use on average.</td></tr>
+          <tr><td>Re-engagement voucher (E1)</td><td class="nowrap">Rp25,000 off<br>min. Rp150,000</td><td>At 8.2% margin, covering it takes about Rp305k of goods.</td></tr>
+          <tr><td>Free-shipping voucher (C3)</td><td class="nowrap">min. Rp100,000</td><td>The median delivery fee (Rp10k) is 62% of the median margin. At 8.2%, covering it takes about Rp122k of goods. The existing Free Ongkir campaign requires Rp800k, above 90% of all baskets (p90 Rp597k), and was used 10 times in Jul–Aug.</td></tr>
+          <tr><td>VIP (top 10% by spend)</td><td>—</td><td>61 customers spending at least Rp2.23M in three months (about Rp743k a month). They average 12 orders each and bring 57.4% of online revenue.</td></tr>
+          <tr><td>Repeat (3+ orders in 90 days)</td><td>—</td><td>187 customers (31%), who bring 75.6% of online spend.</td></tr>
+          <tr><td>B2B minimum order and pricing</td><td>[ ]</td><td>Can't be worked out, because B2B customers can't be told apart in the data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Basket sizes (goods only): p25 Rp110k · median Rp193k · p75 Rp334k · p90 Rp597k. 19% of online orders are self-pickup and pay no delivery fee.</p>
+  </div>
+
+  <div class="sub">
+    <h3>The plan's assumptions against the data</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Category</th><th>Online revenue</th><th>Online margin</th><th>All-channel margin</th></tr></thead>
+        <tbody>
+          <tr><td>Food &amp; Groceries</td><td>Rp398.2M</td><td>8.7%</td><td>11.1%</td></tr>
+          <tr><td>Household</td><td>Rp102.3M</td><td>6.7%</td><td>14.9%</td></tr>
+          <tr><td>Self-care</td><td>Rp46.5M</td><td>4.7%</td><td>6.7%</td></tr>
+          <tr><td>Home improvement</td><td>Rp0.9M</td><td>29.2%</td><td>27.7%</td></tr>
+          <tr><td>Fashion</td><td>Rp0.05M</td><td>23.0%</td><td>31.1%</td></tr>
+          <tr><td><strong>All</strong></td><td><strong>Rp568.3M</strong></td><td><strong>8.2%</strong></td><td><strong>14.7%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>"Household and fashion are higher-margin."</strong> True across all channels. Online, household earns less than groceries, and fashion sold only Rp0.05M in three months.</li>
+      <li><strong>"B2B is thin-margin with large recurring orders."</strong> This can't be tested yet. There is no customer type, company or NPWP in the system or the warehouse. A keyword scan of names and addresses flags 8 possible businesses (1.8% of online revenue), unverified.</li>
+      <li><strong>Email reach is smaller than the customer count.</strong> 502 of 608 customers have an email, but only 172 are verified, and the system only emails verified addresses. All 608 have a mobile number. Nobody has a consent record.</li>
+      <li><strong>Free-shipping maths uses the fee as a stand-in for cost.</strong> The delivery fee is Biteship's quote passed straight to the customer, and the courier's actual price is discarded when the booking is made.</li>
+      <li><strong>Margin caveat.</strong> 12.9% of online revenue sells below today's purchase price, and 8.7% of orders show zero or negative margin on this estimate.</li>
+    </ul>
+    <p class="note">The SQL for every figure is saved locally in <code>~/copilot/research/marketing-strategy-10799/sql/</code>.</p>
+  </div>
+</section>
+
+<section id="open" class="is-added">
+  <h2>What the plan leaves open</h2>
+  <div class="sec-label"><span class="added-tag">Added by Claude · not in the PDF</span> Claude's reading of the plan</div>
+  <p>These are gaps in the document, listed so they can be settled early. They are not criticisms of the approach.</p>
+  <ul>
+    <li><strong>No budget.</strong> Ads are tested on "a small testing budget each", with no Rupiah figure for ads, tools or incentives.</li>
+    <li><strong>No numeric targets per channel.</strong> The only number is a Google rating of at least 4.5. The closing section names repeat purchase, customer lifetime value, cohort revenue and word of mouth as targets, without values.</li>
+    <li><strong>No owners or timeline.</strong> The plan does not say who runs each channel or in what order the channels start, beyond "Search ads first" and the five email steps.</li>
+    <li><strong>The calendar starts now.</strong> The promo calendar opens with 10.10 and payday in October 2026. 10.10 is on 10 Oct, eleven days from 29 Sep.</li>
+    <li><strong>Consent before sending.</strong> Email and WhatsApp may only go to people who opted in (UU PDP). No customer has a consent record today, so the plan has no starting list until consent is collected.</li>
+  </ul>
+</section>
+
+<section id="system" class="is-added">
+  <h2>What it needs from bormadago.com</h2>
+  <div class="sec-label"><span class="added-tag">Added by Claude · not in the PDF</span> whole section</div>
+  <p>Everything in the plan that depends on the website, the app or the backend, checked against the code on 29 Sep 2026 (<code>ts-master</code> ba44528, <code>solvent-master</code> ab86cd3) and against live DNS.</p>
+  <div class="legend"><span class="chip ok">ready</span> <span class="chip part">partial</span> <span class="chip miss">missing</span></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Need</th><th>Status</th><th>What exists today</th><th>For</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Google Search &amp; SEO</td></tr>
+        <tr><td>Pages Google can read without running JavaScript</td><td><span class="chip miss">missing</span></td><td>No server-side rendering or prerendering. The first HTML is a splash screen titled "Borma Dago". Google has to render the JavaScript to see any product, and link previews show nothing specific.</td><td>B</td></tr>
+        <tr><td>Per-page meta title and description, sitemap, structured data</td><td><span class="chip part">partial</span></td><td>Product pages get a title and the description "Beli {product}", set in the browser. Category pages get a title only. There is no sitemap, no canonical link and no JSON-LD. The backend has no meta fields.</td><td>B</td></tr>
+        <tr><td>Keyword URLs, headings and image alt text</td><td><span class="chip part">partial</span></td><td>URLs include a slug (<code>/shop/product/:id/:slug</code>). The product name is an <code>h3</code>, not an <code>h1</code>. List thumbnails have alt text, but the main product image has an empty one.</td><td>B</td></tr>
+        <tr><td>Blog with internal links</td><td><span class="chip miss">missing</span></td><td>No blog or article pages, and no CMS.</td><td>B</td></tr>
+        <tr><td>Conversion tracking at checkout</td><td><span class="chip part">partial</span></td><td>GA4 (via Firebase) sends <code>purchase</code> when the order is created, plus the other standard shop events. There is no Google Ads tag, Meta pixel or TikTok pixel. GA4 key events can be imported into Google Ads once the accounts are linked.</td><td>A, B</td></tr>
+        <tr><td>Product feed for Google Shopping</td><td><span class="chip ok">ready</span></td><td>The backend already syncs price, sale price, stock, image and link to Google Merchant Center.</td><td>B</td></tr>
+        <tr class="grp"><td colspan="4">Pages and offer</td></tr>
+        <tr><td>"Borma for Business" page and sign-up form</td><td><span class="chip miss">missing</span></td><td>No B2B page. Customers have no business flag, company name or NPWP, so B2B customers can't be told apart.</td><td>Offer, B, C</td></tr>
+        <tr><td>"Why shop at bormadago.com?" landing page</td><td><span class="chip miss">missing</span></td><td>"About" is a link out to about.bormadago.com.</td><td>A, B</td></tr>
+        <tr><td>Google Map on the site</td><td><span class="chip ok">ready</span></td><td>A map embed is on the Contact page and in the checkout shop-address modal.</td><td>D</td></tr>
+        <tr><td>Bundles</td><td><span class="chip miss">missing</span></td><td>No bundle products. Promos are either product or voucher type. Tracked in <a href="https://github.com/borma-dago/br-monorepo/issues/10121">#10121</a> ("Paket Bundling").</td><td>Offer</td></tr>
+        <tr><td>Complementary recommendations</td><td><span class="chip miss">missing</span></td><td>No related, similar or cross-sell products anywhere.</td><td>Offer, C2</td></tr>
+        <tr><td>Saved shopping list and fast reorder</td><td><span class="chip part">partial</span></td><td>"Buy again" copies a past order into the basket, but only from the order detail page (<a href="https://github.com/borma-dago/br-monorepo/issues/8797">#8797</a> reports the flow as wrong). There is no saved list or wishlist.</td><td>Offer</td></tr>
+        <tr><td>Scheduled B2B delivery</td><td><span class="chip miss">missing</span></td><td>Couriers (Biteship: Grab, Lalamove) are always booked for immediate delivery. Orders have no delivery date field.</td><td>Offer</td></tr>
+        <tr><td>Invoices for business bookkeeping</td><td><span class="chip miss">missing</span></td><td>No customer invoice or faktur.</td><td>Offer</td></tr>
+        <tr class="grp"><td colspan="4">Email &amp; WhatsApp</td></tr>
+        <tr><td>Authenticated sending domain</td><td><span class="chip ok">ready</span></td><td>Mailgun sends from <code>mail.bormadago.com</code>, which has SPF, DKIM (1024-bit key) and Mailgun MX records. The root domain has DMARC <code>p=none</code>, <code>sp=quarantine</code>.</td><td>C step 1</td></tr>
+        <tr><td>Consent and unsubscribe</td><td><span class="chip miss">missing</span></td><td>No marketing consent on sign-up, checkout or profile, no WhatsApp opt-in, and no unsubscribe link or header. Emails only go to verified addresses, and email is optional at sign-up.</td><td>C</td></tr>
+        <tr><td>Customer and order data flowing to an email platform</td><td><span class="chip miss">missing</span></td><td>No export or webhook. Tags such as intent, interest and source would have to be built from order data.</td><td>C</td></tr>
+        <tr><td>Welcome, abandoned-cart, after-purchase and restock triggers</td><td><span class="chip part">partial</span></td><td>Only transactional emails are sent (OTP, verification, payment, order status). A <code>REGISTRATION</code> email type exists but is never sent. Carts are saved on the server with timestamps, so abandoned carts can be detected for logged-in customers.</td><td>C</td></tr>
+        <tr><td>Birthday voucher</td><td><span class="chip miss">missing</span></td><td>No birthday field on customers.</td><td>C</td></tr>
+        <tr><td>Voucher codes (HALODAGO, ONGKIRFREE, BALIKDAGO)</td><td><span class="chip part">partial</span></td><td>Ready: fixed or percentage off, minimum purchase, validity dates, one use per customer, free-shipping vouchers. Missing: first-order-only, automatically issued vouchers, one code per customer. Gift cards already create unique single-use codes.</td><td>C, A1, C3, E1</td></tr>
+        <tr><td>WhatsApp broadcast</td><td><span class="chip part">partial</span></td><td>Twilio sends template messages for OTP, password reset and "ready for pickup" only. There is no broadcast and no opt-in.</td><td>C</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub">
+    <h3>Useful facts from the check</h3>
+    <ul>
+      <li><strong>The app is the website.</strong> The Android app is a WebView of www.bormadago.com, so every website fix reaches the app too. There is no iOS app.</li>
+      <li><strong>Shipping today:</strong> the fee is Biteship's live courier rate, and the minimum order is Rp50,000. Free shipping can only be given through a voucher.</li>
+      <li><strong>robots.txt blocks GPTBot and CCBot</strong> and has no <code>Sitemap:</code> line.</li>
+      <li><strong>Separate marketing from transactional email.</strong> Order and OTP emails already use <code>mail.bormadago.com</code>. Bulk marketing is usually sent from its own subdomain so that spam complaints don't hurt order emails.</li>
+    </ul>
+  </div>
+  <div class="sub">
+    <h3>Related open issues</h3>
+    <ul>
+      <li><a href="https://github.com/borma-dago/br-monorepo/issues/4347">#4347</a> Improve SEO · <a href="https://github.com/borma-dago/br-monorepo/issues/10121">#10121</a> Paket Bundling · <a href="https://github.com/borma-dago/br-monorepo/issues/8797">#8797</a> reorder flow is wrong</li>
+      <li><a href="https://github.com/borma-dago/br-monorepo/issues/4349">#4349</a> Mailgun mailing list · <a href="https://github.com/borma-dago/br-monorepo/issues/4321">#4321</a> privacy settings for promotional emails</li>
+      <li><a href="https://github.com/borma-dago/br-monorepo/issues/10690">#10690</a> Instagram (Meta) ads alongside Google ads · <a href="https://github.com/borma-dago/br-monorepo/issues/10820">#10820</a> customer survey insights</li>
+    </ul>
+  </div>
+</section>
+
+<section id="offer">
+  <h2>The offer</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <p>Content brings people in. The offer is what makes them buy and come back, so the plan builds it first.</p>
+  <div class="sub">
+    <h3>Borma for Business (B2B)</h3>
+    <p>It targets three problems business owners have: time lost shopping, stock arriving late, and juggling too many suppliers.</p>
+    <ul>
+      <li>One order for all stock: staples, food ingredients, spices, beverages, cleaning supplies, packaging.</li>
+      <li>Scheduled delivery around Dago, for example every [day] and [day].</li>
+      <li>Fast reorder: a saved regular shopping list, confirmed in the app or through a dedicated business admin.</li>
+      <li>Guarantee: missing or damaged items replaced in the next delivery, subject to the complaint SOP.</li>
+      <li>Clean invoices for business bookkeeping.</li>
+      <li>Competitive pricing for business-volume purchases.</li>
+    </ul>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><ul>
+      <li><strong>Scheduled delivery:</strong> not possible yet. Couriers (Biteship) are always booked for immediate delivery, and orders have no delivery date.</li>
+      <li><strong>Fast reorder:</strong> "Buy again" exists, but only on the order detail page (<a href="https://github.com/borma-dago/br-monorepo/issues/8797">#8797</a> reports it as wrong). There is no saved list.</li>
+      <li><strong>Invoices:</strong> the system has no customer invoice or faktur.</li>
+      <li><strong>B2B page:</strong> doesn't exist, and B2B customers can't be flagged.</li>
+    </ul><p class="src">Source: customer site code, <code>ts-master</code> ba44528; backend code, <code>solvent-master</code> ab86cd3</p></div>
+  </div>
+  <div class="sub">
+    <h3>B2C: high-margin goods</h3>
+    <ul>
+      <li>Bundles: "New Kitchen Pack", "Boarding-House Starter Pack", "1 Outer, 3 Looks".</li>
+      <li>Complementary recommendations on product and checkout pages: buy a wok, get offered a spatula and a cutting board.</li>
+    </ul>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>Neither exists yet. There are no bundle products (proposed in <a href="https://github.com/borma-dago/br-monorepo/issues/10121">#10121</a>, "Paket Bundling") and no related or cross-sell products anywhere on the site.</p><p class="src">Source: customer site code, <code>ts-master</code> ba44528; backend code, <code>solvent-master</code> ab86cd3</p></div>
+  </div>
+  <div class="callout warn">
+    <p><strong>Free shipping needs management approval.</strong> Compare shipping cost per order against margin per order, then set a minimum order value so every order stays profitable.</p>
+  </div>
+  <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p><strong>Actual shipping cost isn't recorded.</strong> The customer pays Biteship's courier quote (median Rp10k, p90 Rp28k), and the courier's real price isn't saved. Using the fee as a stand-in for cost, the median fee is 62% of the median order's margin (Rp16k). At 8.2% margin, it takes about Rp122k of goods to cover it.</p>
+    <p>Today the minimum order is Rp50k, and free shipping is only possible through a voucher. The current Free Ongkir campaign requires Rp800k and was used 10 times in Jul–Aug.</p><p class="src">Source: warehouse, online orders Jun–Aug 2026; backend code, <code>solvent-master</code> ab86cd3</p></div>
+</section>
+
+<section id="social">
+  <h2>A. Instagram &amp; TikTok</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Funnel stage</th><th>Job</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td class="nowrap">Top · reach</td><td>Reach new people with shareable content</td><td>Fashion ("1 item, 3 looks", outfits inspired by [public figure], customer makeovers); budget recipes ("Café-style meal for the whole family for just Rp35k"); cooking vlogs with Borma kitchen tools; trends, viral audio, holidays (brand-safe)</td></tr>
+        <tr><td class="nowrap">Middle · trust</td><td>Build trust with education and behind-the-scenes</td><td>Pinned "Why shop at bormadago.com?"; picking, packing and delivery; tips for business owners (warung stocking, menu COGS); ordering tutorials; B2B testimonials</td></tr>
+        <tr><td class="nowrap">Bottom · sales</td><td>Sell, with one clear call to order</td><td>Borma for Business ads; hard-selling reels; B2C reels on bundles and high-margin goods</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Every piece of content follows <strong>Hook</strong> (the first 3 seconds stop the scroll), <strong>Retain</strong> (watched to the end), <strong>Reward</strong> (the viewer leaves with an idea, tip or solution).</p>
+
+  <div class="sub">
+    <h3>Where content ideas come from</h3>
+    <p>Talk to HORECA and warung owners who already shop on bormadago.com, by WhatsApp, a short call, or at delivery. Log each answer in a simple sheet (customer, business type, answer, date) to spot recurring themes.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ask them</th><th>Use it for</th></tr></thead>
+        <tbody>
+          <tr><td>"Kenapa belanja stok usaha di Borma Dago?" · "Apa enaknya belanja di sini dibanding di tempat lain?" · "Apa yang paling membantu usaha Bapak/Ibu?"</td><td>Content themes and hooks in the customer's own words, e.g. "Nggak perlu keliling pasar lagi"</td></tr>
+          <tr><td>"Ada yang perlu kami benahi?" · "Kendala apa yang sekarang dirasakan?" · "Lebih enak kalau…?"</td><td>Feedback for management and operations. Once fixed, it becomes content: "Kalian minta, kami perbaiki."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>B2B testimonials</h3>
+    <ul>
+      <li><strong>Who:</strong> business clients with a record of repeat orders. Repeat orders are the strongest proof the service works.</li>
+      <li><strong>Formats:</strong> WhatsApp screenshots with phone numbers blurred; reels and stories shot at the customer's business; the customer's own story tagging @bormadago, reposted to a "Testimoni" highlight.</li>
+      <li><strong>Incentive (optional):</strong> a bonus product or voucher, subject to management approval. Social media only; never for Google reviews.</li>
+      <li><strong>Consent:</strong> ask before posting a name, face, business name or chat.</li>
+      <li>Reuse the best ones in testimonial ads and on the B2B page.</li>
+    </ul>
+  </div>
+
+  <div class="sub">
+    <h3>Borma for Business ads</h3>
+    <p class="quote">"Buat kamu pemilik [restoran/kafe/warung] yang lagi cari supplier [barang, berdasarkan data]… Di Borma Dago semua stok usahamu ada di satu tempat. Order lewat aplikasi Borma Dago atau bormadago.com, barang diantar ke tempat usahamu. Kamu fokus urus bisnis, urusan belanja stok biar kami yang bantu."</p>
+    <p>Make 10 versions with different hooks, scripts and footage. Footage ideas: an owner running between shops, then a one-tap order in the app; a busy warung with an empty shelf, then the Borma courier arrives; a screen recording of an app order, then goods arriving in a restaurant kitchen; picking, quality check, packing and delivery; all items laid out from one delivery; 2–3 short owner testimonials; an admin answering a chat and sending a replacement (only once the guarantee is approved); close-ups of products and price tags.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Ad testing: test, pick, scale</h3>
+    <ol class="steps">
+      <li><span><strong>Test</strong> 10 ad formats, each on a small budget.</span></li>
+      <li><span><strong>Pick</strong> the ads with the most orders or profile visits at the lowest cost.</span></li>
+      <li><span><strong>Scale</strong> by moving all budget to the winners and cutting the rest.</span></li>
+    </ol>
+<div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>The site has no Meta pixel or TikTok pixel, so Instagram and TikTok can't see which ads led to orders. They can only count profile visits and clicks. GA4 does record purchases on the site. Meta ads are tracked in <a href="https://github.com/borma-dago/br-monorepo/issues/10690">#10690</a>.</p><p class="src">Source: customer site code, <code>ts-master</code> ba44528</p></div>
+    <p>Be specific about the audience ("café owners in Dago", not "everyone"). Optional starting boost: 3–5 km radius around Borma Dago, objective profile visits, interests supermarket, culinary, business owners and food supplies. Widen the radius once a format is proven.</p>
+  </div>
+</section>
+
+<section id="google">
+  <h2>B. Google Search &amp; SEO</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <p><strong>End goal:</strong> bormadago.com ranks on page 1 for what HORECA and warung owners in Bandung search, and searchers check out on the site. "Ads = renting a shop; SEO = owning the shop."</p>
+  <ol class="steps">
+    <li><span><strong>Keyword research.</strong> Google Keyword Planner, keywordtool.io, related searches. Short head terms (supplier, grosir, sembako, bahan makanan, perlengkapan resto/kafe/hotel) plus long tail with area and business type ("supplier bahan makanan restoran Bandung", "grosir sembako Dago", "supplier horeca Bandung"). Keywords stay in Indonesian. Collect about 300, group them, and map each group to one page.</span></li>
+    <li><span><strong>Search ads first.</strong> One keyword group = one ad group = one landing page (category or product pages, so visitors can check out). Track conversions at checkout; keywords that produce orders become SEO priorities. Run during business hours. Cut a keyword's ad budget gradually once it ranks organically.</span><div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>There is no Google Ads tag on the site. GA4 already sends a <code>purchase</code> event when an order is created, and GA4 key events can be imported into Google Ads as conversions once the accounts are linked. The backend already syncs products to Google Merchant Center, which Shopping ads can use.</p><p class="src">Source: customer site code, <code>ts-master</code> ba44528; backend code, <code>solvent-master</code> ab86cd3</p></div></li>
+    <li><span><strong>On-page.</strong> One keyword per page: the Borma for Business page for supplier/wholesale terms, category pages one keyword each, product pages long tail. Put keywords in meta title, meta description, URL, headings, description and image alt text. Original product descriptions, no keyword stuffing. Fast, mobile-friendly, easy checkout.</span><div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><ul>
+      <li><strong>Google can't read the site without running its JavaScript.</strong> The site has no server-side rendering or prerendering, so the first HTML is a splash screen titled "Borma Dago".</li>
+      <li>Product pages get a title and the description "Beli {product}" in the browser; category pages get a title only. The backend has no meta title or description fields.</li>
+      <li>There is no sitemap, no canonical link and no structured data (JSON-LD). robots.txt has no <code>Sitemap:</code> line.</li>
+      <li>URLs already carry a slug (<code>/shop/product/:id/:slug</code>). The product name is an <code>h3</code>, not an <code>h1</code>, and the main product image has an empty alt text.</li>
+    </ul><p class="src">Source: customer site code, <code>ts-master</code> ba44528; backend code, <code>solvent-master</code> ab86cd3</p></div></li>
+    <li><span><strong>Blog and internal links.</strong> Articles on questions owners search, each linking to a target page: "How to Calculate Menu COGS for a Café" → B2B restaurant page; "Must-Have Stock List for Opening a Warung" → staples; "How to Store Ingredients Longer" → food ingredients. Pattern: one link to the target page, one to a trusted external source, the rest to other articles. Reuse each article as IG/TikTok content and broadcast material.</span><div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>There are no blog or article pages and no CMS. "About" links out to about.bormadago.com.</p><p class="src">Source: customer site code, <code>ts-master</code> ba44528</p></div></li>
+    <li><span><strong>Local SEO.</strong> Google Business Profile (section D). Local Bandung/Dago keywords are where Borma can beat the big players.</span></li>
+    <li><span><strong>Off-page.</strong> Basic links (local directories, Quora, Bandung culinary Facebook groups, Facebook page, YouTube), social shares, and a few strong links (Bandung culinary and SME media, PHRI or SME communities) at about 9 basic to 1 strong. No automated link software, PBNs or bulk link buying.</span></li>
+  </ol>
+</section>
+
+<section id="email">
+  <h2>C. Email &amp; WhatsApp</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <p>Goal: people who already know Borma Dago buy more often and more per order, directly on bormadago.com or the app.</p>
+
+  <div class="sub">
+    <h3>Quick start</h3>
+    <ol class="steps">
+      <li><span>Set up the email platform and the sending domain (SPF, DKIM, DMARC).</span></li>
+      <li><span>Import contacts and give each three tags: intent, product interest, source.</span></li>
+      <li><span>Turn on four automations: Welcome, Abandoned cart, After purchase, Re-engagement.</span></li>
+      <li><span>Schedule monthly broadcasts from the promo calendar, plus a payday broadcast.</span></li>
+      <li><span>Review results monthly and keep what works.</span></li>
+    </ol>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><ul>
+      <li><strong>Step 1 is mostly done.</strong> Order and OTP emails already go through Mailgun from <code>mail.bormadago.com</code>, which has SPF and DKIM. The root domain has DMARC <code>p=none</code>. Claude's suggestion: send marketing email from its own subdomain, so that spam complaints don't hurt order emails.</li>
+      <li><strong>Step 2 has no data feed.</strong> Nothing exports customers or orders to an outside platform, and no customer has a consent record.</li>
+      <li><strong>Step 3 has partial groundwork.</strong> A "registration" email type exists but is never sent. Carts are saved on the server with timestamps, so abandoned carts can be found for logged-in customers.</li>
+    </ul><p class="src">Source: DNS lookup; backend code, <code>solvent-master</code> ab86cd3</p></div>
+    <p><strong>Rules:</strong> keep B2B and B2C separate from day one. About three useful emails per promo. One goal and one button per email. Lead B2C with fashion and household goods. Short and mobile-friendly.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Segments</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Segments</th><th>Tags</th></tr></thead>
+        <tbody>
+          <tr><td>Intent</td><td><strong>Lead:</strong> signed up or claimed a voucher, no online order yet. <strong>Enquiry:</strong> has an account, abandoned a cart, or asked on WhatsApp without checking out. <strong>Customer:</strong> at least one online order. <strong>Repeat:</strong> 3+ orders in 90 days. <strong>VIP:</strong> top 10% by spend.</td><td><code>lead</code> <code>enquiry</code> <code>cart_abandon</code> <code>customer</code> <code>repeat</code> <code>vip</code></td></tr>
+          <tr><td>Product interest</td><td>Daily groceries · fresh · fashion · household · wholesale/B2B</td><td><code>minat_fresh</code> <code>minat_fashion</code> <code>minat_household</code></td></tr>
+          <tr><td>Customer type</td><td>B2C household · B2B (HORECA, warung, office/SME)</td><td><code>b2c</code> <code>b2b_horeca</code> <code>b2b_warung</code></td></tr>
+          <tr><td>Source</td><td>Web checkout · app · Borma for Business form · QR at cashier or receipt · IG/TikTok voucher · bazaar/event</td><td><code>src_web</code> <code>src_app</code> <code>src_b2b</code> <code>src_toko</code> <code>src_sosmed</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><ul>
+      <li><strong>VIP (top 10%):</strong> 61 customers who spent at least Rp2.23M in three months. They bring 57.4% of online revenue.</li>
+      <li><strong>Repeat (3+ orders in 90 days):</strong> 187 customers (31%), bringing 75.6% of online spend.</li>
+      <li><strong>B2B tags</strong> can't be set from our data yet, because nothing marks a customer as a business.</li>
+    </ul><p class="src">Source: warehouse, online orders Jun–Aug 2026</p></div>
+  </div>
+
+  <div class="sub">
+    <h3>Promo calendar, Oct 2026 to Sep 2027</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Month</th><th>Moment</th><th>Email angle</th><th>Segment</th></tr></thead>
+        <tbody>
+          <tr><td class="nowrap">Oct 2026</td><td>10.10 · payday</td><td>Payday belanja bulanan + flash sale peralatan rumah</td><td>All B2C</td></tr>
+          <tr><td class="nowrap">Nov 2026</td><td>11.11 · Hari Ayah (12 Nov)</td><td>Fashion pria &amp; perkakas rumah untuk Ayah</td><td>B2C fashion/household</td></tr>
+          <tr><td class="nowrap">Dec 2026</td><td>12.12 · Hari Ibu (22 Dec) · Christmas · New Year</td><td>Paket masak akhir tahun, kado Hari Ibu; B2B: stok akhir tahun HORECA</td><td>B2C + B2B</td></tr>
+          <tr><td class="nowrap">Jan 2027</td><td>New Year · payday</td><td>"Rumah rapi di tahun baru": organizer &amp; wadah</td><td>B2C household</td></tr>
+          <tr><td class="nowrap">Feb 2027</td><td>Chinese New Year · start of Ramadan</td><td>Paket sembako &amp; stok sahur; B2B: restock warung/resto sebelum Ramadan</td><td>All</td></tr>
+          <tr><td class="nowrap">Mar 2027</td><td>Eid al-Fitr</td><td>Baju Lebaran, perlengkapan sambut tamu, hampers; B2B: parcel/THR kantor</td><td>All</td></tr>
+          <tr><td class="nowrap">Apr 2027</td><td>After Lebaran</td><td>Re-engagement pembeli musiman, restock dapur</td><td>Seasonal customers</td></tr>
+          <tr><td class="nowrap">May 2027</td><td>Eid al-Adha</td><td>Bumbu &amp; alat masak olahan daging</td><td>B2C + HORECA</td></tr>
+          <tr><td class="nowrap">Jun–Jul 2027</td><td>School holidays · new school year</td><td>Back to school: fashion anak, alat tulis, perlengkapan bekal</td><td>B2C families</td></tr>
+          <tr><td class="nowrap">Aug 2027</td><td>Independence Day (17 Aug)</td><td>Paket lomba &amp; konsumsi RT/RW, dekorasi</td><td>B2B/SME + B2C</td></tr>
+          <tr><td class="nowrap">Sep 2027</td><td>9.9 · payday</td><td>Flash sale + akses duluan untuk VIP</td><td>VIP, repeat</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Every month: a payday broadcast (25th to the 1st). 2027 dates for Chinese New Year, Ramadan and Eid are estimates; check the official calendar before scheduling.</p>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>The first moment, 10.10, is on 10 Oct 2026, eleven days after this plan was written. Email automations, consent collection and an email platform aren't in place yet (see Platform below).</p><p class="src">Source: date arithmetic; backend code, <code>solvent-master</code> ab86cd3</p></div>
+  </div>
+
+  <div class="sub">
+    <h3>Customer journey</h3>
+    <p>Every contact moves through five stages. Buyers go up to Ascension, non-buyers go to Segmentation, and inactive contacts get one last chance before leaving the list. AR = autoresponder (automatic, in sequence); broadcast = one send per segment.</p>
+    <div class="diagram">
+<pre class="mermaid">
+flowchart TD
+  N([New subscriber]) --> A["(a) Indoctrination · AR<br/>welcome, first-order voucher, how to order"]
+  A --> B["(b) Engagement · AR<br/>sales emails by interest"]
+  B --> Q1{Bought?}
+  Q1 -- yes --> C["(c) Ascension · AR<br/>thank you, add-ons, free-shipping voucher"]
+  Q1 -- no --> D["(d) Segmentation · broadcast<br/>weekly email per segment"]
+  C --> D
+  D -- clicked --> B
+  D -.->|inactive 60 days| E["(e) Re-engagement · broadcast<br/>3 last-chance emails"]
+  E --> Q2{Bought?}
+  Q2 -- yes --> C
+  Q2 -- no --> R([Removed from list])
+</pre>
+    </div>
+    <p class="note">B2B sign-ups go to their own track: B2B welcome and wholesale catalogue, then sales follow-up.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Triggers and timing</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>When this happens</th><th>Send</th><th>Timing</th></tr></thead>
+        <tbody>
+          <tr><td>Signs up or claims a voucher</td><td>Welcome A1 → A2 → A3</td><td class="nowrap">now → D+2 → D+4</td></tr>
+          <tr><td>Leaves items in the cart</td><td>Cart reminders F1 → F2 → F3</td><td class="nowrap">1 h → 24 h → 48 h</td></tr>
+          <tr><td>Completes first order</td><td>C1 thank you → C2 recommendations → C3 free-shipping voucher → C4 "ends tomorrow" → C5 last call</td><td class="nowrap">now → D+1 → D+2 → D+8 morning → D+9 12:00</td></tr>
+          <tr><td>Last grocery order 25–30 days ago</td><td>"Stok bulanan menipis?" reminder</td><td class="nowrap">day 25–30</td></tr>
+          <tr><td>Signs up for Borma for Business</td><td>B2B welcome + wholesale catalogue, then sales follow-up</td><td class="nowrap">now → D+3</td></tr>
+          <tr><td>Birthday coming up</td><td>Birthday voucher</td><td class="nowrap">3 days before</td></tr>
+          <tr><td>No opens or clicks for 60 days</td><td>Re-engagement E1 → E2 → E3</td><td class="nowrap">day 60 → 67 → 74</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">D+2 = two days later. Codes refer to the templates at the end of this page.</p>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><ul>
+      <li><strong>Birthday voucher:</strong> customers have no birthday field.</li>
+      <li><strong>Abandoned cart:</strong> can be detected from saved carts, but only for logged-in customers. Guest carts have no one to contact.</li>
+      <li><strong>Automatic vouchers:</strong> the system can't issue a voucher automatically or create one code per customer. Gift cards already create unique single-use codes.</li>
+    </ul><p class="src">Source: backend code, <code>solvent-master</code> ab86cd3</p></div>
+  </div>
+
+  <div class="sub">
+    <h3>Content mix</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Examples</th><th>Template</th></tr></thead>
+        <tbody>
+          <tr><td>Value / tips</td><td>Smart monthly shopping tips, printable shopping list, 15-minute recipes, make-up tips</td><td>A2, A3</td></tr>
+          <tr><td>Recall → offer</td><td>"Already used the shopping-list template?" → monthly bundle</td><td>B1</td></tr>
+          <tr><td>Category push</td><td>Household and fashion picks of the week (higher margin)</td><td>B2</td></tr>
+          <tr><td>Gifts</td><td>Before visits and holidays: fruit parcels, hampers, tableware</td><td>D2</td></tr>
+          <tr><td>DIY</td><td>15-minute fridge or kitchen tidy-up with Borma containers</td><td>D3</td></tr>
+          <tr><td>Weekly segment promo</td><td>"Jumat Segar" for fresh products</td><td>D1</td></tr>
+          <tr><td>Giveaway</td><td>Year-end draw for purchases above a minimum</td><td>B3</td></tr>
+          <tr><td>B2B</td><td>Stock up before Ramadan and peak seasons, wholesale catalogue, restock reminders</td><td>D4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Platform and deliverability</h3>
+    <ul>
+      <li><strong>Sender:</strong> our own domain, e.g. <code>promo@bormadago.com</code> or <code>halo@bormadago.com</code>, never a Gmail address.</li>
+      <li><strong>Platform:</strong> needs automations, tags and a connection to bormadago.com order data. Options: Mailchimp, Brevo, MailerLite, Klaviyo.</li>
+      <li><strong>Authentication:</strong> SPF, DKIM and DMARC on bormadago.com (start DMARC at <code>p=none</code>). Gmail and Yahoo also require one-click unsubscribe for bulk senders.</li>
+      <li><strong>Consent:</strong> only people who signed up or ticked consent (UU PDP). An unsubscribe link in every email.</li>
+      <li><strong>Warm-up:</strong> start with the most active customers, then grow volume gradually.</li>
+      <li><strong>List hygiene:</strong> people who never open drag every email into spam, including for loyal customers. Run re-engagement, then remove anyone who still doesn't open or click.</li>
+      <li><strong>Monthly review:</strong> open rate, click rate, orders, revenue per email, unsubscribes per segment.</li>
+    </ul>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><ul>
+      <li><strong>No consent or unsubscribe exists.</strong> Sign-up, checkout and the profile page don't ask for marketing consent, and emails carry no unsubscribe link or header.</li>
+      <li><strong>Email reach is small.</strong> 502 of 608 online customers have an email, but only 172 are verified, and the system only emails verified addresses. Email is optional at sign-up.</li>
+    </ul><p class="src">Source: warehouse, online orders Jun–Aug 2026; customer site code, <code>ts-master</code> ba44528; backend code, <code>solvent-master</code> ab86cd3</p></div>
+  </div>
+
+  <div class="sub">
+    <h3>WhatsApp broadcast</h3>
+    <ul>
+      <li>WhatsApp Business, only to customers who opted in (at checkout or the cashier).</li>
+      <li>Same segments and calendar as email, but 2–4 lines with one link.</li>
+      <li>Best for time-sensitive messages: flash sales, Jumat Segar, B2B restock reminders, order updates.</li>
+      <li>Too many messages lead to blocks and reports, which can get the number restricted.</li>
+    </ul>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>All 608 online customers have a mobile number, but none has opted in. The system sends WhatsApp only through Twilio templates (OTP, password reset, "ready for pickup"). There is no broadcast.</p><p class="src">Source: warehouse, online orders Jun–Aug 2026; backend code, <code>solvent-master</code> ab86cd3</p></div>
+  </div>
+</section>
+
+<section id="maps">
+  <h2>D. Google Maps &amp; Business Profile</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <div class="callout warn">
+    <p><strong>Reviews come first.</strong> They are what customers see before deciding to shop, and they strongly affect local ranking. Target: a rating of at least 4.5, starting with branches that have fewer than 100 reviews.</p>
+  </div>
+  <div class="sub">
+    <h3>Reviews</h3>
+    <ul>
+      <li><strong>Protect quality:</strong> reply to every negative review with the follow-up action management took. Add customer satisfaction to every employee's KPIs (smile, greeting, attentiveness, speed, customer focus) if not already there.</li>
+      <li><strong>Grow volume:</strong> Google Review QR code at the cashier; cashiers invite a review after each transaction; ask B2B clients after their first smooth delivery; invite customers to mention what they bought and the service (e.g. fresh vegetables, fast delivery).</li>
+      <li><strong>Never:</strong> write reviews for customers, post from our own or bulk accounts, or give incentives for Google reviews. Google removes them and can suspend the profile.</li>
+    </ul>
+  </div>
+  <div class="sub">
+    <h3>Profile and ranking</h3>
+    <ul>
+      <li><strong>Setup:</strong> claim the profile at business.google.com; match the categories top competitors use; set the location precisely; list the delivery areas; link bormadago.com and the B2B page; opening hours, photos and regular promo posts.</li>
+      <li><strong>Ranking factors:</strong> distance to the searcher, fresh in-store photos, rating and review wording, NAP consistency, and other sites embedding or linking our map.</li>
+      <li><strong>NAP:</strong> write name, address and phone identically everywhere. Find the listings of a strong (not the nearest) competitor by searching their address and phone, then register Borma Dago on the same sites.</li>
+      <li><strong>Photos:</strong> taken in store with location on; add a geotag to older ones (geoimgr.com).</li>
+      <li><strong>Map references:</strong> embed the map on bormadago.com; create a public Google My Maps map titled with the target keyword (e.g. "Supermarket &amp; Supplier Horeca di Dago Bandung"). My Maps pins only show on that custom map.</li>
+    </ul>
+    <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>The site already embeds a Google Map of the Borma Dago store, on the Contact page and in the checkout shop-address modal.</p><p class="src">Source: customer site code, <code>ts-master</code> ba44528</p></div>
+  </div>
+</section>
+
+<section id="reminder">
+  <h2>Key reminder</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <p>Ads and content can bring a customer in once. Only a good experience makes them come back and bring others. Protect three things: <strong>product quality</strong> (fresh, complete, as described), <strong>service</strong> (fast, friendly, accurate, complaints handled well) and <strong>competitive pricing</strong>.</p>
+  <p>The targets that matter most: repeat purchase, customer lifetime value, cohort revenue (each month's new customers keep buying afterwards), and word of mouth.</p>
+</section>
+
+<section id="templates">
+  <h2>Email templates</h2>
+  <div class="sec-label"><span class="src-tag">From the PDF</span> violet notes are additions</div>
+  <p>Ready to send, in Indonesian. Text in [ ] is filled per send. Voucher amounts and minimum orders are placeholders to set from margin per order. Emails that offer free shipping (B2, C3–C5) wait on management approval.</p>
+
+  <div class="group-h">a · Welcome (Indoctrination)</div>
+  <details class="tpl"><summary><span class="code">A1</span> Welcome + first-order voucher <span class="tpl-flag">+ Claude note</span> <span class="when">right after sign-up</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Selamat datang di Borma Dago, [Nama] — ada hadiah kecil untuk Anda</dd><dt>Preview</dt><dd>Voucher Rp[20.000] untuk belanja pertama di bormadago.com</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Terima kasih sudah bergabung. Sekarang belanja kebutuhan rumah dari Borma Dago bisa langsung dari HP — tanpa antre, tanpa angkat kantong berat.</p>
+      <p>Sebagai salam kenal, ini voucher untuk belanja pertama Anda:<br><strong>Kode: HALODAGO</strong> — potongan Rp[20.000], min. belanja Rp[150.000], berlaku 7 hari.</p>
+      <p>Belum pernah pesan online? Tonton video 60 detik cara order di bormadago.com, dari pilih produk sampai pesanan diantar: [link video]</p>
+      <p>Di email berikutnya kami kirim trik belanja bulanan supaya budget lebih awet.</p>
+      <p>Salam hangat,<br>Tim Borma Dago</p>
+      <span class="btn">Pakai Voucher Sekarang</span>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>A Rp20k voucher is 125% of the median order's margin (Rp16k). At 8.2% margin, the order needs about Rp244k of goods to cover it, above the median basket of Rp193k. The current new-user voucher gives Rp8,013 per use on average.</p><p>The system can limit a voucher to one use per customer, but not to a first order: promo conditions only check the basket, products or shipping. So a returning customer could also use HALODAGO once.</p><p class="src">Source: warehouse, online orders Jun–Aug 2026; backend code, <code>solvent-master</code> ab86cd3</p></div>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">A2</span> Value: money-saving shopping tips <span class="when">D+2</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>5 trik belanja bulanan supaya gajian nggak cepat habis</dd><dt>Preview</dt><dd>No. 3 sering dilupakan, padahal paling hemat</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Ini 5 trik yang dipakai banyak ibu rumah tangga pintar:</p>
+      <ul>
+        <li>Tulis daftar belanja per ruangan (dapur, kamar mandi, cucian) — tidak ada yang ketinggalan, tidak beli dobel.</li>
+        <li>Kebutuhan tahan lama beli sekaligus sebulan; sayur dan buah cukup per minggu.</li>
+        <li>Bandingkan harga per gram/ml, bukan per bungkus. Kemasan besar belum tentu lebih murah.</li>
+        <li>Belanja setelah makan — belanja impulsif jadi jauh lebih terkendali.</li>
+        <li>Siapkan keranjang di bormadago.com dari awal bulan, checkout saat promo tanggal gajian.</li>
+      </ul>
+      <p>Artikel lengkapnya + template daftar belanja bulanan yang bisa di-print ada di blog kami.</p>
+      <p>P.S. Voucher HALODAGO Anda masih berlaku [5] hari lagi.</p>
+      <span class="btn">Unduh Template Daftar Belanja</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">A3</span> Follow &amp; subscribe <span class="when">D+4</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Resep 15 menit, trik rumah rapi &amp; promo kilat — semua ada di sini</dd><dt>Preview</dt><dd>Ikuti Borma Dago di TikTok, Instagram &amp; YouTube</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Tiap minggu kami bagikan konten singkat yang praktis: resep 15 menit dari bahan yang ada di Borma, DIY rapi-rapi rumah pakai wadah murah, dan info promo kilat yang hanya diumumkan di media sosial.</p>
+      <p>Mau dapat duluan? Ikuti kami:</p>
+      <ul>
+        <li>TikTok [@akun] — resep &amp; promo kilat</li>
+        <li>Instagram [@akun] — katalog &amp; info stok baru</li>
+        <li>YouTube [nama channel] — tutorial DIY &amp; tur produk</li>
+      </ul>
+      <p>Satu lagi: pindahkan email ini ke tab Utama supaya info promo dari kami tidak terlewat.</p>
+      <span class="btn">Ikuti di TikTok</span>
+    </div>
+  </details>
+
+  <div class="group-h">b · Sales (Engagement)</div>
+  <details class="tpl"><summary><span class="code">B1</span> Recall the template → monthly bundle <span class="when">D+7</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Sudah dipakai template daftar belanjanya, [Nama]?</dd><dt>Preview</dt><dd>Kalau sudah, ini langkah berikutnya supaya makin hemat</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Minggu lalu kami kirim template daftar belanja bulanan. Semoga membantu!</p>
+      <p>Langkah berikutnya: cocokkan daftar Anda dengan Paket Hemat Bulanan minggu ini — beras, minyak, gula, telur, dan sabun cuci dalam satu paket, lebih hemat Rp[xx.000] dibanding beli satuan.</p>
+      <p>Pesan sebelum [tanggal], diantar ke rumah [area layanan].</p>
+      <span class="btn">Lihat Paket Hemat Bulanan</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">B2</span> Household category push <span class="tpl-flag">+ Claude note</span> <span class="when">D+10 · needs free-shipping approval</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Mau dapur rapi &amp; awet tanpa harga mahal?</dd><dt>Preview</dt><dd>Diskon s.d. [30]% untuk wadah, alat masak &amp; organizer</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Rumah yang nyaman sering dimulai dari hal kecil: wadah bumbu yang seragam, wajan yang tidak lengket lagi, kulkas yang gampang dicari isinya.</p>
+      <p>Pilihan minggu ini:</p>
+      <ul>
+        <li>Set wadah kedap udara [merek/ukuran] — Rp[harga]</li>
+        <li>Wajan anti lengket [ukuran] — Rp[harga]</li>
+        <li>Rak organizer dapur — Rp[harga]</li>
+      </ul>
+      <p>Gratis ongkir untuk belanja peralatan rumah min. Rp[200.000] sampai [tanggal].</p>
+      <span class="btn">Belanja Peralatan Rumah</span>
+      <p class="internal">Internal note: fashion and household goods have higher margins, so lead B2C Engagement emails with them.</p>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>The internal note doesn't hold online. Household earns 6.7% online against 8.7% for groceries. At 6.7%, Rp200k of household goods earns about Rp13.4k, compared with a median delivery fee of Rp10k (p90 Rp28k).</p><p class="src">Source: warehouse, online orders Jun–Aug 2026</p></div>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">B3</span> Monthly giveaway <span class="when">early December · needs permit check</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Giveaway Desember: belanja di bormadago.com, bawa pulang [hadiah]</dd><dt>Preview</dt><dd>Setiap belanja Rp[200.000] = 1 kesempatan menang</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Akhir tahun, kami mau berbagi. Setiap belanja min. Rp[200.000] di bormadago.com atau app Borma Dago selama [periode] otomatis dapat 1 kupon undian.</p>
+      <p>Hadiah: [hadiah utama] untuk 1 pemenang, dan [hadiah hiburan] untuk [jumlah] pemenang.</p>
+      <p>Pemenang diumumkan [tanggal] di Instagram [@akun].</p>
+      <span class="btn">Mulai Belanja</span>
+      <p class="internal">Internal note: prize draws usually need a permit; check with legal / Borma head office before announcing.</p>
+    </div>
+  </details>
+
+  <div class="group-h">c · After purchase (Ascension)</div>
+  <details class="tpl"><summary><span class="code">C1</span> Thank you <span class="when">right after payment</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Pesanan #[nomor] sudah kami terima — terima kasih, [Nama]!</dd><dt>Preview</dt><dd>Tim kami sedang menyiapkan belanjaan Anda</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Terima kasih sudah belanja di Borma Dago. Pesanan Anda sedang disiapkan dan akan [diantar / siap diambil] pada [jadwal].</p>
+      <p>[Ringkasan pesanan otomatis]</p>
+      <p>Ada pertanyaan? Balas email ini atau chat WhatsApp kami di [nomor].</p>
+      <span class="btn">Lacak Pesanan</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">C2</span> Complementary recommendations <span class="tpl-flag">+ Claude note</span> <span class="when">D+1</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Pelengkap yang pas untuk belanjaan Anda kemarin</dd><dt>Preview</dt><dd>Dipilih berdasarkan pesanan Anda</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Semoga pesanan kemarin sudah sampai dengan baik. Berdasarkan belanjaan Anda, mungkin ini berguna:</p>
+      <p>[Blok produk dinamis — contoh: beli beras → wadah beras kedap udara; beli sayur → pisau &amp; talenan; beli deterjen → keranjang laundry]</p>
+      <span class="btn">Lihat Rekomendasi</span>
+      <p class="internal">Internal note: prioritise recommendations from high-margin categories.</p>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>The system has no related or complementary product data, so this dynamic product block has nothing to draw from yet.</p><p class="src">Source: backend code, <code>solvent-master</code> ab86cd3</p></div>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">C3</span> One-week free-shipping voucher <span class="tpl-flag">+ Claude note</span> <span class="when">D+2 · needs free-shipping approval</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Hadiah untuk belanja kedua Anda: GRATIS ONGKIR (7 hari saja)</dd><dt>Preview</dt><dd>Berlaku sampai [tanggal] pukul 23.59</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Terima kasih sudah jadi pelanggan online Borma Dago. Untuk belanja berikutnya, pakai:<br><strong>Kode: ONGKIRFREE</strong> — gratis ongkir, min. belanja Rp[100.000], berlaku sampai [tanggal] pukul 23.59.</p>
+      <p>Stok dapur untuk minggu depan sudah aman? Kalau belum, ini waktu yang pas.</p>
+      <span class="btn">Belanja dengan Gratis Ongkir</span>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>At 8.2% margin, a Rp100k order earns about Rp8.2k, less than the median delivery fee of Rp10k. The system already supports free-shipping vouchers.</p><p class="src">Source: warehouse, online orders Jun–Aug 2026; backend code, <code>solvent-master</code> ab86cd3</p></div>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">C4</span> Offer ends tomorrow <span class="when">D+8 morning</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Besok voucher gratis ongkir Anda hangus</dd><dt>Preview</dt><dd>Kode ONGKIRFREE berakhir [tanggal] pukul 23.59</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Pengingat singkat: kode ONGKIRFREE berakhir besok, [tanggal] pukul 23.59.</p>
+      <p>Mau langsung pesan kebutuhan yang sama seperti kemarin? Belanjaan terakhir Anda: [ringkasan singkat].</p>
+      <span class="btn">Pakai Sebelum Hangus</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">C5</span> Last call, 12 hours left <span class="when">D+9 at 12:00</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Last call: 12 jam lagi gratis ongkir berakhir</dd><dt>Preview</dt><dd>Setelah malam ini, kode tidak berlaku lagi</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Ini pengingat terakhir. Pukul 23.59 malam ini kode ONGKIRFREE tidak berlaku lagi.</p>
+      <span class="btn">Checkout Sekarang</span>
+    </div>
+  </details>
+
+  <div class="group-h">d · Segment broadcasts</div>
+  <details class="tpl"><summary><span class="code">D1</span> Jumat Segar (fresh segment) <span class="when">every Friday morning</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Jumat Segar: sayur, buah &amp; daging diskon s.d. [25]% hari ini</dd><dt>Preview</dt><dd>Cuma sampai pukul 21.00 — stok terbatas</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Weekend masak apa? Promo segar hari ini:</p>
+      <ul>
+        <li>[Produk 1] — Rp[harga] (normal Rp[harga])</li>
+        <li>[Produk 2] — Rp[harga]</li>
+        <li>[Produk 3] — Rp[harga]</li>
+      </ul>
+      <p>Pesan sebelum pukul [14.00], diantar hari ini juga untuk area [area].</p>
+      <span class="btn">Belanja Promo Segar</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">D2</span> Gift ideas (B2C) <span class="when">before holidays / Lebaran</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Mau berkunjung ke rumah mertua? 5 buah tangan yang selalu disambut hangat</dd><dt>Preview</dt><dd>Praktis, tidak pasaran, bisa dipesan dari rumah</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Buah tangan yang pas bikin kunjungan jadi lebih berkesan. Lima ide yang aman untuk semua usia:</p>
+      <ul>
+        <li>Parsel buah segar pilihan</li>
+        <li>Paket kue kering &amp; teh premium</li>
+        <li>Set peralatan makan atau wadah saji</li>
+        <li>Paket sembako premium untuk keluarga besar</li>
+        <li>Hampers custom — pilih isi sendiri, kami bungkuskan</li>
+      </ul>
+      <p>Semua bisa dipesan di bormadago.com dan diambil di toko atau diantar.</p>
+      <span class="btn">Lihat Ide Buah Tangan</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">D3</span> DIY (household segment) <span class="when">Sunday morning</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>DIY 15 menit: bikin kulkas rapi pakai wadah Rp[xx] ribuan</dd><dt>Preview</dt><dd>Sebelum–sesudahnya bikin puas</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Kulkas penuh tapi susah cari barang? Coba cara ini:</p>
+      <ul>
+        <li>Keluarkan semua isi, buang yang sudah lewat tanggal</li>
+        <li>Kelompokkan: sayur, protein, bumbu, minuman</li>
+        <li>Pakai wadah bening berlabel — yang lama di depan, yang baru di belakang</li>
+      </ul>
+      <p>Video lengkapnya ada di TikTok kami. Semua wadah yang dipakai tersedia di bormadago.com.</p>
+      <span class="btn">Lihat Wadah yang Dipakai</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">D4</span> Borma for Business (B2B segment) <span class="when">about 3 weeks before Ramadan</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Stok usaha aman sebelum Ramadan — harga khusus Borma for Business</dd><dt>Preview</dt><dd>Untuk resto, katering, warung &amp; UMKM di sekitar Dago</dd></dl>
+      <p>Yth. Bapak/Ibu [Nama], [Nama Usaha]</p>
+      <p>Menjelang Ramadan, permintaan bahan baku biasanya naik dan harga ikut bergerak. Amankan stok usaha Anda lebih awal bersama Borma for Business:</p>
+      <ul>
+        <li>Harga khusus untuk pembelian volume</li>
+        <li>Pengiriman terjadwal ke lokasi usaha</li>
+        <li>[Termin pembayaran / faktur — sesuaikan dengan program]</li>
+        <li>Satu kontak sales khusus untuk semua pesanan</li>
+      </ul>
+      <p>Terlampir daftar produk yang paling sering dipesan resto &amp; warung: [link katalog]. Balas email ini dengan daftar kebutuhan Anda, tim kami kirimkan penawaran dalam 1×24 jam.</p>
+      <p>Hormat kami,<br>[Nama Sales] — Borma for Business, Borma Dago</p>
+      <span class="btn">Minta Penawaran</span>
+    </div>
+  </details>
+
+  <div class="group-h">e · Re-engagement, then clean the list</div>
+  <details class="tpl"><summary><span class="code">E1</span> We-miss-you voucher <span class="tpl-flag">+ Claude note</span> <span class="when">day 60 inactive</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>[Nama], sudah lama nggak mampir — ini voucher Rp[25.000] untuk Anda</dd><dt>Preview</dt><dd>Berlaku 7 hari, untuk semua produk</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Kami kangen! Supaya belanja berikutnya lebih ringan, ini voucher khusus:<br><strong>Kode: BALIKDAGO</strong> — potongan Rp[25.000], min. belanja Rp[150.000], berlaku 7 hari.</p>
+      <span class="btn">Pakai Voucher</span>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>At 8.2% margin, covering a Rp25k voucher takes about Rp305k of goods. The median basket is Rp193k.</p><p class="src">Source: warehouse, online orders Jun–Aug 2026</p></div>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">E2</span> Benefits reminder <span class="when">day 67</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Yang Anda lewatkan dari belanja online di Borma Dago</dd><dt>Preview</dt><dd>Plus: voucher BALIKDAGO masih berlaku sampai besok</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Sekadar mengingatkan, ini yang Anda dapat saat belanja lewat bormadago.com atau app:</p>
+      <ul>
+        <li>Belanja dari rumah, diantar ke [area layanan]</li>
+        <li>Promo tanggal gajian setiap bulan</li>
+        <li>Voucher ulang tahun</li>
+        <li>[Benefit lain yang berlaku]</li>
+      </ul>
+      <p>Voucher BALIKDAGO Anda berakhir besok.</p>
+      <span class="btn">Belanja Sekarang</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">E3</span> Last confirmation <span class="when">day 74</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Masih mau terima info promo dari kami?</dd><dt>Preview</dt><dd>Satu klik saja supaya tetap terdaftar</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Kami tidak ingin memenuhi inbox Anda dengan email yang tidak dibaca. Kalau masih ingin mendapat info promo Borma Dago, klik tombol di bawah.</p>
+      <p>Jika tidak ada klik dalam 7 hari, kami akan berhenti mengirim email. Anda selalu bisa daftar lagi kapan saja di bormadago.com.</p>
+      <span class="btn">Ya, Tetap Kirim Promo</span>
+      <p class="internal">Internal note: still no click or purchase → remove from the active list, so other emails keep landing in the inbox.</p>
+    </div>
+  </details>
+
+  <div class="group-h">f · Abandoned cart</div>
+  <details class="tpl"><summary><span class="code">F1</span> Cart reminder <span class="tpl-flag">+ Claude note</span> <span class="when">1 hour after</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Belanjaan Anda masih menunggu di keranjang, [Nama]</dd><dt>Preview</dt><dd>Tinggal satu langkah lagi untuk checkout</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Sepertinya belanjaan Anda belum sempat di-checkout:</p>
+      <p>[Ringkasan isi keranjang otomatis]</p>
+      <p>Klik tombol di bawah untuk melanjutkan. Keranjang Anda sudah tersimpan, tidak perlu pilih ulang.</p>
+      <span class="btn">Lanjutkan Checkout</span>
+      <div class="added-note"><span class="added-tag">Added by Claude · not in the PDF</span><p>Abandoned carts can be found from the carts saved on the server, but only for logged-in customers. Guest carts have no one to contact.</p><p class="src">Source: backend code, <code>solvent-master</code> ab86cd3</p></div>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">F2</span> Help finishing the order <span class="when">24 hours</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Ada kendala saat checkout? Kami bantu</dd><dt>Preview</dt><dd>Balas email ini atau chat WhatsApp kami</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Kalau ada yang membingungkan — cara bayar, jadwal kirim, atau stok barang — tim kami siap bantu lewat WhatsApp [nomor].</p>
+      <p>Belanjaan Anda masih tersimpan di keranjang.</p>
+      <span class="btn">Lihat Keranjang Saya</span>
+    </div>
+  </details>
+  <details class="tpl"><summary><span class="code">F3</span> Final reminder <span class="when">48 hours</span></summary>
+    <div class="mail">
+      <dl class="hdr"><dt>Subjek</dt><dd>Stok [nama produk] di keranjang Anda terbatas</dd><dt>Preview</dt><dd>Checkout sekarang supaya tidak kehabisan</dd></dl>
+      <p>Halo [Nama],</p>
+      <p>Ini pengingat terakhir dari kami. Beberapa barang di keranjang Anda stoknya terbatas:</p>
+      <p>[Ringkasan isi keranjang otomatis]</p>
+      <p>Pesan sekarang, diantar ke [area layanan] sesuai jadwal pengiriman.</p>
+      <span class="btn">Checkout Sekarang</span>
+      <p class="internal">Internal note: only claim limited stock when it is true (use real stock data).</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  Reorganised from <a href="https://github.com/borma-dago/br-screenshots/blob/main/2026-09/10799-online-marketing-strategy.pdf">Borma_Dago_Online_Marketing_Strategy.pdf</a> (21 pages, 29 Sep 2026). Everything labelled "Added by Claude" comes from Claude's checks of our warehouse, code and DNS on 29 Sep 2026, or is Claude's reading of the plan. The original PDF is the authoritative text of the plan.
+</footer>
+</main>
+</div>
